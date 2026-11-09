@@ -72,6 +72,7 @@ TAP_DRILL, TAP_DEPTH = 2.5, 5.0                         # vertical, from the rin
 FOOT = (300.0, 5.8, 2.0)               # two long rubber rails, near the front and back edges
 FOOT_POCKET = (300.6, 6.4, 1.0)
 FOOT_XY = [(0.0, -58.0), (0.0, 53.0)]
+BACK_RAIL_X1 = 119.4                    # the back rail (and its pocket, +0.3) stops 3.0 short of the battery bay (x 122.7)
 USB_Z, USB_SHELL = 7.0, (8.94, 3.26)       # the daughterboard sits low: the ring runs at 13.7 where it meets the back face
 PCB_T = 1.6
 WARN = []
@@ -505,12 +506,12 @@ def build(prm):
         comb.add(c2)
 
     # ---- ring joint: through slots in the laser-cut ring (square to the sheet) and a tab from each block, meeting inside the slot.
-    # Slot 12 x 1.5, tabs 11.8 x 1.3 (0.1 clearance all round), each 0.75 tall so the two tabs leave 0.1 between them in the 1.6 sheet.
-    SLOT_L, SLOT_W2, TAB_H = 12.0, 1.5, 0.75
+    # Slot 12.2 x 1.7, tabs 11.8 x 1.3 (0.2 clearance all round), each 0.75 tall so the two tabs leave 0.1 between them in the 1.6 sheet.
+    SLOT_L, SLOT_W2, TAB_H = 12.2, 1.7, 0.75
     off = (TOP_GROOVE[0] + TOP_GROOVE[1]) / 2          # slot centre line from the outline wall
     yb_l, yf_l = OUT_BACK - off, -OUT_FRONT + off
     xr_l, xl_l = OUT_XR - off, -OUT_XL + off
-    SLOTS = [(x_, yb_l, 0) for x_ in (-100.0, 0.0, 100.0)] + [(x_, yf_l, 0) for x_ in (-100.0, 0.0, 100.0)] +             [(xr_l, y_, 1) for y_ in (-35.0, 0.0, 35.0)] + [(xl_l, y_, 1) for y_ in (-35.0, 0.0, 35.0)]
+    SLOTS = [(x_, yb_l, 0) for x_ in (-100.0, -45.0, 100.0)] + [(x_, yf_l, 0) for x_ in (-100.0, 0.0, 100.0)] +             [(xr_l, y_, 1) for y_ in (-35.0, 0.0, 35.0)] + [(xl_l, y_, 1) for y_ in (-35.0, 0.0, 35.0)]
 
     def slot_rects(sk, to_sk, grow):
         for sx_, sy_, rot in SLOTS:
@@ -523,10 +524,10 @@ def build(prm):
     slot_rects(sk, to_sk, 0.0)
     cut(['Accent ring'], extrude_all(sk, RING_TOP - RING_BOT + 1.0))
     sk, to_sk = sketch(tp(RING_TOP - TAB_H, 'L top tabs start'), RING_TOP - TAB_H, 'Top block tabs (plate plane)')
-    slot_rects(sk, to_sk, -0.1)
+    slot_rects(sk, to_sk, -0.2)
     cut(['Top shell'], extrude_all(sk, TAB_H), Join)
     sk, to_sk = sketch(tp(RING_BOT, 'L bottom tabs start'), RING_BOT, 'Bottom block tabs (plate plane)')
-    slot_rects(sk, to_sk, -0.1)
+    slot_rects(sk, to_sk, -0.2)
     cut(['Bottom shell'], extrude_all(sk, TAB_H), Join)
 
     # ---- top block: lower pocket for the plate and PCB, solid above it
@@ -634,17 +635,19 @@ def build(prm):
     cut(['Bottom shell'], extrude_all(skb_, zb1 - zb0), Join)
     # the battery (EEMB 803450, 52 x 34.5 x 8.3, a 4.5 mm protection board on its front end) lies flat, long side front to back, under the
     # screen and the knob in one flat pocket (world horizontal: the board's underside slopes away toward the front, so a flat cell keeps
-    # its 1.0 mm of aluminium all over). Cell x 124.75..159.25, y 5.3..61.8, bottom z 1.2 (0.2 off the floor), top z 9.5.
-    BATT_X0, BATT_X1, BATT_Y0, BATT_Y1, BATT_Z0 = 124.75, 159.25, 5.3, 61.8, 1.2
+    # its 1.0 mm of aluminium all over). Cell x 123.6..158.1, y 2.92..59.42, bottom z 1.2 (0.2 off the floor), top z 9.5. The bay is x 122.7..160,
+    # y 2.0..61.3 (its back wall in the cavity wall's shadow, so no lip), R3 corners and the cavity's own R5.75 at the back right: the
+    # cell's square corners need the 0.9 of play that R3 takes (foam-tape it). In the .f3d only: the R3/R5.75 corners.
+    BATT_X0, BATT_X1, BATT_Y0, BATT_Y1, BATT_Z0 = 123.6, 158.1, 2.92, 59.42, 1.2
     BATT_ZT = BATT_Z0 + 8.3
     skb3 = root.sketches.add(zp(BATT_Z0 - 0.2, 'battery bay plane'))
     skb3.name = 'Battery bay (world plan)'
     skb3.isLightBulbOn = False
-    skb3.sketchCurves.sketchLines.addTwoPointRectangle(skb3.modelToSketchSpace(P(BATT_X0 - 0.3, BATT_Y0 - 0.3, BATT_Z0 - 0.2)),
-                                                       skb3.modelToSketchSpace(P(BATT_X1 + 0.3, BATT_Y1 + 0.3, BATT_Z0 - 0.2)))
+    skb3.sketchCurves.sketchLines.addTwoPointRectangle(skb3.modelToSketchSpace(P(122.7, 2.0, BATT_Z0 - 0.2)),
+                                                       skb3.modelToSketchSpace(P(160.0, 61.3, BATT_Z0 - 0.2)))
     cut(['Bottom shell'], extrude_all(skb3, BATT_ZT + 0.2 - (BATT_Z0 - 0.2)))
     print('battery bay: x %.2f..%.2f y %.2f..%.2f, floor z %.1f, cell z %.1f..%.1f, aluminium under it %.1f mm' % (
-        BATT_X0 - 0.3, BATT_X1 + 0.3, BATT_Y0 - 0.3, BATT_Y1 + 0.3, BATT_Z0 - 0.2, BATT_Z0, BATT_ZT, BATT_Z0 - 0.2))
+        122.7, 160.0, 2.0, 61.3, BATT_Z0 - 0.2, BATT_Z0, BATT_ZT, BATT_Z0 - 0.2))
 
     # ---- ring frame: board outline + 0.5 (the ring is level with the PCB)
     zs = RING_BOT - 1.0
@@ -682,7 +685,7 @@ def build(prm):
     ring_top_z = lambda y: (RING_TOP + LIFT * C + S * y) / C
     rows = [(FRONT_Y, 'front'), (BACK_Y, 'back')]
     SCREW_LEN = {'front': 12, 'back': 20}
-    TAP_DEEP = {lab: SCREW_LEN[lab] - ring_top_z(yrow) + 0.5 for yrow, lab in rows}      # the thread ends 0.5 short of the tap
+    TAP_DEEP = {lab: SCREW_LEN[lab] - ring_top_z(yrow) + 3.0 for yrow, lab in rows}      # drilled to the screw tip + 3 (threaded to tip + 1.5)
     print('screws: front M3x12 (%.1f mm in the top block), back M3x20 (%.1f mm)' % (SCREW_LEN['front'] - ring_top_z(FRONT_Y), SCREW_LEN['back'] - ring_top_z(BACK_Y)))
     csk = None
     for yrow, lab in rows:
@@ -850,8 +853,9 @@ def build(prm):
         rvf.add(rvi)
         print('encoder: module x0 %.2f, axis y %.2f, knob x %.2f..%.2f dia %.1f, cover x %.2f..%.2f, cutout x %.2f..%.2f (pocket wall at x %.1f)' % (
             MX0, AX_Y, wxa, wxb, p['KNOB_D'], cov_x0, cov_x1, cut_x0, cut_x1, INNER_W / 2))
-        # posts under the solid for the module's M2 screws (taps from below)
-        BOSS_D, TAP_D, TAP_L = 3.4, 1.6, 5.0
+        # posts under the solid for the module's M2 screws (taps from below). Removed in the .f3d: the module now screws to the encoder
+        # cover's foot and the cover to the top block (rear ear, two M2 taps); BOSS_D 1.0 leaves nothing once the taps are cut
+        BOSS_D, TAP_D, TAP_L = 1.0, 1.6, 5.0
         mh = [(MX0 + 2.7, AX_Y + 11 - 2.7), (MX0 + 2.7, AX_Y + 11 - 19.3)]
         sk, to_sk = sketch(tp(SOLID_Z + 0.2, 'L boss start'), SOLID_Z + 0.2, 'Module bosses (local)')
         for hx_, hy_ in mh:
@@ -878,6 +882,12 @@ def build(prm):
         sk, to_sk = sketch(tp(ROOF_Z - 1.5, 'L glass pocket start'), ROOF_Z - 1.5, 'E-ink glass pocket (local)')
         sk.sketchCurves.sketchLines.addTwoPointRectangle(to_sk(gx0, gy0), to_sk(gx1, gy1))
         cut(['Top shell'], extrude_all(sk, 1.5))
+        sk, to_sk = sketch(tp(8.0, 'L screen drop-in start'), 8.0, 'Screen drop-in opening (local)')     # glass + driver board go in from below
+        rrect(sk, to_sk, (gx0 + gx1) / 2, (gy0 + gy1) / 2, (gx1 - gx0) / 2, (gy1 - gy0) / 2, 1.0)
+        cut(['Top shell'], extrude_all(sk, 2.3))
+        sk, to_sk = sketch(tp(ROOF_Z - 0.2, 'L window land start'), ROOF_Z - 0.2, 'E-ink window land (local)')   # 0.3 land: no knife edge
+        rrect(sk, to_sk, DCX, dcy, aw / 2 + 0.4, ah / 2 + 0.4, 0.5)
+        cut(['Top shell'], extrude_all(sk, 0.5))
         sk, to_sk = sketch(tp(6.9, 'L display board pocket start'), 6.9, 'E-ink driver board pocket (local)')
         sk.sketchCurves.sketchLines.addTwoPointRectangle(to_sk(143.0 - 21.5 / 2 - 0.3, 13.35 - 34.7 / 2 - 0.3),
                                                          to_sk(143.0 + 21.5 / 2 + 0.3, 13.35 + 34.7 / 2 + 0.3))
@@ -947,8 +957,8 @@ def build(prm):
         def stepy(ea_):
             return ea_ * C - FLOOR_L * S
         Z_FRONT, Z_BACK, Y_STEP = stepz(-21.40) - 0.1, stepz(-2.36) - 0.1, stepy(-2.36)     # weight top in front of / behind the step at y -2.04
-        WIN_X, WIN_Y0, WIN_Y1 = 92.5, -16.5, 14.1          # the weight's face (the window)
-        FL_X, FL_Y0, FL_Y1 = 108.0, -19.0, 27.5            # its flange: long ends and a third floor level behind, for screws spaced far apart
+        WIN_X, WIN_Y0, WIN_Y1 = 92.5, -16.5, 23.5          # the weight's face (the window): 185 x 40
+        FL_X, FL_Y0, FL_Y1 = 108.0, -19.0, 34.0            # its flange: long ends and a third floor level behind, for screws spaced far apart
         FL_T = 1.5
         LEDGE_F, LEDGE_B = Z_FRONT - FL_T, Z_BACK - FL_T
         Z3, Y_STEP2 = stepz(16.69) - 0.1, stepy(16.69)      # the floor's next step at y 16.96
@@ -1052,7 +1062,8 @@ def build(prm):
         skf.name = 'Foot pockets (world plan)'
         skf.isLightBulbOn = False
         for fx, fy in FOOT_XY:
-            rrect(skf, lambda x, y: skf.modelToSketchSpace(P(x, y, -0.5)), fx, fy, FOOT_POCKET[0] / 2, FOOT_POCKET[1] / 2, 1.0)
+            x1_ = FOOT_POCKET[0] / 2 if fy < 0 else BACK_RAIL_X1 + 0.3
+            rrect(skf, lambda x, y: skf.modelToSketchSpace(P(x, y, -0.5)), (x1_ - FOOT_POCKET[0] / 2) / 2, fy, (x1_ + FOOT_POCKET[0] / 2) / 2, FOOT_POCKET[1] / 2, 1.0)
         e = ext.createInput(profs_of(skf), NewB)
         e.setDistanceExtent(False, adsk.core.ValueInput.createByReal(mm(1.5)))
         cut(['Bottom shell'], list(ext.add(e).bodies))
@@ -1081,7 +1092,7 @@ def build(prm):
 
         GAP_P, RECESS_W = 0.2, 1.1                       # plug shell to opening; width of the recess ring round the opening
         port = stadium(Y_BACK - 7.0, USB_SHELL[0] + 2 * GAP_P, USB_SHELL[1] + 2 * GAP_P, 16.0, 'USB-C port')      # full stadium, even 0.2 gap round the shell
-        lead = stadium(Y_BACK, USB_SHELL[0] + 2 * (GAP_P + RECESS_W), USB_SHELL[1] + 2 * (GAP_P + RECESS_W), 2.0, 'USB-C lead-in')   # same stadium offset by 1.1, 1.0 deep
+        lead = stadium(Y_BACK, 12.6, 6.4, 2.0, 'USB-C lead-in')   # 1.0 deep, 12.6 x 6.4 for ordinary overmoulds (6.4 keeps 1.0 of aluminium under the ring)
         cut(['Bottom shell'], [port, lead])
         # the daughterboard's pocket (flat on a ledge at USB_Z), a relief for the connector's legs, two M3 taps
         y_edge = Y_BACK - 1.0 - 1.3
@@ -1105,7 +1116,7 @@ def build(prm):
         # pin or a fingernail but not knocked by accident.
         px, pw, ph = p['POWER_SLOT']
         pz = USB_Z + PCB_T + 0.75
-        CAP_W, CAP_H, CAP_CLR, TRAVEL = 3.4, 2.0, 0.2, 1.5
+        CAP_W, CAP_H, CAP_CLR, TRAVEL = 3.6, 2.6, 0.2, 1.5          # printed or POM cap: 0.8 walls round the lever pocket
         usb_tools.append(stadium(Y_BACK - 1.55, CAP_W + TRAVEL + 2 * CAP_CLR, CAP_H + 2 * CAP_CLR, 4.1, 'Power switch access slot', xc=px, zcc=pz))
         skt = root.sketches.add(zp(USB_Z - 4.8, 'usb tap plane'))
         skt.name = 'USB board taps'
@@ -1139,7 +1150,7 @@ def build(prm):
         # PCM12's 1.5 mm actuator.
         cap = stadium(Y_BACK - 0.8, CAP_W, CAP_H, 2.2, 'HW Power slider cap', xc=px, zcc=pz)
         cap.name = 'HW Power slider cap'
-        cap_tools = [hbox(px + k_ * 1.0 - 0.15, px + k_ * 1.0 + 0.15, Y_BACK, Y_BACK + 0.6, pz - 1.2, pz + 1.2, 'Cap rib %d' % k_) for k_ in (-1, 0, 1)]
+        cap_tools = [hbox(px + k_ * 1.1 - 0.15, px + k_ * 1.1 + 0.15, Y_BACK, Y_BACK + 0.6, pz - 1.5, pz + 1.5, 'Cap rib %d' % k_) for k_ in (-1, 0, 1)]   # 0.8 ribs
         cap_tools.append(hbox(px - 0.65, px + 0.65, Y_BACK - 2.1, Y_BACK - 0.9, pz - 0.5, pz + 0.5, 'Cap lever pocket'))
         cut(['HW Power slider cap'], cap_tools)
 
@@ -1185,11 +1196,13 @@ def build(prm):
 
         # four M3 x 5 countersunk screws from inside, as far apart as the flange allows: at the flange's long ends (x +/-103.5) and 20 apart
         # in y (y 2.5 on the floor's 6.5 level, y 22.5 on its 7.85 level); 3.8 of thread in the ledge, over 1.5 of wall to every edge
-        WSCREWS = [(-103.5, 2.5, Z_BACK, LEDGE_B), (103.5, 2.5, Z_BACK, LEDGE_B), (-103.5, 22.5, Z3, LEDGE_C), (103.5, 22.5, Z3, LEDGE_C)]
+        # M2 x 4 countersunk (DIN 965): countersink 4.0 -> 2.2 (0.9 deep, 0.6 land in the 1.5 flange), taps 1.6 drilled to the tip + 1.0
+        # (>= 1.0 of floor under the drill point). The ledge risers' R1.0 corners and the flange's matching ones are in the .f3d only.
+        WSCREWS = [(-103.5, 2.5, Z_BACK, LEDGE_B), (103.5, 2.5, Z_BACK, LEDGE_B), (-103.5, 30.5, Z3, LEDGE_C), (103.5, 30.5, Z3, LEDGE_C)]
         wcs = None
         for sx_, sy_, zt_, zl_ in WSCREWS:
-            q = tbm.createCylinderOrCone(P3(sx_, sy_, zt_ + 0.05), mm(3.05), P3(sx_, sy_, zt_ - 1.35), mm(1.7))
-            tbm.booleanOperation(q, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 1.35), mm(1.7), P3(sx_, sy_, zl_ - 0.05), mm(1.7)), UNION)
+            q = tbm.createCylinderOrCone(P3(sx_, sy_, zt_ + 0.05), mm(2.05), P3(sx_, sy_, zt_ - 0.9), mm(1.1))
+            tbm.booleanOperation(q, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 0.9), mm(1.1), P3(sx_, sy_, zl_ - 0.05), mm(1.1)), UNION)
             if wcs is None:
                 wcs = q
             else:
@@ -1201,17 +1214,17 @@ def build(prm):
             skt3.isLightBulbOn = False
             for sx_, sy_, zt_, zl2_ in WSCREWS:
                 if zl2_ == zl_:
-                    skt3.sketchCurves.sketchCircles.addByCenterRadius(skt3.modelToSketchSpace(P(sx_, sy_, zl_)), mm(1.25))
+                    skt3.sketchCurves.sketchCircles.addByCenterRadius(skt3.modelToSketchSpace(P(sx_, sy_, zl_)), mm(0.8))
             et = ext.createInput(profs_of(skt3), NewB)
-            et.setOneSideExtent(adsk.fusion.DistanceExtentDefinition.create(adsk.core.ValueInput.createByReal(mm(3.8))), adsk.fusion.ExtentDirections.NegativeExtentDirection)
+            zt3 = [s_[2] for s_ in WSCREWS if s_[3] == zl_][0]
+            et.setOneSideExtent(adsk.fusion.DistanceExtentDefinition.create(adsk.core.ValueInput.createByReal(mm(zl_ - (zt3 - 5.0)))), adsk.fusion.ExtentDirections.NegativeExtentDirection)
             cut(['Bottom shell'], list(ext.add(et).bodies))
         n_scr = 0
         for sx_, sy_, zt_, zl_ in WSCREWS:
             n_scr += 1
-            head = tbm.createCylinderOrCone(P3(sx_, sy_, zt_), mm(2.9), P3(sx_, sy_, zt_ - 1.3), mm(1.5))
-            tbm.booleanOperation(head, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 1.3), mm(1.5), P3(sx_, sy_, zt_ - 5.0), mm(1.5)), UNION)
-            tbm.booleanOperation(head, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ + 0.1), mm(1.0), P3(sx_, sy_, zt_ - 1.0), mm(1.0)), DIFF)
-            add_temp(head, 'HW M3x5 CSK screw weight %d' % n_scr)
+            head = tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 0.05), mm(1.9), P3(sx_, sy_, zt_ - 0.95), mm(1.0))
+            tbm.booleanOperation(head, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 0.9), mm(0.8), P3(sx_, sy_, zt_ - 4.0), mm(0.8)), UNION)
+            add_temp(head, 'HW M2x4 CSK screw weight %d' % n_scr)
 
         # ---- engraving on the polished face (viewed from below, back edge up: the dog at the left, the name at the right; world x = -u).
         # The dachshund is a filled silhouette in a 0.3 deep flat-floored pocket (the matte, bead-blasted floor), with 0.4 wide detail grooves
@@ -1247,7 +1260,7 @@ def build(prm):
         DOG_OUT = [(0.5, 6.6), (2.4, 9.6), (5.0, 12.8), (8.4, 15.0), (14.0, 16.8), (21.0, 18.4), (28.0, 19.8), (33.5, 21.8), (36.6, 25.2), (39.8, 28.2), (43.4, 29.8), (47.6, 29.0), (50.6, 27.8), (53.0, 26.4), (49.8, 25.0), (46.4, 24.2), (43.4, 22.8), (41.6, 20.6), (41.8, 17.0), (43.0, 14.0), (43.7, 10.0), (44.4, 4.6), (44.9, 1.2), (45.7, 0.1), (41.6, 0.0), (41.3, 1.4), (41.6, 5.4), (40.6, 9.6), (34.0, 11.2), (27.0, 11.0), (21.0, 11.8), (18.8, 8.8), (17.2, 5.0), (17.8, 1.4), (18.0, 0.1), (14.4, 0.0), (14.2, 1.6), (14.8, 5.4), (12.2, 8.8), (9.0, 11.8), (7.0, 11.8), (3.6, 8.4)]
         DOG_LINES = {'ear': [(40.6, 28.6), (38.2, 25.6), (37.2, 22.0), (38.4, 19.0), (40.2, 19.4), (41.0, 21.8)], 'chest': [(41.9, 16.8), (40.6, 14.6), (38.8, 13.8)], 'front legs': [(43.2, 8.6), (43.4, 1.6)], 'hind legs': [(16.4, 8.6), (16.2, 1.8)]}
         EYE = (47.8, 27.4, 0.55)
-        DOG_S, DOG_CX = 0.88, 45.0                           # scale and centre (world x) of the dog on the face
+        DOG_S, DOG_CX = 0.88 * 40.0 / 30.6, 45.0             # scale and centre (world x) of the dog on the face (scaled with the 40 mm face)
         dog_xy = lambda u_, v_: (DOG_CX - DOG_S * (u_ - 26.7), WCY + DOG_S * (v_ - 15.0))
 
         sk_p = root.sketches.add(zp(h, 'dog pocket plane'))
@@ -1268,8 +1281,8 @@ def build(prm):
         skx = root.sketches.add(zp(h, 'bar text plane'))
         skx.name = 'Weight engraving'
         skx.isLightBulbOn = False
-        ti = skx.sketchTexts.createInput2('Dachshund70', mm(6.0))
-        ti.setAsMultiLine(skx.modelToSketchSpace(P(-88, WCY + 4, h)), skx.modelToSketchSpace(P(-12, WCY - 4, h)),
+        ti = skx.sketchTexts.createInput2('Dachshund70', mm(6.0 * 40.0 / 30.6))
+        ti.setAsMultiLine(skx.modelToSketchSpace(P(-88, WCY + 5.2, h)), skx.modelToSketchSpace(P(-12, WCY - 5.2, h)),
                           adsk.core.HorizontalAlignments.CenterHorizontalAlignment, adsk.core.VerticalAlignments.MiddleVerticalAlignment, 0)
         ti.fontName = 'Fredoka SemiBold'    # SIL OFL, Google Fonts; install the static SemiBold (see hardware/case/README.md)
         try:
@@ -1293,8 +1306,8 @@ def build(prm):
                 tx_, ty_ = pb_[0] - pa[0], pb_[1] - pa[1]
                 tl_ = math.hypot(tx_, ty_)
                 nx_, ny_ = -ty_ / tl_, tx_ / tl_
-                left.append((curve[i_][0] + nx_ * HW_, curve[i_][1] + ny_ * HW_))
-                right.append((curve[i_][0] - nx_ * HW_, curve[i_][1] - ny_ * HW_))
+                left.append((curve[i_][0] + nx_ * HW_ / DOG_S, curve[i_][1] + ny_ * HW_ / DOG_S))     # 0.4 wide on the face
+                right.append((curve[i_][0] - nx_ * HW_ / DOG_S, curve[i_][1] - ny_ * HW_ / DOG_S))
             sk_d = root.sketches.add(zp(h, 'dog line plane ' + nm_))
             sk_d.name = 'Dachshund groove: ' + nm_
             sk_d.isLightBulbOn = False
@@ -1358,7 +1371,8 @@ def build(prm):
         skf2.name = 'Rails (world plan)'
         skf2.isLightBulbOn = False
         for fx, fy in FOOT_XY:
-            rrect(skf2, lambda x, y: skf2.modelToSketchSpace(P(x, y, -1.0)), fx, fy, FOOT[0] / 2, FOOT[1] / 2, 1.0)
+            x1_ = FOOT[0] / 2 if fy < 0 else BACK_RAIL_X1
+            rrect(skf2, lambda x, y: skf2.modelToSketchSpace(P(x, y, -1.0)), (x1_ - FOOT[0] / 2) / 2, fy, (x1_ + FOOT[0] / 2) / 2, FOOT[1] / 2, 1.0)
         for fi, fb in enumerate(extrude_all(skf2, FOOT[2])):
             fb.name = 'HW Rail %d' % (fi + 1)
         for yrow, lab in rows:
