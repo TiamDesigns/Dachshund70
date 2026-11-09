@@ -1,0 +1,79 @@
+* Dachshund70 power path: USB daughterboard + mainboard (rev 1.1)
+* Nets and parts follow the schematics in hardware/Dachshund70-USB and
+* hardware/Dachshund70. The part models are fitted by hand to datasheet
+* typicals; they are good to tens of millivolts, not to the last microamp.
+*
+* Parameters (set with .param before including this file):
+*   VHOST   host VBUS at the port (V)        RCABLE  USB-C cable, VBUS + GND (ohm)
+*   LCABLE  cable loop inductance (H)
+*   RFUSE   F1 BSMD1206-075 resistance (ohm) TPLUG / TUNPLUG  plug and unplug times (s)
+*   VCELL   cell open-circuit voltage (V)    RCELL   cell internal resistance (ohm)
+*   BATT    1 = cell connected, 0 = no cell  SWON    1 = power switch SW1 on
+*   R3      Q1 gate pull-down (ohm)          ILEAK   D8 leakage on top of the model's own (A)
+*   INRF    module + display current from VDDH (A)
+*   ILED    SK6812MINI-E string current with LED_EN on (A)
+*   LEDON   1 = LED_EN high (U3 on)          QVTO    Q1 threshold (V, negative)
+
+.model AO3401A VDMOS(pchan Vto={QVTO} Kp=12.5 Rd=0.01 Rs=0.01 Rb=0.05 Is=2e-12 N=1
++ Cgdmax=300p Cgdmin=60p Cgs=600p Cjo=150p)
+* B5819W: fitted to about 0.32 V at 0.1 A and 0.45 V at 1 A. Its Is (20 uA) is also its reverse
+* leakage at a few volts and 25 C; the datasheet only gives 1 mA max at 40 V.
+.model B5819W D(Is=2e-5 N=1.43 Rs=0.05 Cjo=110p BV=40 IBV=1m)
+.model PLUGSW SW(Ron=1m Roff=1e9 Vt=0.5 Vh=0.1)
+* USBLC6-2SC6 VBUS-to-GND clamp: breakdown 6 V min at 1 mA, about 1 ohm above it
+.model USBLC6 D(Is=1e-12 N=1 BV=6.6 IBV=1m Rs=1.0 Cjo=60p)
+
+* ---- host and cable --------------------------------------------------------
+Vhost host 0 {VHOST}
+Vplugctl plugctl 0 PWL(0 0 {TPLUG} 0 {TPLUG+1u} 1 {TUNPLUG} 1 {TUNPLUG+1u} 0)
+Splug host hostsw plugctl 0 PLUGSW
+Lcable hostsw cab {LCABLE}
+Rcable cab vbus_raw {RCABLE}
+Vihost vbus_raw vbus_c 0
+
+* ---- USB daughterboard ---------------------------------------------------------
+* F1 polyfuse VBUS_RAW -> VBUS, then the 6-pin JST SH cable (pin 1) to the mainboard.
+Dtvs 0 vbus_c USBLC6
+Rf1 vbus_c vbus_db {RFUSE}
+Rjvbus vbus_db vbus 0.07
+* SW1 (PCM12) switches VBAT (pin 5) to VBAT_SW (pin 6); both cross the cable.
+Rj5 vbat vbat_db 0.07
+Rsw1 vbat_db vbat_swdb {SWON*0.08 + (1-SWON)*1e9}
+Rj6 vbat_swdb vbat_sw 0.07
+
+* ---- battery (J2, JST PH) ------------------------------------------------------
+Vcell cell 0 {VCELL}
+Vibat cell cellc 0
+Rcell cellc vbat {BATT*RCELL + (1-BATT)*1e9}
+C3 vbat 0 4.7u
+Rvbatbleed vbat 0 1e7
+
+* ---- mainboard power path --------------------------------------------------------
+C1 vbus 0 4.7u
+C2 vbus 0 4.7u
+R3 vbus 0 {R3}
+D8 vbus vsys B5819W
+* D8's reverse leakage, only while VSYS is above VBUS.
+Bleak vsys vbus I={ILEAK}*max(0, tanh((V(vsys)-V(vbus))/0.05))
+* Q1 AO3401A: D = VBAT_SW, G = VBUS, S = VSYS
+M1 vbat_sw vbus vsys AO3401A
+C4 vsys 0 4.7u
+C12 vsys 0 1u
+C5 vsys 0 100n
+Rvsysbleed vsys 0 1e7
+
+* ---- U2 MCP73831-2 charger (behavioural) ---------------------------------------------
+* R1 = 3.3k sets 1000 V / 3.3k = 303 mA. Charges when VDD > ~3.75 V and above
+* VBAT by its headroom; tapers to 0 at 4.20 V (CV).
+Bchg vbus vbat I=0.303*BATT*min(1,max(0,(V(vbus)-3.6)/0.15))*min(1,max(0,(V(vbus)-V(vbat)-0.05)/0.1))*min(1,max(0,(4.2-V(vbat))/0.03))
+
+* ---- loads ---------------------------------------------------------------------
+* nRF52840 VDDH (REG0 LDO to 3.3 V) plus the display on 3V3; input current = output current.
+Bnrf vsys 0 I={INRF}*min(1,max(0,(V(vsys)-1.0)/0.5))
+* the module's VBUS pin (USB regulator) and the charger's own supply current
+Bvbusq vbus 0 I=0.003*min(1,max(0,(V(vbus)-3.0)/0.5))
+* U3 TPS22917 (about 80 mOhm on) feeding the SK6812MINI-E string and C13-C19
+Ru3 vsys led_vdd {LEDON*0.08 + (1-LEDON)*1e9}
+Cled led_vdd 0 0.7u
+Bled led_vdd 0 I={ILED}*min(1,max(0,(V(led_vdd)-2.7)/0.5))
+Rledbleed led_vdd 0 1e6

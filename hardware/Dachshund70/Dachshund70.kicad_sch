@@ -29526,7 +29526,7 @@
 				)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "10k"
 			(at 85.09 261.62 90)
 			(effects
 				(font
@@ -29534,7 +29534,7 @@
 				)
 			)
 		)
-		(property "MPN" "UNI-ROYAL 0603WAF1003T5E"
+		(property "MPN" "UNI-ROYAL 0603WAF1002T5E"
 			(at 85.09 261.62 90)
 			(hide yes)
 			(effects
@@ -29543,7 +29543,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C25804"
 			(at 85.09 261.62 90)
 			(hide yes)
 			(effects

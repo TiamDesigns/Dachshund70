@@ -6,6 +6,12 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Power path: ngspice simulation, R3 to 10k (2026-11-09)
+
+- New `hardware/sim/power-path/`: an ngspice model of the daughterboard and mainboard power path (F1, USBLC6, SW1, the cable, D8, Q1, R3, the MCP73831, the module's and LEDs' loads) and `run.py`, which runs battery-only, USB-only, charging, plug-in and unplug cases. Results and limits are in its README; the nRF52840 and firmware are modelled as a fixed load.
+- R3 (Q1 gate pull-down) is 10k (UNI-ROYAL 0603WAF1002T5E, C25804, basic part), was 100k. With 100k, D8's reverse leakage (tens of uA) lifts Q1's gate on battery enough to leave Q1 half on or off, so the keyboard runs through the body diode (0.6 V lost), and after unplugging USB VSYS sat on the body diode for 0.2-1.9 s, or stayed there with a high-threshold Q1 and a low cell. With 10k the switchover takes 11-47 ms and Q1 stays fully on. Same footprint and position; DRC and ERC unchanged.
+- Found, not changed: charging plus every LED on full draws about 552 mA from USB (above the 500 mA in the descriptor, under F1's 750 mA hold). Not tested on hardware.
+
 ### PCBs: full DRC and ERC pass, JLCPCB check (2026-11-09)
 
 - Ran kicad-cli 10.0.8 DRC (every severity, schematic parity, zones refilled) and ERC on all five boards, then again with a JLCPCB 2-layer rule set added on a copy (0.127 mm track and gap, 0.3 mm via drill, 0.45 mm via pad, 0.13 mm via ring, 0.3 mm copper to edge, hole spacing). No errors, 0 unconnected items, zone fills current, no copper, drill or edge rule broken on any board.
