@@ -56,17 +56,18 @@ M = {
     "plastic": mat("Dark plastic", "#222222", 0.5, 0.0),
     "battery": mat("Battery pouch", "#A8A9AA", 0.35, 0.8),
     # GMK Kaiju-style doubleshot ABS: cream alphas, warm grey mods, red-orange accents
-    "cap_alpha": mat("Kaiju cream", "#E7DDC7", 0.38, 0.0),
-    "cap_mod": mat("Kaiju grey", "#77736D", 0.38, 0.0),
-    "cap_accent": mat("Kaiju red-orange", "#E2502A", 0.38, 0.0),
-    "leg_dark": mat("Legend charcoal", "#2C2A29", 0.38, 0.0),
-    "leg_cream": mat("Legend cream", "#EFE7D6", 0.38, 0.0),
+    "cap_alpha": mat("Kaiju cream", "#E7DDC7", 0.32, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
+    "cap_mod": mat("Kaiju grey", "#77736D", 0.32, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
+    "cap_accent": mat("Kaiju red-orange", "#E2502A", 0.32, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
+    "leg_dark": mat("Legend charcoal", "#2C2A29", 0.32, 0.0),
+    "leg_cream": mat("Legend cream", "#EFE7D6", 0.32, 0.0),
 }
 add_bump(M["ecoat"], 1600, 0.05)
 add_bump(M["accent"], 2500, 0.03)
 add_bump(M["plate"], 2000, 0.15)
-for k in ("cap_alpha", "cap_mod", "cap_accent", "knob"):
-    add_bump(M[k], 2600, 0.02)  # faint moulding / blasting texture
+add_bump(M["knob"], 2600, 0.02)  # bead-blasted anodising
+for k in ("cap_alpha", "cap_mod", "cap_accent"):
+    add_bump(M[k], 12000, 0.004)  # ABS: a satin moulded finish, barely any texture
 
 def add_dust(m, scale=1100.0, thresh=0.99195, col="#DCD8D0"):  # half-size specks, 15% more of them
     """Sparse sub-millimetre specks: a random few Voronoi cells get a dusty, rough dot."""
@@ -191,10 +192,37 @@ M["eink_pic"] = ep
 blank = bpy.data.images.new("eink_blank", 8, 8); blank.pixels = [0.93, 0.93, 0.93, 1.0] * 64
 next(n for n in ei.node_tree.nodes if n.type == "TEX_IMAGE").image = blank
 
-def bevelize(m, radius):
-    """Every real edge is a little round: the Cycles bevel node rounds the shading normal along hard edges."""
+def bevelize(m, radius, keep_tops=False):
+    """Every real edge is a little round: the Cycles bevel node rounds the shading normal along hard edges.
+    keep_tops: leave upward-facing surfaces alone (keycap tops, where the legend inlays would get dark rims)."""
     nt = m.node_tree; b = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
-    bv = nt.nodes.new("ShaderNodeBevel"); bv.samples = 8; bv.inputs["Radius"].default_value = radius
+    bv0 = nt.nodes.new("ShaderNodeBevel"); bv0.samples = 8; bv0.inputs["Radius"].default_value = radius
+    bv = bv0
+    if keep_tops:
+        geo = nt.nodes.new("ShaderNodeNewGeometry")
+        sz = nt.nodes.new("ShaderNodeSeparateXYZ"); nt.links.new(geo.outputs["True Normal"], sz.inputs[0])
+        fac = nt.nodes.new("ShaderNodeMapRange"); fac.inputs[1].default_value = 0.6; fac.inputs[2].default_value = 0.85
+        nt.links.new(sz.outputs["Z"], fac.inputs[0])
+        # only the top edges get rounded: fade the bevel out below 70% of each cap's height (per-object attributes)
+        lo = nt.nodes.new("ShaderNodeAttribute"); lo.attribute_type = "OBJECT"; lo.attribute_name = "cap_lo"
+        hi = nt.nodes.new("ShaderNodeAttribute"); hi.attribute_type = "OBJECT"; hi.attribute_name = "cap_hi"
+        tco = nt.nodes.new("ShaderNodeTexCoord"); oz = nt.nodes.new("ShaderNodeSeparateXYZ"); nt.links.new(tco.outputs["Object"], oz.inputs[0])
+        def M_(op, a, b):
+            n = nt.nodes.new("ShaderNodeMath"); n.operation = op
+            for i, v in enumerate((a, b)):
+                if isinstance(v, (int, float)): n.inputs[i].default_value = v
+                else: nt.links.new(v, n.inputs[i])
+            return n.outputs[0]
+        h = M_("SUBTRACT", hi.outputs["Fac"], lo.outputs["Fac"])
+        t = M_("DIVIDE", M_("SUBTRACT", oz.outputs["Z"], lo.outputs["Fac"]), M_("MAXIMUM", h, 0.1))
+        hf = nt.nodes.new("ShaderNodeMapRange"); hf.inputs[1].default_value = 0.62; hf.inputs[2].default_value = 0.78
+        nt.links.new(t, hf.inputs[0])
+        geomw = M_("MAXIMUM", fac.outputs[0], M_("SUBTRACT", 1.0, hf.outputs[0]))
+        mx = nt.nodes.new("ShaderNodeMix"); mx.data_type = "VECTOR"
+        nt.links.new(geomw, mx.inputs[0]); nt.links.new(bv0.outputs["Normal"], mx.inputs[4])
+        nt.links.new(geo.outputs["Normal"], mx.inputs[5])
+        class _O: pass
+        bv = _O(); bv.outputs = {"Normal": mx.outputs[1]}
     bumps = [n for n in nt.nodes if n.type == "BUMP"]
     if bumps:
         last = next((n for n in bumps if any(l.to_node == b for l in n.outputs["Normal"].links)), bumps[0])
@@ -206,10 +234,10 @@ def bevelize(m, radius):
         nt.links.new(bv.outputs["Normal"], b.inputs["Normal"])
 
 for k, m in M.items():
-    if k.startswith("eink") or k == "paper": continue  # flat film: bevel would only add artefacts
+    if k.startswith("eink") or k == "paper" or k.startswith("leg_"): continue  # flat film / inlays: no rounding
     r = {"cap_alpha": 0.0006, "cap_mod": 0.0006, "cap_accent": 0.0006, "leg_dark": 0.0004, "leg_cream": 0.0004,
          "ecoat": 0.0005, "knob": 0.0003, "brass": 0.00035, "accent": 0.00025, "steel": 0.0002}.get(k, 0.00025)
-    bevelize(m, r)
+    bevelize(m, r, keep_tops=k.startswith("cap_"))
 
 ACCENT_KEYS = {"Esc", "Enter"}
 MOD_KEYS = {"Tab", "Caps Lock", "Shift", "Shift 2", "Ctrl", "Ctrl 2", "Win", "Alt", "Fn",
@@ -264,6 +292,8 @@ for e in man:
     k = keyname(e["chain"], e["label"])
     o.name = (f"{role}:{k}:{e['label']}" if k else f"{role}:{e['label']}")[:60]
     o["role"] = role; o["key"] = k or ""
+    if role in ("keycap", "legend"):
+        zs = [v.co.z for v in o.data.vertices]; o["cap_lo"] = min(zs); o["cap_hi"] = max(zs)
     o.data.materials.clear(); o.data.materials.append(M[mk])
     o.parent = root
     roles[role] = roles.get(role, 0) + 1
