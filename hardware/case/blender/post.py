@@ -28,8 +28,8 @@ def rescale(ch, s):
     else:
         c = Image.new("L", (w, h)); c.paste(img, (-l, -t)); img = c
     return np.asarray(img).astype(np.float32) / 255
-a[..., 0] = rescale(a[..., 0], 1.0014)
-a[..., 1] = rescale(a[..., 1], 1.0007)  # blue stays put: all scales >= 1, so no empty border
+a[..., 0] = rescale(a[..., 0], 1.0019)
+a[..., 1] = rescale(a[..., 1], 1.00095)  # blue stays put: all scales >= 1, so no empty border
 
 # vignette
 yy, xx = np.mgrid[0:h, 0:w]

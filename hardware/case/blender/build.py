@@ -68,7 +68,7 @@ add_bump(M["plate"], 2000, 0.15)
 for k in ("cap_alpha", "cap_mod", "cap_accent", "knob"):
     add_bump(M[k], 2600, 0.02)  # faint moulding / blasting texture
 
-def add_dust(m, scale=1100.0, thresh=0.993, col="#DCD8D0"):
+def add_dust(m, scale=1100.0, thresh=0.99195, col="#DCD8D0"):  # half-size specks, 15% more of them
     """Sparse sub-millimetre specks: a random few Voronoi cells get a dusty, rough dot."""
     nt = m.node_tree; b = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
     tc = nt.nodes.new("ShaderNodeTexCoord")
@@ -77,7 +77,7 @@ def add_dust(m, scale=1100.0, thresh=0.993, col="#DCD8D0"):
     sep = nt.nodes.new("ShaderNodeSeparateColor"); nt.links.new(v.outputs["Color"], sep.inputs[0])
     pick = nt.nodes.new("ShaderNodeMath"); pick.operation = "GREATER_THAN"; pick.inputs[1].default_value = thresh
     nt.links.new(sep.outputs[0], pick.inputs[0])
-    near = nt.nodes.new("ShaderNodeMath"); near.operation = "LESS_THAN"; near.inputs[1].default_value = 0.2
+    near = nt.nodes.new("ShaderNodeMath"); near.operation = "LESS_THAN"; near.inputs[1].default_value = 0.1
     nt.links.new(v.outputs["Distance"], near.inputs[0])
     mask = nt.nodes.new("ShaderNodeMath"); mask.operation = "MULTIPLY"
     nt.links.new(pick.outputs[0], mask.inputs[0]); nt.links.new(near.outputs[0], mask.inputs[1])
@@ -155,11 +155,61 @@ ei = mat("E-ink", "#E4E1DA", 0.9, 0.0); nt = ei.node_tree; eb = next(n for n in 
 tx = nt.nodes.new("ShaderNodeTexImage"); tx.image = bpy.data.images.load(os.path.join(S, "eink.png"))
 tx.image.colorspace_settings.name = "sRGB"; tx.interpolation = "Cubic"
 tcg = nt.nodes.new("ShaderNodeTexCoord"); nt.links.new(tcg.outputs["Generated"], tx.inputs["Vector"])
-nt.links.new(tx.outputs["Color"], eb.inputs["Base Color"])
+# e-paper is a greyish, dead-matt surface: ink never reaches black, the white is a warm grey, and the film has a
+# fine grain and a faint microcapsule mottle
+ramp = nt.nodes.new("ShaderNodeValToRGB"); ramp.color_ramp.elements[0].color = srgb("#2E2D2B")
+ramp.color_ramp.elements[1].color = srgb("#CFCCC3"); nt.links.new(tx.outputs["Color"], ramp.inputs["Fac"])
+tco = nt.nodes.new("ShaderNodeTexCoord")
+gr = nt.nodes.new("ShaderNodeTexNoise"); gr.inputs["Scale"].default_value = 9000.0; gr.inputs["Detail"].default_value = 2.0
+nt.links.new(objm(nt, tco), gr.inputs["Vector"])
+mot = nt.nodes.new("ShaderNodeTexNoise"); mot.inputs["Scale"].default_value = 300.0
+nt.links.new(objm(nt, tco), mot.inputs["Vector"])
+gm = nt.nodes.new("ShaderNodeMath"); gm.operation = "MULTIPLY_ADD"; gm.inputs[1].default_value = 0.08; gm.inputs[2].default_value = 0.92
+nt.links.new(gr.outputs["Fac"], gm.inputs[0])
+gm2 = nt.nodes.new("ShaderNodeMath"); gm2.operation = "MULTIPLY_ADD"; gm2.inputs[1].default_value = 0.06
+nt.links.new(mot.outputs["Fac"], gm2.inputs[0]); nt.links.new(gm.outputs[0], gm2.inputs[2])
+mul = nt.nodes.new("ShaderNodeMix"); mul.data_type = "RGBA"; mul.blend_type = "MULTIPLY"; mul.inputs[0].default_value = 1.0
+nt.links.new(ramp.outputs["Color"], mul.inputs[6])
+cc = nt.nodes.new("ShaderNodeCombineColor")
+for i in range(3): nt.links.new(gm2.outputs[0], cc.inputs[i])
+nt.links.new(cc.outputs[0], mul.inputs[7]); nt.links.new(mul.outputs[2], eb.inputs["Base Color"])
+eb.inputs["Roughness"].default_value = 0.97
+eb.inputs["Coat Weight"].default_value = 0.15; eb.inputs["Coat Roughness"].default_value = 0.35  # the thin front film
+bpe = nt.nodes.new("ShaderNodeBump"); bpe.inputs["Strength"].default_value = 0.05; bpe.inputs["Distance"].default_value = 0.00005
+nt.links.new(gr.outputs["Fac"], bpe.inputs["Height"]); nt.links.new(bpe.outputs["Normal"], eb.inputs["Normal"])
+# the tessellated panel isn't perfectly planar; feed the bump the true panel normal (tilted 4 deg) to kill facet shading
+pn = nt.nodes.new("ShaderNodeCombineXYZ"); pn.inputs[0].default_value = 0.0
+pn.inputs[1].default_value = -math.sin(math.radians(4)); pn.inputs[2].default_value = math.cos(math.radians(4))
+nt.links.new(pn.outputs[0], bpe.inputs["Normal"])
 M["eink"] = ei
 ep = ei.copy(); ep.name = "E-ink picture"
 next(n for n in ep.node_tree.nodes if n.type == "TEX_IMAGE").image = bpy.data.images.load(os.path.join(S, "eink_pic.png"))
+# The picture-area solid carries the image (cropped to it); the panel around it is blank e-paper, so nothing doubles
+ep = ei.copy(); ep.name = "E-ink picture"
+next(n for n in ep.node_tree.nodes if n.type == "TEX_IMAGE").image = bpy.data.images.load(os.path.join(S, "eink_pic.png"))
 M["eink_pic"] = ep
+blank = bpy.data.images.new("eink_blank", 8, 8); blank.pixels = [0.93, 0.93, 0.93, 1.0] * 64
+next(n for n in ei.node_tree.nodes if n.type == "TEX_IMAGE").image = blank
+
+def bevelize(m, radius):
+    """Every real edge is a little round: the Cycles bevel node rounds the shading normal along hard edges."""
+    nt = m.node_tree; b = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+    bv = nt.nodes.new("ShaderNodeBevel"); bv.samples = 8; bv.inputs["Radius"].default_value = radius
+    bumps = [n for n in nt.nodes if n.type == "BUMP"]
+    if bumps:
+        last = next((n for n in bumps if any(l.to_node == b for l in n.outputs["Normal"].links)), bumps[0])
+        first = last
+        while first.inputs["Normal"].is_linked and first.inputs["Normal"].links[0].from_node.type == "BUMP":
+            first = first.inputs["Normal"].links[0].from_node
+        nt.links.new(bv.outputs["Normal"], first.inputs["Normal"])
+    else:
+        nt.links.new(bv.outputs["Normal"], b.inputs["Normal"])
+
+for k, m in M.items():
+    if k.startswith("eink") or k == "paper": continue  # flat film: bevel would only add artefacts
+    r = {"cap_alpha": 0.0006, "cap_mod": 0.0006, "cap_accent": 0.0006, "leg_dark": 0.0004, "leg_cream": 0.0004,
+         "ecoat": 0.0005, "knob": 0.0003, "brass": 0.00035, "accent": 0.00025, "steel": 0.0002}.get(k, 0.00025)
+    bevelize(m, r)
 
 ACCENT_KEYS = {"Esc", "Enter"}
 MOD_KEYS = {"Tab", "Caps Lock", "Shift", "Shift 2", "Ctrl", "Ctrl 2", "Win", "Alt", "Fn",
@@ -222,6 +272,8 @@ for e in man:
     bm.to_mesh(o.data); bm.free()
     for p in o.data.polygons: p.use_smooth = True
     o.data.set_sharp_from_angle(angle=math.radians(32))
+    if role == "screen":  # flat panel: smooth normals from its thin edges shade the face in diagonal streaks
+        for p in o.data.polygons: p.use_smooth = False
     if role in ("knob", "keycap", "top", "bottom", "enc_cover", "weight", "legend", "ring", "plate", "screw"):
         wn = o.modifiers.new("wn", "WEIGHTED_NORMAL"); wn.keep_sharp = True; wn.mode = "FACE_AREA"
     if role == "legend":  # lift legends a hair off the cap so they never z-fight

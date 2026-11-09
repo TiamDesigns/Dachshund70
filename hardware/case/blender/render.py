@@ -147,6 +147,7 @@ def copy_cap(keyword, loc, rot, floor=0.0):
             w = o.matrix_world @ Vector(c); lo = Vector(map(min, lo, w)); hi = Vector(map(max, hi, w))
     ctr = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, lo.z))
     e = link(bpy.data.objects.new("prop_" + keyword, None)); e.location = ctr
+    bpy.context.view_layer.update()  # so matrix_world is current before the children take its inverse
     for o in parts:
         n = o.copy(); link(n); n.parent = None; n.matrix_world = o.matrix_world.copy()
         n.parent = e; n.matrix_parent_inverse = e.matrix_world.inverted()
@@ -165,6 +166,19 @@ CTR = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, 0.012))
 # =====================================================================
 if SCENE == "dramatic":
     world("#8C93A0", 0.10)
+    try:
+        wn = sc.world.node_tree; sky = wn.nodes.new("ShaderNodeTexSky")
+        for t in ("NISHITA", "MULTIPLE_SCATTERING", "SINGLE_SCATTERING", "PREETHAM"):
+            try: sky.sky_type = t; break
+            except TypeError: pass
+        try:
+            sky.sun_elevation = math.radians(20); sky.sun_rotation = math.radians(225); sky.sun_disc = False
+        except Exception: pass
+        bgn = next(n for n in wn.nodes if n.type == "BACKGROUND")
+        wn.links.new(sky.outputs[0], bgn.inputs["Color"]); bgn.inputs["Strength"].default_value = 0.035
+        print("sky", sky.sky_type)
+    except Exception as ex:
+        print("no sky", ex)
     def node_mat(name):
         m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree
         return m, nt, next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
@@ -250,7 +264,12 @@ if SCENE == "dramatic":
     nt.links.new(W("MULTIPLY", pmask, 0.5), mx2.inputs[0]); nt.links.new(mx.outputs[2], mx2.inputs[6])
     mx2.inputs[7].default_value = srgb("#1E110A")
     nt.links.new(mx2.outputs[2], wb.inputs["Base Color"])
-    nt.links.new(W("ADD", 0.38, W("MULTIPLY", pmask, 0.25)), wb.inputs["Roughness"])
+    smg = N(nt, "ShaderNodeTexNoise", Scale=7.0, Detail=6.0, Roughness=0.7); nt.links.new(geo.outputs["Position"], smg.inputs["Vector"])
+    scm = N(nt, "ShaderNodeMapping"); scm.inputs["Scale"].default_value = (1.0, 0.02, 1.0)
+    scm.inputs["Rotation"].default_value = (0, 0, math.radians(17)); nt.links.new(geo.outputs["Position"], scm.inputs["Vector"])
+    scr = N(nt, "ShaderNodeTexNoise", Scale=2500.0, Detail=1.0); nt.links.new(scm.outputs[0], scr.inputs["Vector"])
+    scrm = W("MULTIPLY", W("GREATER_THAN", scr.outputs["Fac"], 0.71), 0.18)
+    nt.links.new(W("ADD", W("ADD", 0.30, W("MULTIPLY", pmask, 0.25)), W("ADD", W("MULTIPLY", smg.outputs["Fac"], 0.22), scrm)), wb.inputs["Roughness"])
     wb.inputs["Coat Weight"].default_value = 0.3; wb.inputs["Coat Roughness"].default_value = 0.3
     bp = N(nt, "ShaderNodeBump", Strength=0.25, Distance=0.0003)
     nt.links.new(W("ADD", W("MULTIPLY", pmask, -1.0), W("MULTIPLY", late.outputs[0], 0.05)), bp.inputs["Height"])
@@ -342,7 +361,18 @@ if SCENE == "dramatic":
     e[0].position, e[0].color = 0.28, srgb("#34332F"); e[1].position, e[1].color = 0.74, srgb("#64625B")
     mm = N(nt, "ShaderNodeMath"); mm.operation = "MULTIPLY_ADD"; mm.inputs[1].default_value = 0.65
     nt.links.new(fib.outputs["Fac"], mm.inputs[0]); nt.links.new(mot.outputs["Fac"], mm.inputs[2])
-    nt.links.new(mm.outputs[0], cr.inputs["Fac"]); nt.links.new(cr.outputs["Color"], fb.inputs["Base Color"])
+    nt.links.new(mm.outputs[0], cr.inputs["Fac"])
+    flk = N(nt, "ShaderNodeTexVoronoi", Scale=3200.0); nt.links.new(geo.outputs["Position"], flk.inputs["Vector"])
+    fsep = nt.nodes.new("ShaderNodeSeparateColor"); nt.links.new(flk.outputs["Color"], fsep.inputs[0])
+    fl_hi = N(nt, "ShaderNodeMath"); fl_hi.operation = "GREATER_THAN"; fl_hi.inputs[1].default_value = 0.93
+    nt.links.new(fsep.outputs[0], fl_hi.inputs[0])
+    fl_lo = N(nt, "ShaderNodeMath"); fl_lo.operation = "LESS_THAN"; fl_lo.inputs[1].default_value = 0.06
+    nt.links.new(fsep.outputs[0], fl_lo.inputs[0])
+    m1 = nt.nodes.new("ShaderNodeMix"); m1.data_type = "RGBA"
+    nt.links.new(fl_hi.outputs[0], m1.inputs[0]); nt.links.new(cr.outputs["Color"], m1.inputs[6]); m1.inputs[7].default_value = srgb("#8E8B83")
+    m2 = nt.nodes.new("ShaderNodeMix"); m2.data_type = "RGBA"
+    nt.links.new(fl_lo.outputs[0], m2.inputs[0]); nt.links.new(m1.outputs[2], m2.inputs[6]); m2.inputs[7].default_value = srgb("#1F1E1C")
+    nt.links.new(m2.outputs[2], fb.inputs["Base Color"])
     hh = N(nt, "ShaderNodeMath"); hh.operation = "MULTIPLY_ADD"; hh.inputs[1].default_value = 0.8
     nt.links.new(hair.outputs["Distance"], hh.inputs[0]); nt.links.new(fib.outputs["Fac"], hh.inputs[2])
     pp = N(nt, "ShaderNodeMath"); pp.operation = "MULTIPLY_ADD"; pp.inputs[1].default_value = -0.5
@@ -405,6 +435,24 @@ if SCENE == "dramatic":
     cb.inputs["Roughness"].default_value = 0.08
     bpy.ops.mesh.primitive_cylinder_add(radius=0.0374, depth=0.001, vertices=128, location=(0.15, 0.17, 0.0885))
     bpy.context.object.data.materials.append(coffee)
+    cork, nt, kb = node_mat("Cork")
+    geo = nt.nodes.new("ShaderNodeNewGeometry")
+    ck = N(nt, "ShaderNodeTexVoronoi", Scale=900.0); nt.links.new(geo.outputs["Position"], ck.inputs["Vector"])
+    ckn = N(nt, "ShaderNodeTexNoise", Scale=400.0, Detail=6.0); nt.links.new(geo.outputs["Position"], ckn.inputs["Vector"])
+    crk = nt.nodes.new("ShaderNodeValToRGB"); e = crk.color_ramp.elements
+    e[0].color = srgb("#6E4A2C"); e[1].color = srgb("#B58A5C")
+    nt.links.new(ckn.outputs["Fac"], crk.inputs["Fac"]); nt.links.new(crk.outputs["Color"], kb.inputs["Base Color"])
+    kb.inputs["Roughness"].default_value = 0.9
+    bpk = N(nt, "ShaderNodeBump", Strength=0.6, Distance=0.0006)
+    nt.links.new(ck.outputs["Distance"], bpk.inputs["Height"]); nt.links.new(bpk.outputs["Normal"], kb.inputs["Normal"])
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.052, depth=0.005, vertices=128, location=(0.15, 0.17, 0.0025))
+    cst = bpy.context.object; cst.data.materials.append(cork)
+    cbv = cst.modifiers.new("bv", "BEVEL"); cbv.width = 0.0008; cbv.segments = 3; cbv.limit_method = "ANGLE"
+    for o in bpy.data.objects:
+        if o.type == "MESH" and o is not cst and o.location.x == 0.15 and abs(o.location.y - 0.17) < 1e-6:
+            o.location.z += 0.005
+        if o.type == "MESH" and o.name.startswith("Torus"):
+            o.location.z += 0.005
     # Cloth-bound notebook: linen weave cover, cream page block, an elastic band
     linen, nt, lb = node_mat("Linen cover")
     tco = nt.nodes.new("ShaderNodeTexCoord")
@@ -470,9 +518,32 @@ if SCENE == "dramatic":
     pr2 = box("Print", (0.18, 0.002, H - 0.04), (0, -0.0005, H / 2), art); pr2.parent = pv
     glass = simple_mat("Picture glass", "#FFFFFF", 0.01, **{"Transmission Weight": 1.0, "IOR": 1.52})
     gl = box("Glass", (0.192, 0.0015, H - 0.028), (0, -0.0022, H / 2), glass); gl.parent = pv; gl.visible_shadow = False
-    copy_cap("Esc", (0.20, -0.16, 0.0), Euler((0, 0, math.radians(32))), floor=MAT_T)
+    copy_cap("Esc", (0.06, -0.185, 0.0), Euler((0, 0, math.radians(32))), floor=MAT_T)
+    copy_cap("A", (0.0, -0.145, 0.0), Euler((0, 0, math.radians(-21))), floor=MAT_T)
+    copy_cap("Alt", (-0.09, -0.175, 0.0), Euler((0, 0, math.radians(9))), floor=MAT_T)
+    # braided USB-C cable: plug in the back port, out across the mat and off behind the mug
+    braid, nt, bb2 = node_mat("Braided cable")
+    tcb = nt.nodes.new("ShaderNodeTexCoord")
+    bw = N(nt, "ShaderNodeTexWave", Scale=900.0, Distortion=0.4); bw.wave_type = "BANDS"; bw.bands_direction = "DIAGONAL"
+    nt.links.new(tcb.outputs["Object"], bw.inputs["Vector"])
+    bb2.inputs["Base Color"].default_value = srgb("#E6DCC8"); bb2.inputs["Roughness"].default_value = 0.75
+    bb2.inputs["Sheen Weight"].default_value = 0.5
+    bpb = N(nt, "ShaderNodeBump", Strength=0.6, Distance=0.0003)
+    nt.links.new(bw.outputs["Fac"], bpb.inputs["Height"]); nt.links.new(bpb.outputs["Normal"], bb2.inputs["Normal"])
+    z0 = root.location.z
+    R_ = 0.0021
+    pts = [(0.0, 0.108, 0.00975 + z0), (0.0, 0.118, 0.0080 + z0), (0.0, 0.127, MAT_T + R_ + 0.001),
+           (0.004, 0.150, R_), (0.030, 0.205, R_), (0.090, 0.232, R_), (0.200, 0.232, R_), (0.300, 0.226, R_), (0.420, 0.232, R_)]
+    cu = bpy.data.curves.new("Cable", "CURVE"); cu.dimensions = "3D"; cu.bevel_depth = R_; cu.bevel_resolution = 6
+    cu.resolution_u = 24
+    sp = cu.splines.new("NURBS"); sp.points.add(len(pts) - 1); sp.use_endpoint_u = True; sp.order_u = 4
+    for p, (x, y, z) in zip(sp.points, pts): p.co = (x, y, z, 1)
+    cab = link(bpy.data.objects.new("Cable", cu)); cu.materials.append(braid)
+    shell = simple_mat("Plug shell", "#2C2B29", 0.35, 0.8)
+    plug = box("Plug", (0.0125, 0.022, 0.0068), (0.0, 0.0905, 0.00975 + z0), shell, bevel=0.0018)
+    boot = box("Boot", (0.0075, 0.010, 0.0060), (0.0, 0.1055, 0.00975 + z0), simple_mat("Boot", "#E2D8C4", 0.6), bevel=0.0015)
     # Board fills the frame; shallow depth of field drops the props out of focus
-    cam = camera("Cam", (-0.36, -0.535, 0.21), (-0.012, 0.0, 0.012), lens=55, fstop=6.3)
+    cam = camera("Cam", (-0.35, -0.50, 0.31), (-0.008, 0.005, 0.0), lens=55, fstop=8.0)
     cam.data.dof.focus_distance = (Vector((-0.01, -0.03, 0.02)) - cam.location).length
     if os.environ.get("WOODTEST"):
         cam = camera("Wood", (0.62, -0.95, 0.30), (0.58, -0.50, 0.0), lens=45)
@@ -511,7 +582,7 @@ elif SCENE == "views":
         "top": camera("top", (0, 0, 0.9), (0, 0.0001, 0), lens=50, ortho=0.39),
         "back": camera("back", (0.035, 0.36, 0.055), (0.014, 0.078, 0.010), lens=85, fstop=8.0),
         "right-end": camera("right-end", (0.62, -0.12, 0.10), (0.11, 0.0, 0.02), lens=55),
-        "knob": camera("knob", (0.32, -0.20, 0.16), (0.14, 0.01, 0.022), lens=85, fstop=6.3),
+        "knob": camera("knob", (0.32, -0.20, 0.16), (0.14, 0.01, 0.022), lens=85, fstop=9.0),
     }
     for k in ("hero", "top", "back", "right-end", "knob"):
         face(v[k]); shot(v[k], "views-" + k, (4800, 3200) if k == "hero" else (3200, 2133))
