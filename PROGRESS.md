@@ -6,6 +6,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### PCBs: full DRC and ERC pass, JLCPCB check (2026-11-09)
+
+- Ran kicad-cli 10.0.8 DRC (every severity, schematic parity, zones refilled) and ERC on all five boards, then again with a JLCPCB 2-layer rule set added on a copy (0.127 mm track and gap, 0.3 mm via drill, 0.45 mm via pad, 0.13 mm via ring, 0.3 mm copper to edge, hole spacing). No errors, 0 unconnected items, zone fills current, no copper, drill or edge rule broken on any board.
+- Fixed: the mainboard's J5 (encoder JST SH) used a symbol without the mounting-pad pin, while its PCB tabs are on GND. It now uses `Conn_01x05_MountingPin` with MP on GND (`#PWR04`), the same as J1, which clears the two `net_conflict` parity warnings.
+- Synced the symbol fields (MPN, LCSC, Description, Datasheet) onto the footprints of the mainboard, daughterboard, dongle and encoder module, as KiCad's Update PCB from Schematic would. The fields are hidden; gerbers, drills, BOM and CPL from `export_fab.py` are unchanged (checked by diffing the exports before and after).
+- The deliberate spacebar overlaps (SW604/SW606/SW615, ST4/ST5/ST6) are now waived by a rule in `Dachshund70.kicad_dru` (the old project-file exclusions no longer matched after the board moved). The two co-located ST4/ST6 holes are exclusions in the `.kicad_pro`. New `.kicad_dru` files on the daughterboard and dongle waive the USB-C and slide switch silk that crosses the board edge (the fab clips it).
+- Left as they are: 195 "footprint differs from library" warnings (the bottom-side parts are flipped, and the hot-swap holes differ by 1 nm; pads otherwise match), ERC's power-symbol and label name notes and library symbol mismatches, and the stock hot-swap footprint's 0.44 mm web between the 1.75 mm peg hole and the 3.05 mm socket hole (every Kailh MX hot-swap board has it; JLC drills it). Silk text is 0.8 to 0.9 mm tall with 0.12 mm strokes on all boards, below JLC's 1.0 mm / 0.15 mm guideline, so small labels may print faint.
+
 ### Case: weight text in Fredoka SemiBold, Fusion v33 (2026-11-04)
 
 - The weight's "Dachshund70" is now Fredoka SemiBold (SIL OFL, the font of the project slideshow and the "Doghouse Boards" PCB logo), same size and centre (x -76.2 to -23.8 on the weight, was Arial Rounded MT Bold). Fusion v33. The text engraving is 0.3 deep; the strokes are about 0.9 mm, so a 0.6 mm cutter follows them.

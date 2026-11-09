@@ -14,3 +14,19 @@
 (rule "SW1 edge-mount switch"
   (constraint edge_clearance (min 0mm))
   (condition "A.memberOfFootprint('SW1')"))
+
+# The spacebar row carries two alternative layouts on purpose: a 6.25u
+# spacebar (SW615, stabiliser ST5) or split 2.25u + 1.25u + 2.75u keys
+# (SW604, SW606 with stabilisers ST4/ST6). Only one set of switches gets
+# soldered, so their courtyards, holes and silk overlap, and ST4 and ST6
+# share their stabiliser holes (aligned in PR #34; those two co-located
+# holes are DRC exclusions in the .kicad_pro, since a rule can't waive them).
+(rule "Alternate spacebar courtyards"
+  (constraint courtyard_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('SW604') || A.Reference == 'SW604' || A.memberOfFootprint('SW606') || A.Reference == 'SW606' || A.memberOfFootprint('SW615') || A.Reference == 'SW615' || A.memberOfFootprint('ST4') || A.Reference == 'ST4' || A.memberOfFootprint('ST5') || A.Reference == 'ST5' || A.memberOfFootprint('ST6') || A.Reference == 'ST6') && (B.memberOfFootprint('SW604') || B.Reference == 'SW604' || B.memberOfFootprint('SW606') || B.Reference == 'SW606' || B.memberOfFootprint('SW615') || B.Reference == 'SW615' || B.memberOfFootprint('ST4') || B.Reference == 'ST4' || B.memberOfFootprint('ST5') || B.Reference == 'ST5' || B.memberOfFootprint('ST6') || B.Reference == 'ST6')"))
+
+(rule "Alternate spacebar silk"
+  (constraint silk_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('SW604') || A.memberOfFootprint('SW606') || A.memberOfFootprint('SW615') || A.memberOfFootprint('ST4') || A.memberOfFootprint('ST5') || A.memberOfFootprint('ST6')) && (B.memberOfFootprint('SW604') || B.memberOfFootprint('SW606') || B.memberOfFootprint('SW615') || B.memberOfFootprint('ST4') || B.memberOfFootprint('ST5') || B.memberOfFootprint('ST6'))"))

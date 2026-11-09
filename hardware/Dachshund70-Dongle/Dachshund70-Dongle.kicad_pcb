@@ -161,6 +161,18 @@
 				)
 			)
 		)
+		(property "LCSC" "C25104"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "c67a4125-1bb7-4ebb-8e22-74061a51e7ab")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/bef6eb7c-aed8-4298-8750-c4baf07191a3")
 		(sheetname "/")
 		(sheetfile "Dachshund70-Dongle.kicad_sch")
@@ -307,6 +319,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "e6905ee7-7b36-4a64-ae5a-3fd91715d885")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C2886898"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4c65e3ef-ffcc-4999-9605-3869d15dd9b2")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -896,6 +920,18 @@
 				)
 			)
 		)
+		(property "LCSC" "C19666"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "f2c0fddf-74c7-4abd-962a-c10639b3ef91")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/93509854-4705-4438-b8a8-75cd2dd7268a")
 		(sheetname "/")
 		(sheetfile "Dachshund70-Dongle.kicad_sch")
@@ -1050,6 +1086,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "8e883675-dc37-4319-93d8-2285b4b1d6ef")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C1017"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "a2a004eb-9cd5-43f7-a07e-bde2e21a4e5a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1485,6 +1533,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "122a9a38-f174-4c94-8a8d-9c9744537667")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C2886898"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "20fb454b-842a-484c-9c4e-c5c325a0b8f5")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2074,6 +2134,18 @@
 				)
 			)
 		)
+		(property "LCSC" "C1525"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "2aabd191-6fd8-43b8-b477-7cbe83956101")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/4812ee90-46b2-48b1-ad7b-f1ed72e1768c")
 		(sheetname "/")
 		(sheetfile "Dachshund70-Dongle.kicad_sch")
@@ -2344,6 +2416,18 @@
 				)
 			)
 		)
+		(property "LCSC" "C19666"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4701af62-0cc1-4fcf-8aac-ef3ba6041d64")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/165ee9fb-48de-4d1d-8562-89080de6ad05")
 		(sheetname "/")
 		(sheetfile "Dachshund70-Dongle.kicad_sch")
@@ -2498,6 +2582,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "697d7b6a-035b-4506-bf0e-27fe0632efe5")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C25104"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "a2f734d5-4093-4f94-a726-c26034d91060")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2666,6 +2762,18 @@
 				)
 			)
 		)
+		(property "LCSC" "C11702"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "0cde928d-8686-4724-9af2-4eaebff3c328")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/24bda8e3-67d3-4516-9a50-5f01df035b99")
 		(sheetname "/")
 		(sheetfile "Dachshund70-Dongle.kicad_sch")
@@ -2815,11 +2923,23 @@
 				)
 			)
 		)
-		(property "MPN" "Bourns MF-NSMF075-2"
+		(property "MPN" "BHFUSE BSMD1206-075-6V"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "b8bdf827-e0ee-4de0-bf17-b67ed5ef0532")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C883127"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "bef52053-aefe-4a1a-a50c-5e9da5c03692")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3154,6 +3274,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "80bee52a-e0c1-44aa-a944-03aebfaecf2b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "bec8ac5f-151a-486b-b8e5-8a520fbc8d3f")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3584,6 +3716,30 @@
 				)
 			)
 		)
+		(property "MPN" "XFCN PZ127V-11-05-H25"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "b7d2048a-de6a-42e7-b332-d97c72813d03")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C962329"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "7779f63f-1536-4cc0-9c8c-034328ee0e7a")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/4d62be44-e9cf-4ca0-ab5a-4386ccdf9a3d")
 		(sheetname "/")
 		(sheetfile "Dachshund70-Dongle.kicad_sch")
@@ -3858,6 +4014,18 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "f78b9ae6-a5a7-4606-8dc4-47232fd85e64")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C5119772"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "2084fbb5-843e-49cd-ac06-9103e405f37f")
 			(effects
 				(font
 					(size 1.27 1.27)
