@@ -72,32 +72,12 @@
       "diff_pair_dimensions": [],
       "drc_exclusions": [
         [
-          "courtyards_overlap|146206500|142943000|84a2ca63-169b-4658-9da1-8c4e1bf69b2c|a0ccfd9d-54d8-44c2-ac5b-47045f8e47bc",
-          ""
+          "holes_co_located|200969000|142553000|61d1f386-ba98-44f8-bbbe-7e42e05e3e7f|f02d2101-144a-4207-8ad1-fe5d9fd1e644",
+          "Alternate spacebar layouts: ST4 and ST6 share these stabiliser holes on purpose"
         ],
         [
-          "npth_inside_courtyard|100969000|142553000|96cff6da-5435-4fbc-b797-ed511f265b9d|d716941d-f1fb-4d59-b842-fc49adc978bd",
-          ""
-        ],
-        [
-          "npth_inside_courtyard|100969000|157763000|005a75ab-db3c-49f0-9574-0357d08682f2|d716941d-f1fb-4d59-b842-fc49adc978bd",
-          ""
-        ],
-        [
-          "npth_inside_courtyard|153382000|142553000|ab201ebd-512d-447c-898d-79cf18509f44|a0ccfd9d-54d8-44c2-ac5b-47045f8e47bc",
-          ""
-        ],
-        [
-          "npth_inside_courtyard|153382000|157763000|55063c40-2587-4cde-9899-df9f1523720f|a0ccfd9d-54d8-44c2-ac5b-47045f8e47bc",
-          ""
-        ],
-        [
-          "pth_inside_courtyard|143984000|144458000|34175f5b-dc69-48f9-9eac-c814d9ae53bd|a0ccfd9d-54d8-44c2-ac5b-47045f8e47bc",
-          ""
-        ],
-        [
-          "pth_inside_courtyard|148429000|154618000|fddc0e65-9661-4a91-84d1-36ab3ea4f410|84a2ca63-169b-4658-9da1-8c4e1bf69b2c",
-          ""
+          "holes_co_located|200969000|157763000|8c54e0dd-7224-4ee5-a6c9-ca9e38d71fc2|ac459784-a6da-4d63-9ab1-b2ed7c2a2030",
+          "Alternate spacebar layouts: ST4 and ST6 share these stabiliser holes on purpose"
         ]
       ],
       "meta": {

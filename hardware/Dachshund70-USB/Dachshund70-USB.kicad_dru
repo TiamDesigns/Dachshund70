@@ -1,0 +1,14 @@
+(version 1)
+
+# J1 (USB-C receptacle) and SW1 (edge-mount slide switch) overhang the board
+# edge on purpose, so their footprint outlines on F.Silkscreen cross it. The
+# fab clips silk at the edge; nothing to fix.
+(rule "Edge-mount parts silk"
+  (constraint silk_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('J1') || A.memberOfFootprint('SW1')) && B.Layer == 'Edge.Cuts'"))
+
+(rule "Edge-mount silk (edge check)"
+  (constraint edge_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('J1') || A.memberOfFootprint('SW1')) && A.Layer == 'F.Silkscreen'"))

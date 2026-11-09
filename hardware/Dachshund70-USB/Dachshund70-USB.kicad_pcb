@@ -947,6 +947,18 @@
 				)
 			)
 		)
+		(property "LCSC" "C1017"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "6ff32286-858b-4a54-bc92-078ff1a4f142")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/11b6461b-1582-4a4e-9234-20be0cd1d7b1")
 		(sheetname "/")
 		(sheetfile "Dachshund70-USB.kicad_sch")
@@ -1247,12 +1259,36 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Switch, single pole double throw"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "239db702-160a-4fd6-b18c-b7b8a05f3a20")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "C&K PCM12SMTR"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "d91d1f4f-b9ee-4e79-89ef-a1c4925f6b1d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C221841"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "eeba5b89-0e0f-40f7-8b42-9ab72a72d94c")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1688,11 +1724,23 @@
 				)
 			)
 		)
-		(property "MPN" "Bourns MF-NSMF075-2"
+		(property "MPN" "BHFUSE BSMD1206-075-6V"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "6dcf774c-6fad-4ba2-8b0a-6985f6011ba3")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C883127"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "6e280ace-1578-4886-8fad-e042b91d01c5")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2255,7 +2303,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "To mainboard J1. 1:1 cable, pin 1 to pin 1"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -2275,6 +2323,28 @@
 				(font
 					(size 1 1)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "JST SM06B-SRSS-TB(LF)(SN)"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "acd11e4a-c319-42d4-b7de-9f82c4080144")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C160405"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "977669a6-cb0e-47de-b008-25ecadb2c73f")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)

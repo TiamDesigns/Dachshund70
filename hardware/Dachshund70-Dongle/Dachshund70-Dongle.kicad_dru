@@ -1,0 +1,13 @@
+(version 1)
+
+# J1 (USB-C receptacle) overhangs the board edge on purpose, so its footprint
+# outline on F.Silkscreen crosses it. The fab clips silk at the edge.
+(rule "Edge-mount connector silk"
+  (constraint silk_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('J1')) && B.Layer == 'Edge.Cuts'"))
+
+(rule "Edge-mount silk (edge check)"
+  (constraint edge_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('J1')) && A.Layer == 'F.Silkscreen'"))
