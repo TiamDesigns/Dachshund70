@@ -6,6 +6,7 @@ They show the preliminary look; they are not a spec. The Fusion model is still t
 | File | What |
 | --- | --- |
 | `renders/01-dramatic.jpg` | Low warm sun through window blinds: wool felt mat, walnut desk standing off a plaster wall, plant, framed print, mug, linen notebook and a loose keycap, shallow depth of field |
+| `renders/03-knob-screen-leds.jpg` | Close-up of the knob, the e-paper status screen and the three lit status LEDs |
 | `renders/02-views.jpg` | Hero view plus back, right end, knob close-up, plan, underside and the brass weight, on deep green paper |
 
 Finishes: warm light-grey matte e-coat case, GMK Kaiju-style keycaps (cream alphas, warm grey mods, red-orange
@@ -23,7 +24,7 @@ aberration, vignette and grain).
 ```bash
 SRC="$PWD/hardware/case/step/Dachshund70-Case-Assembly.step" OUT=/path/to/work/mesh freecadcmd hardware/case/blender/fc_mesh.py
 MESH=/path/to/work/mesh OUT=/path/to/work ACCENT=orange blender -b --factory-startup --python hardware/case/blender/build.py
-blender -b /path/to/work/base_orange.blend --python hardware/case/blender/render.py -- dramatic /path/to/work/out 512
+blender -b /path/to/work/base_orange.blend --python hardware/case/blender/render.py -- dramatic /path/to/work/out 1536
 blender -b /path/to/work/base_orange.blend --python hardware/case/blender/render.py -- views /path/to/work/out 320
 python hardware/case/blender/post.py /path/to/work/out/01-dramatic.png hardware/case/blender/renders/01-dramatic.jpg 3600
 for n in hero back right-end knob top underside weight; do
