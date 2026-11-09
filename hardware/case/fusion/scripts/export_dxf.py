@@ -6,6 +6,7 @@ OUT = REPO + 'hardware/case/dxf/'
 TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
 LIFT = 3.0 + 4.0 * C + (121.1 / 2 + 0.75) * S
+FACE_CY = 3.5        # world y of the weight face's centre (face y -16.5..23.5)
 
 
 class Dxf:
@@ -113,7 +114,7 @@ def weight_dxf():
     root = adsk.fusion.Design.cast(adsk.core.Application.get().activeProduct).rootComponent
     w = root.bRepBodies.itemByName('HW Accent weight bar')
     # seen from the engraved face (below): reading orientation u = -x, v = y; origin at the face centre
-    fx = lambda p: (-p.x * 10, p.y * 10 + 1.2)
+    fx = lambda p: (-p.x * 10, p.y * 10 - FACE_CY)
     faces = []
     for f in w.faces:
         if f.geometry.surfaceType != adsk.core.SurfaceTypes.PlaneSurfaceType:

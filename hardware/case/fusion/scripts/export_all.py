@@ -19,7 +19,7 @@ REPO = 'C:/path/to/Dachshund70/'   # EDIT: the repo root (with a trailing slash)
 CASE = REPO + 'hardware/case/'
 PARTS = [('Top', 'Top shell'), ('Bottom', 'Bottom shell'), ('Ring', 'Accent ring'), ('Weight', 'HW Accent weight bar'),
          ('Encoder-Cover', 'Encoder cover'), ('Knob', 'HW Wheel'), ('Switch-Cap', 'HW Power slider cap'),
-         ('LED-Guide', 'HW LED guide')]
+         ('LED-Guide', 'HW LED guide'), ('Gasket-Retainer', 'Gasket retainer 1')]     # the six retainers are identical: one file
 
 
 def parts(app, root):
