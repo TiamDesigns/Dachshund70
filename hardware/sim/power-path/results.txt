@@ -1,0 +1,67 @@
+== Steady state, battery only (switch on, no USB)
+cell 4.2 V, LEDs off                           VSYS 4.188 V (drop 0.012), LED_VDD 0.004 V, cell current 30 mA
+cell 4.2 V, LEDs max                           VSYS 4.097 V (drop 0.103), LED_VDD 4.080 V, cell current 246 mA
+cell 3.7 V, LEDs off                           VSYS 3.687 V (drop 0.013), LED_VDD 0.004 V, cell current 30 mA
+cell 3.7 V, LEDs max                           VSYS 3.596 V (drop 0.104), LED_VDD 3.579 V, cell current 246 mA
+cell 3.3 V, LEDs off                           VSYS 3.287 V (drop 0.013), LED_VDD 0.003 V, cell current 30 mA
+cell 3.3 V, LEDs max                           VSYS 3.198 V (drop 0.102), LED_VDD 3.181 V, cell current 238 mA
+cell 3.0 V, LEDs off                           VSYS 2.987 V (drop 0.013), LED_VDD 0.003 V, cell current 30 mA
+cell 3.0 V, LEDs max                           VSYS 2.943 V (drop 0.057), LED_VDD 2.935 V, cell current 132 mA
+== Steady state, USB
+USB 5.0 V, no cell, LEDs off                   VBUS 4.984, VSYS 4.712, LED_VDD 0.000 V, host 33 mA, cell +0 mA
+USB 5.0 V, no cell, LEDs max                   VBUS 4.882, VSYS 4.522, LED_VDD 4.505 V, host 249 mA, cell +0 mA
+USB 4.75 V worst, no cell, LEDs off            VBUS 4.719, VSYS 4.447, LED_VDD 0.000 V, host 33 mA, cell +0 mA
+USB 4.75 V worst, no cell, LEDs max            VBUS 4.520, VSYS 4.160, LED_VDD 4.142 V, host 249 mA, cell +0 mA
+USB 5.0 V, cell 3.7 V charging, LEDs off       VBUS 4.842, VSYS 4.569, LED_VDD 0.004 V, host 336 mA, cell -303 mA
+USB 5.0 V, cell 3.7 V charging, LEDs max       VBUS 4.740, VSYS 4.379, LED_VDD 4.362 V, host 552 mA, cell -303 mA
+USB 4.75 V worst, cell 3.7 V charging, LEDs off VBUS 4.440, VSYS 4.168, LED_VDD 0.004 V, host 336 mA, cell -303 mA
+USB 4.75 V worst, cell 3.7 V charging, LEDs max VBUS 4.241, VSYS 3.881, LED_VDD 3.863 V, host 552 mA, cell -303 mA
+USB 4.75 V worst, cell 4.15 V, LEDs off        VBUS 4.534, VSYS 4.262, LED_VDD 0.004 V, host 234 mA, cell -201 mA
+USB 4.75 V worst, cell 4.15 V, LEDs max        VBUS 4.335, VSYS 3.975, LED_VDD 3.957 V, host 450 mA, cell -201 mA
+USB 5.0 V, cell 3.7 V, switch off, LEDs off    VBUS 4.842, VSYS 4.569, LED_VDD 0.000 V, host 336 mA, cell -303 mA
+USB 5.0 V, cell 3.7 V, switch off, LEDs max    VBUS 4.740, VSYS 4.379, LED_VDD 4.362 V, host 552 mA, cell -303 mA
+== Plug in at 0.5 s (cell 3.7 V): inrush and VBUS overshoot
+cable 0.5 uH 0.15 ohm, cell 3.7 V              peak host current 7.55 A, VBUS peak 4.84 V
+cable 0.5 uH 0.15 ohm, no cell                 peak host current 8.10 A, VBUS peak 4.98 V
+cable 1.0 uH 0.1 ohm, cell 3.7 V               peak host current 7.06 A, VBUS peak 4.92 V
+cable 1.0 uH 0.1 ohm, no cell                  peak host current 7.81 A, VBUS peak 5.00 V
+cable 1.0 uH 0.05 ohm, cell 3.7 V              peak host current 7.55 A, VBUS peak 5.07 V
+cable 1.0 uH 0.05 ohm, no cell                 peak host current 8.41 A, VBUS peak 5.12 V
+cable 2.0 uH 0.05 ohm, cell 3.7 V              peak host current 6.26 A, VBUS peak 5.52 V
+cable 2.0 uH 0.05 ohm, no cell                 peak host current 7.15 A, VBUS peak 5.67 V
+== Unplug at 0.5 s: VSYS dip while Q1 waits for VBUS to fall
+cell 3.7 V, R3 100k, Vth -0.9, LEDs off        VSYS min 3.081 V, back within 0.1 V of 3.685 V after 226 ms
+cell 3.7 V, R3 100k, Vth -0.9, LEDs max        VSYS min 2.989 V, back within 0.1 V of 3.570 V after 594 ms
+cell 3.7 V, R3 100k, Vth -1.3, LEDs off        VSYS min 3.081 V, back within 0.1 V of 3.679 V after 891 ms
+cell 3.7 V, R3 100k, Vth -1.3, LEDs max        VSYS min 2.989 V, back within 0.1 V of 3.456 V after 1926 ms
+cell 3.7 V, R3 10k, Vth -0.9, LEDs off         VSYS min 3.081 V, back within 0.1 V of 3.687 V after 11 ms
+cell 3.7 V, R3 10k, Vth -0.9, LEDs max         VSYS min 2.989 V, back within 0.1 V of 3.596 V after 21 ms
+cell 3.7 V, R3 10k, Vth -1.3, LEDs off         VSYS min 3.081 V, back within 0.1 V of 3.687 V after 27 ms
+cell 3.7 V, R3 10k, Vth -1.3, LEDs max         VSYS min 2.989 V, back within 0.1 V of 3.595 V after 39 ms
+cell 3.3 V, R3 100k, Vth -0.9, LEDs off        VSYS min 2.681 V, back within 0.1 V of 3.281 V after 465 ms
+cell 3.3 V, R3 100k, Vth -0.9, LEDs max        VSYS min 2.681 V, back within 0.1 V of 3.137 V after 1125 ms
+cell 3.3 V, R3 100k, Vth -1.3, LEDs off        VSYS min 2.681 V, back within 0.1 V of 2.689 V after 0 ms
+cell 3.3 V, R3 100k, Vth -1.3, LEDs max        VSYS min 2.681 V, back within 0.1 V of 2.689 V after 0 ms
+cell 3.3 V, R3 10k, Vth -0.9, LEDs off         VSYS min 2.681 V, back within 0.1 V of 3.287 V after 16 ms
+cell 3.3 V, R3 10k, Vth -0.9, LEDs max         VSYS min 2.681 V, back within 0.1 V of 3.198 V after 26 ms
+cell 3.3 V, R3 10k, Vth -1.3, LEDs off         VSYS min 2.681 V, back within 0.1 V of 3.287 V after 36 ms
+cell 3.3 V, R3 10k, Vth -1.3, LEDs max         VSYS min 2.681 V, back within 0.1 V of 3.196 V after 47 ms
+cell 3.0 V, R3 100k, Vth -0.9, LEDs off        VSYS min 2.381 V, back within 0.1 V of 2.960 V after 1138 ms
+cell 3.0 V, R3 100k, Vth -0.9, LEDs max        VSYS min 2.381 V, back within 0.1 V of 2.760 V after 1134 ms
+cell 3.0 V, R3 100k, Vth -1.3, LEDs off        VSYS min 2.381 V, back within 0.1 V of 2.381 V after 0 ms
+cell 3.0 V, R3 100k, Vth -1.3, LEDs max        VSYS min 2.381 V, back within 0.1 V of 2.381 V after 0 ms
+cell 3.0 V, R3 10k, Vth -0.9, LEDs off         VSYS min 2.381 V, back within 0.1 V of 2.987 V after 19 ms
+cell 3.0 V, R3 10k, Vth -0.9, LEDs max         VSYS min 2.381 V, back within 0.1 V of 2.943 V after 23 ms
+cell 3.0 V, R3 10k, Vth -1.3, LEDs off         VSYS min 2.381 V, back within 0.1 V of 2.987 V after 41 ms
+cell 3.0 V, R3 10k, Vth -1.3, LEDs max         VSYS min 2.381 V, back within 0.1 V of 2.942 V after 47 ms
+== Battery only: extra D8 leakage (on top of the model's ~20 uA) pulling Q1's gate up through R3
+extra leak 0 uA, R3 100k, cell 3.5 V, LEDs max VBUS 2.00 V, Vgs -1.36 V, VSYS 3.364 V
+extra leak 0 uA, R3 10k, cell 3.5 V, LEDs max  VBUS 0.20 V, Vgs -3.20 V, VSYS 3.396 V
+extra leak 10 uA, R3 100k, cell 3.5 V, LEDs max VBUS 2.75 V, Vgs -0.09 V, VSYS 2.832 V
+extra leak 10 uA, R3 10k, cell 3.5 V, LEDs max VBUS 0.30 V, Vgs -3.10 V, VSYS 3.395 V
+extra leak 30 uA, R3 100k, cell 3.5 V, LEDs max VBUS 2.80 V, Vgs -0.03 V, VSYS 2.832 V
+extra leak 30 uA, R3 10k, cell 3.5 V, LEDs max VBUS 0.50 V, Vgs -2.89 V, VSYS 3.394 V
+extra leak 100 uA, R3 100k, cell 3.5 V, LEDs max VBUS 2.82 V, Vgs -0.01 V, VSYS 2.831 V
+extra leak 100 uA, R3 10k, cell 3.5 V, LEDs max VBUS 1.20 V, Vgs -2.19 V, VSYS 3.389 V
+extra leak 300 uA, R3 100k, cell 3.5 V, LEDs max VBUS 2.83 V, Vgs -0.00 V, VSYS 2.831 V
+extra leak 300 uA, R3 10k, cell 3.5 V, LEDs max VBUS 2.77 V, Vgs -0.07 V, VSYS 2.832 V

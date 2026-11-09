@@ -77921,7 +77921,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "100k"
+		(property "Value" "10k"
 			(at 0 -1.43 90)
 			(layer "B.Fab")
 			(uuid "22dbcb8a-8221-4fe9-9da3-10c7d6b9005e")
@@ -77970,7 +77970,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "UNI-ROYAL 0603WAF1003T5E"
+		(property "MPN" "UNI-ROYAL 0603WAF1002T5E"
 			(at 0 0 0)
 			(layer "B.SilkS")
 			(hide yes)
@@ -77982,7 +77982,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25803"
+		(property "LCSC" "C25804"
 			(at 0 0 0)
 			(layer "B.SilkS")
 			(hide yes)
