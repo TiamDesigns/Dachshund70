@@ -64,9 +64,9 @@ MIN_ACCENT_AREA = 2.0  # mm²
 # outward), so a sock lies along the edge and the nub reaches only ~5 mm past the plate
 # edge, which is what fits the case's bezel. The sock's open end sits against the arm's end.
 # Everything stays outside the plate outline, so no switch cutout is touched.
-NECK_WIDTH = 4.0
+NECK_WIDTH = 24.0       # Tiam, 2026-11-10: a 24 mm neck joins the arms to the plate
 SLOT = 2.0               # between the plate edge and the arm (the sock, 5 wide, centred on the arm, then clears the plate edge)
-ARM_WIDTH = 1.5          # in plane; the arm bends in this direction
+ARM_WIDTH = 2.8          # in plane; the arm bends in this direction. Same as TAB_WIDTH, so arm and prong are one uniform 2.8 branch
 ARM_LENGTH = 12.0        # from the neck's side face to the arm's free end
 TAB_WIDTH = 2.8          # one prong
 TAB_LENGTH = 6.5
@@ -94,7 +94,7 @@ POST_RELIEF_D = 3.9
 # Every inside corner of the outline gets at least this radius (tab roots).
 OUTLINE_INSIDE_RADIUS = 0.5
 # Every outside corner gets at least this radius (tab tips, notch ends). Rounding is a morphological opening,
-# so anything thinner than twice this vanishes: it must stay under half the arm width (ARM_WIDTH 1.5).
+# so anything thinner than twice this vanishes: it must stay under half the arm width (ARM_WIDTH 2.8).
 OUTLINE_OUTSIDE_RADIUS = 0.7
 
 # Encoder notch: the plate stops short of the roller. The encoder is on its own

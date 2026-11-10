@@ -46,15 +46,16 @@ can't drift apart.
 ## Gasket nubs
 
 Six branched nubs, three on the top edge (the keyboard's back) and three on the bottom (its front), none on the
-ends. Each nub is one 4 mm neck that leaves the plate edge and splits into two arms running back along the edge in
+ends. Each nub is one 24 mm neck that leaves the plate edge and splits into two arms running back along the edge in
 opposite directions (a T). A 2.0 mm slot separates each arm from the plate edge, so an arm is a cantilever held only
-through the neck and the material flexes. An arm is 1.5 mm wide (in the plane, the direction it bends) and 12 mm long
-from the neck's side face; with 1.6 mm FR4 that is roughly 15 N/mm at the prong (3EI/L³, E ≈ 20 GPa), and the
-polycarbonate plate is softer. The free end of each arm carries one prong, 2.8 mm wide and 6.5 mm long, the size of
-the silicone sock's pocket (8 × 5 × 5 mm outside, 6.5 × 2.8 × 1.2 mm inside, fits 1.2–1.6 mm plates). The prongs run
-on along the plate edge, parallel to it and to the arms (they no longer point outward), so every gasket lies along the
-edge and a nub reaches only 4.15 mm past it (the socks, centred on the arm, reach 5.25 mm). That is what fits the case's
-bezel. The sock's open end sits against the arm's end, 14 mm from the nub centre. Twelve gaskets on six nubs.
+through the neck and the material flexes. An arm is 2.8 mm wide, the same as its prong, so the branch is one uniform
+width from the neck to its tip, and 12 mm long from the neck's side face. With 1.6 mm FR4 that is roughly 33 N/mm
+vertically at the prong (3EI/L³, E ≈ 20 GPa; it was about 18 with the old 1.5 mm arm), and the polycarbonate plate
+is softer. Most of the typing flex comes from the socks. The free end of each arm carries one prong, 2.8 mm wide and
+6.5 mm long, the size of the silicone sock's pocket (8 × 5 × 5 mm outside, 6.5 × 2.8 × 1.2 mm inside, fits
+1.2–1.6 mm plates). The prongs run on along the plate edge, parallel to it and to the arms, so every gasket lies along
+the edge and a nub reaches 4.8 mm past it (the socks, centred on the arm, reach 5.9 mm). The sock's open end sits
+against the arm's end, 24 mm from the nub centre. Twelve gaskets on six nubs.
 Everything is outside the plate outline, so no switch cutout is touched. Inside corners (neck to slot) have a 0.5 mm
 radius and outside corners 0.7 mm (the rounding would erase an arm thinner than twice the outside radius).
 
