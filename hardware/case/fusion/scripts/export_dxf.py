@@ -70,7 +70,8 @@ def ring_dxf():
             m = w2l(pm)[:2]
             if ct == adsk.core.Curve3DTypes.Line3DCurveType:
                 d.line(layer, a, b)
-            elif ct == adsk.core.Curve3DTypes.Circle3DCurveType:
+            elif ct == adsk.core.Curve3DTypes.Circle3DCurveType or (
+                    ct == adsk.core.Curve3DTypes.Arc3DCurveType and math.hypot(a[0] - b[0], a[1] - b[1]) < 1e-6):
                 g = e.geometry
                 c = w2l(g.center)[:2]
                 d.circle(layer, c, g.radius * 10)

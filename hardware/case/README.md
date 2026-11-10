@@ -19,20 +19,20 @@ replaced by this one. Git history has it.
 | `step/` | STEP files, all in one frame (below), so they import on top of each other |
 | `dxf/` | Flat DXFs for the ring (laser) and the weight's engraving (engraver) |
 | `renders/` | Views of the model |
-| `BOM.md` | Every part: material, finish, process, quantity, screws, gaskets, feet, the switch cap |
+| `BOM.md` | Every part: material, finish, process, quantity, screws, gaskets, feet, the slider button |
 
 ### `step/`
 
 | File | What |
 | --- | --- |
 | `Dachshund70-Case-Top.step` | Top block (aluminium): the bezel, key opening, sock pockets and the retainer openings under them with the retainers' ear pockets and M2 taps, screen window and drop-in opening, LED holes and guide pocket, the encoder cover's opening, its front boss, back-ear pocket and two M2 taps, screw taps |
-| `Dachshund70-Case-Bottom.step` | Bottom block (aluminium): the stepped floor, battery bay, USB-C opening, power switch slot, weight window and ledge pocket, rail pockets, screw holes |
+| `Dachshund70-Case-Bottom.step` | Bottom block (aluminium): the stepped floor, battery bay, USB-C opening, slider channel and lever slot, weight window and ledge pocket, rail pockets, screw holes |
 | `Dachshund70-Case-Ring.step` | The accent ring (1.6 mm sheet) |
 | `Dachshund70-Case-Weight.step` | The brass weight with its engraving |
 | `Dachshund70-Case-Knob.step` | The knurled knob |
 | `Dachshund70-Case-Encoder-Cover.step` | The cover over the encoder: the v33 hood (a Ø19.2 half-cylinder on the knob's axis); the encoder module screws to its foot, and one M2 on each side, under the plate, holds it to the top block |
 | `Dachshund70-Case-Gasket-Retainer.step` | One of the six identical gasket retainers with its two screw ears (the one at the back-left nub, at its assembly position) |
-| `Dachshund70-Case-Switch-Cap.step` | The cap on the power switch's lever (printed or POM) |
+| `Dachshund70-Case-Slider-Button.step` | The power slider button on the switch's lever (printed or POM) |
 | `Dachshund70-Case-LED-Guide.step` | The light guide over the five status LEDs (3D printed) |
 | `Dachshund70-Case-Assembly.step` | Everything: boards, plate, battery, screen, the keycaps with the 6.25 u spacebar, the case parts, screws and rails (64 MB, so import it with care) |
 | `Dachshund70-Keycaps.step` | The keycap set with the split bottom row (1.25 u, 2.75 u and 2.25 u keys), in the assembly's frame |
@@ -63,13 +63,16 @@ KiCad y = 99.55 − local y.
 - Accent ring: 1.6 mm sheet in a slot between the blocks, at local z −2.2 to −0.6 in the board's frame (its edge
   shows as a thin gold line round the case). Outline 347.9 × 155.2, opening 320 × 122.6.
 - Mounting: the plate sits on twelve silicone gasket socks (8 × 5 × 5 mm) on its prongs, in pockets in the top
-  block. Under each nub the whole pocket region (both socks and the nub's clearance) is open from below, 44.3 × 4.65,
-  and a 6061 gasket retainer (44.1 × 4.55 × 4.1, R1.1 corners, 0.1 clear in its R1.0 pocket) fills it from the ring up
+  block. Each nub is a 24 mm neck with two 2.8 arms (prongs at ±27.25 from the nub's centre, the socks reaching 5.9
+  past the plate edge). Under each nub the whole region (neck, arms and both socks) is one opening from below to the
+  sock tops (z 8.1), 64.3 × 5.3, with 1.25 or more round the arms and 4.0 or more of aluminium to the bezel's outside,
+  and a 6061 gasket retainer (64.1 × 5.2 × 4.1, R1.1 corners, 0.1 clear in its R1.0 pocket) fills it from the ring up
   to the sock floor (local z 3.5): it is the floor under both socks and the nub, it seats against the top block's step
   at 3.5 and the ring clamps it. All six are the same part. Each is screwed up into the top block with two M2 × 8
   countersunk screws (DIN 965) through two ears on its outer side at ±18.0 from its centre (R2.8 lobes 2.0 thick, local z
   −0.6 to 1.4, R1.0 where they meet the bar, in pockets 0.1 clear), the heads flush with its underside so the ring still
-  seats flat. The taps (Ø1.6) are drilled to z 9.4 (the tip + 2), 5.9 of thread, with 1.7 or more of metal above them. 4 × M3 × 12 along the front and 4 × M3 × 20 along the back
+  seats flat. The taps (Ø1.6) are drilled to z 9.4 (the tip + 2), 5.9 of thread, with 1.7 or more of metal above them. 4 × M3 × 12 along the front (x ±50.5, ±151.5) and 4 × M3 × 20 along the back (x −151.5, −61.35, +39.5, +151.5: the middle two moved
+  off ±50.5 for the longer retainers)
   (countersunk, from below) hold the blocks together through the ring; their taps are drilled to the screw tip + 3
   and threaded to the tip + 1.5.
 - Ring joint: twelve slots 12.2 × 1.7 in the ring for the blocks' 11.8 × 1.3 tabs (0.2 a side). The back-centre pair
@@ -80,7 +83,7 @@ KiCad y = 99.55 − local y.
   R3 corners and the cavity's own R5.75 at the back right, for an EEMB LP803450 (52.0 × 34.5 × 8.3 plus a 4.5
   protection board) laid flat, its long side front to back, at x 123.6 to 158.1, y 2.92 to 59.42 (0.9 of play at the
   sides for the R3 corners: foam-tape it). The floor stays at 1.0. J1 (the JST-SH on the mainboard's underside) is
-  now on the front sidebar at KiCad (333.5, 118.5), 17.6 from the cell; J5 at (329.8, 46.5) is 2.2 over it.
+  now on the front sidebar at KiCad (333.5, 118.5), 17.6 from the cell; J5 at (329.8, 49.54) is 2.0 over it.
 - Weight: brass, face 185.0 × 76.1 (R4 corners, y −40.4 to 35.7: from the number row's top edge to the Shift row's
   bottom edge, local y 35.74 and −40.46, square to the desk), flange 216.0 × 80.9 (R5, y −42.9 to 38.0), 87.5 cm³
   (87.4 cm³ with the paw print and the M3 countersinks: brass 743 g, Ti-6Al-4V 387 g). It drops in from inside through a window in the floor; its top sits 0.1 under the
@@ -108,20 +111,27 @@ KiCad y = 99.55 − local y.
   takes the module's two M2 × 5 socket-head screws (DIN 912, Ø3.8 × 2.0 heads; taps Ø1.6 through, R1.8 bosses, on the
   module's holes). Their heads stand in the mainboard's Ø4.2 lobe (the front one, 0.15 clear) and its corner notch (the
   back one, 0.73 clear), 0.2 below the board; the cell is 4.3 under the front one, J5 2.9 beside it. The cover screws up
-  into the top block with one M2 × 8 countersunk screw (DIN 965) on each side of the axis, through flat ears 2.6
-  thick (z 2.2 to 4.8, off the module's PCB, under the plate and out of sight, heads flush in 90° countersinks Ø4.0 to
-  a Ø2.2 clearance): the front one at (130.575, 35.8) into a Ø5.0 boss that hangs from the top block through the plate's
-  enlarged encoder notch (1.7 of metal round the tap), the back one at (139.25, 64.4) in a pocket in the back wall. Both
+  into the top block with one M2 × 8 countersunk screw (DIN 965) on each side of the axis, through flat ears (heads
+  flush in 90° countersinks Ø4.0 to a Ø2.2 clearance): the front one at (131.2, 35.8), an R2.7 ear z 2.9 to 4.8, into a
+  Ø5.0 boss that hangs from the top block through the plate's encoder notch; the back one at (139.25, 64.4), 2.6 thick
+  (z 2.2 to 4.8), in a pocket in the back wall. Since round 5 the front ear, its screw and the boss are 1.5, 2.9 and 1.7
+  from the plate in plan wherever it floats (±1.0 on the socks), and the ear is 1.39 over the mainboard. Both
   taps are Ø1.6 drilled to z 12.2 (1.0 under the top face), 5.4 of thread. Clearances: 1.7 to the keycaps pressed 4.0 (3.2 at rest), 0.15 to the plate, knob and encoder body,
   0.36 to its frame ears. The top block's opening follows the hood (0.25 round it, R1.75 corners at the closed end).
 - Screen: GoodDisplay GDEY0213B74 on end beside the knob, behind a window with a 45° frame (a 0.3 land at the
   glass, no knife edge); the glass and its driver board drop in from below through an opening the glass's size
   (29.8 × 59.8, R1.0). Five LEDs under it in an evenly spaced row, with a printed light guide (below).
-- Power switch: a PCM12 slide switch on the USB-C daughterboard, its lever carrying a printed (or POM) 3.6 × 2.6 cap
-  (0.8 walls round the lever pocket) that rides in a 5.5 × 3.0 stadium slot in the back face (1.5 travel, 0.2 clear).
-- USB-C: an opening in the back face with a 12.6 × 6.4 lead-in recess 1.0 deep (6.4 keeps 1.0 of aluminium under the
-  ring), and the daughterboard on a ledge (2 M3 taps). The pocket is open from above over the board (x −21.4 to 33.4),
-  so its two M3 × 6 screws go in before the ring and the top block.
+- Power switch: a PCM12 slide switch on the USB-C daughterboard (battery on/off). A printed (or POM) pill button,
+  10.7 × 6.0 and 0.85 thick, flush with the back face, slides 1.5 in a channel beside the USB-C with the lead-in's own
+  outline (12.6 × 6.4, R3.2 ends, 1.0 deep, R0.25 rim), on the USB-C's centre height (z 9.23): 0.2 clear top and bottom,
+  0.15 off the floor. A stem on its back (2.5 × 1.8, 0.83 under the centre line, at the lever's height) goes through a
+  4.4 × 2.2 slot (R0.5 corners) and holds the lever in a 1.4 × 0.89 pocket. The button hides the slot at both ends of
+  its travel. No undercuts: channel and slot are plain pockets cut from the back face.
+- USB-C: an opening in the back face with a 12.6 × 6.4 lead-in recess 1.0 deep (2.0 of aluminium under the ring), and
+  the daughterboard on a ledge (2 M3 taps). Since round 5 the board sits 1.0 lower: its underside at z 6.0 above the desk
+  (was 7.0), the port's centre at z 9.23 (was 10.23); the opening, lead-in, ledge, leg relief and taps moved with it
+  (1.2 of floor under the taps). The pocket is open from above over the board (x −21.4 to 33.4), so its two M3 × 6
+  screws go in before the ring and the top block.
 - Feet: two rubber rails near the front and back edges, in 1.0 mm pockets: 300 × 5.8 × 2.0 at the front, 269.4 × 5.8 × 2.0
   at the back (it stops at x 119.4, its pocket 3.0 short of the battery bay).
 - LEDs and light guide: the LEDs (D3 to D7, reverse-mount SK6812MINI-E) are an even 5.5 pitch centred on the screen:
@@ -130,7 +140,8 @@ KiCad y = 99.55 − local y.
   LED. The guide is opaque black resin, its block 30.6 × 6.05 × 5.0 in the roof pocket and five 3.7 square spigots in
   the plate's 4 × 4 windows (0.15 clear, down to the PCB's top). Each channel is one straight Ø2.1 bore from its LED to
   its hole, so the walls are 0.8 at the spigots and 1.9 or more in the block; its pocket has R1.0 corners and the guide
-  R1.15. The LEDs sit in their 3.4 PCB cutouts in the mainboard STEP: body 2.8 × 3.2, 0.3 / 0.1 clear, top 0.75 under
+  R1.15. The plate and mainboard float, so the block's underside is at z 7.8 and the spigots end at z 2.8 (1.2 over the
+  plate and the PCB at rest). The LEDs sit in their 3.4 PCB cutouts in the mainboard STEP: body 2.8 × 3.2, 0.3 / 0.1 clear, top 0.75 under
   the PCB's top face, pins on the bottom pads.
 - Inside corners: every inside vertical corner is radiused (R1.0 where a part sits 0.3 clear, R0.64 to R0.8 in the
   daughterboard pocket and leg relief, R3 in the battery bay).
@@ -153,8 +164,11 @@ execute (each defines `run(_context)`).
   The November 2026 fixes, the second round (retainer ears, encoder cover v35, the 76.1 mm weight), the third (the
   current mainboard, the v33 hood on the v35 mounting) and the fourth (M2 cover screws, socket-head module screws, M3
   weight screws at the corners, the paw print, the LEDs centred under the screen with straight guide channels, and the
-  plate and mainboard PCB bodies from that board change) were made in the `.f3d` as features at the end of the timeline;
-  their numbers are mirrored at the top of `build_case2.py` (`COVER_V35`, `COVER_HOOD`, `RETAINER_EARS`) and in its
+  plate and mainboard PCB bodies from that board change) and the fifth (v37: the 24 mm-neck plate and the 64.1 mm
+  retainers with their openings, the back M3 screws at x −61.35 and +39.5, the cover's front mount at x 131.2, the
+  daughterboard 1.0 lower, the slider button and its channel, the light guide clear of the floating plate, J5 and the
+  module's J1 moved, the encoder cable stand-in) were made in the `.f3d` as features at the end of the timeline;
+  their numbers are mirrored at the top of `build_case2.py` (`COVER_V35`, `COVER_HOOD`, `RETAINER_EARS`, `ROUND5`) and in its
   weight section. `build_case2.py` mirrors
   their numbers where that was simple: the ring slots and moved tab, the M3 tap depth, the rails, the battery bay's size
   and the cell's place, the lead-in, the switch slot and cap, the weight (face, flange, M3 corner screws, the paw print),
@@ -167,9 +181,12 @@ execute (each defines `run(_context)`).
 - `export_dxf.py`: writes the two DXFs.
 - `check_a.py`: the clash check. `run_checks(log)` tests the plate, every board part, the battery, the screen and both
   keycap sets (at rest and pressed 4.0 along the plate's normal) against the case parts, the case parts against each
-  other and the screws against the boards and caps. Known hits: the encoder shaft in the knob's D-bore (the model's
-  shaft is round) and the switch cap's press fit on its lever. Since the current mainboard went into the model the
-  module's M2 heads and J1 are clear.
+  other and the screws against the boards and caps; the plate, the mainboard (it hangs from the switches) and the caps
+  are also checked floating 1.0 up and down on the socks (caps at rest + 1.0, pressed 4.0 − 1.0), and
+  `plate_clearance(log)` gives each part's gap to the plate's swept volume. Known hit: the encoder shaft in the knob's
+  D-bore (the model's shaft is round). Round 5 (v37): no other hits against the case. Board against board, floating:
+  the mainboard at +1.0 hits the encoder module's PCB (0.29 apart at rest, see BOM.md's open points), its J4 header
+  model touches the e-paper driver (no header is fitted), and at −1.0 a SOT-23-5 and the battery plug touch the cell.
 - `shots.py`, `underside.py`: the camera helper and an underside view used while designing.
 - Placement: the boards, battery, screen and keycaps are placed by setting occurrence transforms, which Fusion doesn't
   keep when a timeline item is added (they go back to where they were imported). After adding features, put them back
@@ -187,7 +204,7 @@ After a board changes: run `python hardware/export_step.py` for the new board ST
 parts in Fusion), then re-export. The model's imported board occurrences are the ones to replace.
 
 Not checked against real parts: the gasket retainers' clamp height (4.1, no squeeze allowance), sock squeeze, the plug lead-in against real cables, the screw-in stabilizers'
-clearance, the switch cap's travel and fit on the PCM12 lever, the screen's real sizes (the panel's from
+clearance, the slider button's travel and fit on the PCM12 lever (and the PCM12's travel, taken as 1.5), the screen's real sizes (the panel's from
 GoodDisplay's drawing; the picture's position along it is an estimate), the light guide against the plate's
 LED windows, and the radio's range through the aluminium over the antenna.
 
