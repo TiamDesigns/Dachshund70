@@ -31,10 +31,11 @@ can't drift apart.
   SW606 and SW615) are the soldered ones, so the PCB holds them. The hot-swap 2.25u Mod (SW608) keeps a
   full cutout.
 - **Encoder:** the plate stops short of the roller. A notch takes out the top-right corner,
-  x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. From x 305.25 to 322.25 it runs further forward, to y 67.25
-  (`NOTCH_EXT_RIGHT`, `NOTCH_EXT_BOTTOM`): the case's encoder cover stands on the module's board with its walls down
-  through the plate there, and the boss its front M3 screw goes into hangs from the top block through the plate (0.8 mm
-  clear at the bottom, 1.75 at the left). The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
+  x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. From x 305.25 to the right-hand edge it runs further forward,
+  to y 68.5 (`NOTCH_EXT_RIGHT`, `NOTCH_EXT_BOTTOM`): the case's encoder cover stands on the module's board with its walls down
+  through the plate there, and the boss its front M2 screw goes into hangs from the top block through the plate. The plate
+  floats on its socks (±1 mm), so since round 5 the cover's front ear, its screw and the boss are 1.5 mm or more from it in
+  plan, and the knob's underside, which used to reach 0.8 mm over the plate's top, has no plate under it. The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
   only to x 326.4) so the web next to the Delete cutout is 2.0 mm; the plate's notch goes on to the right edge so the shaft and the
   wheel on it are clear. The module's own board (below the plate) runs under the web, and nothing of the module stands at plate height there. Supporting the roller is up to the
   case. Since mainboard Rev 1.1 the encoder is on its own module board, so `gen_plate.py` no longer reads
@@ -59,8 +60,8 @@ against the arm's end, 24 mm from the nub centre. Twelve gaskets on six nubs.
 Everything is outside the plate outline, so no switch cutout is touched. Inside corners (neck to slot) have a 0.5 mm
 radius and outside corners 0.7 mm (the rounding would erase an arm thinner than twice the outside radius).
 
-Nub centres (mm from the middle of the plate, x = 0 at the USB-C connector on the back edge), prong centres at ±(2 + 12 + 3.25)
-= ±17.25 mm from each:
+Nub centres (mm from the middle of the plate, x = 0 at the USB-C connector on the back edge), prong centres at ±(12 + 12 + 3.25)
+= ±27.25 mm from each:
 
 | Edge | Nub centres |
 | --- | --- |
@@ -70,11 +71,11 @@ Nub centres (mm from the middle of the plate, x = 0 at the USB-C connector on th
 The back can't be symmetric: the encoder notch takes out the right-hand end of the top edge (plate edge to
 x ≈ +125), and the USB-C connector is at x = 0, so the three nubs are spread evenly over the edge that is left,
 with the middle one 15 mm left of the connector. In mainboard coordinates the nubs are at x = 70.55, 163.25, 255.95
-on the top edge (y = 39.0), with prongs at 53.30, 87.80, 146.00, 180.50, 238.70, 273.20, and at x = 72.08, 178.25,
-284.42 on the bottom edge (y = 160.1), with prongs at 54.83, 89.33, 161.00, 195.50, 267.17, 301.67.
+on the top edge (y = 39.0), with prongs at 43.30, 97.80, 136.00, 190.50, 228.70, 283.20, and at x = 72.08, 178.25,
+284.42 on the bottom edge (y = 160.1), with prongs at 44.83, 99.33, 151.00, 205.50, 257.17, 311.67.
 
 The sock outlines (8 × 5 mm) are drawn on Cmts.User, so the case pockets can be placed from them. Each sock starts at
-the arm's end and lies 8 mm along the plate edge, centred 2.75 mm past it (0.25 to 5.25 mm past the edge). The case needs a clearance pocket round
+the arm's end and lies 8 mm along the plate edge, centred 3.4 mm past it (0.9 to 5.9 mm past the edge). The case needs a clearance pocket round
 each nub (about 0.5 mm round the neck and arms) so the arms can move.
 
 Feel: set by the arm width and length. To soften it, make `ARM_WIDTH` smaller or `ARM_LENGTH` longer; to firm it up,
