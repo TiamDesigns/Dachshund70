@@ -133,7 +133,7 @@ def world(col, strength):
 def shot(cam, name, res=(2400, 1600)):
     if ONLY and name not in ONLY: return
     sc.camera = cam; sc.render.resolution_x, sc.render.resolution_y = res
-    sc.render.resolution_percentage = 100
+    sc.render.resolution_percentage = int(os.environ.get("PCT", "100"))
     sc.render.filepath = os.path.join(OUT, name + ".png")
     bpy.ops.render.render(write_still=True); print("wrote", sc.render.filepath)
 
@@ -175,7 +175,7 @@ if SCENE == "dramatic":
             sky.sun_elevation = math.radians(20); sky.sun_rotation = math.radians(225); sky.sun_disc = False
         except Exception: pass
         bgn = next(n for n in wn.nodes if n.type == "BACKGROUND")
-        wn.links.new(sky.outputs[0], bgn.inputs["Color"]); bgn.inputs["Strength"].default_value = 0.035
+        wn.links.new(sky.outputs[0], bgn.inputs["Color"]); bgn.inputs["Strength"].default_value = float(os.environ.get("SKY", "0.09"))
         print("sky", sky.sky_type)
     except Exception as ex:
         print("no sky", ex)
@@ -296,7 +296,7 @@ if SCENE == "dramatic":
     box("Floor", (3.0, 3.0, 0.02), (0, 0.0, -0.76), floor_m)
 
     # --- low warm sun through blinds (gobo card); hard-edged shadows ---
-    d = Vector((0.62, 0.62, -0.48)).normalized()
+    d = Vector((0.55, 0.58, -0.66)).normalized()  # ~41 deg up: high enough to reach into the screen well
     sun = bpy.data.lights.new("Sun", "SUN"); sun.energy = 4.6; sun.angle = math.radians(0.25)
     sun.color = (1.0, 0.78, 0.55)
     so = link(bpy.data.objects.new("Sun", sun)); so.rotation_euler = d.to_track_quat("-Z", "Y").to_euler()
@@ -332,6 +332,17 @@ if SCENE == "dramatic":
     gp.visible_camera = False; gp.visible_glossy = False
     area("Fill", (0.9, -0.9, 0.4), CTR, 1.2, 7, (0.85, 0.9, 1.0))
     area("Bounce", (-0.2, -1.0, 0.15), CTR, 1.6, 4, (1.0, 0.86, 0.7))
+    # The e-paper sits deep in its window and the window card that makes the blind shadows also hides most of the
+    # sky from it, so it renders near-black. Stand in for the room light bouncing into the well with a faint glow
+    # of its own paper colour.
+    for m in bpy.data.materials:
+        if m.name.startswith("E-ink") and m.use_nodes:
+            nt = m.node_tree; eb = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+            if eb.inputs["Base Color"].is_linked:
+                nt.links.new(eb.inputs["Base Color"].links[0].from_socket, eb.inputs["Emission Color"])
+            eb.inputs["Emission Strength"].default_value = float(os.environ.get("SGLOW", "0.6"))
+    # light bouncing off the ceiling and the room: soft, from above, so recesses (the screen well) aren't black
+    area("Ceiling bounce", (0.1, -0.35, 1.5), (0.05, 0.0, 0.0), 2.4, 9, (1.0, 0.94, 0.86))
 
     # --- wool felt mat, rounded corners: fibres, mottling, a soft cut edge ---
     MAT_T = 0.004
