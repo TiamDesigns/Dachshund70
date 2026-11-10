@@ -821,7 +821,7 @@
 				)
 			)
 		)
-		(property "Description" "Cable to the mainboard port J5: pin 1 COL14, 2 ENC_A, 3 GND, 4 ENC_B, 5 ENC_SW (JST SH 1.0 mm, side entry)"
+		(property "Description" "Cable to the mainboard port J5: pin 1 ENC_SW, 2 ENC_B, 3 GND, 4 ENC_A, 5 COL14 (JST SH 1.0 mm, side entry). J1 faces J5 across the notch, so the cable is reversed (J1 pin n to J5 pin 6 - n, parallel wires)"
 			(at 160.02 80.01 0)
 			(hide yes)
 			(effects
@@ -942,7 +942,7 @@
 		)
 		(uuid "e76d0d70-d384-4973-b9e2-3e74a6c8d08b")
 	)
-	(label "COL14"
+	(label "ENC_SW"
 		(at 149.86 74.93 180)
 		(effects
 			(font
@@ -959,7 +959,7 @@
 		)
 		(uuid "bd3857fb-db59-4f41-8ca2-bf64e2e1ab33")
 	)
-	(label "ENC_A"
+	(label "ENC_B"
 		(at 149.86 77.47 180)
 		(effects
 			(font
@@ -1004,7 +1004,7 @@
 		)
 		(uuid "b51a8db2-3ce0-43f6-81aa-e02ac4021953")
 	)
-	(label "ENC_B"
+	(label "ENC_A"
 		(at 149.86 82.55 180)
 		(effects
 			(font
@@ -1021,7 +1021,7 @@
 		)
 		(uuid "8c6577c9-5cb1-4881-95cf-c21b4505ca74")
 	)
-	(label "ENC_SW"
+	(label "COL14"
 		(at 149.86 85.09 180)
 		(effects
 			(font

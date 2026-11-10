@@ -7,19 +7,22 @@ which no longer carries the encoder. KiCad 10 project, 2 layers, 1.6 mm FR4.
   20 mm shaft, push switch pressed along the shaft; LCSC C49673168, which showed no stock on 2026-10-28). Same
   body and footprint as the old SW3 (which was the 30 mm PEC12R-2230F-S0024), with the shorter shaft
   (`../3dmodels/Bourns_PEC12R-2x20F-S_standin.step`). Through-hole; its two frame tabs are on GND.
-- **Cable port:** J1, JST SH 1.0 mm, 5 pins, side entry (SM05B-SRSS-TB), on the **bottom** side with the cable
-  leaving at the -u edge. It plugs into the mainboard's J5 with a straight (pin 1 to pin 1) cable: a pre-made
-  5-pin 1.0 mm SH cable, or SHR-05V-S housings with SSH-003T contacts.
+- **Cable port:** J1, JST SH 1.0 mm, 5 pins, side entry (SM05B-SRSS-TB), on the **bottom** side, its mouth facing
+  +u (toward the shaft). The mainboard's J5 faces it across the notch on the same line, so the cable runs straight
+  under the module: about 25 mm overall (housing end to end), 5 parallel wires with both latches on the same side,
+  which makes it a reversed cable (J1 pin n to J5 pin 6 − n; the pin numbers below are matched to that). Crimp it
+  from SHR-05V-S housings and SSH-003T contacts with 30–32 AWG wire, or shorten a pre-made reversed cable.
+  Trim the encoder's through-hole pins to 0.5 mm or less on the bottom: the cable runs 0.2 under their uncut tips.
 - **Nothing else.** The 10 nF debounce capacitors on A and B and the push-switch diode D114 stay on the
   mainboard, so the pin map and the firmware did not change. No expansion ports on either board.
 
-| J1 / J5 pin | Net | Encoder pad | MCU pin |
-| --- | --- | --- | --- |
-| 1 | COL14 | S1 (push switch) | matrix column 14, with diode D114 on the mainboard |
-| 2 | ENC_A | A | P0.11 |
-| 3 | GND | C (common) | |
-| 4 | ENC_B | B | P0.12 |
-| 5 | ENC_SW | S2 (push switch) | matrix row 0 through D114 |
+| J5 pin (mainboard) | J1 pin (module) | Net | Encoder pad | MCU pin |
+| --- | --- | --- | --- | --- |
+| 1 | 5 | COL14 | S1 (push switch) | matrix column 14, with diode D114 on the mainboard |
+| 2 | 4 | ENC_A | A | P0.11 |
+| 3 | 3 | GND | C (common) | |
+| 4 | 2 | ENC_B | B | P0.12 |
+| 5 | 1 | ENC_SW | S2 (push switch) | matrix row 0 through D114 |
 
 ## Geometry
 
@@ -33,11 +36,13 @@ from the PCB's top face.
   u = 31.5 (20 mm shaft). Shaft axis at v = 11.0 and 10.0 mm above the PCB top.
 - Two mounting holes, 2.2 mm (M2), at (2.7, 2.7) and (2.7, 19.3). The 12.5 mm-wide encoder body spans
   v 4.75 to 17.25.
-- J1's pad row at u = 5.3, v = 9 to 13 (pin 1 at v = 13); its courtyard is u 0.0 to 6.6, v 6.6 to 15.4.
-  The cable leaves toward -u.
-- On the mainboard, J5 is on the back to the right of the corner notch: pad row at x = 331.8 mm, y = 44.5
-  (pin 5) to 48.5 (pin 1), body toward -x (courtyard about x 326.9 to 333.1, y 41.9 to 51.1), cable leaving
-  toward -x into the notch. The notch is open to the mainboard's top edge, x 304.0 to 326.4 mm and y 39.0 to
+- J1's pad row at u = 1.3, v = 9 (pin 1) to 13 (pin 5); its body is u 0.8 to 5.8 and its mouth faces +u, so the
+  plug sits under the module's left half and the cable leaves toward +u, under the encoder (mainboard x 309.7).
+  (Before round 5 it faced -u, into the mainboard's notch edge, where no plug could go in.)
+- On the mainboard, J5 is on the back to the right of the corner notch: footprint at (329.8, 49.54) rot 90, pad
+  row at x = 331.8 mm, y = 47.54 (pin 5) to 51.54 (pin 1), on the same line as J1 (centre y 49.54, the shaft's
+  axis), mouth at x 327.3 facing -x into the notch. The two mouths are 17.6 mm apart; the cable drops 1.8 mm from
+  J1 (under the module, z 1.8) to J5 (under the mainboard), and the plate is 3.3 mm or more above it. The notch is open to the mainboard's top edge, x 304.0 to 326.4 mm and y 39.0 to
   57.0 mm, so the module (left edge at x 303.905) sits in it, with a 4.2 mm lobe at (306.6, 57.8) for the
   head of its lower M2 screw (its post is at y 57.82); the upper screw head is inside the notch.
 
