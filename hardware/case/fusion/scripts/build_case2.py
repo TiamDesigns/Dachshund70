@@ -51,6 +51,10 @@ COVER_HOOD = dict(X0=130.245, X1=143.505, Z_BASE=6.6, R=9.6, R_END=1.5, CAV_X0=1
 # Gasket retainers: 44.1 x 4.55 x 4.1 plus two ears each (centre +-18.0, outer face 65.85 -> screw at |y| 68.4, ear R2.8,
 # z -0.6 .. 1.4, R1.0 where they meet the bar), M2 x 8 countersunk (DIN 965) up into the top block, taps Dia 1.6 drilled to z 9.4.
 RETAINER_EARS = dict(DX=18.0, Y=68.4, R=2.8, Z=(-0.6, 1.4), FILLET=1.0, POCKET_CLEAR=0.1, SCREW='M2x8 DIN 965', DRILL_TO=9.4)
+# Fourth round (in the .f3d only): the cover's two case screws are M2 x 8 countersunk (DIN 965) in the same ears and places
+# (90 deg countersink 4.0 -> 2.2 clearance, taps Dia 1.6 drilled to z 12.2, 5.4 of thread), replacing COVER_V35's M3 x 8;
+# the module's two screws are M2 x 5 socket head (DIN 912, Dia 3.8 x 2.0), replacing the pan heads.
+COVER_SCREWS = dict(SCREW='M2x8 DIN 965', CSK_D=4.0, CLEAR_D=2.2, TAP_D=1.6, DRILL_TO=12.2, MODULE_SCREW='M2x5 DIN 912')
 
 TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
@@ -918,14 +922,15 @@ def build(prm):
         sk, to_sk = sketch(tp(6.9, 'L led guide pocket start'), 6.9, 'LED guide pocket (local)')
         sk.sketchCurves.sketchLines.addTwoPointRectangle(to_sk(LEDX[0], -33.95 - 0.3), to_sk(LEDX[1], -28.2 + 0.3))
         cut(['Top shell'], extrude_all(sk, ROOF_Z - 6.9))
-        led_first, led_last = p['DISP_CX'] - OUTER_HALF + 1.5, p['DISP_CX'] + OUTER_HALF - 1.5     # holes of dia 3.0: outer edges flush with the frame's
-        led_x = [led_first + i * (led_last - led_first) / 4 for i in range(5)]
+        # holes of dia 3.0 straight over the LEDs: D3-D7 at an even 5.5 pitch centred on the screen (KiCad x 311.75 .. 333.75,
+        # since 1611d2c; the holes were at a 6.375 pitch, flush with the window's frame, before)
+        led_x = [p['DISP_CX'] + 5.5 * (i - 2) for i in range(5)]
         sk, to_sk = sketch(tp(ROOF_Z - 1.0, 'L led holes start'), ROOF_Z - 1.0, 'LED holes (local)')
         for lx in led_x:
             sk.sketchCurves.sketchCircles.addByCenterRadius(to_sk(lx, -30.95), mm(1.5))
         cut(['Top shell'], extrude_all(sk, 4.2))
         print('LED hole x', [round(v, 3) for v in led_x], 'window x', round(wl, 3), round(we, 3))
-        mb_led = [134.75, 140.25, 145.75, 151.25, 156.75]       # the LEDs: D4-D7 stay, D3 moves 2.5 to an equal 5.5 pitch; the printed guide's bores fan out to the holes
+        mb_led = list(led_x)       # the LEDs, under their holes: every bore is straight
         print('LED hole x %s; board LED x %s; bore jogs %s' % ([round(v, 3) for v in led_x], mb_led, [round(a - b, 2) for a, b in zip(led_x, mb_led)]))
 
         # ---- LED light guide (printed, opaque): one bore per LED, so the five LEDs cannot bleed into each other. A block in the
@@ -941,9 +946,9 @@ def build(prm):
         cut(['HW LED guide'], list(extrude_all(gsp, 6.6 - PCB_T + 0.2)), Join)
         for bi_, (lm_, lt_) in enumerate(zip(mb_led, led_x)):
             sa_, sat = sketch(tp(PCB_T - 0.1, 'L bore bottom %d' % bi_), PCB_T - 0.1, 'LED bore bottom %d' % bi_)
-            sa_.sketchCurves.sketchCircles.addByCenterRadius(sat(lm_, -30.95), mm(1.7))
+            sa_.sketchCurves.sketchCircles.addByCenterRadius(sat(lm_, -30.95), mm(1.05))     # dia 2.1: 0.8 walls in the 3.7 spigots
             sb_, sbt = sketch(tp(ROOF_Z + 0.1, 'L bore top %d' % bi_), ROOF_Z + 0.1, 'LED bore top %d' % bi_)
-            sb_.sketchCurves.sketchCircles.addByCenterRadius(sbt(lt_, -30.95), mm(1.5))
+            sb_.sketchCurves.sketchCircles.addByCenterRadius(sbt(lt_, -30.95), mm(1.05))
             li_ = root.features.loftFeatures.createInput(NewB)
             li_.loftSections.add(sa_.profiles.item(0))
             li_.loftSections.add(sb_.profiles.item(0))
@@ -1217,94 +1222,60 @@ def build(prm):
         cut(['HW Accent weight bar'], [wbox(-WIN_X - 1, WIN_X + 1, WIN_Y0 - 1, Y_STEP, Z_FRONT, Z_BACK + 1, 'Body top front')])
         cut(['HW Accent weight bar'], [body('Weight flange')], Join)
 
-        # four M3 x 5 countersunk screws from inside, as far apart as the flange allows: at the flange's long ends (x +/-103.5) and 20 apart
-        # in y (y 2.5 on the floor's 6.5 level, y 22.5 on its 7.85 level); 3.8 of thread in the ledge, over 1.5 of wall to every edge
-        # M2 x 4 countersunk (DIN 965): countersink 4.0 -> 2.2 (0.9 deep, 0.6 land in the 1.5 flange), taps 1.6 drilled to the tip + 1.0
-        # (>= 1.0 of floor under the drill point). The ledge risers' R1.0 corners and the flange's matching ones are in the .f3d only.
-        WSCREWS = [(-103.5, 2.5, Z_BACK, LEDGE_B), (103.5, 2.5, Z_BACK, LEDGE_B), (-103.5, 30.5, Z3, LEDGE_C), (103.5, 30.5, Z3, LEDGE_C)]
-        wcs = None
-        for sx_, sy_, zt_, zl_ in WSCREWS:
-            q = tbm.createCylinderOrCone(P3(sx_, sy_, zt_ + 0.05), mm(2.05), P3(sx_, sy_, zt_ - 0.9), mm(1.1))
-            tbm.booleanOperation(q, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 0.9), mm(1.1), P3(sx_, sy_, zl_ - 0.05), mm(1.1)), UNION)
+        # four M3 countersunk screws (DIN 965, dk 5.5) from inside, at the corners of the flange's long ends. The front corners are too
+        # thin for an M3 (under 4 mm from the desk to the weight's top), so the front pair sits at the front of the 5.01 ledge (y 13.0,
+        # M3 x 5, 3.5 of thread) and the back pair at the back corners on the 6.34 ledge (y 33.0, M3 x 6, 4.5 of thread). 90 deg
+        # countersinks 5.7 -> 3.4 (1.15 deep, a 0.35 land in the 1.5 flange); taps 2.5 with flat bottoms at the tip + 0.5 / + 0.8
+        # (z 1.0 / 1.04: 1.0 of floor under them; bottoming tap). The ledge risers' R1.0 corners are in the .f3d only.
+        WSCREWS = [(-102.5, 13.0, Z_BACK, LEDGE_B, 5, 1.0), (102.5, 13.0, Z_BACK, LEDGE_B, 5, 1.0),
+                   (-102.5, 33.0, Z3, LEDGE_C, 6, 1.042), (102.5, 33.0, Z3, LEDGE_C, 6, 1.042)]
+        wcs, wtap = None, None
+        for sx_, sy_, zt_, zl_, L_, zd_ in WSCREWS:
+            q = tbm.createCylinderOrCone(P3(sx_, sy_, zt_ + 0.05), mm(2.9), P3(sx_, sy_, zt_ - 1.15), mm(1.7))
+            tbm.booleanOperation(q, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 1.15), mm(1.7), P3(sx_, sy_, zl_ - 0.05), mm(1.7)), UNION)
+            t_ = tbm.createCylinderOrCone(P3(sx_, sy_, zl_ + 0.05), mm(1.25), P3(sx_, sy_, zd_), mm(1.25))
             if wcs is None:
-                wcs = q
+                wcs, wtap = q, t_
             else:
                 tbm.booleanOperation(wcs, q, UNION)
+                tbm.booleanOperation(wtap, t_, UNION)
         cut(['HW Accent weight bar'], [add_temp(wcs, 'Weight countersink tool')])
-        for zl_ in sorted(set(s_[3] for s_ in WSCREWS)):
-            skt3 = root.sketches.add(zp(zl_, 'weight tap plane %.1f' % zl_))
-            skt3.name = 'Weight screw taps %.1f' % zl_
-            skt3.isLightBulbOn = False
-            for sx_, sy_, zt_, zl2_ in WSCREWS:
-                if zl2_ == zl_:
-                    skt3.sketchCurves.sketchCircles.addByCenterRadius(skt3.modelToSketchSpace(P(sx_, sy_, zl_)), mm(0.8))
-            et = ext.createInput(profs_of(skt3), NewB)
-            zt3 = [s_[2] for s_ in WSCREWS if s_[3] == zl_][0]
-            et.setOneSideExtent(adsk.fusion.DistanceExtentDefinition.create(adsk.core.ValueInput.createByReal(mm(zl_ - (zt3 - 5.0)))), adsk.fusion.ExtentDirections.NegativeExtentDirection)
-            cut(['Bottom shell'], list(ext.add(et).bodies))
+        cut(['Bottom shell'], [add_temp(wtap, 'Weight tap tool')])
         n_scr = 0
-        for sx_, sy_, zt_, zl_ in WSCREWS:
+        for sx_, sy_, zt_, zl_, L_, zd_ in WSCREWS:
             n_scr += 1
-            head = tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 0.05), mm(1.9), P3(sx_, sy_, zt_ - 0.95), mm(1.0))
-            tbm.booleanOperation(head, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 0.9), mm(0.8), P3(sx_, sy_, zt_ - 4.0), mm(0.8)), UNION)
-            add_temp(head, 'HW M2x4 CSK screw weight %d' % n_scr)
+            head = tbm.createCylinderOrCone(P3(sx_, sy_, zt_), mm(2.75), P3(sx_, sy_, zt_ - 1.25), mm(1.5))
+            tbm.booleanOperation(head, tbm.createCylinderOrCone(P3(sx_, sy_, zt_ - 1.25), mm(1.25), P3(sx_, sy_, zt_ - L_), mm(1.25)), UNION)
+            add_temp(head, 'HW M3x%d CSK screw weight %d' % (L_, n_scr))
 
-        # ---- engraving on the polished face (viewed from below, back edge up: the dog at the left, the name at the right; world x = -u).
-        # The dachshund is a filled silhouette in a 0.3 deep flat-floored pocket (the matte, bead-blasted floor), with 0.4 wide detail grooves
-        # 0.5 deep for the ear, chest, leg separations and the eye.
-        def cmr(pts, per=6, closed=False, alpha=0.5):
-            """Centripetal Catmull-Rom through the points: smooth, no overshoot or kinks with uneven spacing."""
-            n_ = len(pts)
-            if closed:
-                q = [pts[-1]] + list(pts) + [pts[0], pts[1]]
-                segs = range(1, n_ + 1)
-            else:
-                q = [(2 * pts[0][0] - pts[1][0], 2 * pts[0][1] - pts[1][1])] + list(pts) + [(2 * pts[-1][0] - pts[-2][0], 2 * pts[-1][1] - pts[-2][1])]
-                segs = range(1, len(q) - 2)
-            out = []
-            for i_ in segs:
-                p0, p1, p2, p3 = q[i_ - 1], q[i_], q[i_ + 1], q[i_ + 2]
-                t0 = 0.0
-                t1 = t0 + math.hypot(p1[0] - p0[0], p1[1] - p0[1]) ** alpha
-                t2 = t1 + math.hypot(p2[0] - p1[0], p2[1] - p1[1]) ** alpha
-                t3 = t2 + math.hypot(p3[0] - p2[0], p3[1] - p2[1]) ** alpha
-                for k_ in range(per):
-                    t = t1 + (t2 - t1) * k_ / per
-                    a1 = [(t1 - t) / (t1 - t0) * p0[j] + (t - t0) / (t1 - t0) * p1[j] for j in (0, 1)]
-                    a2 = [(t2 - t) / (t2 - t1) * p1[j] + (t - t1) / (t2 - t1) * p2[j] for j in (0, 1)]
-                    a3 = [(t3 - t) / (t3 - t2) * p2[j] + (t - t2) / (t3 - t2) * p3[j] for j in (0, 1)]
-                    b1 = [(t2 - t) / (t2 - t0) * a1[j] + (t - t0) / (t2 - t0) * a2[j] for j in (0, 1)]
-                    b2 = [(t3 - t) / (t3 - t1) * a2[j] + (t - t1) / (t3 - t1) * a3[j] for j in (0, 1)]
-                    out.append(tuple((t2 - t) / (t2 - t1) * b1[j] + (t - t1) / (t2 - t1) * b2[j] for j in (0, 1)))
-            if not closed:
-                out.append(pts[-1])
-            return out
-
-        DOG_OUT = [(0.5, 6.6), (2.4, 9.6), (5.0, 12.8), (8.4, 15.0), (14.0, 16.8), (21.0, 18.4), (28.0, 19.8), (33.5, 21.8), (36.6, 25.2), (39.8, 28.2), (43.4, 29.8), (47.6, 29.0), (50.6, 27.8), (53.0, 26.4), (49.8, 25.0), (46.4, 24.2), (43.4, 22.8), (41.6, 20.6), (41.8, 17.0), (43.0, 14.0), (43.7, 10.0), (44.4, 4.6), (44.9, 1.2), (45.7, 0.1), (41.6, 0.0), (41.3, 1.4), (41.6, 5.4), (40.6, 9.6), (34.0, 11.2), (27.0, 11.0), (21.0, 11.8), (18.8, 8.8), (17.2, 5.0), (17.8, 1.4), (18.0, 0.1), (14.4, 0.0), (14.2, 1.6), (14.8, 5.4), (12.2, 8.8), (9.0, 11.8), (7.0, 11.8), (3.6, 8.4)]
-        DOG_LINES = {'ear': [(40.6, 28.6), (38.2, 25.6), (37.2, 22.0), (38.4, 19.0), (40.2, 19.4), (41.0, 21.8)], 'chest': [(41.9, 16.8), (40.6, 14.6), (38.8, 13.8)], 'front legs': [(43.2, 8.6), (43.4, 1.6)], 'hind legs': [(16.4, 8.6), (16.2, 1.8)]}
-        EYE = (47.8, 27.4, 0.55 * 1.45 / 1.15)
-        DOG_S, DOG_CX, DOG_Y0 = 1.45, 0.0, -16.6             # the dog above the name, centred on the 76.1 mm face (feet at y -16.6)
-        dog_xy = lambda u_, v_: (DOG_CX - DOG_S * (u_ - 26.7), DOG_Y0 + DOG_S * v_)
-
-        sk_p = root.sketches.add(zp(h, 'dog pocket plane'))
-        sk_p.name = 'Dachshund silhouette (pocket 0.3)'
+        # ---- engraving on the polished face (viewed from below, back edge up; world x = -u). A paw print above the name: four
+        # toe beans (ellipses) over a main pad (a closed fitted spline through PAW_PAD, symmetric, three soft lobes at its base),
+        # each a 0.3 deep flat-floored pocket (the matte, bead-blasted floor). 46.1 x 43.2 at PAW_S, bottom at y -16.6, centred in x;
+        # the gaps between the pads are 2.2 or more. It replaced the dachshund (dog_proto.py) in the fourth round.
+        PAW_HALF = [(0, 20.6), (6.4, 19.9), (11.6, 16.9), (14.9, 12.2), (15.6, 7.2), (13.9, 3.0), (10.4, 0.7), (7.0, 0.9), (4.8, 1.35), (2.4, 0.4)]
+        PAW_PAD = PAW_HALF + [(0, 0.0)] + [(-u_, v_) for u_, v_ in reversed(PAW_HALF[1:])]
+        PAW_TOES = [(5.7, 31.0, 4.7, 6.3, -9), (-5.7, 31.0, 4.7, 6.3, 9), (15.3, 24.2, 4.2, 5.6, -30), (-15.3, 24.2, 4.2, 5.6, 30)]   # centre, half widths, tilt
+        PAW_S, PAW_X0, PAW_Y0 = 1.159258, 0.0, -16.6
+        paw_xy = lambda u_, v_: (PAW_X0 + PAW_S * u_, PAW_Y0 + PAW_S * v_)
+        sk_p = root.sketches.add(zp(h, 'paw pocket plane'))
+        sk_p.name = 'Paw print (pocket 0.3)'
         sk_p.isLightBulbOn = False
         colp = adsk.core.ObjectCollection.create()
-        for uv in cmr(DOG_OUT, 6, True):
-            colp.add(sk_p.modelToSketchSpace(P(*dog_xy(*uv), h)))
+        for uv in PAW_PAD:
+            colp.add(sk_p.modelToSketchSpace(P(*paw_xy(*uv), h)))
         spp = sk_p.sketchCurves.sketchFittedSplines.add(colp)
-        try:
-            spp.isClosed = True
-        except Exception:
-            pass
-        if sk_p.profiles.count == 0:
-            sk_p.sketchCurves.sketchLines.addByTwoPoints(spp.endSketchPoint, spp.startSketchPoint)
+        spp.isClosed = True
+        for cu_, cv_, ru_, rv_, ang_ in PAW_TOES:
+            a_ = math.radians(ang_)
+            sk_p.sketchCurves.sketchEllipses.add(sk_p.modelToSketchSpace(P(*paw_xy(cu_, cv_), h)),
+                                                 sk_p.modelToSketchSpace(P(*paw_xy(cu_ - rv_ * math.sin(a_), cv_ + rv_ * math.cos(a_)), h)),
+                                                 sk_p.modelToSketchSpace(P(*paw_xy(cu_ + ru_ * math.cos(a_), cv_ + ru_ * math.sin(a_)), h)))
         tools_030 = extrude_all(sk_p, 0.3)
         # name (sans serif), 0.3 deep
         skx = root.sketches.add(zp(h, 'bar text plane'))
         skx.name = 'Weight engraving'
         skx.isLightBulbOn = False
-        ti = skx.sketchTexts.createInput2('Dachshund70', mm(10.5))      # under the dog, centred at y -26.85
+        ti = skx.sketchTexts.createInput2('Dachshund70', mm(10.5))      # under the paw, centred at y -26.85
         ti.setAsMultiLine(skx.modelToSketchSpace(P(-70, -26.85 + 7.0, h)), skx.modelToSketchSpace(P(70, -26.85 - 7.0, h)),
                           adsk.core.HorizontalAlignments.CenterHorizontalAlignment, adsk.core.VerticalAlignments.MiddleVerticalAlignment, 0)
         ti.fontName = 'Fredoka SemiBold'    # SIL OFL, Google Fonts; install the static SemiBold (see hardware/case/README.md)
@@ -1317,45 +1288,6 @@ def build(prm):
         et.setDistanceExtent(False, adsk.core.ValueInput.createByReal(mm(0.3)))
         tools_030 += list(ext.add(et).bodies)
         cut(['HW Accent weight bar'], tools_030)
-        # detail grooves 0.4 wide, 0.5 deep, with round ends
-        HW_ = 0.2
-        groove_tools = []
-        for nm_, pts_dog in DOG_LINES.items():
-            curve = cmr(pts_dog, 8)
-            n_ = len(curve)
-            left, right = [], []
-            for i_ in range(n_):
-                pa, pb_ = curve[max(i_ - 1, 0)], curve[min(i_ + 1, n_ - 1)]
-                tx_, ty_ = pb_[0] - pa[0], pb_[1] - pa[1]
-                tl_ = math.hypot(tx_, ty_)
-                nx_, ny_ = -ty_ / tl_, tx_ / tl_
-                left.append((curve[i_][0] + nx_ * HW_ / DOG_S, curve[i_][1] + ny_ * HW_ / DOG_S))     # 0.4 wide on the face
-                right.append((curve[i_][0] - nx_ * HW_ / DOG_S, curve[i_][1] - ny_ * HW_ / DOG_S))
-            sk_d = root.sketches.add(zp(h, 'dog line plane ' + nm_))
-            sk_d.name = 'Dachshund groove: ' + nm_
-            sk_d.isLightBulbOn = False
-            to_d = lambda uv: sk_d.modelToSketchSpace(P(*dog_xy(*uv), h))
-            col_l, col_r = adsk.core.ObjectCollection.create(), adsk.core.ObjectCollection.create()
-            for uv in left:
-                col_l.add(to_d(uv))
-            for uv in right[::-1]:
-                col_r.add(to_d(uv))
-            spl_l = sk_d.sketchCurves.sketchFittedSplines.add(col_l)
-            spl_r = sk_d.sketchCurves.sketchFittedSplines.add(col_r)
-            tl0 = (curve[1][0] - curve[0][0], curve[1][1] - curve[0][1])
-            tn0 = (curve[-1][0] - curve[-2][0], curve[-1][1] - curve[-2][1])
-            for (pt_, tv_, sa_, sb2_) in ((curve[-1], tn0, spl_l.endSketchPoint, spl_r.startSketchPoint),
-                                          (curve[0], (-tl0[0], -tl0[1]), spl_r.endSketchPoint, spl_l.startSketchPoint)):
-                tl_ = math.hypot(*tv_)
-                mid_ = to_d((pt_[0] + tv_[0] / tl_ * HW_, pt_[1] + tv_[1] / tl_ * HW_))
-                sk_d.sketchCurves.sketchArcs.addByThreePoints(sa_, mid_, sb2_)
-            groove_tools += extrude_all(sk_d, 0.5)
-        sk_e = root.sketches.add(zp(h, 'dog eye plane'))
-        sk_e.name = 'Dachshund eye'
-        sk_e.isLightBulbOn = False
-        sk_e.sketchCurves.sketchCircles.addByCenterRadius(sk_e.modelToSketchSpace(P(*dog_xy(EYE[0], EYE[1]), h)), mm(EYE[2]))
-        groove_tools += extrude_all(sk_e, 0.5)
-        cut(['HW Accent weight bar'], groove_tools)
 
         # small chamfered frame round the face's edge
         try:
@@ -1376,7 +1308,7 @@ def build(prm):
         except Exception as ex_:
             print('weight chamfer failed:', str(ex_)[:100])
         wbod = body('HW Accent weight bar')
-        print('weight: face %.1f x %.1f (R4), flange %.1f x %.1f (R5), thickness %.1f (front) %.1f (back): %.2f cm3 -> brass %.0f g, steel %.0f g, aluminium %.0f g, titanium %.0f g; screws %d M3x5 CSK' % (
+        print('weight: face %.1f x %.1f (R4), flange %.1f x %.1f (R5), thickness %.1f (front) %.1f (back): %.2f cm3 -> brass %.0f g, steel %.0f g, aluminium %.0f g, titanium %.0f g; screws %d M3 CSK (DIN 965)' % (
             2 * WIN_X, WIN_Y1 - WIN_Y0, 2 * FL_X, FL_Y1 - FL_Y0, Z_FRONT - h, Z_BACK - h, wbod.volume, wbod.volume * 8.5, wbod.volume * 7.85,
             wbod.volume * 2.70, wbod.volume * 4.43, n_scr))
         try:

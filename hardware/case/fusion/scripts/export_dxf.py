@@ -7,7 +7,7 @@ TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
 LIFT = 3.0 + 4.0 * C + (121.1 / 2 + 0.75) * S
 FACE_CY = -2.35      # world y of the weight face's centre (face y -40.4..35.7)
-TEXT_BELOW_Y = -19.0  # the dog stands above this world y, the name sits below it
+TEXT_BELOW_Y = -19.0  # the paw print sits above this world y, the name below it
 
 
 class Dxf:
@@ -124,20 +124,11 @@ def weight_dxf():
         z = f.pointOnFace.z * 10
         if n.z < -0.99 and 0.3 < z < 0.7:
             faces.append((f, z))
-    biggest = max(faces, key=lambda t: t[0].area)[0]
-    d = Dxf(['DOG_SILHOUETTE', 'DOG_DETAIL', 'TEXT'])
+    d = Dxf(['PAW', 'TEXT'])
     cnt = {}
     for f, z in faces:
-        cy = f.centroid.y * 10
-        if f == biggest:
-            layer = 'DOG_SILHOUETTE'
-        elif cy > TEXT_BELOW_Y:
-            layer = 'DOG_DETAIL'
-        else:
-            layer = 'TEXT'
+        layer = 'PAW' if f.centroid.y * 10 > TEXT_BELOW_Y else 'TEXT'    # the paw's five pads, the name's letters
         for lp in f.loops:
-            if not lp.isOuter and f == biggest:
-                continue  # the grooves inside the silhouette are output as their own faces
             pts = loop_pts(lp, fx)
             if len(pts) >= 3:
                 d.poly(layer, pts)
