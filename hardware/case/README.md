@@ -25,13 +25,13 @@ replaced by this one. Git history has it.
 
 | File | What |
 | --- | --- |
-| `Dachshund70-Case-Top.step` | Top block (aluminium): the bezel, key opening, sock pockets and the retainer openings under them, screen window and drop-in opening, LED holes and guide pocket, encoder cutout, the cover's ear pocket and taps, screw taps |
+| `Dachshund70-Case-Top.step` | Top block (aluminium): the bezel, key opening, sock pockets and the retainer openings under them with the retainers' ear pockets and M2 taps, screen window and drop-in opening, LED holes and guide pocket, the encoder cover's opening, its front boss, back-ear pocket and two M3 taps, screw taps |
 | `Dachshund70-Case-Bottom.step` | Bottom block (aluminium): the stepped floor, battery bay, USB-C opening, power switch slot, weight window and ledge pocket, rail pockets, screw holes |
 | `Dachshund70-Case-Ring.step` | The accent ring (1.6 mm sheet) |
 | `Dachshund70-Case-Weight.step` | The brass weight with its engraving |
 | `Dachshund70-Case-Knob.step` | The knurled knob |
-| `Dachshund70-Case-Encoder-Cover.step` | The cover over the encoder, tangent to the knob; the encoder module screws to its foot, and it screws to the top block |
-| `Dachshund70-Case-Gasket-Retainer.step` | One of the six identical gasket retainers (the one at the back-left nub, at its assembly position) |
+| `Dachshund70-Case-Encoder-Cover.step` | The cover over the encoder: a Ø19.2 dome on the knob's axis; the encoder module screws to its foot, and one M3 on each side holds it to the top block |
+| `Dachshund70-Case-Gasket-Retainer.step` | One of the six identical gasket retainers with its two screw ears (the one at the back-left nub, at its assembly position) |
 | `Dachshund70-Case-Switch-Cap.step` | The cap on the power switch's lever (printed or POM) |
 | `Dachshund70-Case-LED-Guide.step` | The light guide over the five status LEDs (3D printed) |
 | `Dachshund70-Case-Assembly.step` | Everything: boards, plate, battery, screen, the keycaps with the 6.25 u spacebar, the case parts, screws and rails (64 MB, so import it with care) |
@@ -66,7 +66,10 @@ KiCad y = 99.55 − local y.
   block. Under each nub the whole pocket region (both socks and the nub's clearance) is open from below, 44.3 × 4.65,
   and a 6061 gasket retainer (44.1 × 4.55 × 4.1, R1.1 corners, 0.1 clear in its R1.0 pocket) fills it from the ring up
   to the sock floor (local z 3.5): it is the floor under both socks and the nub, it seats against the top block's step
-  at 3.5 and the ring clamps it. All six are the same part. 4 × M3 × 12 along the front and 4 × M3 × 20 along the back
+  at 3.5 and the ring clamps it. All six are the same part. Each is screwed up into the top block with two M2 × 8
+  countersunk screws (DIN 965) through two ears on its outer side at ±18.0 from its centre (R2.8 lobes 2.0 thick, local z
+  −0.6 to 1.4, R1.0 where they meet the bar, in pockets 0.1 clear), the heads flush with its underside so the ring still
+  seats flat. The taps (Ø1.6) are drilled to z 9.4 (the tip + 2), 5.9 of thread, with 1.7 or more of metal above them. 4 × M3 × 12 along the front and 4 × M3 × 20 along the back
   (countersunk, from below) hold the blocks together through the ring; their taps are drilled to the screw tip + 3
   and threaded to the tip + 1.5.
 - Ring joint: twelve slots 12.2 × 1.7 in the ring for the blocks' 11.8 × 1.3 tabs (0.2 a side). The back-centre pair
@@ -79,19 +82,28 @@ KiCad y = 99.55 − local y.
   sides for the R3 corners: foam-tape it). The floor stays at 1.0: raised to 1.5 the cell would touch J1 and J2. The
   cell's top (Z 9.5) already overlaps J1 (the JST-SH on the mainboard's underside, Z 8.8 to 9.4 over it) by about
   0.7 mm, as it did before; a 7.3 mm cell or J1 moved off the bay fixes that.
-- Weight: brass, face 185.0 × 40.0 (R4 corners, y −16.5 to 23.5), flange 216.0 × 53.0 (R5, y −19 to 34), 51.1 cm³
-  (brass 435 g, Ti-6Al-4V 227 g). It drops in from inside through a window in the floor; its flange rests on stepped
-  ledges at z 3.68, 5.01 and 6.34 (the risers 0.1 behind the flange's steps, R1.0 where they meet the sides) and its
-  top sits 0.1 under the floor. Four M2 × 4 countersunk screws (DIN 965) from inside, at (±103.5, 2.5) and
-  (±103.5, 30.5), in countersinks that leave a 0.6 land in the 1.5 flange, into M2 taps drilled Ø1.6 to the tip + 1.0
-  (1.0 and 2.4 of floor under the drill point). No screw heads show underneath. The dog and the text are scaled by
-  40/30.6; the grooves stay 0.4 wide.
+- Weight: brass, face 185.0 × 76.1 (R4 corners, y −40.4 to 35.7: from the number row's top edge to the Shift row's
+  bottom edge, local y 35.74 and −40.46, square to the desk), flange 216.0 × 80.9 (R5, y −42.9 to 38.0), 87.5 cm³
+  (brass 744 g, Ti-6Al-4V 388 g). It drops in from inside through a window in the floor; its top sits 0.1 under the
+  floor: sloped like the floor in front of y −21.0 (3.8 at the face's front edge, 3.7 thick there), then 5.2, 6.5 and
+  7.8 at the steps. The flange rests on ledges 1.5 under that: sloped at the front (z 2.2 to 3.68), then 3.68, 5.01
+  and 6.34 (the risers 0.1 behind the flange's steps, R1.0 where they meet the sides); 2.2 of floor under the front
+  ledge. Four M2 × 4 countersunk screws (DIN 965) from inside, at (±103.5, 2.5) and (±103.5, 30.5) as before, in
+  countersinks that leave a 0.6 land in the 1.5 flange, into M2 taps drilled Ø1.6 to the tip + 1.0. No screw heads
+  show underneath. The engraving: the dog (scale 1.45) above "Dachshund70" (10.5 tall), centred on the face; the
+  grooves stay 0.4 wide.
 - Knob and cover: Ø19.2 × 15.1 knurled knob on the encoder's 20 mm D shaft (D-bore 6.0 with the flat at 4.5). The
-  cover is 19.2 wide with R7 top corners, tangent to the knob at its sides and top (a round dome can't keep 1 mm of
-  wall over the encoder body's corners, 9.18 from the axis). The encoder module screws up into the cover's foot
-  (2 × M2 × 5 through the module's holes; the front tap sits 0.08 toward the plate's bay so its wall keeps 0.15 to
-  the plate), and the cover screws up into the top block through its rear ear (2 × M2 × 6 into taps 4.0 deep, 1.2
-  under the top face). The old M2 posts in the top block are gone.
+  cover is a Ø19.2 dome on the knob's axis (local y 50.03, z 13.395), x 135.0 to 143.5 (0.15 from the knob), its
+  walls tangent to the knob down to the encoder module's PCB: just big enough for the PEC12R body (cavity
+  12.84 × 13.7 from x 136.1, 0.15 round the body, R0.5 corners at its closed end; frame-ear pockets to x 138.825).
+  The body's top corners are 9.16 from the axis, so the dome's wall over the cavity's corners is only 0.21 (accepted
+  to keep the dome round). A foot (x 127.15 to 135, up to z 7.5) takes the module's two M2 × 5 screws (taps Ø1.6
+  through, R1.8 bosses, on the module's holes). The cover screws up into the top block with one M3 × 8 countersunk
+  screw (DIN 7991) on each side of the axis, through flat ears 2.6 thick (z 2.2 to 4.8, off the module's PCB, heads
+  flush): the front one at (130.575, 35.8) into a Ø5.0 boss that hangs from the top block through the plate's
+  enlarged encoder notch, the back one at (139.25, 64.4) in a pocket in the back wall. Both taps are Ø2.5 drilled to
+  z 12.2 (1.0 under the top face), 5.4 of thread. Clearances: 1.7 to the keycaps pressed 4.0 (5.7 at rest), 0.15 to
+  the plate, knob and encoder. The top block's opening follows the dome (0.25 round it, R1.75 corners).
 - Screen: GoodDisplay GDEY0213B74 on end beside the knob, behind a window with a 45° frame (a 0.3 land at the
   glass, no knife edge); the glass and its driver board drop in from below through an opening the glass's size
   (29.8 × 59.8, R1.0). Five LEDs under it in an evenly spaced row, with a printed light guide (below).
@@ -125,16 +137,28 @@ execute (each defines `run(_context)`).
   The keycap sets it imports are `step/Dachshund70-Keycaps*.step`; they come from this model (the old CadQuery
   `keycaps.py` is gone), so a rebuild needs them in the repo as they are. The rebuild path from these scripts
   has not been re-run end to end since the files were moved here: the `.f3d` is the dependable copy.
-  The November 2026 fixes were made in the `.f3d` as features at the end of the timeline. `build_case2.py` mirrors
+  The November 2026 fixes, and the second round (retainer ears, encoder cover v35, the 76.1 mm weight), were made in the
+  `.f3d` as features at the end of the timeline; the second round's numbers are mirrored at the top of `build_case2.py`
+  (`COVER_V35`, `RETAINER_EARS`) and in its weight section. `build_case2.py` mirrors
   their numbers where that was simple: the ring slots and moved tab, the M3 tap depth, the rails, the battery bay's size
   and the cell's place, the lead-in, the switch slot and cap, the weight (face, flange, M2 screws, engraving scale),
-  the screen drop-in opening and window land, and no module posts. Only in the `.f3d`: the gasket retainers and
-  their openings, the encoder cover's new shape (foot, rear ear, cavity, ear pockets) and its ear pocket and taps in
-  the top block, the light guide's channels, the daughterboard opening, the knob's D-bore, the R3/R5.75 bay corners,
-  the weight ledges' corner radii, and the inside-corner fillets.
+  the screen drop-in opening and window land, and no module posts. Only in the `.f3d`: the gasket retainers, their
+  ears and screws and their openings, the encoder cover (dome, foot, ears, cavity) and its opening, front boss, back
+  pocket and taps in the top block, the weight's sloped front part and ledge, the light guide's channels, the
+  daughterboard opening, the knob's D-bore, the R3/R5.75 bay corners, the weight ledges' corner radii, and the
+  inside-corner fillets.
 - `export_all.py`: writes the part STEP files, the assembly, both keycap sets and the `.f3d`.
 - `export_dxf.py`: writes the two DXFs.
-- `shots.py`, `check_a.py`, `underside.py`: the camera helper and the clearance checks used while designing.
+- `check_a.py`: the clash check. `run_checks(log)` tests the plate, every board part, the battery, the screen and both
+  keycap sets (at rest and pressed 4.0 along the plate's normal) against the case parts, the case parts against each
+  other and the screws against the boards and caps. Known hits: the encoder shaft in the knob's D-bore (the model's
+  shaft is round), the switch cap's press fit on its lever, the module's M2 heads on the mainboard and the cell on J1
+  (both board changes, see BOM.md).
+- `shots.py`, `underside.py`: the camera helper and an underside view used while designing.
+- Placement: the boards, battery, screen and keycaps are placed by setting occurrence transforms, which Fusion doesn't
+  keep when a timeline item is added (they go back to where they were imported). After adding features, put them back
+  (the plate is now its own `Dachshund70-Plate` occurrence, from `hardware/step/Dachshund70-Plate.step`, at local
+  z 4.995) before checking or exporting.
 - `dog_proto.py` + `dog_outline.txt`: the dachshund outline's control points and a quick PIL preview of it.
 
 After a board changes: run `python hardware/export_step.py` for the new board STEPs, rebuild (or move the
@@ -177,7 +201,7 @@ cells of text with the 10 × 16 font. Build the firmware with
 
 - Top and bottom blocks: 6061-T6 aluminium, 3-axis CNC with a ball-end mill for the slopes, bead-blasted and
   anodised. The ring is laser-cut from 1.6 mm sheet from the DXF and anodised in the accent colour. The weight
-  is brass (C360) with a polished face (435 g); steel, aluminium and Ti-6Al-4V weigh 401, 138 and 227 g.
+  is brass (C360) with a polished face (744 g); steel, aluminium and Ti-6Al-4V weigh 687, 236 and 388 g.
 - Setups: the top block is machined from its bottom face (the ring plane, square to the plate) and its top; the
   bottom block from the top, the bottom and the back face (USB-C and switch openings). The bottom block's cavity
   walls are square to the plate, so in a level setup its back wall leans 4° over the floor (about 0.7 mm over its

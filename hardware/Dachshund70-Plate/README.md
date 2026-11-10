@@ -31,7 +31,10 @@ can't drift apart.
   SW606 and SW615) are the soldered ones, so the PCB holds them. The hot-swap 2.25u Mod (SW608) keeps a
   full cutout.
 - **Encoder:** the plate stops short of the roller. A notch takes out the top-right corner,
-  x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
+  x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. From x 305.25 to 322.25 it runs further forward, to y 67.25
+  (`NOTCH_EXT_RIGHT`, `NOTCH_EXT_BOTTOM`): the case's encoder cover stands on the module's board with its walls down
+  through the plate there, and the boss its front M3 screw goes into hangs from the top block through the plate (0.8 mm
+  clear at the bottom, 1.75 at the left). The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
   only to x 326.4) so the web next to the Delete cutout is 2.0 mm; the plate's notch goes on to the right edge so the shaft and the
   wheel on it are clear. The module's own board (below the plate) runs under the web, and nothing of the module stands at plate height there. Supporting the roller is up to the
   case. Since mainboard Rev 1.1 the encoder is on its own module board, so `gen_plate.py` no longer reads
@@ -84,12 +87,13 @@ Edge.Cuts (outline with the six branched nubs, their twelve prongs and the post 
 cutout), in mm, exported with `kicad-cli pcb export dxf --layers Edge.Cuts --output-units mm --mode-single -o Dachshund70-Plate-outline.dxf Dachshund70-Plate.kicad_pcb`. Regenerate it after any change to the
 plate (rerun `gen_plate.py` first). The copper accents exist only on the FR4 plate.
 
-## Encoder module post reliefs
+## Encoder module screw reliefs
 
-The encoder module's two M2 posts stand at mainboard (306.6, 41.7) and (306.6, 57.8). Each has a Ø3.8 mm relief in
-the plate (`POST_RELIEFS`): the case's post bosses are Ø3.4, so 0.2 mm clear all round. With the notch at x ≥ 305.25 and y ≤ 57.0 (plus the
-plate's own opening to the right edge for the roller), the upper post is mostly inside the notch and the lower one's relief
-merges into the notch's bottom edge as a lobe. The web left between the notch and the Delete cutout is 2.0 mm (1.45 mm at the two reliefs, which bite 0.55 mm into it).
+The encoder module screws to the case's encoder cover through its two holes at mainboard (306.625, 41.24) and
+(306.625, 57.84). The cover has a Ø3.6 boss round each tap that reaches 0.575 mm past the notch's left edge, so each
+hole has a Ø3.9 mm relief in the plate (`POST_RELIEFS`, 0.15 mm clear). Both sit inside the notch except for that
+sliver; the one by the top edge is a slot open to the edge. The web left between the notch and the Delete cutout is
+2.0 mm (1.43 mm at the two reliefs).
 
 ## Copper accents
 
