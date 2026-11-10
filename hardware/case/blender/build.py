@@ -56,9 +56,9 @@ M = {
     "plastic": mat("Dark plastic", "#222222", 0.5, 0.0),
     "battery": mat("Battery pouch", "#A8A9AA", 0.35, 0.8),
     # GMK Kaiju-style doubleshot ABS: cream alphas, warm grey mods, red-orange accents
-    "cap_alpha": mat("Kaiju cream", "#E7DDC7", 0.32, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
-    "cap_mod": mat("Kaiju grey", "#77736D", 0.32, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
-    "cap_accent": mat("Kaiju red-orange", "#E2502A", 0.32, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
+    "cap_alpha": mat("Kaiju cream", "#E7DDC7", 0.46, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
+    "cap_mod": mat("Kaiju grey", "#77736D", 0.46, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
+    "cap_accent": mat("Kaiju red-orange", "#E2502A", 0.46, 0.0, **{"Subsurface Weight": 0.12, "Subsurface Scale": 0.0015, "IOR": 1.54, "Specular IOR Level": 0.55}),
     "leg_dark": mat("Legend charcoal", "#2C2A29", 0.32, 0.0),
     "leg_cream": mat("Legend cream", "#EFE7D6", 0.32, 0.0),
 }
@@ -67,7 +67,7 @@ add_bump(M["accent"], 2500, 0.03)
 add_bump(M["plate"], 2000, 0.15)
 add_bump(M["knob"], 2600, 0.02)  # bead-blasted anodising
 for k in ("cap_alpha", "cap_mod", "cap_accent"):
-    add_bump(M[k], 12000, 0.004)  # ABS: a satin moulded finish, barely any texture
+    add_bump(M[k], 4200, 0.035)  # PBT: a fine, dry, grainy texture
 
 def add_dust(m, scale=1100.0, thresh=0.99195, col="#DCD8D0"):  # half-size specks, 15% more of them
     """Sparse sub-millimetre specks: a random few Voronoi cells get a dusty, rough dot."""

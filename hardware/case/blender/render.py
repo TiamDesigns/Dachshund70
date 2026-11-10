@@ -425,11 +425,11 @@ if SCENE == "dramatic":
     bmesh.ops.create_cone(bm3, cap_ends=True, segments=128, radius1=0.042, radius2=0.042, depth=0.095)
     top = max(bm3.faces, key=lambda f: f.calc_center_median().z); bmesh.ops.delete(bm3, geom=[top], context="FACES")
     me3 = bpy.data.meshes.new("Mug"); bm3.to_mesh(me3)
-    mug = link(bpy.data.objects.new("Mug", me3)); mug.location = (0.15, 0.17, 0.0475); me3.materials.append(mug_m)
+    mug = link(bpy.data.objects.new("Mug", me3)); mug.location = (0.25, 0.165, 0.0475); me3.materials.append(mug_m)
     so_ = mug.modifiers.new("wall", "SOLIDIFY"); so_.thickness = 0.0045; so_.offset = -1
     b2 = mug.modifiers.new("bv", "BEVEL"); b2.width = 0.0012; b2.segments = 3; b2.limit_method = "ANGLE"
     for p in me3.polygons: p.use_smooth = True
-    bpy.ops.mesh.primitive_torus_add(major_radius=0.026, minor_radius=0.0065, location=(0.15 + 0.050, 0.17, 0.05),
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.026, minor_radius=0.0065, location=(0.25 + 0.050, 0.165, 0.05),
                                      rotation=(math.radians(90), 0, 0), major_segments=64, minor_segments=24)
     bpy.context.object.data.materials.append(mug_m)
     coffee, nt, cb = node_mat("Coffee with crema")
@@ -444,7 +444,7 @@ if SCENE == "dramatic":
     nt.links.new(ns.outputs["Fac"], mxc.inputs[0]); nt.links.new(rim.outputs[0], mxc.inputs[2])
     nt.links.new(mxc.outputs[0], cc.inputs["Fac"]); nt.links.new(cc.outputs["Color"], cb.inputs["Base Color"])
     cb.inputs["Roughness"].default_value = 0.08
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.0374, depth=0.001, vertices=128, location=(0.15, 0.17, 0.0885))
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0374, depth=0.001, vertices=128, location=(0.25, 0.165, 0.0885))
     bpy.context.object.data.materials.append(coffee)
     cork, nt, kb = node_mat("Cork")
     geo = nt.nodes.new("ShaderNodeNewGeometry")
@@ -456,11 +456,11 @@ if SCENE == "dramatic":
     kb.inputs["Roughness"].default_value = 0.9
     bpk = N(nt, "ShaderNodeBump", Strength=0.6, Distance=0.0006)
     nt.links.new(ck.outputs["Distance"], bpk.inputs["Height"]); nt.links.new(bpk.outputs["Normal"], kb.inputs["Normal"])
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.052, depth=0.005, vertices=128, location=(0.15, 0.17, 0.0025))
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.052, depth=0.005, vertices=128, location=(0.25, 0.165, 0.0025))
     cst = bpy.context.object; cst.data.materials.append(cork)
     cbv = cst.modifiers.new("bv", "BEVEL"); cbv.width = 0.0008; cbv.segments = 3; cbv.limit_method = "ANGLE"
     for o in bpy.data.objects:
-        if o.type == "MESH" and o is not cst and o.location.x == 0.15 and abs(o.location.y - 0.17) < 1e-6:
+        if o.type == "MESH" and o is not cst and abs(o.location.x - 0.25) < 1e-6 and abs(o.location.y - 0.165) < 1e-6:
             o.location.z += 0.005
         if o.type == "MESH" and o.name.startswith("Torus"):
             o.location.z += 0.005
@@ -523,12 +523,12 @@ if SCENE == "dramatic":
     e3 = cr2.color_ramp.elements.new(0.82); e3.color = srgb("#8A9C88")
     nt.links.new(wv2.outputs["Fac"], cr2.inputs["Fac"]); nt.links.new(cr2.outputs["Color"], pbsdf.inputs["Base Color"])
     # pivot on the desk 1 cm in from the back edge; lean the top back onto the wall
-    H, lean = 0.29, math.asin((0.30 - 0.23 - 0.014) / 0.29)
-    pv = link(bpy.data.objects.new("Frame pivot", None)); pv.location = (-0.02, 0.23, 0.0); pv.rotation_euler.x = -lean
-    fr = box("Frame", (0.22, 0.014, H), (0, 0.007, H / 2), frame_m, bevel=0.002); fr.parent = pv
-    pr2 = box("Print", (0.18, 0.002, H - 0.04), (0, -0.0005, H / 2), art); pr2.parent = pv
+    H, lean = 0.22, math.asin((0.30 - 0.235 - 0.014) / 0.22)
+    pv = link(bpy.data.objects.new("Frame pivot", None)); pv.location = (0.44, 0.235, 0.0); pv.rotation_euler.x = -lean
+    fr = box("Frame", (0.17, 0.014, H), (0, 0.007, H / 2), frame_m, bevel=0.002); fr.parent = pv
+    pr2 = box("Print", (0.135, 0.002, H - 0.035), (0, -0.0005, H / 2), art); pr2.parent = pv
     glass = simple_mat("Picture glass", "#FFFFFF", 0.01, **{"Transmission Weight": 1.0, "IOR": 1.52})
-    gl = box("Glass", (0.192, 0.0015, H - 0.028), (0, -0.0022, H / 2), glass); gl.parent = pv; gl.visible_shadow = False
+    gl = box("Glass", (0.146, 0.0015, H - 0.024), (0, -0.0022, H / 2), glass); gl.parent = pv; gl.visible_shadow = False
     copy_cap("Esc", (0.06, -0.185, 0.0), Euler((0, 0, math.radians(32))), floor=MAT_T)
     copy_cap("A", (0.0, -0.145, 0.0), Euler((0, 0, math.radians(-21))), floor=MAT_T)
     copy_cap("Alt", (-0.09, -0.175, 0.0), Euler((0, 0, math.radians(9))), floor=MAT_T)
@@ -543,8 +543,8 @@ if SCENE == "dramatic":
     nt.links.new(bw.outputs["Fac"], bpb.inputs["Height"]); nt.links.new(bpb.outputs["Normal"], bb2.inputs["Normal"])
     z0 = root.location.z
     R_ = 0.0021
-    pts = [(0.0, 0.108, 0.00975 + z0), (0.0, 0.118, 0.0080 + z0), (0.0, 0.127, MAT_T + R_ + 0.001),
-           (0.004, 0.150, R_), (0.030, 0.205, R_), (0.090, 0.232, R_), (0.200, 0.232, R_), (0.300, 0.226, R_), (0.420, 0.232, R_)]
+    pts = [(0.0, 0.108, 0.00975 + z0), (0.0, 0.118, 0.0080 + z0), (-0.004, 0.124, MAT_T + R_ + 0.0008),
+           (-0.06, 0.131, R_ + 0.0004), (-0.16, 0.131, R_), (-0.235, 0.112, R_), (-0.31, 0.13, R_), (-0.38, 0.20, R_), (-0.52, 0.232, R_)]
     cu = bpy.data.curves.new("Cable", "CURVE"); cu.dimensions = "3D"; cu.bevel_depth = R_; cu.bevel_resolution = 6
     cu.resolution_u = 24
     sp = cu.splines.new("NURBS"); sp.points.add(len(pts) - 1); sp.use_endpoint_u = True; sp.order_u = 4
@@ -554,7 +554,80 @@ if SCENE == "dramatic":
     plug = box("Plug", (0.0125, 0.022, 0.0068), (0.0, 0.0905, 0.00975 + z0), shell, bevel=0.0018)
     boot = box("Boot", (0.0075, 0.010, 0.0060), (0.0, 0.1055, 0.00975 + z0), simple_mat("Boot", "#E2D8C4", 0.6), bevel=0.0015)
     # Board fills the frame; shallow depth of field drops the props out of focus
-    cam = camera("Cam", (-0.35, -0.50, 0.31), (-0.008, 0.005, 0.0), lens=55, fstop=8.0)
+    # ---------------- desk setup: monitor, mouse, headphones ----------------
+    def rbox(name, size, loc, m, bevel=0.002, rot=(0, 0, 0), parent=None):
+        o = box(name, size, loc, m, bevel=bevel); o.rotation_euler = rot
+        if parent: o.parent = parent
+        return o
+    # monitor: satin dark-grey shell, slim bezel, matte panel showing an editor
+    shell = simple_mat("Monitor shell", "#2B2B2D", 0.45, 0.0, **{"Coat Weight": 0.1})
+    alu = simple_mat("Stand aluminium", "#B8B8B6", 0.35, 1.0)
+    scr, nt, sb = node_mat("Monitor screen")
+    tx = nt.nodes.new("ShaderNodeTexImage"); tx.image = bpy.data.images.load(os.path.join(os.path.dirname(os.path.abspath(__file__)), "monitor.png"))
+    tcg = nt.nodes.new("ShaderNodeTexCoord"); nt.links.new(tcg.outputs["Generated"], tx.inputs["Vector"])
+    sb.inputs["Base Color"].default_value = srgb("#0C0C0E"); sb.inputs["Roughness"].default_value = 0.35
+    nt.links.new(tx.outputs["Color"], sb.inputs["Emission Color"]); sb.inputs["Emission Strength"].default_value = 0.9
+    mon = link(bpy.data.objects.new("Monitor", None)); mon.location = (0.0, 0.205, 0.0)
+    rbox("Mon base", (0.24, 0.10, 0.008), (0.0, -0.015, 0.004), alu, bevel=0.003, parent=mon)
+    rbox("Mon neck", (0.055, 0.022, 0.24), (0.0, 0.02, 0.12), alu, bevel=0.004, parent=mon)
+    rbox("Mon panel", (0.62, 0.022, 0.37), (0.0, 0.0, 0.30), shell, bevel=0.004, parent=mon)
+    # screen as a plane just in front of the panel face; texture mapped by generated coords (x across, z up)
+    bpy.ops.mesh.primitive_plane_add(size=1.0)
+    sp_ = bpy.context.object; sp_.name = "Mon screen"; sp_.data.materials.append(scr)
+    sp_.scale = (0.604, 0.35, 1); sp_.rotation_euler = (math.radians(90), 0, 0)
+    sp_.location = (0.0, -0.0112, 0.307); sp_.parent = mon
+    # mouse: a soft, low, rounded shell in the case colour, with a split for the buttons and a wheel
+    mouse_m = simple_mat("Mouse shell", "#E4DDCD", 0.42, 0.0, **{"Subsurface Weight": 0.08, "Subsurface Scale": 0.0015})
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, radius=1.0)
+    ms = bpy.context.object; ms.name = "Mouse"; ms.data.materials.append(mouse_m)
+    for p in ms.data.polygons: p.use_smooth = True
+    for v in ms.data.vertices:
+        if v.co.z < -0.15: v.co.z = -0.15                    # flat underside
+        v.co.y *= 1.0 + 0.12 * v.co.y                        # wider at the back, like a hand
+    ms.scale = (0.031, 0.058, 0.026)
+    ms.location = (0.262, -0.055, MAT_T + 0.026 * 0.15); ms.rotation_euler.z = math.radians(-9)
+    sub_ = ms.modifiers.new("sub", "SUBSURF"); sub_.levels = sub_.render_levels = 1
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0045, depth=0.0032, vertices=48, rotation=(0, math.radians(90), 0))
+    wh = bpy.context.object; wh.name = "Mouse wheel"; wh.data.materials.append(simple_mat("Wheel", "#2A2826", 0.6))
+    wh.parent = ms; wh.location = (0.0, 0.45, 0.96); wh.scale = (1 / 0.031, 1 / 0.058, 1 / 0.026)
+    # retro-style on-ear headphones, lying flat: chrome band, small black cups, orange foam pads facing up
+    chrome = simple_mat("Chrome band", "#D7D7D5", 0.12, 1.0)
+    cupm = simple_mat("Cup plastic", "#1D1C1B", 0.45, 0.0)
+    foam, nt, fo = node_mat("Orange foam")
+    fo.inputs["Base Color"].default_value = srgb("#E8763E"); fo.inputs["Roughness"].default_value = 0.95
+    fo.inputs["Sheen Weight"].default_value = 0.6; fo.inputs["Subsurface Weight"].default_value = 0.2
+    fo.inputs["Subsurface Scale"].default_value = 0.002
+    geo2 = nt.nodes.new("ShaderNodeNewGeometry")
+    cells = N(nt, "ShaderNodeTexVoronoi", Scale=1800.0); nt.links.new(geo2.outputs["Position"], cells.inputs["Vector"])
+    bpf = N(nt, "ShaderNodeBump", Strength=0.8, Distance=0.0008)
+    nt.links.new(cells.outputs["Distance"], bpf.inputs["Height"]); nt.links.new(bpf.outputs["Normal"], fo.inputs["Normal"])
+    hp = link(bpy.data.objects.new("Headphones", None)); hp.location = (-0.29, -0.01, MAT_T); hp.rotation_euler.z = math.radians(100)
+    for side in (-1, 1):
+        cy = side * 0.068
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.029, depth=0.016, vertices=64, location=(0, cy, 0.008))
+        c = bpy.context.object; c.data.materials.append(cupm); c.parent = hp
+        b_ = c.modifiers.new("bv", "BEVEL"); b_.width = 0.003; b_.segments = 4; b_.limit_method = "ANGLE"
+        for p in c.data.polygons: p.use_smooth = True
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.036, depth=0.012, vertices=64, location=(0, cy, 0.022))
+        f_ = bpy.context.object; f_.data.materials.append(foam); f_.parent = hp
+        b_ = f_.modifiers.new("bv", "BEVEL"); b_.width = 0.005; b_.segments = 6; b_.limit_method = "ANGLE"
+        for p in f_.data.polygons: p.use_smooth = True
+        # yoke: a short chrome bar from the cup to the band
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.0018, depth=0.03, vertices=24, location=(-0.034, cy * 0.86, 0.01),
+                                            rotation=(math.radians(90), 0, 0))
+        y_ = bpy.context.object; y_.data.materials.append(chrome); y_.parent = hp
+    band = bpy.data.curves.new("Band", "CURVE"); band.dimensions = "3D"; band.bevel_depth = 0.0022; band.bevel_resolution = 4
+    spb = band.splines.new("NURBS"); bp_pts = [(-0.034, -0.06, 0.012), (-0.085, -0.05, 0.010), (-0.11, 0.0, 0.009), (-0.085, 0.05, 0.010), (-0.034, 0.06, 0.012)]
+    spb.points.add(len(bp_pts) - 1); spb.use_endpoint_u = True; spb.order_u = 3
+    for p, (x, y, z) in zip(spb.points, bp_pts): p.co = (x, y, z, 1)
+    bo = link(bpy.data.objects.new("Band", band)); band.materials.append(chrome); bo.parent = hp
+    # thin black headphone cable trailing off the mat
+    hc = bpy.data.curves.new("HP cable", "CURVE"); hc.dimensions = "3D"; hc.bevel_depth = 0.0011; hc.bevel_resolution = 3
+    sph = hc.splines.new("NURBS"); hc_pts = [(0.0, -0.095, 0.006), (0.01, -0.13, 0.002), (-0.03, -0.17, 0.0012), (-0.10, -0.15, 0.0012), (-0.16, -0.20, -MAT_T + 0.0012)]
+    sph.points.add(len(hc_pts) - 1); sph.use_endpoint_u = True; sph.order_u = 3
+    for p, (x, y, z) in zip(sph.points, hc_pts): p.co = (x, y, z, 1)
+    ho = link(bpy.data.objects.new("HP cable", hc)); hc.materials.append(cupm); ho.parent = hp
+    cam = camera("Cam", (-0.33, -0.54, 0.33), (0.0, 0.03, 0.03), lens=40, fstop=8.0)
     cam.data.dof.focus_distance = (Vector((-0.01, -0.03, 0.02)) - cam.location).length
     if os.environ.get("WOODTEST"):
         cam = camera("Wood", (0.62, -0.95, 0.30), (0.58, -0.50, 0.0), lens=45)
