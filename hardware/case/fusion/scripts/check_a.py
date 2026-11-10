@@ -4,6 +4,10 @@ run_checks(log) writes one line per group, with the hits (part, case part, mm3) 
 
 Pressed = every cap moved 4.0 mm along the plate's normal (full MX travel). Screws sit in tapped holes whose
 drills are smaller than the thread, so screws are only checked against the boards, plate and caps.
+
+Floating: the plate, the mainboard (it hangs from the switches) and the keycaps sit on the gasket socks, so they are
+also checked moved FLOAT (1.0 mm) up and down along the plate's normal: at rest + FLOAT, and pressed with - FLOAT.
+plate_clearance(log) reports the smallest gap from each case part and screw to the plate in that range.
 """
 import adsk.core, adsk.fusion, math, time
 
@@ -12,8 +16,9 @@ INTER = adsk.fusion.BooleanTypes.IntersectionBooleanType
 TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
 TRAVEL = 4.0
+FLOAT = 1.0
 CASE = ['Top shell', 'Bottom shell', 'Accent ring', 'Encoder cover', 'HW Wheel', 'HW LED guide', 'HW Accent weight bar',
-        'HW Power slider cap'] + ['Gasket retainer %d' % i for i in range(1, 7)]
+        'HW Power slider button'] + ['Gasket retainer %d' % i for i in range(1, 7)]
 
 
 def bb(b):
@@ -36,12 +41,17 @@ def inter_vol(a, b):
         return 0.0
 
 
-def pressed(b):
+def pressed(b, d=TRAVEL):
     t = TBM.copy(b)
     m = adsk.core.Matrix3D.create()
-    m.translation = adsk.core.Vector3D.create(0, TRAVEL * S / 10, -TRAVEL * C / 10)    # along the plate's normal, down
+    m.translation = adsk.core.Vector3D.create(0, d * S / 10, -d * C / 10)    # along the plate's normal, down
     TBM.transform(t, m)
     return t
+
+
+def floated(b, d):
+    """moved d mm up (d > 0) or down along the plate's normal"""
+    return pressed(b, -d)
 
 
 def occ_bodies(o):
@@ -85,6 +95,9 @@ def run_checks(log, thr=0.0001):
     plate = [(n, b) for o in occ('-Plate') for n, b in occ_bodies(o)] + [(n, b) for n, b in asm_items if 'Plate_PCB' in n]
     test('plate', plate)
     test('mainboard and its parts', asm_items)
+    for d in (FLOAT, -FLOAT):
+        test('plate %+.1f' % d, [(n, floated(b, d)) for n, b in plate])
+        test('mainboard and its parts %+.1f' % d, [(n, floated(b, d)) for n, b in asm_items])
     for key in ('-Encoder', '-USB'):
         for o in occ(key):
             test(o.name, occ_bodies(o))
@@ -126,6 +139,8 @@ def run_checks(log, thr=0.0001):
     test('keycaps at rest', caps)
     pc = [(n, pressed(b)) for n, b in caps]
     test('keycaps pressed 4.0', pc)
+    test('keycaps at rest, plate +%.1f' % FLOAT, [(n, floated(b, FLOAT)) for n, b in caps])
+    test('keycaps pressed 4.0, plate -%.1f' % FLOAT, [(n, pressed(b, TRAVEL + FLOAT)) for n, b in caps])
     sc = [(sn, s) for sn, s in screws]
     ph = []
     for n, b in pc:
@@ -155,3 +170,37 @@ def battery_vs_board(log):
                 if v > 0.0001:
                     hits.setdefault(n, []).append(round(v, 2))
     log.write('battery vs board parts: %s' % hits + chr(10))
+
+
+def plate_clearance(log, parts=None, shift=FLOAT, steps=8, margin=3.0):
+    """Smallest gap (mm) from each named part to the plate anywhere in its +-shift float. The plate is clipped to each
+    part's box (+ margin) first and swept in 2 * steps positions, so this stays quick."""
+    des = adsk.fusion.Design.cast(adsk.core.Application.get().activeProduct)
+    root = des.rootComponent
+    plate = [b for o in root.occurrences if o.name.split(' ')[0].split(':')[0].endswith('-Plate') for _, b in occ_bodies(o)][0]
+    names = parts or ['Encoder cover', 'HW M2x8 CSK screw cover front', 'HW M2x8 CSK screw cover back',
+                      'HW M2x5 SHCS module 1', 'HW M2x5 SHCS module 2', 'HW Wheel']
+    mm = adsk.core.Application.get().measureManager
+    out = []
+    for n in names:
+        b = root.bRepBodies.itemByName(n)
+        if b is None:
+            continue
+        x = bb(b)
+        lo = [v - margin for v in x[:3]]
+        hi = [v + margin for v in x[3:]]
+        clip = TBM.createBox(adsk.core.OrientedBoundingBox3D.create(
+            adsk.core.Point3D.create(*[(a + c) / 20 for a, c in zip(lo, hi)]), adsk.core.Vector3D.create(1, 0, 0),
+            adsk.core.Vector3D.create(0, 1, 0), *[(c - a) / 10 for a, c in zip(lo, hi)]))
+        piece = TBM.copy(plate)
+        TBM.booleanOperation(piece, clip, adsk.fusion.BooleanTypes.IntersectionBooleanType)
+        if piece.volume <= 0:
+            continue
+        swept = TBM.copy(piece)
+        for k in range(1, steps + 1):
+            for sg in (1, -1):
+                TBM.booleanOperation(swept, floated(piece, sg * shift * k / steps), adsk.fusion.BooleanTypes.UnionBooleanType)
+        out.append((n, round(mm.measureMinimumDistance(b, swept).value * 10, 2)))
+    out.sort(key=lambda t: t[1])
+    log.write('gap to the plate swept +-%.1f: %s\n' % (shift, out))
+    return out

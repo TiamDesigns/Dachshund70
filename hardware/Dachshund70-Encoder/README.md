@@ -12,7 +12,8 @@ which no longer carries the encoder. KiCad 10 project, 2 layers, 1.6 mm FR4.
   under the module: about 25 mm overall (housing end to end), 5 parallel wires with both latches on the same side,
   which makes it a reversed cable (J1 pin n to J5 pin 6 − n; the pin numbers below are matched to that). Crimp it
   from SHR-05V-S housings and SSH-003T contacts with 30–32 AWG wire, or shorten a pre-made reversed cable.
-  Trim the encoder's through-hole pins to 0.5 mm or less on the bottom: the cable runs 0.2 under their uncut tips.
+  Trim the encoder's through-hole pins to 0.5 mm or less on the bottom: the cable runs right under them (it touches
+  the push switch's uncut pins in the model, 0.3 under the A/B/C pins).
 - **Nothing else.** The 10 nF debounce capacitors on A and B and the push-switch diode D114 stay on the
   mainboard, so the pin map and the firmware did not change. No expansion ports on either board.
 
@@ -42,7 +43,8 @@ from the PCB's top face.
 - On the mainboard, J5 is on the back to the right of the corner notch: footprint at (329.8, 49.54) rot 90, pad
   row at x = 331.8 mm, y = 47.54 (pin 5) to 51.54 (pin 1), on the same line as J1 (centre y 49.54, the shaft's
   axis), mouth at x 327.3 facing -x into the notch. The two mouths are 17.6 mm apart; the cable drops 1.8 mm from
-  J1 (under the module, z 1.8) to J5 (under the mainboard), and the plate is 3.3 mm or more above it. The notch is open to the mainboard's top edge, x 304.0 to 326.4 mm and y 39.0 to
+  J1 (under the module, z 1.8) to J5 (under the mainboard), and the plate is 7.4 mm above it (6.4 when it floats
+  down 1 mm). The notch is open to the mainboard's top edge, x 304.0 to 326.4 mm and y 39.0 to
   57.0 mm, so the module (left edge at x 303.905) sits in it, with a 4.2 mm lobe at (306.6, 57.8) for the
   head of its lower M2 screw (its post is at y 57.82); the upper screw head is inside the notch.
 

@@ -55,6 +55,20 @@ RETAINER_EARS = dict(DX=18.0, Y=68.4, R=2.8, Z=(-0.6, 1.4), FILLET=1.0, POCKET_C
 # (90 deg countersink 4.0 -> 2.2 clearance, taps Dia 1.6 drilled to z 12.2, 5.4 of thread), replacing COVER_V35's M3 x 8;
 # the module's two screws are M2 x 5 socket head (DIN 912, Dia 3.8 x 2.0), replacing the pan heads.
 COVER_SCREWS = dict(SCREW='M2x8 DIN 965', CSK_D=4.0, CLEAR_D=2.2, TAP_D=1.6, DRILL_TO=12.2, MODULE_SCREW='M2x5 DIN 912')
+# Fifth round (v37, in the .f3d only; local mm unless noted). The plate floats +-1.0 on the socks, the mainboard with it.
+# - Retainers 64.1 x 5.2 x 4.1 (R1.1), ears unchanged (RETAINER_EARS, R1.0 where they meet the wider bar); one opening per
+#   nub from the ring up to the sock tops, 64.3 x 5.3 (R1.0), z -0.6 .. 8.1, plus room for the ear fillets.
+# - Back M3 x 20 screws at x -151.5, -61.35, 39.5, 151.5 (SCREW_X still holds the front ones and the old back pair).
+# - Cover front ear: R2.7 at (131.2, 35.8), z 2.9 .. 4.8, countersink from z 2.9; boss Dia 5.0 and tap at the same x.
+# - Daughterboard 1.0 lower (world): underside z 6.0, USB-C centre z 9.23; opening, lead-in, ledge, leg relief and taps
+#   with it. Slider (world x): channel 12.6 x 6.4 R3.2, 1.0 deep square to the back face (local y 76.625), centred
+#   x 27.4 on the USB-C's height; lever slot 4.4 x 2.2 R0.5 at z 8.395 (world); button 10.7 x 6.0 R3.0, 0.85 thick,
+#   stem 2.5 x 1.8 R0.5, lever pocket 1.4 x 0.89. POWER_SLOT below is the old cap's slot.
+# - LED guide: block underside z 7.8, spigots end at z 2.8.
+ROUND5 = dict(RETAINER=(64.1, 5.2, 4.1), RETAINER_OPENING=(64.3, 5.3, 8.1), BACK_SCREW_X=(-151.5, -61.35, 39.5, 151.5),
+              FRONT_EAR=(131.2, 35.8, 2.7, 2.9, 4.8), DAUGHTER_DROP=1.0, USB_CENTRE_Z_WORLD=9.23,
+              SLIDER_CHANNEL=(27.4, 12.6, 6.4, 1.0), SLIDER_SLOT=(4.4, 2.2, 0.5), SLIDER_BUTTON=(10.7, 6.0, 0.85),
+              GUIDE_BLOCK_Z0=7.8, GUIDE_SPIGOT_Z0=2.8)
 
 TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
@@ -78,8 +92,8 @@ BOARD_W, BOARD_H = 318.5, 121.1
 SOCK_W, SOCK_H, SQUEEZE, CLEAR = 5.0, 5.0, 0.4, 0.15
 SOCK_Z0 = 5.8 - (SOCK_H - SQUEEZE) / 2
 SOCK_ZH = SOCK_H - SQUEEZE
-# branched nubs (plate/gen_plate.py): neck 4, slot 2, arm 1.5 x 12, the prongs continue the arms along the plate edge
-NECK_W, SLOT_W, ARM_W, ARM_LEN, TAB_W, TAB_L = 4.0, 2.0, 1.5, 12.0, 2.8, 6.5
+# branched nubs (plate/gen_plate.py): neck 24, slot 2, arm 2.8 x 12, the prongs continue the arms along the plate edge
+NECK_W, SLOT_W, ARM_W, ARM_LEN, TAB_W, TAB_L = 24.0, 2.0, 2.8, 12.0, 2.8, 6.5
 SOCK_LONG = 8.0
 ARM_OUTER = SLOT_W + ARM_W
 ARM_MID = SLOT_W + ARM_W / 2                 # the arm's and the sock's centre line, past the plate edge
