@@ -40,6 +40,14 @@ PRM = dict(
 # (front: a Dia 5.0 boss down to z 4.8 through the plate's notch; back: a pocket in the back wall). Taps Dia 2.5 drilled to z 12.2.
 COVER_V35 = dict(X0=135.0, X1=143.505, FOOT_X0=127.15, FOOT_Z1=7.5, EAR_Z=(2.2, 4.8), FRONT_EAR=(130.575, 35.8, 4.0),
                  BACK_EAR=(139.2525, 64.4, 4.2525), FRONT_BOSS_D=5.0, M3_DRILL_TO=12.2, CAVITY_CLEAR=0.15, OPENING_GAP=0.25)
+# Encoder cover (third round): above the plate's top (z 6.6) the v33 hood, outside unchanged: a Dia 19.2 half-cylinder on the
+# axis (y 50.03, z 13.4), x 130.245 .. 143.505, open at the knob end, flat sides down to z 6.6, R1.5 round on the closed end,
+# frame-ear notches x 136.105 .. 139.255 to |y| 8.7, up to z 13.8 (now through to the bottom, R0.5 corners). Cavity from below:
+# x 132.245 to the open end, |y| <= 7.0, flat ceiling z 21.0, coaxial arc R9.332 over the PEC12R's top corners (9.172 from
+# the axis: wall 0.27), R0.5 at its closed end. Below z 6.6 (and the foot outside the hood) it is COVER_V35 unchanged: walls,
+# frame-ear pockets, the module's two M2 taps and both M3 ears. The top block's opening: the hood's plan + 0.25, R1.75.
+COVER_HOOD = dict(X0=130.245, X1=143.505, Z_BASE=6.6, R=9.6, R_END=1.5, CAV_X0=132.245, CAV_HALF_W=7.0, CAV_TOP=21.0,
+                  CAV_ARC_R=9.332, NOTCH=(136.105, 139.255, 8.7, 13.8), INSIDE_R=0.5, OPENING_GAP=0.25)
 # Gasket retainers: 44.1 x 4.55 x 4.1 plus two ears each (centre +-18.0, outer face 65.85 -> screw at |y| 68.4, ear R2.8,
 # z -0.6 .. 1.4, R1.0 where they meet the bar), M2 x 8 countersunk (DIN 965) up into the top block, taps Dia 1.6 drilled to z 9.4.
 RETAINER_EARS = dict(DX=18.0, Y=68.4, R=2.8, Z=(-0.6, 1.4), FILLET=1.0, POCKET_CLEAR=0.1, SCREW='M2x8 DIN 965', DRILL_TO=9.4)

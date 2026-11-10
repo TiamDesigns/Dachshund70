@@ -9,13 +9,13 @@ resin and 7.9 for stainless screws. Finish and anodise colours are Tiam's choice
 
 | Qty | Part | Material | Size, volume | Process | File |
 |---:|---|---|---|---|---|
-| 1 | Top block | 6061-T6 aluminium | 347.9 × 155.2 × 24.5, 165.7 cm³ (447 g) | CNC 3-axis (5-axis or a ball-end for the slopes), bead-blast, anodise | `step/Dachshund70-Case-Top.step` |
+| 1 | Top block | 6061-T6 aluminium | 347.9 × 155.2 × 24.5, 165.2 cm³ (446 g) | CNC 3-axis (5-axis or a ball-end for the slopes), bead-blast, anodise | `step/Dachshund70-Case-Top.step` |
 | 1 | Bottom block | 6061-T6 aluminium | 347.9 × 155.2 × 15.1, 258.1 cm³ (697 g) | CNC, bead-blast, anodise | `step/Dachshund70-Case-Bottom.step` |
 | 1 | Accent ring | 6061 or 5052 aluminium sheet, 1.6 thick | outline 347.9 × 155.2, opening 320 × 122.6, 23.0 cm³ (62 g) | Laser cut from flat sheet, anodise in the accent colour | `step/Dachshund70-Case-Ring.step`, `dxf/Dachshund70-Case-Ring.dxf` |
 | 6 | Gasket retainer | 6061-T6 aluminium | 44.1 × 4.55 × 4.1 bar, R1.1 corners, with two screw ears (44.1 × 9.9 overall), 0.90 cm³ (2.4 g each, 14.6 g the six) | CNC, anodise | `step/Dachshund70-Case-Gasket-Retainer.step` |
 | 1 | Weight | C360 brass (Ti-6Al-4V, steel or aluminium possible) | face 185.0 × 76.1 (R4), flange 216.0 × 80.9 (R5), 3.7 (sloped) / 5.1 / 6.4 / 7.7 thick, 87.5 cm³: brass 744 g, Ti-6Al-4V 388 g, steel 687 g, aluminium 236 g | CNC; polished face with a 0.4 chamfer round the edge; dachshund silhouette 0.3 deep (flat floor bead-blasted), 0.4 wide detail grooves 0.5 deep, "Dachshund70" text 0.3 deep (Fredoka SemiBold, SIL OFL, 10.5 tall, under the dog) | `step/Dachshund70-Case-Weight.step`, `dxf/Dachshund70-Weight-Engraving.dxf` |
 | 1 | Knob | 6061 aluminium | Ø19.2 × 15.1, 3.73 cm³ (10.1 g) | CNC, form-knurl, anodise | `step/Dachshund70-Case-Knob.step` |
-| 1 | Encoder cover | 6061 aluminium | Ø19.2 dome 8.5 long on a foot, 16.9 × 36.9 × 20.8 with its two ears, 2.11 cm³ (5.7 g) | CNC, anodise in the accent colour | `step/Dachshund70-Case-Encoder-Cover.step` |
+| 1 | Encoder cover | 6061 aluminium | Ø19.2 hood 13.3 long (the v33 shape) on a foot, 16.9 × 36.9 × 20.8 with its two ears, 2.07 cm³ (5.6 g) | CNC, anodise in the accent colour | `step/Dachshund70-Case-Encoder-Cover.step` |
 | 1 | Power switch slider cap | 3D-printed resin (or machined POM) | 3.6 × 2.6 stadium, 2.2 long, 0.016 cm³ | SLA print, or turn/mill in POM | `step/Dachshund70-Case-Switch-Cap.step` |
 | 1 | LED light guide | Opaque black SLA or SLS resin | 30.6 × 6.05 × 10.05, 1.03 cm³ (1.2 g) | 3D print | `step/Dachshund70-Case-LED-Guide.step` |
 
@@ -40,15 +40,21 @@ Notes on the made parts:
 - Knob: D-bore 6.0 with the flat at 4.5 (across the flat) for the PEC12R's 6 mm D shaft, blind, ending 0.3 past the
   shaft's tip, behind a Ø7.6 × 4.9 hub bore; push-on (rotary-broach the D, or wire-EDM it before the blind end is
   faced). The knurl is to be form-knurled, diamond, about 0.8 pitch (the model shows 64 flutes and 14 rings).
-- Encoder cover: a Ø19.2 dome on the knob's axis (the knob's size), its walls tangent to the knob down to the encoder
-  module's PCB, just enclosing the PEC12R body: cavity 12.84 × 13.7 (0.15 round the body, R0.5 corners at its closed
-  end), frame-ear pockets with R0.5 corners. The dome is only 0.21 thick over the cavity's top corners (the body's
-  corners are 9.16 from the axis): accepted to keep it round; everywhere else the walls are at least 1.0. Its foot sits
-  on the module and takes the module's two M2 screws (taps Ø1.6 through, R1.8 bosses on the module's holes, R0.8 where
-  they meet the foot). One flat ear each side of the axis (2.6 thick, off the PCB) takes an M3 × 8 countersunk screw up
-  into the top block: the front one into a Ø5.0 boss through the plate's enlarged notch, the back one in a pocket in
-  the back wall; taps Ø2.5 drilled to the tip + 2 (1.0 under the top face), 5.4 of thread. 0.15 to the knob, the plate
-  and the encoder; 1.7 to the keycaps pressed 4.0.
+- Encoder cover: above the plate it is the v33 hood, unchanged outside: a Ø19.2 half-cylinder on the knob's axis
+  (local y 50.03, z 13.4) from x 130.245 to 143.505, open at the knob end, with flat sides down to the plate's top
+  (local z 6.6), an R1.5 round on the closed end and small notches at the bottom of the front and back walls (for the
+  PEC12R's frame ears). Inside: walls 2.6, a flat ceiling at z 21.0 (2.0 under the crown), and an arc coaxial with the
+  hood at R9.33 over the body's top corners, which are 9.17 from the axis: the wall there is 0.27, the most any Ø19.2
+  hood can keep at 0.15 clearance. The cavity is straight from below (x 132.245 to the open end, 14.0 wide, R0.5 at
+  its closed end) and the notches run through to the bottom (R0.5 corners), so there are no undercuts. Below the
+  plate's top it is the v35 cover: walls tangent to the knob down to the module's PCB, frame-ear pockets, the foot that
+  takes the module's two M2 screws (taps Ø1.6 through, R1.8 bosses on the module's holes, R0.8 where they meet the
+  foot), and one flat ear each side of the axis (2.6 thick, off the PCB, out of sight under the plate) with an M3 × 8
+  countersunk screw up into the top block: the front one into a Ø5.0 boss through the plate's enlarged notch, the back
+  one in a pocket in the back wall; taps Ø2.5 drilled to the tip + 2 (1.0 under the top face), 5.4 of thread. The top
+  block's opening follows the hood 0.25 clear (R1.75 corners at the closed end). Clearances: 0.15 to the knob and the
+  encoder body, 0.36 to the frame ears, 0.15 to the plate, 1.7 to the keycaps pressed 4.0 (3.2 at rest). Setups: from
+  below (cavity, notches, ear pockets, taps), the outside (hood and sides) and the ears' undersides.
 - Switch cap: a light press fit on the PCM12 lever (pocket 1.3 × 1.0, 0.05 under the lever, R0.2 corners) plus a drop
   of cyanoacrylate; walls 0.8 round the pocket. It stands 0.3 proud of the back face and rides in a stadium slot
   5.5 × 3.0 (0.2 clear all round, 1.5 travel). Three grooves 0.3 wide × 0.3 deep, 1.1 apart, leave 0.8 ribs.
@@ -68,11 +74,11 @@ Notes on the made parts:
 | 12 | M2 × 8 countersunk, DIN 965, stainless | The six gasket retainers to the top block, two each, up through their ears, heads flush with the retainers' underside (drive them before the ring goes on) |
 | 2 | M3 × 8 countersunk, DIN 7991, stainless | The encoder cover to the top block, one each side of the axis, up through its ears into the front boss and the back wall |
 | 2 | M3 × 6 button head (ISO 7380) | USB-C daughterboard into the two taps on its ledge (x −16.5 and 19.0); the pocket is open from above, so drive them before the ring and the top block go on |
-| 2 | M2 × 5 pan head (ISO 7045), stainless | Encoder module to the cover's foot, up through the module's holes. The heads need the mainboard's two Ø4.2 clearance holes moved 0.74 onto the module's holes (see below) |
+| 2 | M2 × 5 pan head (ISO 7045), stainless | Encoder module to the cover's foot, up through the module's holes. Their heads sit in the mainboard's corner notch (the back one) and its Ø4.2 lobe (the front one, 0.05 clear) |
 | 1 | Rubber or TPU rail with adhesive, 300 × 5.8 × 2.0 | Near the front edge, in a 1.0 pocket, 1.0 proud |
 | 1 | Rubber or TPU rail with adhesive, 269.4 × 5.8 × 2.0 | Near the back edge, x −150 to 119.4 (it stops 3.0 short of the battery bay), in a 1.0 pocket, 1.0 proud |
 | 12 | Gasket socks, silicone, 8 × 5 × 5 outside, pocket 6.5 × 2.8 × 1.2 | Moulded (stock). One on each of the plate's prongs, lying along the plate edge, on the gasket retainers |
-| 1 | LiPo cell EEMB LP803450, 52.0 × 34.5 × 8.3 plus a 4.5 protection board | Flat in the battery bay (x 122.7 to 160, y 2.0 to 61.3, floor 1.0, R3 corners), long side front to back, held with foam tape (0.9 of play at its sides). Its top overlaps J1 by about 0.7 (see below). JST-PH polarity varies between vendors: check it against J2 |
+| 1 | LiPo cell EEMB LP803450, 52.0 × 34.5 × 8.3 plus a 4.5 protection board | Flat in the battery bay (x 122.7 to 160, y 2.0 to 61.3, floor 1.0, R3 corners), long side front to back, held with foam tape (0.9 of play at its sides). J1 is now on the front sidebar, clear of it. JST-PH polarity varies between vendors: check it against J2 |
 | 1 | E-paper panel, GoodDisplay GDEY0213B74 (2.13", 250 × 122) with driver board | Drops in from below, taped under the roof's window |
 | 1 | Double-sided tape, 0.2 mm (3M 9448A or tesa 4965) | Screen glass to the roof |
 | 1 | JST-SH 4-pin cable, about 100 mm, both ends plugged | USB-C daughterboard to J1 |
@@ -86,28 +92,27 @@ Open points from the November 2026 check (board changes, not case changes):
 - Plate (done in this round): the encoder notch now runs forward to KiCad y 67.25 between x 305.25 and 322.25 for the
   cover's walls and its front boss, and the two module reliefs are Ø3.9 on the module's real holes
   (`hardware/Dachshund70-Plate/`).
-- Mainboard: its Ø4.2 head-clearance holes for the encoder module's screws are at local (128.95, 41.25) and
-  (128.95, 57.85), 0.74 off the module's holes at (128.375, 41.71) and (128.375, 58.31), so the M2 heads hit the board.
-  Move them to KiCad (306.625, 57.84) and (306.625, 41.24).
-- Mainboard: J1 (JST-SH, underside, KiCad x 328.5 to 333.5, y 82.8 to 91.0) sits over the battery bay; the
-  LP803450's top overlaps it by about 0.7 mm. Move J1 off the bay or use a 7.3 mm cell.
+- Mainboard (done): the case model now has the current mainboard (after #67: the corner notch at KiCad x 304 to 326.4,
+  y 39 to 57 with its Ø4.2 lobe at (306.6, 57.8), J1 at (333.5, 118.5) on the front sidebar, J5 at (329.8, 46.5)). The
+  module's M2 heads clear it (0.05 in the lobe, 0.63 in the notch), and J1 is 17.6 from the cell. J5's cable to the
+  module's JST-SH runs 17.5 along the notch, over the cell, with nothing in its way.
 
 ## Masses
 
 | Part | Mass |
 |---|---:|
-| Top block | 447 g |
+| Top block | 446 g |
 | Bottom block | 697 g |
 | Accent ring | 62 g |
 | Knob | 10.1 g |
-| Encoder cover | 5.7 g |
+| Encoder cover | 5.6 g |
 | Gasket retainers (6) | 14.6 g |
 | LED guide, switch cap (resin) | 1.3 g |
 | Rails (rubber, about 1.2 g/cm³) | 7.9 g |
 | Screws (10 × M3 CSK, 16 × M2 CSK, 2 × M2 pan, 2 × M3 button) | 13.1 g |
-| Case without the weight | 1259 g |
+| Case without the weight | 1258 g |
 | Weight, brass / Ti-6Al-4V | 744 g / 388 g |
-| Case with the weight, brass / Ti-6Al-4V | 2003 g / 1647 g |
+| Case with the weight, brass / Ti-6Al-4V | 2002 g / 1646 g |
 | Boards, plate, battery, switches, keycaps, screen (estimate) | about 620 g |
 | Complete keyboard, brass / Ti-6Al-4V (estimate) | about 2.62 kg / 2.27 kg |
 

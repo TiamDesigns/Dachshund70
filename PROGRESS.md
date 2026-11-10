@@ -6,6 +6,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Case: current mainboard in the model, v33 encoder hood back (2026-11-10)
+
+- The Fusion model's mainboard was the pre-#67 one (J1 over the battery, J5 at KiCad (311.4, 50.0), no corner notch). Its PCB body is now the current export (a base feature in the old occurrence, which the spacebar sets share components with), and J1, J5 and one moved 0402 are at their current places. J1 is 17.6 from the cell; the module's M2 heads clear the board (0.05 in the Ø4.2 lobe, 0.63 in the notch); J5's cable runs 17.5 along the notch to the module's JST-SH with nothing in the way. The encoder, USB-C board, plate, battery and screen already matched `hardware/step/`.
+- LED guide: already on D3–D7 (even 5.5 pitch, KiCad x 313 to 335): every channel's entry is on its LED's centre (0.00 offset), so it is unchanged.
+- Encoder cover: Tiam preferred the v33 shape, so above the plate it is the v33 hood again, outside unchanged (Ø19.2 half-cylinder, x 130.245 to 143.505, R1.5 closed end, the frame-ear notches). Inside, an arc coaxial with the hood keeps 0.15 to the PEC12R's top corners (9.17 from the axis, so 0.27 of wall there; v33 itself touched them), and the cavity and notches run straight through from below. Below the plate it keeps v35's mounting: 2 × M2 into the module, one M3 each side up into the top block, all out of sight. The top block's opening follows the hood again. 2.07 cm³ (5.6 g); top block 446 g.
+- Clash check (`check_a.py`): two hits in total, both known (the encoder shaft in the knob's D-bore, the switch cap's press fit). Fusion version 35; re-exported the top, cover and assembly STEPs and the `.f3d`; the other parts and the DXFs are unchanged.
+- Not tested on hardware: nothing is made yet.
+
 ### Power path: ngspice simulation, R3 to 10k (2026-11-09)
 
 - New `hardware/sim/power-path/`: an ngspice model of the daughterboard and mainboard power path (F1, USBLC6, SW1, the cable, D8, Q1, R3, the MCP73831, the module's and LEDs' loads) and `run.py`, which runs battery-only, USB-only, charging, plug-in and unplug cases. Results and limits are in its README; the nRF52840 and firmware are modelled as a fixed load.

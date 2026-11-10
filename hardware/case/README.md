@@ -30,7 +30,7 @@ replaced by this one. Git history has it.
 | `Dachshund70-Case-Ring.step` | The accent ring (1.6 mm sheet) |
 | `Dachshund70-Case-Weight.step` | The brass weight with its engraving |
 | `Dachshund70-Case-Knob.step` | The knurled knob |
-| `Dachshund70-Case-Encoder-Cover.step` | The cover over the encoder: a Ø19.2 dome on the knob's axis; the encoder module screws to its foot, and one M3 on each side holds it to the top block |
+| `Dachshund70-Case-Encoder-Cover.step` | The cover over the encoder: the v33 hood (a Ø19.2 half-cylinder on the knob's axis); the encoder module screws to its foot, and one M3 on each side, under the plate, holds it to the top block |
 | `Dachshund70-Case-Gasket-Retainer.step` | One of the six identical gasket retainers with its two screw ears (the one at the back-left nub, at its assembly position) |
 | `Dachshund70-Case-Switch-Cap.step` | The cap on the power switch's lever (printed or POM) |
 | `Dachshund70-Case-LED-Guide.step` | The light guide over the five status LEDs (3D printed) |
@@ -79,9 +79,8 @@ KiCad y = 99.55 − local y.
 - Battery bay: x 122.7 to 160, y 2.0 to 61.3 (its back wall ends at the cavity wall, so there's no lip), floor at Z 1.0,
   R3 corners and the cavity's own R5.75 at the back right, for an EEMB LP803450 (52.0 × 34.5 × 8.3 plus a 4.5
   protection board) laid flat, its long side front to back, at x 123.6 to 158.1, y 2.92 to 59.42 (0.9 of play at the
-  sides for the R3 corners: foam-tape it). The floor stays at 1.0: raised to 1.5 the cell would touch J1 and J2. The
-  cell's top (Z 9.5) already overlaps J1 (the JST-SH on the mainboard's underside, Z 8.8 to 9.4 over it) by about
-  0.7 mm, as it did before; a 7.3 mm cell or J1 moved off the bay fixes that.
+  sides for the R3 corners: foam-tape it). The floor stays at 1.0. J1 (the JST-SH on the mainboard's underside) is
+  now on the front sidebar at KiCad (333.5, 118.5), 17.6 from the cell; J5 at (329.8, 46.5) is 2.2 over it.
 - Weight: brass, face 185.0 × 76.1 (R4 corners, y −40.4 to 35.7: from the number row's top edge to the Shift row's
   bottom edge, local y 35.74 and −40.46, square to the desk), flange 216.0 × 80.9 (R5, y −42.9 to 38.0), 87.5 cm³
   (brass 744 g, Ti-6Al-4V 388 g). It drops in from inside through a window in the floor; its top sits 0.1 under the
@@ -92,18 +91,22 @@ KiCad y = 99.55 − local y.
   countersinks that leave a 0.6 land in the 1.5 flange, into M2 taps drilled Ø1.6 to the tip + 1.0. No screw heads
   show underneath. The engraving: the dog (scale 1.45) above "Dachshund70" (10.5 tall), centred on the face; the
   grooves stay 0.4 wide.
-- Knob and cover: Ø19.2 × 15.1 knurled knob on the encoder's 20 mm D shaft (D-bore 6.0 with the flat at 4.5). The
-  cover is a Ø19.2 dome on the knob's axis (local y 50.03, z 13.395), x 135.0 to 143.5 (0.15 from the knob), its
-  walls tangent to the knob down to the encoder module's PCB: just big enough for the PEC12R body (cavity
-  12.84 × 13.7 from x 136.1, 0.15 round the body, R0.5 corners at its closed end; frame-ear pockets to x 138.825).
-  The body's top corners are 9.16 from the axis, so the dome's wall over the cavity's corners is only 0.21 (accepted
-  to keep the dome round). A foot (x 127.15 to 135, up to z 7.5) takes the module's two M2 × 5 screws (taps Ø1.6
-  through, R1.8 bosses, on the module's holes). The cover screws up into the top block with one M3 × 8 countersunk
-  screw (DIN 7991) on each side of the axis, through flat ears 2.6 thick (z 2.2 to 4.8, off the module's PCB, heads
-  flush): the front one at (130.575, 35.8) into a Ø5.0 boss that hangs from the top block through the plate's
-  enlarged encoder notch, the back one at (139.25, 64.4) in a pocket in the back wall. Both taps are Ø2.5 drilled to
-  z 12.2 (1.0 under the top face), 5.4 of thread. Clearances: 1.7 to the keycaps pressed 4.0 (5.7 at rest), 0.15 to
-  the plate, knob and encoder. The top block's opening follows the dome (0.25 round it, R1.75 corners).
+- Knob and cover: Ø19.2 × 15.1 knurled knob on the encoder's 20 mm D shaft (D-bore 6.0 with the flat at 4.5). Above
+  the plate the cover is the v33 hood, its outside unchanged: a Ø19.2 half-cylinder on the knob's axis (local y 50.03,
+  z 13.4) from x 130.245 to 143.505 (0.15 from the knob), open at the knob end, flat sides down to the plate's top
+  (z 6.6), an R1.5 round on the closed end and small notches at the bottom of the front and back walls for the
+  PEC12R's frame ears. Inside: 2.6 walls, a flat ceiling at z 21.0 (2.0 under the crown) and, over the body's top
+  corners (9.17 from the axis), an arc coaxial with the hood at R9.33, so the wall there is 0.27 (0.15 clear, the most a
+  Ø19.2 hood allows). The cavity (x 132.245 to the open end, 14.0 wide, R0.5 at its closed end) and the notches run
+  straight through from below: no undercuts. Below the plate's top it is the v35 cover: walls tangent to the knob down
+  to the encoder module's PCB, frame-ear pockets, and a foot (x 127.15 to 132.2, up to z 7.5 outside the hood) that
+  takes the module's two M2 × 5 screws (taps Ø1.6 through, R1.8 bosses, on the module's holes). The cover screws up
+  into the top block with one M3 × 8 countersunk screw (DIN 7991) on each side of the axis, through flat ears 2.6
+  thick (z 2.2 to 4.8, off the module's PCB, under the plate and out of sight, heads flush): the front one at
+  (130.575, 35.8) into a Ø5.0 boss that hangs from the top block through the plate's enlarged encoder notch, the back
+  one at (139.25, 64.4) in a pocket in the back wall. Both taps are Ø2.5 drilled to z 12.2 (1.0 under the top face),
+  5.4 of thread. Clearances: 1.7 to the keycaps pressed 4.0 (3.2 at rest), 0.15 to the plate, knob and encoder body,
+  0.36 to its frame ears. The top block's opening follows the hood (0.25 round it, R1.75 corners at the closed end).
 - Screen: GoodDisplay GDEY0213B74 on end beside the knob, behind a window with a 45° frame (a 0.3 land at the
   glass, no knife edge); the glass and its driver board drop in from below through an opening the glass's size
   (29.8 × 59.8, R1.0). Five LEDs under it in an evenly spaced row, with a printed light guide (below).
@@ -117,7 +120,8 @@ KiCad y = 99.55 − local y.
 - LED light guide: opaque black resin. Each channel (Ø2.3) runs straight up from its LED through a spigot in the plate's
   4 × 4 window (3.7 square, 0.15 clear, down to 0.09 over the PCB), then one S bend between z 6.9 and 10.9 to its roof
   hole; walls at least 0.7 at the spigots and 1.15 at the ends, no breakouts. Its pocket has R1.0 corners and the
-  guide R1.15. The LEDs (D3 to D7, reverse-mount SK6812MINI-E) sit in their 3.4 PCB cutouts in the mainboard STEP:
+  guide R1.15. The LEDs (D3 to D7, reverse-mount SK6812MINI-E, an even 5.5 pitch at KiCad x 313 to 335, y 130.5; every
+  channel starts on its LED's centre) sit in their 3.4 PCB cutouts in the mainboard STEP:
   body 2.8 × 3.2, 0.3 / 0.1 clear, top 0.75 under the PCB's top face, pins on the bottom pads.
 - Inside corners: every inside vertical corner is radiused (R1.0 where a part sits 0.3 clear, R0.64 to R0.8 in the
   daughterboard pocket and leg relief, R3 in the battery bay).
@@ -137,9 +141,10 @@ execute (each defines `run(_context)`).
   The keycap sets it imports are `step/Dachshund70-Keycaps*.step`; they come from this model (the old CadQuery
   `keycaps.py` is gone), so a rebuild needs them in the repo as they are. The rebuild path from these scripts
   has not been re-run end to end since the files were moved here: the `.f3d` is the dependable copy.
-  The November 2026 fixes, and the second round (retainer ears, encoder cover v35, the 76.1 mm weight), were made in the
-  `.f3d` as features at the end of the timeline; the second round's numbers are mirrored at the top of `build_case2.py`
-  (`COVER_V35`, `RETAINER_EARS`) and in its weight section. `build_case2.py` mirrors
+  The November 2026 fixes, the second round (retainer ears, encoder cover v35, the 76.1 mm weight) and the third (the
+  current mainboard, the v33 hood on the v35 mounting) were made in the `.f3d` as features at the end of the timeline;
+  their numbers are mirrored at the top of `build_case2.py` (`COVER_V35`, `COVER_HOOD`, `RETAINER_EARS`) and in its
+  weight section. `build_case2.py` mirrors
   their numbers where that was simple: the ring slots and moved tab, the M3 tap depth, the rails, the battery bay's size
   and the cell's place, the lead-in, the switch slot and cap, the weight (face, flange, M2 screws, engraving scale),
   the screen drop-in opening and window land, and no module posts. Only in the `.f3d`: the gasket retainers, their
@@ -152,13 +157,16 @@ execute (each defines `run(_context)`).
 - `check_a.py`: the clash check. `run_checks(log)` tests the plate, every board part, the battery, the screen and both
   keycap sets (at rest and pressed 4.0 along the plate's normal) against the case parts, the case parts against each
   other and the screws against the boards and caps. Known hits: the encoder shaft in the knob's D-bore (the model's
-  shaft is round), the switch cap's press fit on its lever, the module's M2 heads on the mainboard and the cell on J1
-  (both board changes, see BOM.md).
+  shaft is round) and the switch cap's press fit on its lever. Since the current mainboard went into the model the
+  module's M2 heads and J1 are clear.
 - `shots.py`, `underside.py`: the camera helper and an underside view used while designing.
 - Placement: the boards, battery, screen and keycaps are placed by setting occurrence transforms, which Fusion doesn't
   keep when a timeline item is added (they go back to where they were imported). After adding features, put them back
   (the plate is now its own `Dachshund70-Plate` occurrence, from `hardware/step/Dachshund70-Plate.step`, at local
-  z 4.995) before checking or exporting.
+  z 4.995) before checking or exporting, and capture them (Position > Capture, or `design.snapshots.add()`). The
+  mainboard occurrence is still the first import (named `Dachshund60F-Assembly` in Fusion; the spacebar sets use its
+  stabilizer and switch components, so deleting it deletes them too): its PCB body was replaced by the current one
+  with a base feature, and J1, J5 and the one 0402 capacitor that moved (by the LEDs) were moved to their current places.
 - `dog_proto.py` + `dog_outline.txt`: the dachshund outline's control points and a quick PIL preview of it.
 
 After a board changes: run `python hardware/export_step.py` for the new board STEPs, rebuild (or move the
