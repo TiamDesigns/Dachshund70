@@ -1,4 +1,4 @@
-# Dachshund70 case BOM (rev 2, with the November 2026 fixes)
+# Dachshund70 case BOM (rev 2, with the November 2026 fixes and the second round)
 
 Everything that goes into the case and holds it together, for the default layout (split spacebar). The PCBs
 are line items only; their parts are in each board's own BOM (`hardware/<board>/`). Sizes are in mm, from the
@@ -9,13 +9,13 @@ resin and 7.9 for stainless screws. Finish and anodise colours are Tiam's choice
 
 | Qty | Part | Material | Size, volume | Process | File |
 |---:|---|---|---|---|---|
-| 1 | Top block | 6061-T6 aluminium | 347.9 × 155.2 × 24.5, 166.0 cm³ (448 g) | CNC 3-axis (5-axis or a ball-end for the slopes), bead-blast, anodise | `step/Dachshund70-Case-Top.step` |
-| 1 | Bottom block | 6061-T6 aluminium | 347.9 × 155.2 × 15.1, 295.9 cm³ (799 g) | CNC, bead-blast, anodise | `step/Dachshund70-Case-Bottom.step` |
+| 1 | Top block | 6061-T6 aluminium | 347.9 × 155.2 × 24.5, 165.7 cm³ (447 g) | CNC 3-axis (5-axis or a ball-end for the slopes), bead-blast, anodise | `step/Dachshund70-Case-Top.step` |
+| 1 | Bottom block | 6061-T6 aluminium | 347.9 × 155.2 × 15.1, 258.1 cm³ (697 g) | CNC, bead-blast, anodise | `step/Dachshund70-Case-Bottom.step` |
 | 1 | Accent ring | 6061 or 5052 aluminium sheet, 1.6 thick | outline 347.9 × 155.2, opening 320 × 122.6, 23.0 cm³ (62 g) | Laser cut from flat sheet, anodise in the accent colour | `step/Dachshund70-Case-Ring.step`, `dxf/Dachshund70-Case-Ring.dxf` |
-| 6 | Gasket retainer | 6061-T6 aluminium | 44.1 × 4.55 × 4.1, R1.1 corners, 0.82 cm³ (2.2 g each, 13.3 g the six) | CNC (or cut from 4.1 bar), anodise | `step/Dachshund70-Case-Gasket-Retainer.step` |
-| 1 | Weight | C360 brass (Ti-6Al-4V, steel or aluminium possible) | face 185.0 × 40.0 (R4), flange 216.0 × 53.0 (R5), 5.1 / 6.4 / 7.7 thick, 51.1 cm³: brass 435 g, Ti-6Al-4V 227 g, steel 401 g, aluminium 138 g | CNC; polished face with a 0.4 chamfer round the edge; dachshund silhouette 0.3 deep (flat floor bead-blasted), 0.4 wide detail grooves 0.5 deep, "Dachshund70" text 0.3 deep (Fredoka SemiBold, SIL OFL, 7.8 tall) | `step/Dachshund70-Case-Weight.step`, `dxf/Dachshund70-Weight-Engraving.dxf` |
+| 6 | Gasket retainer | 6061-T6 aluminium | 44.1 × 4.55 × 4.1 bar, R1.1 corners, with two screw ears (44.1 × 9.9 overall), 0.90 cm³ (2.4 g each, 14.6 g the six) | CNC, anodise | `step/Dachshund70-Case-Gasket-Retainer.step` |
+| 1 | Weight | C360 brass (Ti-6Al-4V, steel or aluminium possible) | face 185.0 × 76.1 (R4), flange 216.0 × 80.9 (R5), 3.7 (sloped) / 5.1 / 6.4 / 7.7 thick, 87.5 cm³: brass 744 g, Ti-6Al-4V 388 g, steel 687 g, aluminium 236 g | CNC; polished face with a 0.4 chamfer round the edge; dachshund silhouette 0.3 deep (flat floor bead-blasted), 0.4 wide detail grooves 0.5 deep, "Dachshund70" text 0.3 deep (Fredoka SemiBold, SIL OFL, 10.5 tall, under the dog) | `step/Dachshund70-Case-Weight.step`, `dxf/Dachshund70-Weight-Engraving.dxf` |
 | 1 | Knob | 6061 aluminium | Ø19.2 × 15.1, 3.73 cm³ (10.1 g) | CNC, form-knurl, anodise | `step/Dachshund70-Case-Knob.step` |
-| 1 | Encoder cover | 6061 aluminium | 16.9 × 25.9 × 19.7 with its foot and rear ear, 2.32 cm³ (6.3 g) | CNC, anodise in the accent colour | `step/Dachshund70-Case-Encoder-Cover.step` |
+| 1 | Encoder cover | 6061 aluminium | Ø19.2 dome 8.5 long on a foot, 16.9 × 36.9 × 20.8 with its two ears, 2.11 cm³ (5.7 g) | CNC, anodise in the accent colour | `step/Dachshund70-Case-Encoder-Cover.step` |
 | 1 | Power switch slider cap | 3D-printed resin (or machined POM) | 3.6 × 2.6 stadium, 2.2 long, 0.016 cm³ | SLA print, or turn/mill in POM | `step/Dachshund70-Case-Switch-Cap.step` |
 | 1 | LED light guide | Opaque black SLA or SLS resin | 30.6 × 6.05 × 10.05, 1.03 cm³ (1.2 g) | 3D print | `step/Dachshund70-Case-LED-Guide.step` |
 
@@ -25,21 +25,30 @@ Notes on the made parts:
   opening under its nub's pocket region (44.3 × 4.65, R1.0 corners, open from below) from the ring's top up to the
   sock floor (local z 3.5): its top is the floor under both socks and the nub's clearance, it seats against the top
   block's step at 3.5, and the ring clamps it from below. 0.1 clear at its ends and outer side; its inner side is flush
-  with the top block's pocket wall, 0.75 from the PCB's edge.
-- Weight: it drops in from inside through a window in the bottom block, its 1.5 mm flange resting on a stepped
-  ledge pocket (ledges at z 3.68 front, 5.01 middle, 6.34 back, matching the floor's steps; the risers sit 0.1 behind
-  the flange's steps, R1.0 in their corners and on the flange's), and sits 0.1 under the floor. Four M2 × 4 countersunk
+  with the top block's pocket wall, 0.75 from the PCB's edge. Two ears on its outer side at ±18.0 from its centre
+  (R2.8, 2.0 thick, flush with its underside, R1.0 where they meet the bar) each take an M2 × 8 countersunk screw up
+  into the top block (90° countersink 4.0, head flush, 1.2 land; tap Ø1.6 drilled to the tip + 2, 5.9 of thread). The
+  ears sit in pockets 0.1 clear, well away from the socks, the nub arms, the ring's slots and the M3 screws.
+- Weight: its face runs from the number row's top edge to the Shift row's bottom edge (world y −40.4 to 35.7). It
+  drops in from inside through a window in the bottom block, its 1.5 mm flange resting on a ledge pocket (sloped at the
+  front with the floor, z 2.2 to 3.68, then 3.68, 5.01 and 6.34, matching the floor's steps; the risers sit 0.1 behind
+  the flange's steps, R1.0 in their corners and on the flange's), and sits 0.1 under the floor. The ledges keep 2.2 of
+  floor under them at the front and over 7 of wall to the rails' pockets, the front screws and the battery bay. Four M2 × 4 countersunk
   screws from inside, at x ±103.5 and y 2.5 / 30.5 (local frame), in 90° countersinks 4.0 → 2.2 (0.9 deep, a 0.6 land
   left in the flange), into M2 taps in the ledges: drill Ø1.6 to the screw tip + 1.0, thread to tip + 0.5 (2.5 of
   thread; 1.0 and 2.4 of floor left under the drill points). No screw heads show on the bottom.
 - Knob: D-bore 6.0 with the flat at 4.5 (across the flat) for the PEC12R's 6 mm D shaft, blind, ending 0.3 past the
   shaft's tip, behind a Ø7.6 × 4.9 hub bore; push-on (rotary-broach the D, or wire-EDM it before the blind end is
   faced). The knurl is to be form-knurled, diamond, about 0.8 pitch (the model shows 64 flutes and 14 rings).
-- Encoder cover: 19.2 wide with R7 top corners, tangent to the knob's sides and top; cavity 13.1 wide for the PEC12R
-  body (+0.3, R0.5 corners, R1.0 at its closed end), ear pockets R0.6. Its foot sits on the encoder module and takes
-  the module's two M2 screws (taps Ø1.6 through the foot, 1.0 wall); its rear ear goes into a pocket in the top
-  block's back wall and takes 2 × M2 × 6 up into the top block (taps drilled 4.0 deep, 1.2 under the top face). Walls
-  at least 1.0 everywhere; 0.15 to the knob, 0.15 to the plate, 0.17 to the encoder's frame ears.
+- Encoder cover: a Ø19.2 dome on the knob's axis (the knob's size), its walls tangent to the knob down to the encoder
+  module's PCB, just enclosing the PEC12R body: cavity 12.84 × 13.7 (0.15 round the body, R0.5 corners at its closed
+  end), frame-ear pockets with R0.5 corners. The dome is only 0.21 thick over the cavity's top corners (the body's
+  corners are 9.16 from the axis): accepted to keep it round; everywhere else the walls are at least 1.0. Its foot sits
+  on the module and takes the module's two M2 screws (taps Ø1.6 through, R1.8 bosses on the module's holes, R0.8 where
+  they meet the foot). One flat ear each side of the axis (2.6 thick, off the PCB) takes an M3 × 8 countersunk screw up
+  into the top block: the front one into a Ø5.0 boss through the plate's enlarged notch, the back one in a pocket in
+  the back wall; taps Ø2.5 drilled to the tip + 2 (1.0 under the top face), 5.4 of thread. 0.15 to the knob, the plate
+  and the encoder; 1.7 to the keycaps pressed 4.0.
 - Switch cap: a light press fit on the PCM12 lever (pocket 1.3 × 1.0, 0.05 under the lever, R0.2 corners) plus a drop
   of cyanoacrylate; walls 0.8 round the pocket. It stands 0.3 proud of the back face and rides in a stadium slot
   5.5 × 3.0 (0.2 clear all round, 1.5 travel). Three grooves 0.3 wide × 0.3 deep, 1.1 apart, leave 0.8 ribs.
@@ -56,8 +65,9 @@ Notes on the made parts:
 | 4 | M3 × 12 countersunk, DIN 7991, stainless | Bottom block to top block, along the front, flush with the bottom face; 6.0 of the screw in the top block, taps threaded 7.5 and drilled 9.0 deep from its bottom face (tip + 1.5 / tip + 3) |
 | 4 | M3 × 20 countersunk, DIN 7991, stainless | The same along the back (the block is 23 mm tall there); 4.75 in the top block, taps threaded 6.25 and drilled 7.75 deep |
 | 4 | M2 × 4 countersunk, DIN 965, stainless | The weight, from inside, into the ledge taps (above) |
+| 12 | M2 × 8 countersunk, DIN 965, stainless | The six gasket retainers to the top block, two each, up through their ears, heads flush with the retainers' underside (drive them before the ring goes on) |
+| 2 | M3 × 8 countersunk, DIN 7991, stainless | The encoder cover to the top block, one each side of the axis, up through its ears into the front boss and the back wall |
 | 2 | M3 × 6 button head (ISO 7380) | USB-C daughterboard into the two taps on its ledge (x −16.5 and 19.0); the pocket is open from above, so drive them before the ring and the top block go on |
-| 2 | M2 × 6 pan head (ISO 7045), stainless | Encoder cover to the top block, up through the cover's rear ear |
 | 2 | M2 × 5 pan head (ISO 7045), stainless | Encoder module to the cover's foot, up through the module's holes. The heads need the mainboard's two Ø4.2 clearance holes moved 0.74 onto the module's holes (see below) |
 | 1 | Rubber or TPU rail with adhesive, 300 × 5.8 × 2.0 | Near the front edge, in a 1.0 pocket, 1.0 proud |
 | 1 | Rubber or TPU rail with adhesive, 269.4 × 5.8 × 2.0 | Near the back edge, x −150 to 119.4 (it stops 3.0 short of the battery bay), in a 1.0 pocket, 1.0 proud |
@@ -73,6 +83,9 @@ Notes on the made parts:
 
 Open points from the November 2026 check (board changes, not case changes):
 
+- Plate (done in this round): the encoder notch now runs forward to KiCad y 67.25 between x 305.25 and 322.25 for the
+  cover's walls and its front boss, and the two module reliefs are Ø3.9 on the module's real holes
+  (`hardware/Dachshund70-Plate/`).
 - Mainboard: its Ø4.2 head-clearance holes for the encoder module's screws are at local (128.95, 41.25) and
   (128.95, 57.85), 0.74 off the module's holes at (128.375, 41.71) and (128.375, 58.31), so the M2 heads hit the board.
   Move them to KiCad (306.625, 57.84) and (306.625, 41.24).
@@ -83,20 +96,20 @@ Open points from the November 2026 check (board changes, not case changes):
 
 | Part | Mass |
 |---|---:|
-| Top block | 448 g |
-| Bottom block | 799 g |
+| Top block | 447 g |
+| Bottom block | 697 g |
 | Accent ring | 62 g |
 | Knob | 10.1 g |
-| Encoder cover | 6.3 g |
-| Gasket retainers (6) | 13.3 g |
+| Encoder cover | 5.7 g |
+| Gasket retainers (6) | 14.6 g |
 | LED guide, switch cap (resin) | 1.3 g |
 | Rails (rubber, about 1.2 g/cm³) | 7.9 g |
-| Screws (8 × M3 CSK, 4 × M2 CSK, 4 × M2 pan, 2 × M3 button) | 9.8 g |
-| Case without the weight | 1358 g |
-| Weight, brass / Ti-6Al-4V | 435 g / 227 g |
-| Case with the weight, brass / Ti-6Al-4V | 1793 g / 1584 g |
+| Screws (10 × M3 CSK, 16 × M2 CSK, 2 × M2 pan, 2 × M3 button) | 13.1 g |
+| Case without the weight | 1259 g |
+| Weight, brass / Ti-6Al-4V | 744 g / 388 g |
+| Case with the weight, brass / Ti-6Al-4V | 2003 g / 1647 g |
 | Boards, plate, battery, switches, keycaps, screen (estimate) | about 620 g |
-| Complete keyboard, brass / Ti-6Al-4V (estimate) | about 2.41 kg / 2.20 kg |
+| Complete keyboard, brass / Ti-6Al-4V (estimate) | about 2.62 kg / 2.27 kg |
 
 The estimate: mainboard 100 g (FR4 from the model) + 10 g of parts, plate 61 g, 77 switches 254 g, hot-swap sockets
 27 g, stabilizers 14 g, PBT keycaps 114 g (from the model's volumes), cell 29 g, screen, encoder and USB-C boards 15 g.

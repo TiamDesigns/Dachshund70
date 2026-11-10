@@ -84,11 +84,12 @@ PRONG_START = NECK_WIDTH / 2 + ARM_LENGTH      # from the nub centre: the arm's 
 # Distance from the plate edge to the arms' outer face, where the prongs start.
 ARM_OUTER = SLOT + ARM_WIDTH
 
-# Reliefs for the encoder module's two M2 posts (they stand 1.2 mm from the notch
-# edge), Ø3.8 centred on the module's holes (mainboard mm), open to the edge
-# where the circle would leave a sliver.
-POST_RELIEFS = ((306.6, 41.7), (306.6, 57.8))
-POST_RELIEF_D = 3.8   # the case's M2 post bosses are dia 3.4: 0.2 clear all round
+# Reliefs for the encoder module's two M2 screws: the case's encoder cover has a
+# Ø3.6 boss round each of the module's holes (mainboard mm) that reaches 0.575 mm
+# past the notch's left edge, so each relief is Ø3.9 on the hole (0.15 mm clear),
+# open to the edge where the circle would leave a sliver.
+POST_RELIEFS = ((306.625, 41.24), (306.625, 57.84))
+POST_RELIEF_D = 3.9
 
 # Every inside corner of the outline gets at least this radius (tab roots).
 OUTLINE_INSIDE_RADIUS = 0.5
@@ -107,6 +108,12 @@ ENCODER_BOX = (308.105, 41.33, 328.595, 55.7)
 NOTCH_LEFT = 305.25
 NOTCH_BELOW_COURTYARD = 1.3
 NOTCH_RADIUS = 2.0
+# The notch runs further forward (down to y = NOTCH_EXT_BOTTOM) from NOTCH_LEFT to
+# NOTCH_EXT_RIGHT: room for the case's encoder cover (its walls reach the PCB) and
+# the boss the cover's front M3 screw goes into, which hangs from the top block
+# through the plate (0.8 mm clear at the bottom, 1.75 at the left).
+NOTCH_EXT_RIGHT = 322.25
+NOTCH_EXT_BOTTOM = 67.25
 
 # Pass-through slot for the display header J4 (pins stand ~8.5 mm tall).
 DISPLAY_REF = "J4"
@@ -294,7 +301,8 @@ def build(mb):
     if not NOTCH_LEFT < ex0:
         raise SystemExit("encoder courtyard is left of the notch")
     # Oversize the notch past the outline so only its inside corner is real.
-    notch = rect(NOTCH_LEFT, y0 - 10, x1 + 10, notch_bottom)
+    notch = union([rect(NOTCH_LEFT, y0 - 10, x1 + 10, notch_bottom),
+                   rect(NOTCH_LEFT, y0 - 10, NOTCH_EXT_RIGHT, NOTCH_EXT_BOTTOM)])
     round_outside_corners(notch, NOTCH_RADIUS)
     outline.BooleanSubtract(notch)
     # Relief round each of the encoder module's posts; the one by the top edge is
@@ -442,7 +450,7 @@ def main():
     print("prongs, top edge: x = " + ", ".join(f"{x:.2f}" for x in geo["top_prongs"]))
     print("nubs, bottom edge (y = %s): x = " % y1 + ", ".join(f"{x:.2f}" for x in geo["bottom_nubs"]))
     print("prongs, bottom edge: x = " + ", ".join(f"{x:.2f}" for x in geo["bottom_prongs"]))
-    print(f"encoder notch: x >= {NOTCH_LEFT}, y <= {geo['notch_bottom']}")
+    print(f"encoder notch: x >= {NOTCH_LEFT}, y <= {geo['notch_bottom']} (y <= {NOTCH_EXT_BOTTOM} for x <= {NOTCH_EXT_RIGHT})")
     print(f"wrote {os.path.relpath(OUT)}")
 
 

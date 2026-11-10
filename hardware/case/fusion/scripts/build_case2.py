@@ -32,6 +32,18 @@ PRM = dict(
     KNOB_D=19.2,          # knob: the cover's side walls run tangent to it (the housing is as wide as the knob), 0.4 above the module PCB
 )
 
+# ---- built only in the .f3d (mirrored here for reference; local mm unless noted) ----
+# Encoder cover (v35): a Dia 19.2 dome on the knob's axis (y 50.03, z 13.395), x 135.0 .. 143.505, walls tangent to the knob down
+# to the module PCB (z 3.31); cavity 12.8 x 13.7 (PEC12R body + 0.15) from x 136.225, frame-ear pockets to x 138.825, |y| 7.1;
+# foot x 127.15 .. 135 up to z 7.5 with the module's two M2 taps (Dia 1.6 through, R1.8 bosses); front ear (130.575, 35.8) R4.0 and
+# back ear (139.2525, 64.4) R4.2525, both z 2.2 .. 4.8 off the PCB, each with an M3 x 8 countersunk screw up into the top block
+# (front: a Dia 5.0 boss down to z 4.8 through the plate's notch; back: a pocket in the back wall). Taps Dia 2.5 drilled to z 12.2.
+COVER_V35 = dict(X0=135.0, X1=143.505, FOOT_X0=127.15, FOOT_Z1=7.5, EAR_Z=(2.2, 4.8), FRONT_EAR=(130.575, 35.8, 4.0),
+                 BACK_EAR=(139.2525, 64.4, 4.2525), FRONT_BOSS_D=5.0, M3_DRILL_TO=12.2, CAVITY_CLEAR=0.15, OPENING_GAP=0.25)
+# Gasket retainers: 44.1 x 4.55 x 4.1 plus two ears each (centre +-18.0, outer face 65.85 -> screw at |y| 68.4, ear R2.8,
+# z -0.6 .. 1.4, R1.0 where they meet the bar), M2 x 8 countersunk (DIN 965) up into the top block, taps Dia 1.6 drilled to z 9.4.
+RETAINER_EARS = dict(DX=18.0, Y=68.4, R=2.8, Z=(-0.6, 1.4), FILLET=1.0, POCKET_CLEAR=0.1, SCREW='M2x8 DIN 965', DRILL_TO=9.4)
+
 TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
 LIFT = 3.0 + 4.0 * C + (121.1 / 2 + 0.75) * S      # floor 3.0, 4.0 from it to the PCB bottom at the front edge
@@ -957,8 +969,11 @@ def build(prm):
         def stepy(ea_):
             return ea_ * C - FLOOR_L * S
         Z_FRONT, Z_BACK, Y_STEP = stepz(-21.40) - 0.1, stepz(-2.36) - 0.1, stepy(-2.36)     # weight top in front of / behind the step at y -2.04
-        WIN_X, WIN_Y0, WIN_Y1 = 92.5, -16.5, 23.5          # the weight's face (the window): 185 x 40
-        FL_X, FL_Y0, FL_Y1 = 108.0, -19.0, 34.0            # its flange: long ends and a third floor level behind, for screws spaced far apart
+        # the weight's face (the window): 185 x 76.1, from the number row's top edge (local y 35.74) to the Shift row's bottom
+        # edge (local y -40.46), projected square to the desk. In the .f3d its front part (y < -21.03, where the floor follows
+        # the plate's slope) has a sloped top and a sloped ledge, 0.1 / 1.6 under the floor; here it stays flat at Z_FRONT.
+        WIN_X, WIN_Y0, WIN_Y1 = 92.5, -40.4, 35.7
+        FL_X, FL_Y0, FL_Y1 = 108.0, -42.9, 38.0            # its flange: long ends and a third floor level behind, for screws spaced far apart
         FL_T = 1.5
         LEDGE_F, LEDGE_B = Z_FRONT - FL_T, Z_BACK - FL_T
         Z3, Y_STEP2 = stepz(16.69) - 0.1, stepy(16.69)      # the floor's next step at y 16.96
@@ -1259,9 +1274,9 @@ def build(prm):
 
         DOG_OUT = [(0.5, 6.6), (2.4, 9.6), (5.0, 12.8), (8.4, 15.0), (14.0, 16.8), (21.0, 18.4), (28.0, 19.8), (33.5, 21.8), (36.6, 25.2), (39.8, 28.2), (43.4, 29.8), (47.6, 29.0), (50.6, 27.8), (53.0, 26.4), (49.8, 25.0), (46.4, 24.2), (43.4, 22.8), (41.6, 20.6), (41.8, 17.0), (43.0, 14.0), (43.7, 10.0), (44.4, 4.6), (44.9, 1.2), (45.7, 0.1), (41.6, 0.0), (41.3, 1.4), (41.6, 5.4), (40.6, 9.6), (34.0, 11.2), (27.0, 11.0), (21.0, 11.8), (18.8, 8.8), (17.2, 5.0), (17.8, 1.4), (18.0, 0.1), (14.4, 0.0), (14.2, 1.6), (14.8, 5.4), (12.2, 8.8), (9.0, 11.8), (7.0, 11.8), (3.6, 8.4)]
         DOG_LINES = {'ear': [(40.6, 28.6), (38.2, 25.6), (37.2, 22.0), (38.4, 19.0), (40.2, 19.4), (41.0, 21.8)], 'chest': [(41.9, 16.8), (40.6, 14.6), (38.8, 13.8)], 'front legs': [(43.2, 8.6), (43.4, 1.6)], 'hind legs': [(16.4, 8.6), (16.2, 1.8)]}
-        EYE = (47.8, 27.4, 0.55)
-        DOG_S, DOG_CX = 0.88 * 40.0 / 30.6, 45.0             # scale and centre (world x) of the dog on the face (scaled with the 40 mm face)
-        dog_xy = lambda u_, v_: (DOG_CX - DOG_S * (u_ - 26.7), WCY + DOG_S * (v_ - 15.0))
+        EYE = (47.8, 27.4, 0.55 * 1.45 / 1.15)
+        DOG_S, DOG_CX, DOG_Y0 = 1.45, 0.0, -16.6             # the dog above the name, centred on the 76.1 mm face (feet at y -16.6)
+        dog_xy = lambda u_, v_: (DOG_CX - DOG_S * (u_ - 26.7), DOG_Y0 + DOG_S * v_)
 
         sk_p = root.sketches.add(zp(h, 'dog pocket plane'))
         sk_p.name = 'Dachshund silhouette (pocket 0.3)'
@@ -1281,8 +1296,8 @@ def build(prm):
         skx = root.sketches.add(zp(h, 'bar text plane'))
         skx.name = 'Weight engraving'
         skx.isLightBulbOn = False
-        ti = skx.sketchTexts.createInput2('Dachshund70', mm(6.0 * 40.0 / 30.6))
-        ti.setAsMultiLine(skx.modelToSketchSpace(P(-88, WCY + 5.2, h)), skx.modelToSketchSpace(P(-12, WCY - 5.2, h)),
+        ti = skx.sketchTexts.createInput2('Dachshund70', mm(10.5))      # under the dog, centred at y -26.85
+        ti.setAsMultiLine(skx.modelToSketchSpace(P(-70, -26.85 + 7.0, h)), skx.modelToSketchSpace(P(70, -26.85 - 7.0, h)),
                           adsk.core.HorizontalAlignments.CenterHorizontalAlignment, adsk.core.VerticalAlignments.MiddleVerticalAlignment, 0)
         ti.fontName = 'Fredoka SemiBold'    # SIL OFL, Google Fonts; install the static SemiBold (see hardware/case/README.md)
         try:

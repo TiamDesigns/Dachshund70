@@ -6,7 +6,8 @@ OUT = REPO + 'hardware/case/dxf/'
 TILT = 4.0
 S, C = math.sin(math.radians(TILT)), math.cos(math.radians(TILT))
 LIFT = 3.0 + 4.0 * C + (121.1 / 2 + 0.75) * S
-FACE_CY = 3.5        # world y of the weight face's centre (face y -16.5..23.5)
+FACE_CY = -2.35      # world y of the weight face's centre (face y -40.4..35.7)
+TEXT_BELOW_Y = -19.0  # the dog stands above this world y, the name sits below it
 
 
 class Dxf:
@@ -127,10 +128,10 @@ def weight_dxf():
     d = Dxf(['DOG_SILHOUETTE', 'DOG_DETAIL', 'TEXT'])
     cnt = {}
     for f, z in faces:
-        cx = f.centroid.x * 10
+        cy = f.centroid.y * 10
         if f == biggest:
             layer = 'DOG_SILHOUETTE'
-        elif cx > 0:
+        elif cy > TEXT_BELOW_Y:
             layer = 'DOG_DETAIL'
         else:
             layer = 'TEXT'
