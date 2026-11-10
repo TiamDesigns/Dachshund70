@@ -113,10 +113,13 @@ NOTCH_RADIUS = 2.0
 # the boss its front M2 screw goes into, which hangs from the top block through the
 # plate. Round 5 (2026-11-10): the plate floats on its socks and moves +-1 mm, so
 # the forward part now runs on to the right-hand edge (the knob's underside is clear
-# of it) and 1.25 mm further forward, which keeps the cover's front ear, its screw
-# and the boss 1.5 mm or more from the plate in plan.
+# of it) and forward to y 104.5. That keeps the cover's front ear, its screw and
+# the boss 1.5 mm or more from the plate in plan, and leaves no plate under the
+# e-paper driver board, whose parts sit 0.3 over the plate's top and would be hit
+# when the plate floats up. The sidebar keeps its plate from y 104.5 on (the J4
+# slot and the LED windows).
 NOTCH_EXT_RIGHT = 347.5     # past the plate's right-hand edge (x 337.5)
-NOTCH_EXT_BOTTOM = 68.5
+NOTCH_EXT_BOTTOM = 104.5
 
 # Pass-through slot for the display header J4 (pins stand ~8.5 mm tall).
 DISPLAY_REF = "J4"

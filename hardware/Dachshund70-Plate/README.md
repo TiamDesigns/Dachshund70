@@ -32,10 +32,12 @@ can't drift apart.
   full cutout.
 - **Encoder:** the plate stops short of the roller. A notch takes out the top-right corner,
   x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. From x 305.25 to the right-hand edge it runs further forward,
-  to y 68.5 (`NOTCH_EXT_RIGHT`, `NOTCH_EXT_BOTTOM`): the case's encoder cover stands on the module's board with its walls down
+  to y 104.5 (`NOTCH_EXT_RIGHT`, `NOTCH_EXT_BOTTOM`): the case's encoder cover stands on the module's board with its walls down
   through the plate there, and the boss its front M2 screw goes into hangs from the top block through the plate. The plate
   floats on its socks (±1 mm), so since round 5 the cover's front ear, its screw and the boss are 1.5 mm or more from it in
-  plan, and the knob's underside, which used to reach 0.8 mm over the plate's top, has no plate under it. The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
+  plan, the knob's underside (which used to reach 0.8 mm over the plate's top) has no plate under it, and neither has the
+  e-paper driver board (its parts were 0.3 over the plate). The sidebar keeps its plate from y 104.5 on: the J4 slot and
+  the LED windows. The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
   only to x 326.4) so the web next to the Delete cutout is 2.0 mm; the plate's notch goes on to the right edge so the shaft and the
   wheel on it are clear. The module's own board (below the plate) runs under the web, and nothing of the module stands at plate height there. Supporting the roller is up to the
   case. Since mainboard Rev 1.1 the encoder is on its own module board, so `gen_plate.py` no longer reads
