@@ -236,14 +236,14 @@ if SCENE == "dramatic":
     late = nt.nodes.new("ShaderNodeMath"); late.operation = "MULTIPLY"
     nt.links.new(W("MULTIPLY", l1.outputs[0], l2.outputs[0]), late.inputs[0]); nt.links.new(strength, late.inputs[1])
     ew = nt.nodes.new("ShaderNodeValToRGB"); e = ew.color_ramp.elements
-    e[0].position, e[0].color = 0.2, srgb("#4A2B18"); e[1].position, e[1].color = 0.85, srgb("#A46C43")
+    e[0].position, e[0].color = 0.2, srgb("#3F2414"); e[1].position, e[1].color = 0.85, srgb("#AA7146")
     tone2 = N(nt, "ShaderNodeTexNoise", Scale=4.0, Detail=4.0); nt.links.new(fm.outputs[0], tone2.inputs["Vector"])
     nt.links.new(W("ADD", W("MULTIPLY", tone2.outputs["Fac"], 0.8), W("MULTIPLY", ring, 0.25)), ew.inputs["Fac"])
     grain = nt.nodes.new("ShaderNodeMix"); grain.data_type = "RGBA"
     nt.links.new(late.outputs[0], grain.inputs[0]); nt.links.new(ew.outputs["Color"], grain.inputs[6])
     grain.inputs[7].default_value = srgb("#24130A")
     hair = W("FRACT", W("ADD", W("MULTIPLY", rr, 760.0), W("MULTIPLY", fine.outputs["Fac"], 1.2)))
-    hl = W("MULTIPLY", W("LESS_THAN", hair, 0.12), 0.22)  # fine secondary grain lines
+    hl = W("MULTIPLY", W("LESS_THAN", hair, 0.12), 0.32)  # fine secondary grain lines
     # dark figure streaks running with the grain, and broad tone variation
     sm = N(nt, "ShaderNodeMapping"); sm.inputs["Scale"].default_value = (0.03, 1.0, 1.0)
     nt.links.new(geo.outputs["Position"], sm.inputs["Vector"])
@@ -258,10 +258,10 @@ if SCENE == "dramatic":
     # open pores: short dark streaks running with the grain
     pm = N(nt, "ShaderNodeMapping"); pm.inputs["Scale"].default_value = (0.04, 1.0, 1.0)
     nt.links.new(geo.outputs["Position"], pm.inputs["Vector"])
-    pore = N(nt, "ShaderNodeTexNoise", Scale=1400.0, Detail=2.0); nt.links.new(pm.outputs[0], pore.inputs["Vector"])
-    pmask = W("GREATER_THAN", pore.outputs["Fac"], 0.66)
+    pore = N(nt, "ShaderNodeTexNoise", Scale=2200.0, Detail=2.0); nt.links.new(pm.outputs[0], pore.inputs["Vector"])
+    pmask = W("GREATER_THAN", pore.outputs["Fac"], 0.63)
     mx2 = nt.nodes.new("ShaderNodeMix"); mx2.data_type = "RGBA"
-    nt.links.new(W("MULTIPLY", pmask, 0.5), mx2.inputs[0]); nt.links.new(mx.outputs[2], mx2.inputs[6])
+    nt.links.new(W("MULTIPLY", pmask, 0.65), mx2.inputs[0]); nt.links.new(mx.outputs[2], mx2.inputs[6])
     mx2.inputs[7].default_value = srgb("#1E110A")
     nt.links.new(mx2.outputs[2], wb.inputs["Base Color"])
     smg = N(nt, "ShaderNodeTexNoise", Scale=7.0, Detail=6.0, Roughness=0.7); nt.links.new(geo.outputs["Position"], smg.inputs["Vector"])
@@ -421,15 +421,28 @@ if SCENE == "dramatic":
 
     # --- props ---
     mug_m = simple_mat("Glazed ceramic", "#ECE6DA", 0.1, **{"Coat Weight": 0.6})
+    # stoneware glaze: faint iron speckles and a little colour drift
+    _nt = mug_m.node_tree; _b = next(n for n in _nt.nodes if n.type == "BSDF_PRINCIPLED")
+    _g = _nt.nodes.new("ShaderNodeNewGeometry"); _v = N(_nt, "ShaderNodeTexVoronoi", Scale=1500.0)
+    _nt.links.new(_g.outputs["Position"], _v.inputs["Vector"])
+    _sp = _nt.nodes.new("ShaderNodeSeparateColor"); _nt.links.new(_v.outputs["Color"], _sp.inputs[0])
+    _k = _nt.nodes.new("ShaderNodeMath"); _k.operation = "GREATER_THAN"; _k.inputs[1].default_value = 0.994
+    _nt.links.new(_sp.outputs[0], _k.inputs[0])
+    _dr = N(_nt, "ShaderNodeTexNoise", Scale=25.0, Detail=3.0); _nt.links.new(_g.outputs["Position"], _dr.inputs["Vector"])
+    _cr = _nt.nodes.new("ShaderNodeValToRGB"); _cr.color_ramp.elements[0].color = srgb("#E4DDCF"); _cr.color_ramp.elements[1].color = srgb("#F1ECE2")
+    _nt.links.new(_dr.outputs["Fac"], _cr.inputs["Fac"])
+    _mx = _nt.nodes.new("ShaderNodeMix"); _mx.data_type = "RGBA"; _nt.links.new(_k.outputs[0], _mx.inputs[0])
+    _nt.links.new(_cr.outputs["Color"], _mx.inputs[6]); _mx.inputs[7].default_value = srgb("#5A4A3C")
+    _nt.links.new(_mx.outputs[2], _b.inputs["Base Color"])
     bm3 = bmesh.new()
     bmesh.ops.create_cone(bm3, cap_ends=True, segments=128, radius1=0.042, radius2=0.042, depth=0.095)
     top = max(bm3.faces, key=lambda f: f.calc_center_median().z); bmesh.ops.delete(bm3, geom=[top], context="FACES")
     me3 = bpy.data.meshes.new("Mug"); bm3.to_mesh(me3)
-    mug = link(bpy.data.objects.new("Mug", me3)); mug.location = (0.25, 0.165, 0.0475); me3.materials.append(mug_m)
+    mug = link(bpy.data.objects.new("Mug", me3)); mug.location = (0.255, 0.17, 0.0475); me3.materials.append(mug_m)
     so_ = mug.modifiers.new("wall", "SOLIDIFY"); so_.thickness = 0.0045; so_.offset = -1
     b2 = mug.modifiers.new("bv", "BEVEL"); b2.width = 0.0012; b2.segments = 3; b2.limit_method = "ANGLE"
     for p in me3.polygons: p.use_smooth = True
-    bpy.ops.mesh.primitive_torus_add(major_radius=0.026, minor_radius=0.0065, location=(0.25 + 0.050, 0.165, 0.05),
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.026, minor_radius=0.0065, location=(0.255 + 0.050, 0.17, 0.05),
                                      rotation=(math.radians(90), 0, 0), major_segments=64, minor_segments=24)
     bpy.context.object.data.materials.append(mug_m)
     coffee, nt, cb = node_mat("Coffee with crema")
@@ -444,7 +457,7 @@ if SCENE == "dramatic":
     nt.links.new(ns.outputs["Fac"], mxc.inputs[0]); nt.links.new(rim.outputs[0], mxc.inputs[2])
     nt.links.new(mxc.outputs[0], cc.inputs["Fac"]); nt.links.new(cc.outputs["Color"], cb.inputs["Base Color"])
     cb.inputs["Roughness"].default_value = 0.08
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.0374, depth=0.001, vertices=128, location=(0.25, 0.165, 0.0885))
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0374, depth=0.001, vertices=128, location=(0.255, 0.17, 0.0885))
     bpy.context.object.data.materials.append(coffee)
     cork, nt, kb = node_mat("Cork")
     geo = nt.nodes.new("ShaderNodeNewGeometry")
@@ -456,11 +469,11 @@ if SCENE == "dramatic":
     kb.inputs["Roughness"].default_value = 0.9
     bpk = N(nt, "ShaderNodeBump", Strength=0.6, Distance=0.0006)
     nt.links.new(ck.outputs["Distance"], bpk.inputs["Height"]); nt.links.new(bpk.outputs["Normal"], kb.inputs["Normal"])
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.052, depth=0.005, vertices=128, location=(0.25, 0.165, 0.0025))
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.052, depth=0.005, vertices=128, location=(0.255, 0.17, 0.0025))
     cst = bpy.context.object; cst.data.materials.append(cork)
     cbv = cst.modifiers.new("bv", "BEVEL"); cbv.width = 0.0008; cbv.segments = 3; cbv.limit_method = "ANGLE"
     for o in bpy.data.objects:
-        if o.type == "MESH" and o is not cst and abs(o.location.x - 0.25) < 1e-6 and abs(o.location.y - 0.165) < 1e-6:
+        if o.type == "MESH" and o is not cst and abs(o.location.x - 0.255) < 1e-6 and abs(o.location.y - 0.17) < 1e-6:
             o.location.z += 0.005
         if o.type == "MESH" and o.name.startswith("Torus"):
             o.location.z += 0.005
@@ -496,12 +509,65 @@ if SCENE == "dramatic":
                                         rotation=(0, math.radians(90), math.radians(62)))
     bpy.context.object.data.materials.append(pen_m)
     # Plant in a terracotta pot, and a framed print resting on the desk, leaning on the wall
-    terra = surface_mat("Terracotta", "#9C5235", "#B8694A", scale=120, bump=0.3, rough=0.85)
-    bpy.ops.mesh.primitive_cone_add(vertices=96, radius1=0.036, radius2=0.047, depth=0.075, location=(-0.24, 0.17, 0.0375))
-    pot = bpy.context.object; pot.data.materials.append(terra)
+    # terracotta pot: speckled fired clay, a pale mineral bloom and darker damp near the base, a collar and rim,
+    # a matching saucer, and soil dressed with pebbles
+    terra, nt, tb = node_mat("Terracotta")
+    tco_ = nt.nodes.new("ShaderNodeTexCoord"); tz = nt.nodes.new("ShaderNodeSeparateXYZ"); nt.links.new(tco_.outputs["Object"], tz.inputs[0])
+    clay = N(nt, "ShaderNodeTexNoise", Scale=60.0, Detail=8.0); nt.links.new(tco_.outputs["Object"], clay.inputs["Vector"])
+    crt = nt.nodes.new("ShaderNodeValToRGB"); e = crt.color_ramp.elements
+    e[0].position, e[0].color = 0.3, srgb("#8E4A2E"); e[1].position, e[1].color = 0.75, srgb("#BA6C48")
+    nt.links.new(clay.outputs["Fac"], crt.inputs["Fac"])
+    spk = N(nt, "ShaderNodeTexVoronoi", Scale=900.0); nt.links.new(tco_.outputs["Object"], spk.inputs["Vector"])
+    ssep = nt.nodes.new("ShaderNodeSeparateColor"); nt.links.new(spk.outputs["Color"], ssep.inputs[0])
+    dark = N(nt, "ShaderNodeMath"); dark.operation = "GREATER_THAN"; dark.inputs[1].default_value = 0.985
+    nt.links.new(ssep.outputs[0], dark.inputs[0])
+    m1 = nt.nodes.new("ShaderNodeMix"); m1.data_type = "RGBA"; nt.links.new(dark.outputs[0], m1.inputs[0])
+    nt.links.new(crt.outputs["Color"], m1.inputs[6]); m1.inputs[7].default_value = srgb("#6E3520")
+    bloom_n = N(nt, "ShaderNodeTexNoise", Scale=35.0, Detail=6.0); nt.links.new(tco_.outputs["Object"], bloom_n.inputs["Vector"])
+    low = nt.nodes.new("ShaderNodeMapRange"); low.inputs[1].default_value = -0.01; low.inputs[2].default_value = -0.036
+    nt.links.new(tz.outputs["Z"], low.inputs[0])
+    bl = N(nt, "ShaderNodeMath"); bl.operation = "MULTIPLY"; nt.links.new(low.outputs[0], bl.inputs[0])
+    nt.links.new(bloom_n.outputs["Fac"], bl.inputs[1])
+    m2 = nt.nodes.new("ShaderNodeMix"); m2.data_type = "RGBA"; nt.links.new(bl.outputs[0], m2.inputs[0])
+    nt.links.new(m1.outputs[2], m2.inputs[6]); m2.inputs[7].default_value = srgb("#C9B8A4")
+    nt.links.new(m2.outputs[2], tb.inputs["Base Color"]); tb.inputs["Roughness"].default_value = 0.88
+    bpt = N(nt, "ShaderNodeBump", Strength=0.35, Distance=0.0006)
+    nt.links.new(clay.outputs["Fac"], bpt.inputs["Height"]); nt.links.new(bpt.outputs["Normal"], tb.inputs["Normal"])
+    PX0, PY0, SZ = -0.24, 0.17, 0.008
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.054, depth=0.009, vertices=96, location=(PX0, PY0, 0.0045))
+    sau = bpy.context.object; sau.name = "Saucer"; sau.data.materials.append(terra)
+    bsv = sau.modifiers.new("bv", "BEVEL"); bsv.width = 0.003; bsv.segments = 4; bsv.limit_method = "ANGLE"
+    for p in sau.data.polygons: p.use_smooth = True
+    sau.data.set_sharp_from_angle(angle=math.radians(40))
+    bpy.ops.mesh.primitive_cone_add(vertices=96, radius1=0.036, radius2=0.045, depth=0.062, location=(PX0, PY0, SZ + 0.031))
+    pot = bpy.context.object; pot.name = "Pot"; pot.data.materials.append(terra)
     for p in pot.data.polygons: p.use_smooth = True
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.044, depth=0.002, vertices=64, location=(-0.24, 0.17, 0.07))
-    bpy.context.object.data.materials.append(simple_mat("Soil", "#2B1D14", 0.95))
+    pot.data.set_sharp_from_angle(angle=math.radians(40))
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0495, depth=0.015, vertices=96, location=(PX0, PY0, SZ + 0.062 + 0.0075 - 0.002))
+    col_ = bpy.context.object; col_.name = "Pot collar"; col_.data.materials.append(terra)
+    bcv = col_.modifiers.new("bv", "BEVEL"); bcv.width = 0.002; bcv.segments = 4; bcv.limit_method = "ANGLE"
+    for p in col_.data.polygons: p.use_smooth = True
+    col_.data.set_sharp_from_angle(angle=math.radians(40))
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.047, minor_radius=0.003, location=(PX0, PY0, SZ + 0.0755),
+                                     major_segments=96, minor_segments=16)
+    bpy.context.object.data.materials.append(terra)
+    soil, nt, sb2 = node_mat("Soil")
+    sb2.inputs["Base Color"].default_value = srgb("#2B1D14"); sb2.inputs["Roughness"].default_value = 0.95
+    sn_ = N(nt, "ShaderNodeTexNoise", Scale=600.0, Detail=8.0); geo3 = nt.nodes.new("ShaderNodeNewGeometry")
+    nt.links.new(geo3.outputs["Position"], sn_.inputs["Vector"])
+    bps = N(nt, "ShaderNodeBump", Strength=0.8, Distance=0.001)
+    nt.links.new(sn_.outputs["Fac"], bps.inputs["Height"]); nt.links.new(bps.outputs["Normal"], sb2.inputs["Normal"])
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.046, depth=0.002, vertices=64, location=(PX0, PY0, SZ + 0.071))
+    bpy.context.object.data.materials.append(soil)
+    peb = simple_mat("Pebbles", "#BDB6AA", 0.6)
+    import random as _r; _r.seed(11)
+    for k in range(22):
+        a = _r.random() * 2 * math.pi; rr_ = 0.008 + 0.034 * math.sqrt(_r.random())
+        bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=1.0,
+                                              location=(PX0 + rr_ * math.cos(a), PY0 + rr_ * math.sin(a), SZ + 0.0725))
+        pb_ = bpy.context.object; pb_.data.materials.append(peb)
+        sz_ = 0.0022 + 0.0022 * _r.random(); pb_.scale = (sz_ * 1.3, sz_, sz_ * 0.7); pb_.rotation_euler.z = _r.random() * 3
+        for p in pb_.data.polygons: p.use_smooth = True
     leaf = simple_mat("Leaf", "#3F6B3A", 0.35, **{"Subsurface Weight": 0.15, "Coat Weight": 0.3})
     import random; random.seed(7)
     for i in range(14):
@@ -510,7 +576,7 @@ if SCENE == "dramatic":
         lf = bpy.context.object; lf.data.materials.append(leaf)
         for p in lf.data.polygons: p.use_smooth = True
         lf.scale = (0.011, 0.0035, h / 2); lf.rotation_euler = Euler((tilt, 0, a))
-        lf.location = Vector((-0.24, 0.17, 0.07)) + Euler((tilt, 0, a)).to_matrix() @ Vector((0, 0, h / 2))
+        lf.location = Vector((-0.24, 0.17, 0.079)) + Euler((tilt, 0, a)).to_matrix() @ Vector((0, 0, h / 2))
     frame_m = simple_mat("Walnut frame", "#3A2618", 0.4)
     art = bpy.data.materials.new("Print"); art.use_nodes = True; nt = art.node_tree
     pbsdf = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED"); pbsdf.inputs["Roughness"].default_value = 0.9
@@ -543,8 +609,8 @@ if SCENE == "dramatic":
     nt.links.new(bw.outputs["Fac"], bpb.inputs["Height"]); nt.links.new(bpb.outputs["Normal"], bb2.inputs["Normal"])
     z0 = root.location.z
     R_ = 0.0021
-    pts = [(0.0, 0.108, 0.00975 + z0), (0.0, 0.118, 0.0080 + z0), (-0.004, 0.124, MAT_T + R_ + 0.0008),
-           (-0.06, 0.131, R_ + 0.0004), (-0.16, 0.131, R_), (-0.235, 0.112, R_), (-0.31, 0.13, R_), (-0.38, 0.20, R_), (-0.52, 0.232, R_)]
+    pts = [(0.0, 0.108, 0.00975 + z0), (0.0, 0.118, 0.0080 + z0), (0.002, 0.125, MAT_T + R_ + 0.0008),
+           (0.012, 0.150, R_ + 0.0002), (0.045, 0.205, R_), (0.10, 0.228, R_), (0.135, 0.226, R_), (0.150, 0.226, 0.03), (0.150, 0.226, 0.09)]
     cu = bpy.data.curves.new("Cable", "CURVE"); cu.dimensions = "3D"; cu.bevel_depth = R_; cu.bevel_resolution = 6
     cu.resolution_u = 24
     sp = cu.splines.new("NURBS"); sp.points.add(len(pts) - 1); sp.use_endpoint_u = True; sp.order_u = 4
@@ -561,6 +627,11 @@ if SCENE == "dramatic":
         return o
     # monitor: satin dark-grey shell, slim bezel, matte panel showing an editor
     shell = simple_mat("Monitor shell", "#2B2B2D", 0.45, 0.0, **{"Coat Weight": 0.1})
+    _nt = shell.node_tree; _b = next(n for n in _nt.nodes if n.type == "BSDF_PRINCIPLED")
+    _g = _nt.nodes.new("ShaderNodeNewGeometry"); _n = N(_nt, "ShaderNodeTexNoise", Scale=4000.0, Detail=3.0)
+    _nt.links.new(_g.outputs["Position"], _n.inputs["Vector"])
+    _bp = N(_nt, "ShaderNodeBump", Strength=0.06, Distance=0.0002)
+    _nt.links.new(_n.outputs["Fac"], _bp.inputs["Height"]); _nt.links.new(_bp.outputs["Normal"], _b.inputs["Normal"])
     alu = simple_mat("Stand aluminium", "#B8B8B6", 0.35, 1.0)
     scr, nt, sb = node_mat("Monitor screen")
     tx = nt.nodes.new("ShaderNodeTexImage"); tx.image = bpy.data.images.load(os.path.join(os.path.dirname(os.path.abspath(__file__)), "monitor.png"))
@@ -568,28 +639,115 @@ if SCENE == "dramatic":
     sb.inputs["Base Color"].default_value = srgb("#0C0C0E"); sb.inputs["Roughness"].default_value = 0.35
     nt.links.new(tx.outputs["Color"], sb.inputs["Emission Color"]); sb.inputs["Emission Strength"].default_value = 0.9
     mon = link(bpy.data.objects.new("Monitor", None)); mon.location = (0.0, 0.205, 0.0)
-    rbox("Mon base", (0.24, 0.10, 0.008), (0.0, -0.015, 0.004), alu, bevel=0.003, parent=mon)
-    rbox("Mon neck", (0.055, 0.022, 0.24), (0.0, 0.02, 0.12), alu, bevel=0.004, parent=mon)
+    # monitor arm: desk clamp on the back edge, pole, gas-spring lower arm, elbow, upper arm, tilt head, VESA plate
+    coat = simple_mat("Arm powder coat", "#1E1E1F", 0.55, 0.0, **{"Coat Weight": 0.15, "Coat Roughness": 0.4})
+    satin = simple_mat("Arm satin alu", "#9A9A98", 0.3, 1.0)
+    def beam(name, p0, p1, w, h, m, bevel=0.004):
+        p0, p1 = Vector(p0), Vector(p1); L = (p1 - p0).length
+        o = box(name, (w, L, h), (p0 + p1) / 2, m, bevel=bevel)
+        o.rotation_euler = (p1 - p0).to_track_quat("Y", "Z").to_euler(); return o
+    def cyl(name, loc, r, d, m, rot=(0, 0, 0), bevel=0.0015):
+        bpy.ops.mesh.primitive_cylinder_add(radius=r, depth=d, vertices=64, location=loc, rotation=rot)
+        o = bpy.context.object; o.name = name; o.data.materials.append(m)
+        for p in o.data.polygons: p.use_smooth = True
+        b_ = o.modifiers.new("bv", "BEVEL"); b_.width = bevel; b_.segments = 3; b_.limit_method = "ANGLE"
+        o.data.set_sharp_from_angle(angle=math.radians(35)); return o
+    PX, PY = 0.16, 0.236
+    box("Clamp top", (0.075, 0.062, 0.012), (PX, PY - 0.005, 0.006), coat, bevel=0.003)
+    box("Clamp spine", (0.075, 0.010, 0.072), (PX, 0.262, -0.024), coat, bevel=0.003)
+    box("Clamp jaw", (0.075, 0.048, 0.010), (PX, 0.240, -0.052), coat, bevel=0.003)
+    cyl("Clamp screw", (PX, 0.236, -0.066), 0.006, 0.026, satin)
+    cyl("Clamp knob", (PX, 0.236, -0.082), 0.017, 0.010, coat, bevel=0.003)
+    cyl("Pole", (PX, PY, 0.012 + 0.16), 0.0155, 0.32, satin, bevel=0.001)
+    cyl("Pole cap", (PX, PY, 0.335), 0.0165, 0.008, coat)
+    cyl("Collar", (PX, PY, 0.150), 0.021, 0.034, coat, bevel=0.003)
+    cyl("Collar bolt", (PX + 0.021, PY, 0.150), 0.004, 0.006, satin, rot=(0, math.radians(90), 0))
+    beam("Lower arm", (PX - 0.010, PY + 0.004, 0.160), (0.065, 0.250, 0.232), 0.034, 0.026, coat, bevel=0.006)
+    cyl("Gas spring", ((PX + 0.065) / 2 - 0.005, 0.247, 0.181), 0.0055, 0.10, satin,
+        rot=(0, math.atan2(0.065 - PX, 0.232 - 0.160) + math.radians(8), 0))
+    cyl("Elbow", (0.065, 0.250, 0.232), 0.020, 0.040, coat, bevel=0.003)
+    cyl("Elbow cap", (0.065, 0.250, 0.2535), 0.0165, 0.004, satin)
+    beam("Upper arm", (0.065, 0.250, 0.240), (0.006, 0.238, 0.285), 0.030, 0.024, coat, bevel=0.005)
+    box("Tilt head", (0.050, 0.030, 0.050), (0.0, 0.232, 0.298), coat, bevel=0.006)
+    box("VESA plate", (0.110, 0.006, 0.110), (0.0, 0.2195, 0.300), satin, bevel=0.002)
+    for vx in (-0.05, 0.05):
+        for vz in (0.25, 0.35):
+            cyl("VESA screw", (vx, 0.2165, vz), 0.0035, 0.003, satin, rot=(math.radians(90), 0, 0), bevel=0.0006)
     rbox("Mon panel", (0.62, 0.022, 0.37), (0.0, 0.0, 0.30), shell, bevel=0.004, parent=mon)
     # screen as a plane just in front of the panel face; texture mapped by generated coords (x across, z up)
     bpy.ops.mesh.primitive_plane_add(size=1.0)
     sp_ = bpy.context.object; sp_.name = "Mon screen"; sp_.data.materials.append(scr)
     sp_.scale = (0.604, 0.35, 1); sp_.rotation_euler = (math.radians(90), 0, 0)
     sp_.location = (0.0, -0.0112, 0.307); sp_.parent = mon
-    # mouse: a soft, low, rounded shell in the case colour, with a split for the buttons and a wheel
-    mouse_m = simple_mat("Mouse shell", "#E4DDCD", 0.42, 0.0, **{"Subsurface Weight": 0.08, "Subsurface Scale": 0.0015})
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, radius=1.0)
-    ms = bpy.context.object; ms.name = "Mouse"; ms.data.materials.append(mouse_m)
-    for p in ms.data.polygons: p.use_smooth = True
-    for v in ms.data.vertices:
-        if v.co.z < -0.15: v.co.z = -0.15                    # flat underside
-        v.co.y *= 1.0 + 0.12 * v.co.y                        # wider at the back, like a hand
-    ms.scale = (0.031, 0.058, 0.026)
-    ms.location = (0.262, -0.055, MAT_T + 0.026 * 0.15); ms.rotation_euler.z = math.radians(-9)
+    # ergonomic right-handed gaming mouse: tall on the left, sloping to the right, a thumb groove with two side
+    # buttons, split main buttons, a rubber wheel with an orange ring, matte black soft-touch shell
+    shellm, nt, mb = node_mat("Mouse soft-touch")
+    mb.inputs["Base Color"].default_value = srgb("#18181A"); mb.inputs["Roughness"].default_value = 0.62
+    mb.inputs["Coat Weight"].default_value = 0.08; mb.inputs["Coat Roughness"].default_value = 0.5
+    tcm = nt.nodes.new("ShaderNodeTexCoord"); sxyz = nt.nodes.new("ShaderNodeSeparateXYZ")
+    nt.links.new(tcm.outputs["Object"], sxyz.inputs[0])
+    def MM(op, a, b=None):
+        n = nt.nodes.new("ShaderNodeMath"); n.operation = op
+        for i, v in enumerate((a, b)):
+            if v is None: continue
+            if isinstance(v, (int, float)): n.inputs[i].default_value = v
+            else: nt.links.new(v, n.inputs[i])
+        return n.outputs[0]
+    X_, Y_, Z_ = sxyz.outputs["X"], sxyz.outputs["Y"], sxyz.outputs["Z"]
+    # button split (along the length, front half) and the buttons' rear seam
+    split = MM("MULTIPLY", MM("LESS_THAN", MM("ABSOLUTE", MM("SUBTRACT", X_, 0.0015)), 0.00045), MM("GREATER_THAN", Y_, -0.004))
+    seam = MM("MULTIPLY", MM("MULTIPLY", MM("LESS_THAN", MM("ABSOLUTE", MM("ADD", Y_, 0.004)), 0.00045),
+                                  MM("LESS_THAN", MM("ABSOLUTE", X_), 0.024)), MM("GREATER_THAN", Z_, 0.024))
+    gap = MM("MAXIMUM", split, seam)
+    mixg = nt.nodes.new("ShaderNodeMix"); mixg.data_type = "RGBA"
+    nt.links.new(gap, mixg.inputs[0]); mixg.inputs[6].default_value = srgb("#18181A"); mixg.inputs[7].default_value = srgb("#030303")
+    nt.links.new(mixg.outputs[2], mb.inputs["Base Color"])
+    grain = N(nt, "ShaderNodeTexNoise", Scale=5000.0, Detail=2.0); nt.links.new(tcm.outputs["Object"], grain.inputs["Vector"])
+    bpm = N(nt, "ShaderNodeBump", Strength=0.08, Distance=0.0002)
+    nt.links.new(MM("SUBTRACT", MM("MULTIPLY", grain.outputs["Fac"], 0.3), MM("MULTIPLY", gap, 1.0)), bpm.inputs["Height"])
+    nt.links.new(bpm.outputs["Normal"], mb.inputs["Normal"])
+
+    bm4 = bmesh.new(); bmesh.ops.create_uvsphere(bm4, u_segments=96, v_segments=48, radius=1.0)
+    for v in bm4.verts:
+        xn, yn, zn = v.co.x, v.co.y, v.co.z
+        h = 0.044 * (1.0 - 0.42 * (yn + 0.18) ** 2)            # hump just behind the middle
+        h *= 1.0 + 0.14 * (-xn)                                # higher on the left (palm rests tilted)
+        w = 0.028 + 0.007 * max(0.0, -yn) - 0.002 * max(0.0, yn)                       # wider at the back
+        if xn > 0.4 and zn < 0.1: w *= 1.0 + 0.10 * (xn - 0.4)   # flare at the bottom right for the ring finger
+        x = xn * w; y = yn * 0.064
+        z = (zn + 1.0) * 0.5 * h                               # 0 .. h
+        if zn < -0.55: z = max(z, 0.0)
+        # thumb groove on the left side, half-way up
+        if xn < -0.55:
+            g = math.exp(-((z / h - 0.42) / 0.16) ** 2) * math.exp(-((yn + 0.05) / 0.45) ** 2)
+            x += 0.0055 * g
+        v.co = Vector((x, y, max(z, 0.0)))
+    me4 = bpy.data.meshes.new("Gaming mouse"); bm4.to_mesh(me4); bm4.free()
+    ms = link(bpy.data.objects.new("Gaming mouse", me4)); me4.materials.append(shellm)
+    for p in me4.polygons: p.use_smooth = True
     sub_ = ms.modifiers.new("sub", "SUBSURF"); sub_.levels = sub_.render_levels = 1
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.0045, depth=0.0032, vertices=48, rotation=(0, math.radians(90), 0))
-    wh = bpy.context.object; wh.name = "Mouse wheel"; wh.data.materials.append(simple_mat("Wheel", "#2A2826", 0.6))
-    wh.parent = ms; wh.location = (0.0, 0.45, 0.96); wh.scale = (1 / 0.031, 1 / 0.058, 1 / 0.026)
+    ms.location = (0.262, -0.055, MAT_T); ms.rotation_euler.z = math.radians(-9)
+    rubber = simple_mat("Wheel rubber", "#1E1E1E", 0.75)
+    def mpart(o):
+        o.parent = ms
+        for p in o.data.polygons: p.use_smooth = True
+        return o
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0115, depth=0.0075, vertices=64, location=(0.0015, 0.030, 0.028),
+                                        rotation=(0, math.radians(90), 0))
+    wh = mpart(bpy.context.object); wh.name = "Mouse wheel"; wh.data.materials.append(rubber)
+    b_ = wh.modifiers.new("bv", "BEVEL"); b_.width = 0.0012; b_.segments = 3; b_.limit_method = "ANGLE"
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0118, depth=0.0012, vertices=64, location=(0.0015, 0.030, 0.028),
+                                        rotation=(0, math.radians(90), 0))
+    ring = mpart(bpy.context.object); ring.data.materials.append(simple_mat("Accent orange", "#E8763E", 0.4, 0.5))
+    side_m = simple_mat("Side buttons", "#0E0E0F", 0.3)
+    for yb in (0.014, -0.006):
+        bpy.ops.mesh.primitive_cube_add(size=1.0, location=(-0.0262, yb, 0.019))
+        sbt = mpart(bpy.context.object); sbt.scale = (0.004, 0.017, 0.0065); sbt.data.materials.append(side_m)
+        sbt.rotation_euler.y = math.radians(-12)
+        bb_ = sbt.modifiers.new("bv", "BEVEL"); bb_.width = 0.0015; bb_.segments = 4
+    bpy.ops.mesh.primitive_cube_add(size=1.0, location=(0.0015, 0.012, 0.0378))
+    dpi = mpart(bpy.context.object); dpi.scale = (0.006, 0.009, 0.003); dpi.data.materials.append(side_m)
+    bd_ = dpi.modifiers.new("bv", "BEVEL"); bd_.width = 0.0012; bd_.segments = 4
     # retro-style on-ear headphones, lying flat: chrome band, small black cups, orange foam pads facing up
     chrome = simple_mat("Chrome band", "#D7D7D5", 0.12, 1.0)
     cupm = simple_mat("Cup plastic", "#1D1C1B", 0.45, 0.0)
@@ -601,33 +759,37 @@ if SCENE == "dramatic":
     cells = N(nt, "ShaderNodeTexVoronoi", Scale=1800.0); nt.links.new(geo2.outputs["Position"], cells.inputs["Vector"])
     bpf = N(nt, "ShaderNodeBump", Strength=0.8, Distance=0.0008)
     nt.links.new(cells.outputs["Distance"], bpf.inputs["Height"]); nt.links.new(bpf.outputs["Normal"], fo.inputs["Normal"])
-    hp = link(bpy.data.objects.new("Headphones", None)); hp.location = (-0.29, -0.01, MAT_T); hp.rotation_euler.z = math.radians(100)
+    # retro-style headphones sitting upright on their cups: padded band, small gunmetal yokes, orange foam pads
+    gun = simple_mat("Gunmetal", "#3C3C3E", 0.35, 1.0)
+    leather = simple_mat("Band leather", "#1B1A19", 0.55, 0.0, **{"Sheen Weight": 0.3})
+    hp = link(bpy.data.objects.new("Headphones", None)); hp.location = (-0.30, 0.10, MAT_T); hp.rotation_euler.z = math.radians(40)
+    def hcyl(loc, r, d, m, bev):
+        bpy.ops.mesh.primitive_cylinder_add(radius=r, depth=d, vertices=64, location=loc, rotation=(math.radians(90), 0, 0))
+        o = bpy.context.object; o.data.materials.append(m); o.parent = hp
+        for p in o.data.polygons: p.use_smooth = True
+        b_ = o.modifiers.new("bv", "BEVEL"); b_.width = bev; b_.segments = 5; b_.limit_method = "ANGLE"
+        o.data.set_sharp_from_angle(angle=math.radians(35)); return o
+    CZ, CY = 0.040, 0.084
     for side in (-1, 1):
-        cy = side * 0.068
-        bpy.ops.mesh.primitive_cylinder_add(radius=0.029, depth=0.016, vertices=64, location=(0, cy, 0.008))
-        c = bpy.context.object; c.data.materials.append(cupm); c.parent = hp
-        b_ = c.modifiers.new("bv", "BEVEL"); b_.width = 0.003; b_.segments = 4; b_.limit_method = "ANGLE"
-        for p in c.data.polygons: p.use_smooth = True
-        bpy.ops.mesh.primitive_cylinder_add(radius=0.036, depth=0.012, vertices=64, location=(0, cy, 0.022))
-        f_ = bpy.context.object; f_.data.materials.append(foam); f_.parent = hp
-        b_ = f_.modifiers.new("bv", "BEVEL"); b_.width = 0.005; b_.segments = 6; b_.limit_method = "ANGLE"
-        for p in f_.data.polygons: p.use_smooth = True
-        # yoke: a short chrome bar from the cup to the band
-        bpy.ops.mesh.primitive_cylinder_add(radius=0.0018, depth=0.03, vertices=24, location=(-0.034, cy * 0.86, 0.01),
-                                            rotation=(math.radians(90), 0, 0))
-        y_ = bpy.context.object; y_.data.materials.append(chrome); y_.parent = hp
-    band = bpy.data.curves.new("Band", "CURVE"); band.dimensions = "3D"; band.bevel_depth = 0.0022; band.bevel_resolution = 4
-    spb = band.splines.new("NURBS"); bp_pts = [(-0.034, -0.06, 0.012), (-0.085, -0.05, 0.010), (-0.11, 0.0, 0.009), (-0.085, 0.05, 0.010), (-0.034, 0.06, 0.012)]
-    spb.points.add(len(bp_pts) - 1); spb.use_endpoint_u = True; spb.order_u = 3
-    for p, (x, y, z) in zip(spb.points, bp_pts): p.co = (x, y, z, 1)
-    bo = link(bpy.data.objects.new("Band", band)); band.materials.append(chrome); bo.parent = hp
-    # thin black headphone cable trailing off the mat
-    hc = bpy.data.curves.new("HP cable", "CURVE"); hc.dimensions = "3D"; hc.bevel_depth = 0.0011; hc.bevel_resolution = 3
-    sph = hc.splines.new("NURBS"); hc_pts = [(0.0, -0.095, 0.006), (0.01, -0.13, 0.002), (-0.03, -0.17, 0.0012), (-0.10, -0.15, 0.0012), (-0.16, -0.20, -MAT_T + 0.0012)]
-    sph.points.add(len(hc_pts) - 1); sph.use_endpoint_u = True; sph.order_u = 3
-    for p, (x, y, z) in zip(sph.points, hc_pts): p.co = (x, y, z, 1)
-    ho = link(bpy.data.objects.new("HP cable", hc)); hc.materials.append(cupm); ho.parent = hp
-    cam = camera("Cam", (-0.33, -0.54, 0.33), (0.0, 0.03, 0.03), lens=40, fstop=8.0)
+        hcyl((0, side * CY, CZ), 0.037, 0.024, cupm, 0.004)                       # cup shell
+        hcyl((0, side * (CY + 0.0125), CZ), 0.024, 0.003, gun, 0.0008)          # back badge ring
+        hcyl((0, side * (CY - 0.020), CZ), 0.039, 0.016, foam, 0.006)          # foam pad, facing in
+        # yoke: two short bars from the cup's top to the band end
+        for dx in (-0.012, 0.012):
+            bpy.ops.mesh.primitive_cylinder_add(radius=0.0022, depth=0.034, vertices=24, location=(dx, side * CY, CZ + 0.048))
+            y_ = bpy.context.object; y_.data.materials.append(gun); y_.parent = hp
+        bpy.ops.mesh.primitive_cube_add(size=1.0, location=(0, side * CY, CZ + 0.067))
+        k_ = bpy.context.object; k_.scale = (0.03, 0.008, 0.008); k_.data.materials.append(gun); k_.parent = hp
+    def arc(name, a0, a1, r, zc, depth, m, n=9):
+        cu = bpy.data.curves.new(name, "CURVE"); cu.dimensions = "3D"; cu.bevel_depth = depth; cu.bevel_resolution = 5
+        sp = cu.splines.new("NURBS"); sp.points.add(n - 1); sp.use_endpoint_u = True; sp.order_u = 4
+        for k, p in enumerate(sp.points):
+            a = math.radians(a0 + (a1 - a0) * k / (n - 1)); p.co = (0, r * math.cos(a), zc + r * math.sin(a), 1)
+        o = link(bpy.data.objects.new(name, cu)); cu.materials.append(m); o.parent = hp; return o
+    arc("Band", -6, 186, CY, CZ + 0.072, 0.0032, gun)
+    cush = arc("Band cushion", 38, 142, CY - 0.002, CZ + 0.072, 0.0075, leather)
+    cush.scale = (1.6, 1.0, 1.0)
+    cam = camera("Cam", (-0.36, -0.545, 0.335), (-0.030, 0.03, 0.03), lens=39, fstop=8.0)
     cam.data.dof.focus_distance = (Vector((-0.01, -0.03, 0.02)) - cam.location).length
     if os.environ.get("WOODTEST"):
         cam = camera("Wood", (0.62, -0.95, 0.30), (0.58, -0.50, 0.0), lens=45)
