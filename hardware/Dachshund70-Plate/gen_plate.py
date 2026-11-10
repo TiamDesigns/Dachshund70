@@ -110,10 +110,13 @@ NOTCH_BELOW_COURTYARD = 1.3
 NOTCH_RADIUS = 2.0
 # The notch runs further forward (down to y = NOTCH_EXT_BOTTOM) from NOTCH_LEFT to
 # NOTCH_EXT_RIGHT: room for the case's encoder cover (its walls reach the PCB) and
-# the boss the cover's front M3 screw goes into, which hangs from the top block
-# through the plate (0.8 mm clear at the bottom, 1.75 at the left).
-NOTCH_EXT_RIGHT = 322.25
-NOTCH_EXT_BOTTOM = 67.25
+# the boss its front M2 screw goes into, which hangs from the top block through the
+# plate. Round 5 (2026-11-10): the plate floats on its socks and moves +-1 mm, so
+# the forward part now runs on to the right-hand edge (the knob's underside is clear
+# of it) and 1.25 mm further forward, which keeps the cover's front ear, its screw
+# and the boss 1.5 mm or more from the plate in plan.
+NOTCH_EXT_RIGHT = 347.5     # past the plate's right-hand edge (x 337.5)
+NOTCH_EXT_BOTTOM = 68.5
 
 # Pass-through slot for the display header J4 (pins stand ~8.5 mm tall).
 DISPLAY_REF = "J4"
