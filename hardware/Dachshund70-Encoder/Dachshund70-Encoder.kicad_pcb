@@ -210,7 +210,7 @@
 				)
 			)
 		)
-		(property "Value" "PEC12R-2220F-S0024 (shaft parallel to the board, 20 mm)"
+		(property "Value" "PEC12R-2230F-S0024 (shaft parallel to the board, 30 mm)"
 			(at 0 12 180)
 			(unlocked yes)
 			(layer "F.SilkS")
@@ -245,7 +245,7 @@
 				)
 			)
 		)
-		(property "MPN" "Bourns PEC12R-2220F-S0024"
+		(property "MPN" "Bourns PEC12R-2230F-S0024"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -257,7 +257,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C49673168"
+		(property "LCSC" ""
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -938,7 +938,7 @@
 			(uuid "7c29c516-9056-4e0c-b56f-9a0edf238962")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/../3dmodels/Bourns_PEC12R-2x20F-S_standin.step"
+		(model "${KIPRJMOD}/../3dmodels/Bourns_PEC12R-2x30F-S_standin.step"
 			(offset
 				(xyz 0 0 0)
 			)

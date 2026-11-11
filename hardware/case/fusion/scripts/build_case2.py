@@ -22,7 +22,7 @@ PRM = dict(
     SOLID_Z=8.2,          # top block is solid above this local z (the sock tops are at 8.1, plate top 6.6)
     ROOF=True, UNDERSIDE=True,
     MOD_X0=125.655,        # local x of the encoder module's left edge (u = 0)
-    SHAFT_TIP_U=31.5,     # Bourns PEC12R-2220F: 20 mm shaft from the body face (u 11.5), so the tip is at u 31.5
+    SHAFT_TIP_U=41.5,     # Bourns PEC12R-2230F: 30 mm shaft from the body face (u 11.5), so the tip is at u 41.5
     WHEEL_U=(18.0, 31.5), # the wheel on the shaft: from just past the body to the tip, covering the hub
     DISP_CX=144.5,        # local x of the e-ink glass centre
     FLOOR_L=-4.5,         # cavity floor plane under the PCB (local z): 0.9 under the lowest switch/stabilizer legs
