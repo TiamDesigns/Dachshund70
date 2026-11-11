@@ -6,7 +6,19 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
-### Screen board and FFC display port (2026-11-11)
+### Sharp memory LCD screen (2026-11-11)
+
+- Tiam chose the Sharp LS027B7DH01 (2.7", 400 × 240, about 173 ppi, a full frame in about 50 ms) for the wider screen column beside the 2u encoder. It replaces the 2.13" e-paper.
+- Screen board rev 2.0 (`hardware/Dachshund70-Screen/`, `gen_screen.py`), same 21.0 × 34.0 mm outline and J2 position:
+  - U1 TPS61222 (fixed 5 V boost, SC-70-6) from 3V3, with L1 4.7 µH and 10 µF in and out. Its EN is on J4 pin 8 (P0.24), pulled up by R1, so it stays on unless the firmware drives the pin low.
+  - J1: Hirose FH12-10S for the panel's tail, which folds back under the glass's left edge (in portrait). J1 pin n = panel pin 11 − n, assumed from the fold; to check against Sharp's drawing.
+  - Sharp's capacitors on VDD, VDDA and DISP; EXTMODE high (VCOM follows EXTCOMIN).
+  - Hand-routed. ERC 0; DRC with parity and every severity: 0 violations, 0 unconnected.
+- No mainboard change: J4's pins carry SI, SCLK, SCS, EXTCOMIN, DISP and the boost enable (the screen board README has the table).
+- Firmware: new overlay `sharp-ls027b7dh01-portrait` (Zephyr's `sharp,ls0xx`, 2 MHz SPI, CS active high, EXTCOMIN at 1 Hz; 240 × 400 in portrait, 24 × 25 text cells), with a CI build. `dachshund,display-rotate` and `kb_screen_rotate()` now also handle row-tiled 1-bit panels like the Sharp's, with host tests for both layouts.
+- Core and host-lib tests pass locally. The Sharp firmware build is checked by CI only. Not tested on hardware, nothing ordered. The case model still has the e-paper (`SCHEDULED_TASKS.md`).
+
+### Screen board and FFC display port (2026-11-11) (rev 1.0, e-paper; superseded by the Sharp panel above)
 
 - Screen options compared (OLED, faster e-paper, Sharp/JDI memory LCD); Tiam kept the 2.13" SSD1680 e-paper and chose to build our own driver board. Every SSD1680/SSD1681 panel bottoms out at about 0.3 s per partial refresh. The GDEY0213B74H (296 × 144, same outline and pins) also fits, but GoodDisplay lists it as end of life.
 - New `hardware/Dachshund70-Screen/`, made by `gen_screen.py`:

@@ -37,13 +37,13 @@ Last updated: 2026-11-11 (screen board and FFC display port; display and case-mo
 - **J2 placement check (case).** Check the battery connector J2 and the cell's JST-PH lead against the Fusion model: the lead's route from the cell to J2 under the screen and knob, and its clearance to the plate, J5 and the bottom block's floor steps. Move J2 or the battery bay if it fouls.
 - **PCM12SMTR availability (case).** The power switch on the USB-C daughterboard is a C&K PCM12SMTR, and the case's slider cap and slot (`hardware/case/BOM.md`) are drawn for its lever. Check it is in stock at the fab and distributors; if not, pick a replacement and redraw the cap and slot.
 - **Dongle enclosure.** Still to design: plastic, with nothing metal over the antenna strip.
-- **Display.** Buy the bare 2.13" e-paper panel (GoodDisplay GDEY0213B74) and an 8-way 0.5 mm FFC with contacts on the same side at both ends, so they arrive with the boards. Before ordering the screen board (`hardware/Dachshund70-Screen/`), go through the open checks in its README:
-  - which face of the panel's tail carries the contacts, and where pin 1 lands in J1;
-  - the tail length from the glass edge to J1;
+- **Display.** Buy the Sharp LS027B7DH01 (2.7" memory LCD) and an 8-way 0.5 mm FFC with contacts on the same side at both ends, so they arrive with the boards. Before ordering the screen board (`hardware/Dachshund70-Screen/`, rev 2.0), go through the open checks in its README:
+  - which end of the panel's tail is pin 1 after it folds under the glass (J1 pin n = panel pin 11 − n is assumed), which face carries the contacts, and the pitch (0.5 mm assumed);
+  - where the tail leaves the glass and how long it is, so it reaches J1;
   - the FH12 contact sides;
-  - the LCSC numbers still blank (J1, J2, L1, R1).
-  On hardware, check the `eink-2in13-v4-portrait` overlay (which way up the text comes out: `rotation`) and the boost's peak current on 3V3 (REGOUT0) next to the other 3.3 V loads.
-- **Screen board in the case model.** The Fusion model still has Adafruit's eInk Breakout Friend under the panel. Swap in `hardware/step/Dachshund70-Screen.step` (re-export with `python hardware/export_step.py`, along with the mainboard and plate, since J4 moved). Then:
+  - the LCSC numbers still blank (J1, J2, U1, L1).
+  On hardware, check the `sharp-ls027b7dh01-portrait` overlay (which way up the text comes out: `rotation`) and that the picture holds with EXTCOMIN at 1 Hz.
+- **Screen board and Sharp panel in the case model.** The Fusion model still has the 2.13" e-paper panel and Adafruit's eInk Breakout Friend. Swap in the LS027B7DH01 (62.8 × 42.82 × 1.64 mm glass, 58.8 × 35.28 mm picture, tail folding under its left edge in portrait) and the screen board (`hardware/step/Dachshund70-Screen.step`, re-exported with `python hardware/export_step.py`). Then:
   - draw the FFC loop from J4 up through the plate's notch into J2, and set the cable length from it;
   - check the screen board's parts against the plate, which floats ±1 mm;
   - correct the screen pocket from the measured panel before machining (see "Display" in `hardware/case/README.md`).

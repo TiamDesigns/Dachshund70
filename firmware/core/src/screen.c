@@ -212,32 +212,42 @@ size_t kb_screen_render(const struct kb_screen_layout *layout, const struct kb_s
     return n;
 }
 
-static uint8_t tile_bit(uint16_t y, bool msb_first)
+/* Where pixel (x, y) of a w-wide 1-bit frame lives: its byte, and the bit in it. */
+static size_t mono_index(uint16_t w, uint16_t x, uint16_t y, bool vtiled, bool msb_first,
+                         uint8_t *bit)
 {
-    return (uint8_t)(msb_first ? 0x80u >> (y % 8u) : 1u << (y % 8u));
+    const uint16_t shift = vtiled ? (uint16_t)(y % 8u) : (uint16_t)(x % 8u);
+
+    *bit = (uint8_t)(msb_first ? 0x80u >> shift : 1u << shift);
+    return vtiled ? (size_t)(y / 8u) * w + x : (size_t)y * (w / 8u) + x / 8u;
 }
 
 int kb_screen_rotate(const uint8_t *src, uint16_t src_w, uint16_t src_h, uint8_t *dst,
-                     uint16_t dst_w, uint16_t dst_h, uint16_t rotation, bool msb_first)
+                     uint16_t dst_w, uint16_t dst_h, uint16_t rotation, bool vtiled,
+                     bool msb_first)
 {
-    if (!src || !dst || (rotation != 90u && rotation != 270u) || src_h % 8u != 0u ||
-        dst_h % 8u != 0u || dst_w < src_h || dst_h < src_w) {
+    /* Tiles run down the columns (vtiled) or along the rows. */
+    const uint16_t src_tiled = vtiled ? src_h : src_w;
+    const uint16_t dst_tiled = vtiled ? dst_h : dst_w;
+
+    if (!src || !dst || (rotation != 90u && rotation != 270u) || src_tiled % 8u != 0u ||
+        dst_tiled % 8u != 0u || dst_w < src_h || dst_h < src_w) {
         return -EINVAL;
     }
 
-    memset(dst, 0, (size_t)dst_w * (dst_h / 8u));
+    memset(dst, 0, (size_t)dst_w * dst_h / 8u);
     for (uint16_t y = 0; y < src_h; y++) {
-        const uint8_t bit = tile_bit(y, msb_first);
-        const uint8_t *row = &src[(size_t)(y / 8u) * src_w];
-
         for (uint16_t x = 0; x < src_w; x++) {
-            if (!(row[x] & bit)) {
+            uint8_t bit;
+
+            if (!(src[mono_index(src_w, x, y, vtiled, msb_first, &bit)] & bit)) {
                 continue;
             }
             /* 90: the top of src becomes the right edge of dst; 270: the left. */
             uint16_t dx = rotation == 90u ? (uint16_t)(dst_w - 1u - y) : y;
             uint16_t dy = rotation == 90u ? x : (uint16_t)(dst_h - 1u - x);
-            dst[(size_t)(dy / 8u) * dst_w + dx] |= tile_bit(dy, msb_first);
+            size_t i = mono_index(dst_w, dx, dy, vtiled, msb_first, &bit);
+            dst[i] |= bit;
         }
     }
     return 0;

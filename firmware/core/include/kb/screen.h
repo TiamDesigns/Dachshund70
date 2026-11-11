@@ -110,14 +110,17 @@ size_t kb_screen_render(const struct kb_screen_layout *layout, const struct kb_s
                         uint8_t cols, uint8_t rows, struct kb_screen_item *items, size_t max_items);
 
 /*
- * Rotate a 1-bit, vertically tiled frame (each byte holds 8 pixels of one
- * column, as SSD1306 and SSD16xx take them) by 90 or 270 degrees clockwise.
- * src is src_w x src_h pixels; dst is dst_w x dst_h, with dst_w >= src_h and
- * dst_h >= src_w, and both heights multiples of 8. Pixels of dst that src
- * doesn't cover are cleared. msb_first: bit 7 is a byte's top pixel. Returns
- * -EINVAL for any other rotation or size, without touching dst.
+ * Rotate a 1-bit frame by 90 or 270 degrees clockwise. vtiled: each byte holds
+ * 8 pixels of one column, as SSD1306 and SSD16xx take them; otherwise each
+ * byte holds 8 pixels of one row, as Sharp memory LCDs take them. src is
+ * src_w x src_h pixels; dst is dst_w x dst_h, with dst_w >= src_h and
+ * dst_h >= src_w. The tiled side of both frames (the height if vtiled, the
+ * width if not) must be a multiple of 8. Pixels of dst that src doesn't cover
+ * are cleared. msb_first: bit 7 is a byte's top (vtiled) or left pixel.
+ * Returns -EINVAL for any other rotation or size, without touching dst.
  */
 int kb_screen_rotate(const uint8_t *src, uint16_t src_w, uint16_t src_h, uint8_t *dst,
-                     uint16_t dst_w, uint16_t dst_h, uint16_t rotation, bool msb_first);
+                     uint16_t dst_w, uint16_t dst_h, uint16_t rotation, bool vtiled,
+                     bool msb_first);
 
 #endif /* KB_SCREEN_H */

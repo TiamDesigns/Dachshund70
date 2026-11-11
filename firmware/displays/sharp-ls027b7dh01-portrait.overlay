@@ -1,0 +1,41 @@
+/*
+ * 2.7" Sharp memory LCD (LS027B7DH01, 400x240) standing on end, as in the
+ * case's sidebar: 240 x 400 pixels in portrait, turned in software
+ * (dachshund,display-rotate). The panel sits on the screen board
+ * (hardware/Dachshund70-Screen/), which makes its 5 V supply.
+ *
+ * Same J4 pins as the e-paper overlays, with the Sharp's signals on them:
+ * SI J4-3 (DIN), SCLK J4-4 (CLK), SCS J4-5 (CS), EXTCOMIN J4-6 (DC),
+ * DISP J4-7 (RST). J4-8 (BUSY) is unused. SCS is active high.
+ * If the text is upside down, set rotation to 270.
+ */
+
+/ {
+	chosen {
+		zephyr,display = &screen;
+	};
+
+	screen: screen {
+		compatible = "dachshund,display-rotate";
+		display = <&lcd>;
+		rotation = <90>;
+	};
+};
+
+&display_spi {
+	status = "okay";
+	cs-gpios = <&display_header 5 GPIO_ACTIVE_HIGH>;
+
+	lcd: ls0xx@0 {
+		compatible = "sharp,ls0xx";
+		reg = <0>;
+		/* 2 MHz is the panel's maximum: a full frame takes about 50 ms. */
+		spi-max-frequency = <2000000>;
+		width = <400>;
+		height = <240>;
+		extcomin-gpios = <&display_header 6 GPIO_ACTIVE_HIGH>;
+		/* VCOM inversion, which the panel needs at 1 Hz or more. */
+		extcomin-frequency = <1>;
+		disp-en-gpios = <&display_header 7 GPIO_ACTIVE_HIGH>;
+	};
+};

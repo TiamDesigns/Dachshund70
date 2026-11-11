@@ -1,11 +1,11 @@
 description: |
-  Turns a 1-bit, vertically tiled display (an SSD16xx e-paper panel) by 90 or
-  270 degrees in software, so the character framebuffer can draw on it in
-  portrait. Choose this node as zephyr,display instead of the panel.
+  Turns a 1-bit display (an SSD16xx e-paper panel or a Sharp memory LCD) by
+  90 or 270 degrees in software, so the character framebuffer can draw on it
+  in portrait. Choose this node as zephyr,display instead of the panel.
 
   The SSD16xx driver's own rotation property doesn't help here: it keeps
   reporting the unrotated size, so the character framebuffer draws outside
-  the panel.
+  the panel. The Sharp (ls0xx) driver has no rotation at all.
 
 compatible: "dachshund,display-rotate"
 

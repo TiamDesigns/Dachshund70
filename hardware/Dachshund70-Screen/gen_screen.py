@@ -1,9 +1,8 @@
 """Generate the Dachshund70 screen board: schematic, then the routed board.
 
-The screen board carries a 2.13" SSD1680 e-paper panel (GoodDisplay GDEY0213B74,
-or the GDEY0213B74H, which has the same pins): the panel's boost circuit, its
-24-pin FPC socket and an 8-pin FFC socket for the cable to the mainboard's J4.
-It replaces the Adafruit eInk Breakout Friend and the hand-soldered wires.
+The screen board carries a 2.7" Sharp memory LCD (LS027B7DH01, 400 x 240):
+the panel's 5 V supply (a TPS61222 boost from the mainboard's 3V3), its
+10-pin FPC socket and an 8-pin FFC socket for the cable to the mainboard's J4.
 
 Run with KiCad 10's own Python (it ships the pcbnew module), from the repo root:
 
@@ -30,154 +29,137 @@ SYMDIR = os.environ.get("KICAD_SYMBOL_DIR", "/usr/share/kicad/symbols")
 FPDIR = os.environ.get("KICAD_FOOTPRINT_DIR", "/usr/share/kicad/footprints")
 
 # ---------------------------------------------------------------- the circuit
-# Boost and charge-pump circuit for SSD1680 panels, as on Adafruit's 2.13"
-# eInk Bonnet and GoodDisplay's reference design: L1/Q1/R1 make VGH and VSH
-# from 3V3 (the SSD1680 drives the gate through GDR and senses the current on
-# RESE); C10/D1/D2 pump the negative rails. Panel pins 1, 4, 6, 7 and 19 stay
-# open (NC, the temperature-sensor I2C and VPP, a test pin); BS1 is low for
-# 4-wire SPI.
+# Sharp's LS027B7DH01 runs from 5 V (VDD and VDDA, 4.8 to 5.5 V) and takes 3.3 V logic (VIH from 2.7 V).
+# U1 (TPS61222, fixed 5 V) boosts the mainboard's 3V3; FB goes straight to VOUT, as the datasheet says for the
+# fixed versions. The panel draws tens of microamps, so U1's 5.5 uA quiescent current is most of the cost.
+# U1's EN comes from J4-8 (the e-paper overlays' BUSY), pulled up by R1, so the 5 V is on unless the firmware
+# drives that pin low. EXTMODE is tied high: VCOM is inverted by the EXTCOMIN pulse, not over SPI.
+# C3, C4 and C5 are the capacitors Sharp asks for (VDD >= 1 uF, VDDA >= 0.1 uF, DISP 0.1 uF), close to J1.
 
-# Panel FPC pin -> net (GoodDisplay GDEY0213B74 specification, section 5)
+# Panel FPC pin -> net (Sharp LS027B7DH01 specification, "Input/output terminals")
 PANEL = {
-    1: None, 2: "GDR", 3: "RESE", 4: None, 5: "VSH2", 6: None, 7: None, 8: "GND",
-    9: "DISP_BUSY", 10: "DISP_RST", 11: "DISP_DC", 12: "DISP_CS", 13: "DISP_CLK",
-    14: "DISP_DIN", 15: "+3V3", 16: "+3V3", 17: "GND", 18: "VDD", 19: None,
-    20: "VSH1", 21: "VGH", 22: "VSL", 23: "VGL", 24: "VCOM",
+    1: "SCLK", 2: "SI", 3: "SCS", 4: "EXTCOMIN", 5: "DISP", 6: "+5V", 7: "+5V", 8: "+5V", 9: "GND",
+    10: "GND",
 }
 
-# The FFC socket's pin -> net. It sits right over the mainboard's J4 (the same
-# footprint, upside down), and the 0.5 mm FFC loops round between them, so each
-# pin meets the J4 pin at the same y: pin n here is J4 pin 9 - n (see README).
-MAINBOARD_J4 = {1: "+3V3", 2: "GND", 3: "DISP_DIN", 4: "DISP_CLK", 5: "DISP_CS",
-                6: "DISP_DC", 7: "DISP_RST", 8: "DISP_BUSY"}
+# The FFC socket's pin -> net. It sits right over the mainboard's J4 (the same footprint, upside down), and
+# the 0.5 mm FFC loops round between them, so each pin meets the J4 pin at the same y: pin n here is J4
+# pin 9 - n (see README). The mainboard's names for J4's pins are the e-paper ones (DIN, CLK, CS, DC, RST,
+# BUSY); here they carry the Sharp's SI, SCLK, SCS, EXTCOMIN, DISP and the boost enable.
+MAINBOARD_J4 = {1: "+3V3", 2: "GND", 3: "SI", 4: "SCLK", 5: "SCS", 6: "EXTCOMIN", 7: "DISP", 8: "VLCD_EN"}
 CABLE = {n: MAINBOARD_J4[9 - n] for n in range(1, 9)}
+POWER = ("+3V3", "+5V", "GND")
 
-# ref: (lib_id, value, footprint, mpn, lcsc, {pin: net}, (x, y) on the sheet,
-#       board (x, y, rotation, side))
+# J1's pads run the other way from the panel's pins: the tail folds back under the glass, so (looking down on
+# the board) panel pin 1 lands at the top, where J1's pad 10 is. J1 pin n = panel pin 11 - n (see README).
+SOCKET = {n: PANEL[11 - n] for n in range(1, 11)}
+
+# ref: (lib_id, value, footprint, mpn, lcsc, {pin: net})
 C0603 = "Capacitor_SMD:C_0603_1608Metric"
 C0402 = "Capacitor_SMD:C_0402_1005Metric"
 PARTS = {
-    "J1": ("Connector_Generic_MountingPin:Conn_01x24_MountingPin", "E-paper panel (FPC 24P 0.5 mm)",
-           "Connector_FFC-FPC:Hirose_FH12-24S-0.5SH_1x24-1MP_P0.50mm_Horizontal",
-           "Hirose FH12-24S-0.5SH(55)", "", dict(PANEL, MP="GND")),
+    "J1": ("Connector_Generic_MountingPin:Conn_01x10_MountingPin", "Memory LCD (FPC 10P 0.5 mm)",
+           "Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal",
+           "Hirose FH12-10S-0.5SH(55)", "", dict(SOCKET, MP="GND")),
     "J2": ("Connector_Generic_MountingPin:Conn_01x08_MountingPin", "Mainboard J4 (FFC 8P 0.5 mm, same side)",
            "Connector_FFC-FPC:Hirose_FH12-8S-0.5SH_1x08-1MP_P0.50mm_Horizontal",
            "Hirose FH12-8S-0.5SH(55)", "", dict(CABLE, MP="GND")),
-    "L1": ("Device:L", "10uH", "Inductor_SMD:L_Changjiang_FNR3015S",
-           "Changjiang FNR3015S100MT (10 uH, 3 x 3 x 1.5 mm, 0.9 A)", "", {1: "+3V3", 2: "SW"}),
-    "Q1": ("Transistor_FET:AO3400A", "AO3400A", "Package_TO_SOT_SMD:SOT-23",
-           "AOS AO3400A", "C20917", {1: "GDR", 2: "RESE", 3: "SW"}),
-    "R1": ("Device:R", "0.47", "Resistor_SMD:R_0603_1608Metric",
-           "UNI-ROYAL 0603WAFR470T5E (0.47 ohm, 1 %)", "", {1: "RESE", 2: "GND"}),
-    "D1": ("Device:D_Schottky", "B5819W", "Diode_SMD:D_SOD-123", "B5819W SL", "C8598", {1: "PVGL", 2: "VGL"}),
-    "D2": ("Device:D_Schottky", "B5819W", "Diode_SMD:D_SOD-123", "B5819W SL", "C8598", {1: "GND", 2: "PVGL"}),
-    "D3": ("Device:D_Schottky", "B5819W", "Diode_SMD:D_SOD-123", "B5819W SL", "C8598", {1: "VGH", 2: "SW"}),
-    "C1": ("Device:C", "10uF", C0603, "Samsung CL10A106KP8NNNC (10 uF, 10 V, X5R)", "C19702", {1: "+3V3", 2: "GND"}),
-    "C2": ("Device:C", "1uF", C0402, "Samsung CL05A105KA5NQNC (1 uF, 25 V, X5R)", "C52923", {1: "VDD", 2: "GND"}),
-    "C3": ("Device:C", "1uF 25V", C0603, "Samsung CL10A105KA8NNNC (1 uF, 25 V, X5R)", "C15849", {1: "VSH1", 2: "GND"}),
-    "C4": ("Device:C", "1uF", C0402, "Samsung CL05A105KA5NQNC (1 uF, 25 V, X5R)", "C52923", {1: "VSH2", 2: "GND"}),
-    "C5": ("Device:C", "1uF 25V", C0603, "Samsung CL10A105KA8NNNC (1 uF, 25 V, X5R)", "C15849", {1: "VSL", 2: "GND"}),
-    "C6": ("Device:C", "1uF 25V", C0603, "Samsung CL10A105KA8NNNC (1 uF, 25 V, X5R)", "C15849", {1: "VGH", 2: "GND"}),
-    "C7": ("Device:C", "1uF 25V", C0603, "Samsung CL10A105KA8NNNC (1 uF, 25 V, X5R)", "C15849", {1: "VGL", 2: "GND"}),
-    "C8": ("Device:C", "1uF", C0402, "Samsung CL05A105KA5NQNC (1 uF, 25 V, X5R)", "C52923", {1: "VCOM", 2: "GND"}),
-    "C9": ("Device:C", "4.7uF 25V", "Capacitor_SMD:C_0805_2012Metric",
-           "Samsung CL21A475KAQNNNC (4.7 uF, 25 V, X5R)", "C1779", {1: "SW", 2: "PVGL"}),
-    "C10": ("Device:C", "100nF", "Capacitor_SMD:C_0402_1005Metric", "Samsung CL05B104KO5NNNC", "C1525",
-            {1: "+3V3", 2: "GND"}),
+    "U1": ("Regulator_Switching:TPS61222DCK", "TPS61222DCK", "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+           "TI TPS61222DCKR (5 V boost)", "",
+           {1: "+3V3", 2: "+5V", 3: "GND", 4: "+5V", 5: "SW", 6: "VLCD_EN"}),
+    "L1": ("Device:L", "4.7uH", "Inductor_SMD:L_Changjiang_FNR3015S",
+           "Changjiang FNR3015S4R7MT (4.7 uH, 3 x 3 x 1.5 mm)", "", {1: "+3V3", 2: "SW"}),
+    "R1": ("Device:R", "100k", "Resistor_SMD:R_0402_1005Metric", "UNI-ROYAL 0402WGF1003TCE", "C25741",
+           {1: "+3V3", 2: "VLCD_EN"}),
+    "C1": ("Device:C", "10uF", C0603, "Samsung CL10A106KP8NNNC (10 uF, 10 V, X5R)", "C19702",
+           {1: "+3V3", 2: "GND"}),
+    "C2": ("Device:C", "10uF", C0603, "Samsung CL10A106KP8NNNC (10 uF, 10 V, X5R)", "C19702",
+           {1: "+5V", 2: "GND"}),
+    "C3": ("Device:C", "1uF", C0402, "Samsung CL05A105KA5NQNC (1 uF, 25 V, X5R)", "C52923", {1: "+5V", 2: "GND"}),
+    "C4": ("Device:C", "100nF", C0402, "Samsung CL05B104KO5NNNC", "C1525", {1: "+5V", 2: "GND"}),
+    "C5": ("Device:C", "100nF", C0402, "Samsung CL05B104KO5NNNC", "C1525", {1: "DISP", 2: "GND"}),
 }
 
 # Board placement: x, y, rotation, side ("B" = bottom). Mainboard coordinates.
-BOARD_OUTLINE = (311.0, 69.2, 332.0, 103.2)     # x0, y0, x1, y1: inside the case's old driver-board pocket
+BOARD_OUTLINE = (311.0, 69.2, 332.0, 103.2)     # x0, y0, x1, y1: the case's screen-board pocket
 BOARD_CORNER_R = 1.0
 THICKNESS = 0.8
 CABLE_XY = (327.9, 94.9)                         # J2 here = J4 on the mainboard, the same x and y
 PLACE = {
-    # the panel socket's mouth faces the back edge, where the panel's tail folds round; pin 1 on the left
-    # (seen from above), its pad row 10.65 mm inside the glass's back edge (see README, "Panel tail")
-    "J1": (322.35, 75.65, 0, "B"),
+    # The panel's FPC leaves its long edge on the left (in portrait) and folds back under the glass into J1,
+    # whose mouth faces -x (see README, "Panel tail").
+    "J1": (316.6, 93.7, None, "B"),
     "J2": (CABLE_XY[0], CABLE_XY[1], None, "B"),          # orientation set so the mouth faces -x
     # Others: (x, y, (pad, dx, dy), "B"): the rotation is the one that puts that pad on the (dx, dy) side
-    # boost, left of the signal bundle
-    "Q1": (317.55, 82.6, ("3", 0, 1), "B"),
-    "C4": (318.6, 79.6, ("1", 0, -1), "B"),
-    "R1": (319.6, 86.2, ("1", 0, -1), "B"),
-    "L1": (313.9, 82.6, ("2", 1, 0), "B"),
-    "D3": (317.55, 87.1, ("2", 0, -1), "B"),
-    "C9": (315.0, 86.6, ("1", 0, -1), "B"),
-    "D2": (314.3, 90.75, ("2", 1, 0), "B"),
-    "D1": (314.3, 93.3, ("1", 1, 0), "B"),
-    "C7": (312.4, 96.4, ("1", 0, -1), "B"),
-    "C6": (319.6, 90.0, ("1", 0, -1), "B"),
-    "C1": (312.5, 86.6, ("1", 0, -1), "B"),
-    # panel rails, right of the bundle
-    "C2": (325.4, 80.9, ("1", 0, -1), "B"),
-    "C5": (327.7, 81.0, ("1", 0, -1), "B"),
-    "C3": (326.6, 84.2, ("1", 0, -1), "B"),
-    "C8": (329.4, 83.8, ("1", 0, -1), "B"),
-    "C10": (325.2, 87.6, ("1", -1, 0), "B"),
+    # the boost, above the sockets
+    "U1": (319.5, 84.0, 180, "B"),                        # VIN top right, EN top left
+    "L1": (315.85, 84.0, ("2", 1, 0), "B"),
+    "C1": (322.3, 83.4, ("1", 0, -1), "B"),
+    "C2": (317.9, 86.6, ("1", 1, 0), "B"),
+    "R1": (326.5, 88.6, ("1", 1, 0), "B"),
+    # the panel's own capacitors, below the signal bundle
+    "C5": (321.0, 97.7, ("1", 0, -1), "B"),
+    "C3": (320.6, 101.2, ("1", 0, -1), "B"),
+    "C4": (322.1, 101.2, ("1", 0, -1), "B"),
 }
 
 
 # ---------------------------------------------------------------- routing
-# Hand-routed (two layers). Every part is on B.Cu; F.Cu, under the panel, carries the GND pour and three
-# long rails (VGH, VGL, 3V3) that hop over the signal bundle. (net, layer, width, [(x, y), ...])
-SIG = ("DISP_BUSY", "DISP_RST", "DISP_DC", "DISP_CS", "DISP_CLK", "DISP_DIN")
+# Hand-routed (two layers). Every part is on B.Cu; F.Cu, under the panel, is a ground pour that also carries
+# three hops: SCLK over SI (the one crossing), +5V from the boost to the panel socket, and the boost enable.
+# (net, layer, width, [(x, y), ...])
+J1X = 318.45                                     # J1's pad row
+J2X = 329.75                                     # J2's pad row
 ROUTES = [
-    # signals: straight down from the panel socket, then right into the FFC socket under its body (a staircase,
-    # so nothing crosses)
-    *[(n, "B", 0.2, [(320.6 + 0.5 * i, 77.5), (320.6 + 0.5 * i, 96.65 - 0.5 * i), (329.75, 96.65 - 0.5 * i)])
-      for i, n in enumerate(SIG)],
-    ("+3V3", "B", 0.3, [(323.6, 77.9), (324.1, 77.9)]),
-    ("+3V3", "B", 0.3, [(323.85, 77.9), (323.85, 93.15), (329.75, 93.15)]),
-    ("+3V3", "B", 0.3, [(323.85, 87.6), (324.72, 87.6)]),                      # C10
-    ("+3V3", "F", 0.4, [(323.85, 93.0), (317.0, 93.0), (313.4, 89.4), (313.4, 85.55), (312.6, 84.75)]),
-    ("+3V3", "B", 0.4, [(312.75, 82.6), (312.6, 84.75), (312.5, 85.8)]),        # L1, C1
+    # signals: right from the panel socket, then down a staircase into the FFC socket under its body
+    ("SI", "B", 0.2, [(J1X, 91.95), (324.6, 91.95), (324.6, 94.15), (J2X, 94.15)]),
+    ("SCLK", "B", 0.2, [(J1X, 91.45), (319.75, 91.45), (320.2, 91.0)]),
+    ("SCLK", "F", 0.2, [(320.2, 91.0), (323.3, 93.3)]),
+    ("SCLK", "B", 0.2, [(323.3, 93.3), (323.3, 94.65), (J2X, 94.65)]),
+    ("SCS", "B", 0.2, [(J1X, 92.45), (322.0, 92.45), (322.0, 95.15), (J2X, 95.15)]),
+    ("EXTCOMIN", "B", 0.2, [(J1X, 92.95), (321.5, 92.95), (321.5, 95.65), (J2X, 95.65)]),
+    ("DISP", "B", 0.2, [(J1X, 93.45), (321.0, 93.45), (321.0, 96.15), (J2X, 96.15)]),
+    ("DISP", "B", 0.2, [(321.0, 96.15), (321.0, 97.22)]),                       # C5
+    # boost enable: J2 pin 1, R1's pull-up, U1's EN
+    ("VLCD_EN", "B", 0.2, [(J2X, 96.65), (324.3, 96.65), (323.6, 97.3)]),
+    ("VLCD_EN", "F", 0.2, [(323.6, 97.3), (324.2, 96.7), (324.2, 89.4), (325.0, 88.6)]),
+    ("VLCD_EN", "B", 0.2, [(325.0, 88.6), (325.99, 88.6)]),
+    ("VLCD_EN", "F", 0.2, [(325.0, 88.6), (325.0, 82.3), (324.0, 81.3), (319.6, 81.3), (318.663, 82.5)]),
+    ("VLCD_EN", "B", 0.2, [(318.663, 82.5), (318.663, 83.35)]),
+    # 3V3: up from J2 under its body, to R1, then along the top to U1's VIN, C1 and L1
+    ("+3V3", "B", 0.3, [(J2X, 93.15), (328.6, 93.15), (328.6, 81.8), (314.7, 81.8), (314.7, 82.65)]),
+    ("+3V3", "B", 0.3, [(328.6, 88.6), (327.01, 88.6)]),
+    ("+3V3", "B", 0.3, [(320.337, 83.35), (320.337, 81.8)]),
+    ("+3V3", "B", 0.3, [(322.3, 82.625), (322.3, 81.8)]),
     # boost
-    ("GDR", "B", 0.25, [(317.1, 77.5), (317.1, 80.4), (316.6, 80.9), (316.6, 81.662)]),
-    ("RESE", "B", 0.25, [(317.6, 77.5), (317.6, 80.6), (318.5, 81.5), (318.5, 81.662), (319.6, 82.8),
-                         (319.6, 85.375)]),
-    ("VSH2", "B", 0.25, [(318.6, 77.5), (318.6, 79.12)]),
-    ("SW", "B", 0.4, [(315.05, 83.5), (317.55, 83.5)]),
-    ("SW", "B", 0.4, [(317.55, 83.537), (317.55, 85.45)]),
-    ("SW", "B", 0.4, [(315.05, 83.5), (315.0, 85.65)]),
-    ("VGH", "B", 0.25, [(317.55, 88.75), (317.55, 90.0)]),
-    ("VGH", "B", 0.25, [(317.55, 89.0), (319.6, 89.0)]),
-    ("VGH", "F", 0.25, [(317.55, 90.0), (321.85, 85.7), (321.85, 79.0), (325.85, 79.0), (326.6, 78.25),
-                        (326.6, 76.0)]),
-    ("VGH", "B", 0.25, [(326.6, 76.0), (326.6, 77.5)]),
-    ("PVGL", "B", 0.25, [(315.0, 87.55), (315.95, 88.5), (315.95, 93.3)]),
-    ("VGL", "B", 0.25, [(312.65, 93.3), (312.4, 95.625), (313.6, 95.6)]),
-    ("VGL", "F", 0.25, [(313.6, 95.6), (311.9, 93.9), (311.9, 75.2), (327.6, 75.2)]),
-    ("VGL", "B", 0.25, [(327.6, 75.2), (327.6, 77.5)]),
-    # panel rails on the right
-    ("VDD", "B", 0.25, [(325.1, 77.5), (325.1, 79.9), (325.4, 80.2), (325.4, 80.42)]),
-    ("VSH1", "B", 0.25, [(326.1, 77.5), (326.1, 82.5), (326.6, 83.0), (326.6, 83.425)]),
-    ("VSL", "B", 0.25, [(327.1, 77.5), (327.1, 79.4), (327.7, 80.0), (327.7, 80.225)]),
-    ("VCOM", "B", 0.25, [(328.1, 77.5), (328.1, 78.6), (329.4, 79.9), (329.4, 83.32)]),
+    ("SW", "B", 0.4, [(318.663, 84.0), (317.0, 84.0)]),
+    ("+5V", "B", 0.2, [(320.337, 84.0), (319.5, 84.0), (319.5, 84.65), (318.663, 84.65)]),   # FB to VOUT
+    ("+5V", "B", 0.3, [(318.663, 84.65), (318.663, 86.6), (319.85, 86.6)]),
+    # 5 V over to the panel socket (pins 6-8 = J1 pads 5-3) and its capacitors
+    ("+5V", "F", 0.3, [(319.85, 86.6), (319.3, 87.15), (319.3, 93.6), (320.3, 94.45)]),
+    ("+5V", "B", 0.25, [(J1X, 93.95), (319.6, 93.95), (319.6, 94.95), (J1X, 94.95)]),
+    ("+5V", "B", 0.25, [(J1X, 94.45), (320.3, 94.45)]),
+    ("+5V", "F", 0.3, [(320.3, 94.45), (319.4, 95.35), (319.4, 98.9), (320.3, 99.8), (321.35, 99.8)]),
+    ("+5V", "B", 0.25, [(321.35, 99.8), (320.6, 100.72)]),
+    ("+5V", "B", 0.25, [(321.35, 99.8), (322.1, 100.72)]),
     # ground: pads to their vias
-    ("GND", "B", 0.3, [(320.1, 77.5), (320.1, 76.1)]),
-    ("GND", "B", 0.3, [(324.6, 77.5), (324.6, 76.1)]),
-    ("GND", "B", 0.3, [(318.6, 80.08), (319.6, 80.4)]),
-    ("GND", "B", 0.3, [(319.6, 87.025), (318.6, 87.1)]),
-    ("GND", "B", 0.3, [(319.6, 90.775), (319.6, 91.7)]),
-    ("GND", "B", 0.3, [(312.5, 87.375), (312.65, 88.75), (312.65, 90.75)]),
-    ("GND", "B", 0.3, [(312.4, 97.175), (312.4, 98.1)]),
-    ("GND", "B", 0.3, [(325.4, 81.38), (325.4, 82.3)]),
-    ("GND", "B", 0.3, [(327.7, 81.775), (327.7, 82.7)]),
-    ("GND", "B", 0.3, [(326.6, 84.975), (326.6, 85.9)]),
-    ("GND", "B", 0.3, [(329.4, 84.28), (329.4, 85.2)]),
-    ("GND", "B", 0.3, [(325.68, 87.6), (326.5, 87.6)]),
-    ("GND", "B", 0.3, [(329.75, 93.65), (331.05, 93.65)]),
+    ("GND", "B", 0.25, [(J1X, 95.45), (319.6, 95.45), (319.6, 95.95), (J1X, 95.95)]),
+    ("GND", "B", 0.25, [(319.6, 95.95), (320.35, 96.0)]),
+    ("GND", "B", 0.3, [(J2X, 93.65), (331.05, 93.65)]),
+    ("GND", "B", 0.3, [(320.337, 84.65), (321.6, 85.3)]),
+    ("GND", "B", 0.3, [(322.3, 84.175), (321.6, 85.3)]),
+    ("GND", "B", 0.3, [(317.125, 86.6), (316.1, 87.2)]),
 ]
 VIAS = [
-    ("+3V3", 323.85, 93.0), ("+3V3", 312.6, 84.75), ("VGH", 317.55, 90.0), ("VGH", 326.6, 76.0),
-    ("VGL", 313.6, 95.6), ("VGL", 327.6, 75.2),
+    ("SCLK", 320.2, 91.0), ("SCLK", 323.3, 93.3),
+    ("VLCD_EN", 323.6, 97.3), ("VLCD_EN", 325.0, 88.6), ("VLCD_EN", 318.663, 82.5),
+    ("+5V", 319.85, 86.6), ("+5V", 320.3, 94.45), ("+5V", 321.35, 99.8),
     *[("GND", x, y) for x, y in (
-        (320.1, 76.1), (324.6, 76.1), (319.6, 80.4), (318.6, 87.1), (319.6, 91.7), (312.65, 88.75), (312.4, 98.1),
-        (325.4, 82.3), (327.7, 82.7), (326.6, 85.9), (329.4, 85.2), (326.5, 87.6), (331.05, 93.65),
+        (320.35, 96.0), (331.05, 93.65), (321.6, 85.3), (316.1, 87.2),
         # stitching
-        (330.8, 80.0), (330.8, 90.0), (329.0, 92.0), (319.5, 95.0), (316.5, 96.5), (313.0, 79.7), (322.0, 101.8),
-        (328.5, 102.2), (319.6, 102.2))],
+        (313.0, 72.0), (318.0, 72.0), (324.0, 72.0), (330.0, 72.0), (313.0, 79.0), (322.0, 78.5),
+        (330.5, 80.0), (330.5, 88.0), (313.0, 86.5), (316.5, 88.0), (313.0, 101.5), (325.0, 101.8),
+        (330.5, 101.8))],
 ]
 
 
@@ -317,7 +299,7 @@ def build_schematic(root_uuid, sheet_xy):
         if net is None:
             items.append(["no_connect", ["at", "%.2f" % px, "%.2f" % py], ["uuid", q(U())]])
             return
-        if net in ("+3V3", "GND"):
+        if net in POWER:
             pwr_n[0] += 1
             # pins pointing left/right get a short wire so the symbol stands clear
             if ang in (0, 180):
@@ -356,12 +338,19 @@ def build_schematic(root_uuid, sheet_xy):
                           ["stroke", ["width", "0"], ["type", "default"]], ["uuid", q(U())]])
             instance("#PWR%03d" % pwr_n[0], "power:+3V3", fx, fy + 2.54, "+3V3", hide_ref=True)
             # the +3V3 symbol's pin points up, so it sits on the wire's lower end
+    # and SW: U1's L pin is a power input, fed only through L1
+    fx, fy = 66.04, 30.48
+    instance("#FLG03", "power:PWR_FLAG", fx, fy, "PWR_FLAG", hide_ref=True)
+    items.append(["wire", ["pts", ["xy", "%.2f" % fx, "%.2f" % fy], ["xy", "%.2f" % fx, "%.2f" % (fy + 2.54)]],
+                  ["stroke", ["width", "0"], ["type", "default"]], ["uuid", q(U())]])
+    attach("SW", fx, fy + 2.54, 90)
 
     notes = [
-        "Dachshund70 screen board: SSD1680 e-paper boost (L1, Q1, R1, D1-D3, C9) and panel socket J1.",
+        "Dachshund70 screen board: 5 V for the Sharp LS027B7DH01 memory LCD (U1, L1, C1, C2) and panel socket J1.",
         "J2: 8-pin 0.5 mm FFC to the mainboard's J4 (same-side contacts). J2 pin n = J4 pin 9 - n.",
-        "Panel pins 1, 4, 6, 7, 19 open (NC, TSCL, TSDA, VPP). BS1 low: 4-wire SPI.",
-        "C3-C8 25 V: VGH/VSH reach about +20 V, VGL/VSL about -20 V.",
+        "J4-8 (VLCD_EN) enables U1; R1 holds it high. EXTMODE high: VCOM follows the EXTCOMIN pulse.",
+        "C3 (VDD), C4 (VDDA) and C5 (DISP) are the capacitors from Sharp's specification, next to J1.",
+        "J1 pin n = panel pin 11 - n: the panel's tail folds back under the glass.",
     ]
     for i, t in enumerate(notes):
         items.append(["text", q(t), ["exclude_from_sim", "no"], ["at", "25.4", "%.2f" % (172.72 + 3.81 * i), "0"],
@@ -369,8 +358,8 @@ def build_schematic(root_uuid, sheet_xy):
 
     sch = ["kicad_sch", ["version", "20260306"], ["generator", q("eeschema")], ["generator_version", q("10.0")],
            ["uuid", q(root_uuid)], ["paper", q("A4")],
-           ["title_block", ["title", q("Dachshund70 screen board")], ["date", q("2026-11-11")], ["rev", q("1.0")],
-            ["comment", "1", q("2.13in SSD1680 e-paper (GDEY0213B74 / GDEY0213B74H): boost, FPC socket, FFC to the mainboard")]],
+           ["title_block", ["title", q("Dachshund70 screen board")], ["date", q("2026-11-11")], ["rev", q("2.0")],
+            ["comment", "1", q("2.7in Sharp memory LCD (LS027B7DH01): 5 V boost, FPC socket, FFC to the mainboard")]],
            ["lib_symbols"] + list(used_libs.values())]
     sch += items
     sch += [["sheet_instances", ["path", q("/"), ["page", q("1")]]], ["embedded_fonts", "no"]]
@@ -378,11 +367,10 @@ def build_schematic(root_uuid, sheet_xy):
 
 
 SHEET_XY = {
-    "J1": (63.5, 101.6), "J2": (215.9, 50.8),
-    "L1": (127.0, 50.8), "Q1": (139.7, 76.2), "R1": (149.86, 96.52), "D1": (190.5, 76.2), "D2": (190.5, 96.52),
-    "D3": (162.56, 50.8), "C9": (177.8, 66.04), "C1": (101.6, 50.8), "C2": (114.3, 116.84),
-    "C3": (127.0, 116.84), "C4": (139.7, 116.84), "C5": (152.4, 116.84), "C6": (165.1, 116.84),
-    "C7": (177.8, 116.84), "C8": (190.5, 116.84), "C10": (101.6, 76.2)
+    "J1": (63.5, 101.6), "J2": (215.9, 76.2),
+    "U1": (139.7, 63.5), "L1": (127.0, 50.8), "R1": (114.3, 76.2),
+    "C1": (101.6, 63.5), "C2": (165.1, 63.5), "C3": (101.6, 116.84), "C4": (114.3, 116.84),
+    "C5": (127.0, 116.84),
 }
 
 
@@ -443,7 +431,7 @@ def build_board(sym_uuids):
         fp.SetPath(pcbnew.KIID_PATH("/" + sym_uuids[ref]))
         x, y, rot, side = PLACE[ref]
         b.Add(fp)
-        if ref == "J2":
+        if ref in ("J1", "J2"):
             # mouth (the actuator, +y in the library footprint) toward -x, so the pads end up on the +x side
             place(fp, x, y, None, side)
             for r in (90, 270):
@@ -468,7 +456,7 @@ def build_board(sym_uuids):
             n = pnets.get(key)
             if n is None:       # the schematic's name for a pin with a no-connect flag
                 n = "unconnected-(%s-Pin_%s-Pad%s)" % (ref, num, num)
-            elif n not in ("+3V3", "GND"):
+            elif n not in POWER:
                 n = "/" + n     # local labels
             p.SetNet(net(n))
         fp.Reference().SetVisible(True)
@@ -516,7 +504,7 @@ def build_board(sym_uuids):
         b.Add(z)
 
     def nn(name):
-        return net(name if name in ("+3V3", "GND") else "/" + name)
+        return net(name if name in POWER else "/" + name)
     for name, layer, w, pts in ROUTES:
         for (ax, ay), (bx, by) in zip(pts, pts[1:]):
             t = pcbnew.PCB_TRACK(b)
@@ -536,7 +524,7 @@ def build_board(sym_uuids):
 
     # silkscreen on the parts' side
     t = pcbnew.PCB_TEXT(b)
-    t.SetText("Dachshund70\nscreen v1.0")
+    t.SetText("Dachshund70\nscreen v2.0")
     t.SetLayer(pcbnew.B_SilkS)
     t.SetMirrored(True)
     t.SetTextSize(pcbnew.VECTOR2I(pcbnew.FromMM(0.8), pcbnew.FromMM(0.8)))
