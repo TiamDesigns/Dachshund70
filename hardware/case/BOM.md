@@ -74,8 +74,8 @@ Notes on the made parts:
   engagement), a light press fit plus a drop of cyanoacrylate, like the old cap. The button covers the slot at both ends
   of its travel (2.4 or more of overlap). Channel and slot are plain pockets from the back face (a Ø6 end mill and
   a Ø1.0 one), no undercuts; the button is held by the lever only, as the cap was.
-- Light guide: one straight Ø2.1 channel per LED (five), from the LED (D3 to D7, KiCad x 311.75 to 333.75 at a 5.5
-  pitch, centred under the screen) through a 3.7 square spigot in the plate's 4 × 4 window (0.15 clear) to its roof
+- Light guide: one straight Ø2.1 channel per LED (five), from the LED (D3 to D7, KiCad x 312.51 to 346.61 at an 8.525
+  pitch, spanning the screen's window) through a 3.7 square spigot in the plate's 4 × 4 window (0.15 clear) to its roof
   hole, which is on the same axis. The plate and the mainboard float on the socks, so the block's underside is at z 7.8
   (1.2 over the plate) and the spigots stop at z 2.8 (1.2 over the PCB): 0.2 left at +1.0, and the plate's window
   still sleeves the spigot at −1.0. Walls 0.8 at the spigots and 1.9 or more in the block, corners R1.15 in an R1.0 pocket.

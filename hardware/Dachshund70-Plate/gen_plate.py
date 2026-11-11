@@ -124,6 +124,8 @@ NOTCH_EXT_BOTTOM = 104.5
 # Light windows over the reverse-mount indicator LEDs.
 LED_REFS = ("D2", "D3", "D4", "D5", "D6", "D7")
 LED_WINDOW = 4.0
+# The mainboard outline's right edge (KiCad mm), not counting its LED tab.
+MAIN_RIGHT_EDGE = 337.5
 
 MAX_ERROR = pcbnew.FromMM(0.002)
 ROUND = pcbnew.CORNER_STRATEGY_ROUND_ALL_CORNERS
@@ -177,6 +179,10 @@ def read_mainboard():
     board = pcbnew.LoadBoard(MAINBOARD)
 
     x0, y0, x1, y1 = bbox_mm(board.GetBoardEdgesBoundingBox())
+    # The mainboard grows a small tab under the indicator LEDs (to x 349.3) where the case is wider;
+    # the plate stops at the main outline's right edge.
+    if x1 > MAIN_RIGHT_EDGE + 0.1:
+        x1 = MAIN_RIGHT_EDGE + 0.025
     # Only the arcs in the outline's four corners count: the mainboard also has
     # an inner cut-out (the encoder cable slot) whose ends are arcs of their own.
     def in_corner(d):
@@ -258,11 +264,15 @@ def build(mb):
         return any(abs(x - sx) < half and abs(y - sy) < half for _, sx, sy in mb["switches"])
 
     w = LED_WINDOW / 2
-    led_windows = []
+    led_windows, led_notches = [], []
     for ref, x, y in mb["leds"]:
         if in_switch_cutout(x, y):
             continue  # under a key: the switch cutout already lets the light through
-        holes.append(rect(x - w, y - w, x + w, y + w))
+        if x + w > x1 - 1.0:
+            # at or past the plate's right edge: a notch in the edge instead of a window
+            led_notches.append(rect(x - w, y - w, x1 + 10, y + w))
+        else:
+            holes.append(rect(x - w, y - w, x + w, y + w))
         led_windows.append(ref)
 
     # Overlapping layouts (the split and 6.25u spacebars) merge into one hole.
@@ -303,6 +313,8 @@ def build(mb):
                    rect(NOTCH_LEFT, y0 - 10, NOTCH_EXT_RIGHT, NOTCH_EXT_BOTTOM)])
     round_outside_corners(notch, NOTCH_RADIUS)
     outline.BooleanSubtract(notch)
+    for n in led_notches:
+        outline.BooleanSubtract(n)
     # Relief round each of the encoder module's posts; the one by the top edge is
     # a slot open to that edge (a circle there would leave a 0.1 mm sliver).
     for k, (rx, ry) in enumerate(POST_RELIEFS):

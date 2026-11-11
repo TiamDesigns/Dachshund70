@@ -6,6 +6,23 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wider case, 2u encoder and LEDs across the screen (2026-11-11)
+
+- Case (Fusion v46 to v53, not yet re-exported to `hardware/case/step` and `dxf`): 11.825 mm wider on the right, so the
+  encoder column starts a 1/4u gap after Delete, like F12 to Delete; Sharp LS027B7DH01 window 37.1 × 59.5 (R1.5, 45°
+  bevel) with its top level with Backspace's keycap; 2u roller (25 mm, knurled evenly) on the hood's left; front and back
+  M3 rows even, centred and aligned (back row moved behind the retainers to y 74.5); feet centred between them; brass
+  weight centred and 9.9 mm wider; LED holes and light guide across the screen's width.
+- Encoder module: SW1 is now the PEC12R-2230F-S0024 (30 mm shaft) for the 2u roller, with a new 3D stand-in.
+- Mainboard: D3–D7 and C14–C18 moved to an 8.525 pitch (KiCad x 312.51 to 346.61) to span the screen's window; the
+  outline grows a tab to x 349.3 (y 122 to 136) under them, the GND pours cover it and each LED's GND pad has a via.
+  Their routing kept its pattern. DRC (refilled zones, schematic parity): 0 errors and 0 unconnected; only the
+  existing library-mismatch messages.
+- Plate: regenerated; LED windows over D3–D5 and an edge notch at D6. DRC 0.
+- Open: the hood's front screw moved into the screen pocket, so the hood is held by its back M2 screw and a front lip;
+  the module's screw heads overlap the mainboard edge by 1.8 mm (countersunk M2 or a moved lobe, to decide); re-export
+  the case STEP/DXF files and update the case README and BOM.
+
 ### Sharp memory LCD screen (2026-11-11)
 
 - Tiam chose the Sharp LS027B7DH01 (2.7", 400 × 240, about 173 ppi, a full frame in about 50 ms) for the wider screen column beside the 2u encoder. It replaces the 2.13" e-paper.

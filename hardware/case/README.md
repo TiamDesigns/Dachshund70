@@ -134,9 +134,10 @@ KiCad y = 99.55 − local y.
   screws go in before the ring and the top block.
 - Feet: two rubber rails near the front and back edges, in 1.0 mm pockets: 300 × 5.8 × 2.0 at the front, 269.4 × 5.8 × 2.0
   at the back (it stops at x 119.4, its pocket 3.0 short of the battery bay).
-- LEDs and light guide: the LEDs (D3 to D7, reverse-mount SK6812MINI-E) are an even 5.5 pitch centred on the screen:
-  KiCad x 311.75, 317.25, 322.75, 328.25 and 333.75, y 130.5 (world x 133.5, 139.0, 144.5, 150.0 and 155.5, local y
-  −30.95). The roof's five Ø3 light holes are on the same axes, square to the plate, so each hole is straight over its
+- LEDs and light guide: the LEDs (D3 to D7, reverse-mount SK6812MINI-E) span the Sharp screen's window at an even
+  8.525 pitch: KiCad x 312.51, 321.035, 329.56, 338.085 and 346.61, y 130.5 (world x 134.26, 142.785, 151.31,
+  159.835 and 168.36). D6 and D7 sit on a small tab of the mainboard (to x 349.3) under the widened sidebar, and the
+  plate has an edge notch for D6 instead of a window. The roof's five Ø3 light holes are on the same axes, square to the plate, so each hole is straight over its
   LED. The guide is opaque black resin, its block 30.6 × 6.05 × 5.0 in the roof pocket and five 3.7 square spigots in
   the plate's 4 × 4 windows (0.15 clear, down to the PCB's top). Each channel is one straight Ø2.1 bore from its LED to
   its hole, so the walls are 0.8 at the spigots and 1.9 or more in the block; its pocket has R1.0 corners and the guide

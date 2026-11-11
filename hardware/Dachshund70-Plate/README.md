@@ -43,7 +43,9 @@ can't drift apart.
   case. Since mainboard Rev 1.1 the encoder is on its own module board, so `gen_plate.py` no longer reads
   it from the mainboard: the notch's bottom edge comes from `ENCODER_BOX` and `NOTCH_LEFT`.
 - **Display header:** a slot over J4 (the courtyard plus 0.2 mm), for the 8.5 mm-tall pin header.
-- **Indicator LEDs:** 4 × 4 mm windows over D3–D7, the layer and battery LEDs. The Caps LED (D2) sits
+- **Indicator LEDs:** 4 × 4 mm windows over D3–D5, the layer and battery LEDs; D6 (at the plate's right edge) gets a
+  4 mm notch in the edge instead, and D7 sits past the plate on the mainboard's LED tab. `gen_plate.py` ignores that tab
+  when it takes the plate outline from the mainboard (`MAIN_RIGHT_EDGE`). The Caps LED (D2) sits
   inside its switch cutout, so it needs no window.
 
 ## Gasket nubs
