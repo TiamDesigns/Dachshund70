@@ -1,7 +1,7 @@
 # firmware/displays/
 
 One devicetree overlay per supported panel on the Dachshund70's J4 display
-header. Pick one at build time:
+port. Pick one at build time:
 
 ```
 west build -p -b dachshund70/nrf52840 -d build/firmware firmware -- -DBOARD_ROOT="$PWD" -DEXTRA_DTC_OVERLAY_FILE=displays/oled-ssd1306-128x64.overlay
@@ -27,11 +27,15 @@ the character framebuffer draws in portrait. The SSD16xx driver's own
 
 ## Wiring
 
-J4 follows the Waveshare e-Paper module order: 1 VCC (+3V3), 2 GND, 3 DIN,
-4 CLK, 5 CS, 6 DC, 7 RST, 8 BUSY. A 4-pin I2C OLED uses VCC, GND, DIN (SDA)
-and CLK (SCL). Pins come from `boards/Dachshund70/board.json`. Overlays
-refer to J4 pins only through `<&display_header PIN FLAGS>`; the host-lib
-tests reject raw `&gpio` references here.
+J4 follows the Waveshare e-Paper module order: 1 VCC (+3V3), 2 GND, 3 DIN, 4
+CLK, 5 CS, 6 DC, 7 RST, 8 BUSY. On the board it's an 8-way 0.5 mm FFC socket,
+and an FFC runs from it to the screen board (`hardware/Dachshund70-Screen/`),
+which carries the e-paper panel's boost circuit. Like Adafruit's eInk Friend,
+it runs the panel as 4-wire SPI, so the e-paper overlays work unchanged. A
+4-pin I2C OLED uses VCC, GND, DIN (SDA) and CLK (SCL), through an FFC
+adapter. Pins come from `boards/Dachshund70/board.json`. Overlays refer to J4
+pins only through `<&display_header PIN FLAGS>`; the host-lib tests reject
+raw `&gpio` references here.
 
 ## What is shown
 

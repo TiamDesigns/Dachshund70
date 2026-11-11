@@ -88,7 +88,7 @@ switch footprints and wire them to the same diode.
 - **No pin for battery sensing.** The battery feeds VDDH and the SAADC measures
   VDDH/5 internally, so there is no divider leaking current.
 - **Spare full-speed pins** for later: P0.07, P0.13, P0.14, P0.16, P0.17,
-  P0.25–P0.27, P1.00, P1.08, P1.09. P0.19–P0.24 go to the display header J4.
+  P0.25–P0.27, P1.00, P1.08, P1.09. P0.19–P0.24 go to the display port J4 (an FFC socket for the screen board).
 
 ## Hardware requirements these pins assume
 

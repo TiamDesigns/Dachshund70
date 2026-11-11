@@ -2,7 +2,7 @@
 
 Open work to pick up in later prompts. Each task is written so it can be pasted into a prompt. When a task is finished, delete it here in the same change, and record what was done in `PROGRESS.md`.
 
-Last updated: 2026-11-03 (case moved to Fusion: rev 2 exports, DXFs and build scripts in `hardware/case/`; new case tasks).
+Last updated: 2026-11-11 (screen board and FFC display port; display and case-model tasks).
 
 ## Before ordering boards
 
@@ -37,5 +37,14 @@ Last updated: 2026-11-03 (case moved to Fusion: rev 2 exports, DXFs and build sc
 - **J2 placement check (case).** Check the battery connector J2 and the cell's JST-PH lead against the Fusion model: the lead's route from the cell to J2 under the screen and knob, and its clearance to the plate, J5 and the bottom block's floor steps. Move J2 or the battery bay if it fouls.
 - **PCM12SMTR availability (case).** The power switch on the USB-C daughterboard is a C&K PCM12SMTR, and the case's slider cap and slot (`hardware/case/BOM.md`) are drawn for its lever. Check it is in stock at the fab and distributors; if not, pick a replacement and redraw the cap and slot.
 - **Dongle enclosure.** Still to design: plastic, with nothing metal over the antenna strip.
-- **Display.** The case is built for a bare 2.13" e-paper panel (GoodDisplay GDEY0213B74) on end, driven by an Adafruit eInk Breakout Friend (#4224). Buy both so they arrive with the boards, measure the panel (where the picture sits along it) and the Friend (size, height of its parts), and correct the screen pocket in the Fusion model (`hardware/case/fusion/scripts/build_case2.py`, or edit the `.f3d`) before machining (see "Display" in `hardware/case/README.md`): the Friend's parts clear the plate by only about 0.3 mm in the model. On hardware, check the `eink-2in13-v4-portrait` overlay (which way up the text comes out: `rotation`), that the Friend's SRCS and SDCS idle high with nothing on them, and the refresh current against what REGOUT0 (+3V3 on J4) can supply alongside the other 3.3 V loads.
+- **Display.** Buy the bare 2.13" e-paper panel (GoodDisplay GDEY0213B74) and an 8-way 0.5 mm FFC with contacts on the same side at both ends, so they arrive with the boards. Before ordering the screen board (`hardware/Dachshund70-Screen/`), go through the open checks in its README:
+  - which face of the panel's tail carries the contacts, and where pin 1 lands in J1;
+  - the tail length from the glass edge to J1;
+  - the FH12 contact sides;
+  - the LCSC numbers still blank (J1, J2, L1, R1).
+  On hardware, check the `eink-2in13-v4-portrait` overlay (which way up the text comes out: `rotation`) and the boost's peak current on 3V3 (REGOUT0) next to the other 3.3 V loads.
+- **Screen board in the case model.** The Fusion model still has Adafruit's eInk Breakout Friend under the panel. Swap in `hardware/step/Dachshund70-Screen.step` (re-export with `python hardware/export_step.py`, along with the mainboard and plate, since J4 moved). Then:
+  - draw the FFC loop from J4 up through the plate's notch into J2, and set the cable length from it;
+  - check the screen board's parts against the plate, which floats ±1 mm;
+  - correct the screen pocket from the measured panel before machining (see "Display" in `hardware/case/README.md`).
 - **nRF52840 Dongles (PCA10059), being ordered.** Two cover the wireless tests before the boards arrive: one runs the Pup (the keyboard firmware, `boards/Pup/README.md`), the other the receiver (`dongle/README.md`).

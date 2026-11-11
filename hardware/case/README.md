@@ -215,26 +215,27 @@ beside the knob: 29.2 × 59.2 mm, with a 23.7 × 48.6 mm picture. In portrait th
 cells of text with the 10 × 16 font. Build the firmware with
 `-DEXTRA_DTC_OVERLAY_FILE=displays/eink-2in13-v4-portrait.overlay`, which turns the picture in software.
 
-- Driver: the panel needs a driver board. The model has Adafruit's eInk Breakout Friend (#4224, about
-  34.7 × 21.5 mm) taped flat to the panel's back, its parts facing down. Waveshare's 2.13" V4 module (the same
-  panel on a board) runs the same firmware, but its board is too big for the sidebar.
+- Driver: the panel's boost circuit is on our own screen board (`hardware/Dachshund70-Screen/`, 21.0 × 34.0 ×
+  0.8 mm, KiCad x 311.0 to 332.0, y 69.2 to 103.2), taped flat to the panel's back with its parts facing down.
+  The panel's tail plugs into its J1. The Fusion model still has Adafruit's eInk Breakout Friend (#4224, about
+  34.7 × 21.5 mm) in that place, so swap in `hardware/step/Dachshund70-Screen.step`.
 - Mount: the panel sits in a locating frame under the roof, behind a window with a 45° bevel, held by thin
-  double-sided tape (0.2 mm, such as 3M 9448A or tesa 4965) on its border. The driver board's parts clear the
-  plate by about 0.3 mm in the model, so check that with the real board.
-- Wiring, from J4's holes (no header, since JLC doesn't fit it) to the Friend: 1 3V3 → VIN, 2 GND → GND, 3 DIN →
-  MOSI, 4 CLK → SCK, 5 CS → ECS, 6 DC → D/C, 7 RST → RST, 8 BUSY → BUSY. The Friend's SRAM and SD card selects
-  (SRCS, SDCS) stay unconnected; check that the board pulls them high. Route the wires flat along the plate's
-  J4 slot to the board's front edge, about 80 mm long so the top block can lie upside down next to the board
-  while you fit the screen.
+  double-sided tape (0.2 mm, such as 3M 9448A or tesa 4965) on its border. Check that the screen board's parts
+  clear the plate, which floats ±1 mm.
+- Cable: one 8-way 0.5 mm FFC with contacts on the same side at both ends. It runs from the mainboard's J4
+  (an FH12-8S socket at KiCad (327.9, 94.9), mouth facing −x) up through the plate's screen notch, and loops back
+  into the screen board's J2, which sits straight above J4. Set its length from the model. J4's pins are
+  unchanged: 1 3V3, 2 GND, 3 DIN, 4 CLK, 5 CS, 6 DC, 7 RST, 8 BUSY.
 - Refresh: e-paper keeps its picture with no power, and a refresh takes about a second, so the firmware redraws
   at most every 3 s (`CONFIG_KB_SCREEN_EPD_MIN_INTERVAL_MS`). That suits the layer, lock, battery and
   connection status it shows.
-- The driver board stays clear of the radio module's antenna (KiCad x > 333, y 67–79 mm); only the panel's
+- The screen board stays clear of the radio module's antenna (KiCad x > 333, y 67–79 mm); only the panel's
   glass reaches over the antenna's left end.
 - Sizes are nominal: measure your parts and correct the screen pocket in the Fusion model (`build_case2.py`)
   before machining. If the text comes out upside down, set `rotation = <270>` in the overlay.
 - Other screens: Pimoroni's 1.12" 128 × 128 SH1107 OLED (overlay `oled-sh1107-128x128`, 8 text rows) fits the
-  sidebar; OLED modules use J4 pins 1–4 (3V3, GND, DIN = SDA, CLK = SCL). They need a different pocket.
+  sidebar; OLED modules use J4 pins 1–4 (3V3, GND, DIN = SDA, CLK = SCL), now through an FFC adapter. They
+  need a different pocket.
 
 ## Making it
 

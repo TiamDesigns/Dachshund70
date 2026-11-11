@@ -6,6 +6,23 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Screen board and FFC display port (2026-11-11)
+
+- Screen options compared (OLED, faster e-paper, Sharp/JDI memory LCD); Tiam kept the 2.13" SSD1680 e-paper and chose to build our own driver board. Every SSD1680/SSD1681 panel bottoms out at about 0.3 s per partial refresh. The GDEY0213B74H (296 × 144, same outline and pins) also fits, but GoodDisplay lists it as end of life.
+- New `hardware/Dachshund70-Screen/`, made by `gen_screen.py`:
+  - 21.0 × 34.0 × 0.8 mm, 2 layers, every part on the bottom side, drawn in mainboard coordinates.
+  - The SSD1680 boost circuit (L1 10 µH, AO3400A, 0.47 Ω sense, 3 × B5819W, 25 V caps on the ±20 V rails) and BS1 low, for 4-wire SPI.
+  - J1: Hirose FH12-24S for the panel's tail. J2: FH12-8S for the cable.
+  - Hand-routed, with ground pours on both sides. ERC 0; DRC with parity and every severity: 0.
+- Mainboard J4: the 2.54 mm header is now an FH12-8S FFC socket on the top side at (327.9, 94.9), under the plate's screen notch. The pin order is unchanged, so `board.json`, the devicetree and the overlays didn't change.
+  - Schematic: `Conn_01x08_MountingPin`, MP on GND, MPN set.
+  - Board: the eight display nets were rerouted (`hardware/Dachshund70-Screen/move_j4.py` records the edit), three GND stitching vias were removed and the pours refilled. DRC: 0 unconnected items, parity clean; ERC unchanged.
+- An 8-way 0.5 mm FFC with contacts on the same side at both ends loops from J4 up through the notch into J2, straight above it. J4 pin n meets J2 pin 9 − n.
+- Plate: the J4 slot is gone. `gen_plate.py` was rerun; the regenerated plate also has the sock outlines on Cmts.User again.
+- `export_fab.py` and `export_step.py` now include the screen board. Its STEP shares the mainboard's origin.
+- Docs updated: the screen board's README, "Display" in the case README, the wiring section of `firmware/displays/README.md`.
+- Not tested on hardware, nothing ordered. Open checks are in the screen board README: the panel FPC's contact side and pin 1, the tail length, the FFC length, LCSC numbers, the boost current on 3V3, and the case model update.
+
 ### Case round 5: 24 mm-neck plate, longer retainers, encoder cable, daughterboard lower, slider button, floating-plate check (2026-11-10)
 
 - Plate: the coordinator's 24 mm necks and 2.8 arms (1d0be44) are in the model. The encoder notch now runs forward from x 305.25 to the right-hand edge, down to KiCad y 104.5 (was to x 322.25 and y 67.25): the cover's front mount, the knob's underside (it was 0.8 over the plate) and the e-paper driver's parts (0.3 over it) have no plate under them when it floats. `gen_plate.py` rerun (DRC 0), DXF re-exported, README's prong and sock numbers updated.

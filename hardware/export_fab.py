@@ -4,8 +4,9 @@
 
 Writes to out_dir (default hardware/fab/):
 
-- <board>-gerbers.zip  for the mainboard, USB-C daughterboard, dongle, plate and encoder module
-- <board>-bom.csv and <board>-cpl.csv  for JLCPCB assembly of the four PCBs
+- <board>-gerbers.zip  for the mainboard, USB-C daughterboard, dongle, plate, encoder module and
+  screen board
+- <board>-bom.csv and <board>-cpl.csv  for JLCPCB assembly of the five PCBs
 
 Each zip holds the copper, mask, paste, silkscreen and outline Gerbers plus
 Excellon drill files (plated and non-plated holes separate, mm), set up the
@@ -16,7 +17,7 @@ exporting after any board change.
 
 The BOM takes every part with an LCSC or MPN field (the MPN alone means JLC has
 to source it globally). Parts with neither aren't assembled: the key switches,
-stabilizers, display header J4 and test pads. The hot-swap sockets are on the
+stabilizers and test pads. The hot-swap sockets are on the
 switch footprints, which sit on the front with their pads on the back, so the
 CPL moves them to the bottom layer at the socket's own centre.
 
@@ -32,8 +33,9 @@ import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 KICAD_CLI = os.environ.get("KICAD_CLI", r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe")
-BOARDS = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Plate", "Dachshund70-Encoder"]
-ASSEMBLED = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder"]
+BOARDS = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Plate", "Dachshund70-Encoder",
+          "Dachshund70-Screen"]
+ASSEMBLED = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder", "Dachshund70-Screen"]
 # Kailh socket centre relative to the switch footprint's origin (midpoint of its two pads), KiCad axes.
 SOCKET_FOOTPRINT = "SW_Hotswap_Kailh_MX"
 SOCKET_OFFSET = (-0.6215, -3.81)
