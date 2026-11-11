@@ -11,6 +11,8 @@ the result when you want a snapshot):
 - Dachshund70-USB.step       USB-C daughterboard
 - Dachshund70-Dongle.step    2.4 GHz dongle
 - Dachshund70-Encoder.step   encoder module (the roller encoder on its own board)
+- Dachshund70-Screen.step    screen board (the e-paper panel's boost circuit and sockets), parts on
+                             its bottom face; same X/Y origin as the mainboard, so it sits over it
 
 The mainboard, plate and assembly share one origin: the centre of the
 mainboard outline, so the separate files line up in X and Y. In every file the
@@ -92,6 +94,9 @@ def main():
         assembly(plate_abs, os.path.join(OUT, "Dachshund70-Assembly.step"))
     for name in ("Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder"):
         export(os.path.join(HERE, name, f"{name}.kicad_pcb"), os.path.join(OUT, f"{name}.step"))
+    # The screen board is drawn in mainboard coordinates, so it shares the mainboard's origin.
+    export(os.path.join(HERE, "Dachshund70-Screen", "Dachshund70-Screen.kicad_pcb"),
+           os.path.join(OUT, "Dachshund70-Screen.step"), "--user-origin", MAIN_ORIGIN)
 
 
 if __name__ == "__main__":

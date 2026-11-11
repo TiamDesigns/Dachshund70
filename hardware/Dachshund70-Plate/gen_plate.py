@@ -5,7 +5,7 @@ Run with KiCad's own Python (it ships the pcbnew module), from the repo root:
     "C:/Program Files/KiCad/10.0/bin/python.exe" hardware/Dachshund70-Plate/gen_plate.py
 
 Everything is read from hardware/Dachshund70/Dachshund70.kicad_pcb, so rerun
-this after moving a switch, stabilizer, J4 or the indicator LEDs.
+this after moving a switch, stabilizer or the indicator LEDs.
 The output overwrites Dachshund70-Plate.kicad_pcb; edit the parameters below,
 not the generated board.
 """
@@ -115,15 +115,11 @@ NOTCH_RADIUS = 2.0
 # the forward part now runs on to the right-hand edge (the knob's underside is clear
 # of it) and forward to y 104.5. That keeps the cover's front ear, its screw and
 # the boss 1.5 mm or more from the plate in plan, and leaves no plate under the
-# e-paper driver board, whose parts sit 0.3 over the plate's top and would be hit
-# when the plate floats up. The sidebar keeps its plate from y 104.5 on (the J4
-# slot and the LED windows).
+# screen board, whose parts face down toward the plate and would be hit when the
+# plate floats up; the screen board's FFC loops through here to the mainboard's
+# J4 (at y 90-100). The sidebar keeps its plate from y 104.5 on (the LED windows).
 NOTCH_EXT_RIGHT = 347.5     # past the plate's right-hand edge (x 337.5)
 NOTCH_EXT_BOTTOM = 104.5
-
-# Pass-through slot for the display header J4 (pins stand ~8.5 mm tall).
-DISPLAY_REF = "J4"
-DISPLAY_SLOT_MARGIN = 0.2
 
 # Light windows over the reverse-mount indicator LEDs.
 LED_REFS = ("D2", "D3", "D4", "D5", "D6", "D7")
@@ -242,7 +238,6 @@ def read_mainboard():
         "switches": sorted(switches),
         "stabs": sorted(stabs),
         "encoder": ENCODER_BOX,
-        "display": courtyard(DISPLAY_REF),
         "leds": [(ref, *position(ref)) for ref in LED_REFS],
     }
 
@@ -258,9 +253,6 @@ def build(mb):
     round_outside_corners(key_holes, CUTOUT_RADIUS)
 
     holes = [key_holes]
-    dx0, dy0, dx1, dy1 = mb["display"]
-    m = DISPLAY_SLOT_MARGIN
-    holes.append(rect(dx0 - m, dy0 - m, dx1 + m, dy1 + m))
 
     def in_switch_cutout(x, y):
         return any(abs(x - sx) < half and abs(y - sy) < half for _, sx, sy in mb["switches"])
