@@ -68,7 +68,7 @@ switch footprints and wire them to the same diode.
 | LED data | P0.06 | SK6812MINI-E chain of 6, in this order: LED 0 layer, LEDs 1–4 battery gauge (25/50/75/100%), LED 5 under Caps Lock. LEDs 0–4 sit in a row above the Right arrow. Driven by SPI MOSI. |
 | LED power enable | P0.08 | Active-high EN of the TPS22917 load switch feeding the LEDs, with a 100 kΩ pull-down so the LEDs stay off through reset and sleep. |
 | Display CLK / DIN | P0.19 / P0.21 | J4 pins 4 and 3. SPI SCK/MOSI for e-paper, or SCL/SDA for an I2C OLED (the display module supplies the pull-ups). |
-| Display CS / DC / RST / BUSY | P0.20 / P0.23 / P0.22 / P0.24 | J4 pins 5–8, for e-paper. An I2C OLED leaves them unused. J4 pins 1 and 2 are +3V3 and GND. |
+| Display CS / DC / RST / BUSY | P0.20 / P0.23 / P0.22 / P0.24 | J4 pins 5–8, for e-paper. The Sharp memory LCD uses them as SCS, EXTCOMIN, DISP and its boost enable (`hardware/Dachshund70-Screen/`). An I2C OLED leaves them unused. J4 pins 1 and 2 are +3V3 and GND. |
 | Charger status | P0.15 | MCP73831 STAT through a BAT54WS Schottky (cathode at STAT), so it behaves as open-drain: low while charging. Needs the internal pull-up. |
 | Reset | P0.18 | nRESET: reset button to GND and SWD header. Double-tap enters the UF2 bootloader (so does holding Esc at reset). |
 | USB | D+, D−, VBUS | Dedicated module pads. |

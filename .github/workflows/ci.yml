@@ -161,6 +161,10 @@ jobs:
             app: firmware
             board: dachshund70/nrf52840
             display: eink-2in13-v4-portrait
+          - variant: keyboard + sharp-ls027b7dh01-portrait
+            app: firmware
+            board: dachshund70/nrf52840
+            display: sharp-ls027b7dh01-portrait
           - variant: dongle
             app: dongle
             board: nrf52840dongle/nrf52840

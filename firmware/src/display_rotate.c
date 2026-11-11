@@ -1,10 +1,11 @@
 /*
- * A display that turns a 1-bit, vertically tiled panel (SSD16xx e-paper) by
- * 90 or 270 degrees, so the character framebuffer can draw on it in portrait.
- * It reports the panel's size with width and height swapped (the height cut
- * to a multiple of 8, as tiles need), takes full frames only, as the
- * character framebuffer writes them, and passes each one to the panel turned
- * back to its own landscape layout.
+ * A display that turns a 1-bit panel by 90 or 270 degrees, so the character
+ * framebuffer can draw on it in portrait. The panel's bytes may run down the
+ * columns (SSD16xx e-paper, vertically tiled) or along the rows (Sharp memory
+ * LCDs). It reports the panel's size with width and height swapped (the tiled
+ * side cut to a multiple of 8), takes full frames only, as the character
+ * framebuffer writes them, and passes each one to the panel turned back to
+ * its own landscape layout.
  */
 
 #define DT_DRV_COMPAT dachshund_display_rotate
@@ -31,6 +32,8 @@ static void panel_caps(const struct device *dev, struct display_capabilities *ca
 {
     const struct rotate_config *cfg = dev->config;
 
+    /* Some drivers (ls0xx) fill in only some of the fields. */
+    memset(caps, 0, sizeof(*caps));
     display_get_capabilities(cfg->panel, caps);
 }
 
@@ -38,10 +41,16 @@ static void rotate_get_capabilities(const struct device *dev, struct display_cap
 {
     panel_caps(dev, caps);
 
-    uint16_t w = caps->x_resolution;
+    const uint16_t w = caps->x_resolution;
+    const uint16_t h = caps->y_resolution;
 
-    caps->x_resolution = caps->y_resolution;
-    caps->y_resolution = w - w % 8u;
+    if (caps->screen_info & SCREEN_INFO_MONO_VTILED) {
+        caps->x_resolution = h;
+        caps->y_resolution = w - w % 8u;
+    } else {
+        caps->x_resolution = h - h % 8u;
+        caps->y_resolution = w;
+    }
 }
 
 static int rotate_write(const struct device *dev, const uint16_t x, const uint16_t y,
@@ -52,9 +61,6 @@ static int rotate_write(const struct device *dev, const uint16_t x, const uint16
 
     panel_caps(dev, &panel);
     rotate_get_capabilities(dev, &ours);
-    if (!(panel.screen_info & SCREEN_INFO_MONO_VTILED)) {
-        return -ENOTSUP;
-    }
     if (x != 0 || y != 0 || desc->width != ours.x_resolution ||
         desc->height != ours.y_resolution || desc->pitch != desc->width ||
         desc->buf_size < (size_t)desc->width * desc->height / 8u ||
@@ -64,6 +70,7 @@ static int rotate_write(const struct device *dev, const uint16_t x, const uint16
 
     int err = kb_screen_rotate(buf, desc->width, desc->height, cfg->frame, panel.x_resolution,
                                panel.y_resolution, cfg->rotation,
+                               (panel.screen_info & SCREEN_INFO_MONO_VTILED) != 0,
                                (panel.screen_info & SCREEN_INFO_MONO_MSB_FIRST) != 0);
     if (err) {
         return err;

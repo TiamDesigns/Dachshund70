@@ -234,41 +234,54 @@ static void test_long_text_is_truncated_in_layout(void)
     KB_CHECK_EQ(strlen(layout.widgets[0].text), KB_SCREEN_TEXT_MAX - 1);
 }
 
-static int pixel(const uint8_t *buf, uint16_t w, uint16_t x, uint16_t y, bool msb_first)
+static size_t pixel_at(uint16_t w, uint16_t x, uint16_t y, bool vt, bool msb, uint8_t *bit)
 {
-    uint8_t bit = (uint8_t)(msb_first ? 0x80u >> (y % 8u) : 1u << (y % 8u));
-    return (buf[(y / 8u) * w + x] & bit) != 0;
+    uint16_t shift = vt ? (uint16_t)(y % 8u) : (uint16_t)(x % 8u);
+
+    *bit = (uint8_t)(msb ? 0x80u >> shift : 1u << shift);
+    return vt ? (size_t)(y / 8u) * w + x : (size_t)y * (w / 8u) + x / 8u;
 }
 
-static void set_pixel(uint8_t *buf, uint16_t w, uint16_t x, uint16_t y, bool msb_first)
+static int pixel(const uint8_t *buf, uint16_t w, uint16_t x, uint16_t y, bool vt, bool msb)
 {
-    buf[(y / 8u) * w + x] |= (uint8_t)(msb_first ? 0x80u >> (y % 8u) : 1u << (y % 8u));
+    uint8_t bit;
+    return (buf[pixel_at(w, x, y, vt, msb, &bit)] & bit) != 0;
+}
+
+static void set_pixel(uint8_t *buf, uint16_t w, uint16_t x, uint16_t y, bool vt, bool msb)
+{
+    uint8_t bit;
+    buf[pixel_at(w, x, y, vt, msb, &bit)] |= bit;
 }
 
 static void test_rotate_moves_corners(void)
 {
-    /* A 16 x 40 portrait frame onto a 42 x 16 landscape one, as 120 x 248 onto 250 x 120. */
-    enum { SW = 16, SH = 40, DW = 42, DH = 16 };
-    for (int msb = 0; msb <= 1; msb++) {
-        uint8_t src[SW * SH / 8] = {0};
-        uint8_t dst[DW * DH / 8];
+    /* A 16 x 40 portrait frame onto a 42 x 16 landscape one, as 120 x 248 onto 250 x 120
+     * (column tiles), or a 16 x 40 onto 40 x 16 (row tiles), as 240 x 400 onto 400 x 240. */
+    enum { SW = 16, SH = 40, DH = 16 };
+    for (int vt = 0; vt <= 1; vt++) {
+        const uint16_t DW = vt ? 42 : 40;
+        for (int msb = 0; msb <= 1; msb++) {
+            uint8_t src[SW * SH / 8] = {0};
+            uint8_t dst[42 * DH / 8];
 
-        set_pixel(src, SW, 0, 0, msb);   /* top left */
-        set_pixel(src, SW, 3, 9, msb);
-        KB_CHECK_EQ(kb_screen_rotate(src, SW, SH, dst, DW, DH, 90, msb), 0);
-        KB_CHECK(pixel(dst, DW, DW - 1, 0, msb));      /* -> top right */
-        KB_CHECK(pixel(dst, DW, DW - 1 - 9, 3, msb));
-        int lit = 0;
-        for (int i = 0; i < DW * DH / 8; i++) {
-            for (uint8_t b = dst[i]; b; b &= (uint8_t)(b - 1u)) {
-                lit++;
+            set_pixel(src, SW, 0, 0, vt, msb);   /* top left */
+            set_pixel(src, SW, 3, 9, vt, msb);
+            KB_CHECK_EQ(kb_screen_rotate(src, SW, SH, dst, DW, DH, 90, vt, msb), 0);
+            KB_CHECK(pixel(dst, DW, DW - 1, 0, vt, msb));      /* -> top right */
+            KB_CHECK(pixel(dst, DW, DW - 1 - 9, 3, vt, msb));
+            int lit = 0;
+            for (int i = 0; i < DW * DH / 8; i++) {
+                for (uint8_t b = dst[i]; b; b &= (uint8_t)(b - 1u)) {
+                    lit++;
+                }
             }
-        }
-        KB_CHECK_EQ(lit, 2);
+            KB_CHECK_EQ(lit, 2);
 
-        KB_CHECK_EQ(kb_screen_rotate(src, SW, SH, dst, DW, DH, 270, msb), 0);
-        KB_CHECK(pixel(dst, DW, 0, DH - 1, msb));      /* -> bottom left */
-        KB_CHECK(pixel(dst, DW, 9, DH - 1 - 3, msb));
+            KB_CHECK_EQ(kb_screen_rotate(src, SW, SH, dst, DW, DH, 270, vt, msb), 0);
+            KB_CHECK(pixel(dst, DW, 0, DH - 1, vt, msb));      /* -> bottom left */
+            KB_CHECK(pixel(dst, DW, 9, DH - 1 - 3, vt, msb));
+        }
     }
 }
 
@@ -280,9 +293,11 @@ static void test_rotate_round_trip(void)
     for (size_t i = 0; i < sizeof(src); i++) {
         src[i] = (uint8_t)(i * 37u + 11u);
     }
-    KB_CHECK_EQ(kb_screen_rotate(src, W, H, mid, H, W, 90, true), 0);
-    KB_CHECK_EQ(kb_screen_rotate(mid, H, W, back, W, H, 270, true), 0);
-    KB_CHECK_EQ(memcmp(src, back, sizeof(src)), 0);
+    for (int vt = 0; vt <= 1; vt++) {
+        KB_CHECK_EQ(kb_screen_rotate(src, W, H, mid, H, W, 90, vt, true), 0);
+        KB_CHECK_EQ(kb_screen_rotate(mid, H, W, back, W, H, 270, vt, true), 0);
+        KB_CHECK_EQ(memcmp(src, back, sizeof(src)), 0);
+    }
 }
 
 static void test_rotate_rejects_bad_sizes(void)
@@ -291,11 +306,13 @@ static void test_rotate_rejects_bad_sizes(void)
     uint8_t dst[16 * 16 / 8];
 
     memset(dst, 0xAA, sizeof(dst));
-    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 16, 16, 180, false), -EINVAL);
-    KB_CHECK_EQ(kb_screen_rotate(src, 16, 12, dst, 16, 16, 90, false), -EINVAL);  /* not 8-tall */
-    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 15, 16, 90, false), -EINVAL);  /* too narrow */
-    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 16, 8, 90, false), -EINVAL);   /* too short */
-    KB_CHECK_EQ(kb_screen_rotate(NULL, 16, 16, dst, 16, 16, 90, false), -EINVAL);
+    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 16, 16, 180, true, false), -EINVAL);
+    KB_CHECK_EQ(kb_screen_rotate(src, 16, 12, dst, 16, 16, 90, true, false), -EINVAL);  /* not 8-tall */
+    KB_CHECK_EQ(kb_screen_rotate(src, 12, 16, dst, 16, 16, 90, false, false), -EINVAL); /* not 8-wide */
+    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 12, 16, 90, false, false), -EINVAL); /* dst not 8-wide */
+    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 15, 16, 90, true, false), -EINVAL);  /* too narrow */
+    KB_CHECK_EQ(kb_screen_rotate(src, 16, 16, dst, 16, 8, 90, true, false), -EINVAL);   /* too short */
+    KB_CHECK_EQ(kb_screen_rotate(NULL, 16, 16, dst, 16, 16, 90, true, false), -EINVAL);
     KB_CHECK_EQ(dst[0], 0xAA);
 }
 

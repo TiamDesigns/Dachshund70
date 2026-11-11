@@ -17,21 +17,27 @@ every panel below.
 | `oled-sh1106-128x64` | 1.3" SH1106, 128×64 | I2C 0x3C | 12 × 4 |
 | `oled-sh1107-128x128` | 1.12" SH1107, 128×128 | I2C 0x3C | 12 × 8 |
 | `eink-2in13-v4` | Waveshare 2.13" e-Paper V4 (GDEY0213B74, SSD1680), 250×122 | SPI | 25 × 7 |
-| `eink-2in13-v4-portrait` | The same panel on end, 120×248 (the case's screen) | SPI | 12 × 15 |
+| `eink-2in13-v4-portrait` | The same panel on end, 120×248 | SPI | 12 × 15 |
+| `sharp-ls027b7dh01-portrait` | 2.7" Sharp memory LCD LS027B7DH01, 400×240, on end: 240×400 (the case's screen) | SPI | 24 × 25 |
 
-The portrait overlay chooses a `dachshund,display-rotate` node
+The portrait overlays choose a `dachshund,display-rotate` node
 (`firmware/src/display_rotate.c`) as the display. It reports the panel's size
 turned by 90°, and turns each frame back before writing it to the panel, so
-the character framebuffer draws in portrait. The SSD16xx driver's own
-`rotation` property doesn't do this: it keeps reporting the landscape size.
+the character framebuffer draws in portrait. It handles both 1-bit layouts:
+bytes down the columns (SSD16xx) and bytes along the rows (Sharp). The SSD16xx
+driver's own `rotation` property doesn't do this: it keeps reporting the
+landscape size. The Sharp driver (`sharp,ls0xx`) has no rotation at all.
 
 ## Wiring
 
 J4 follows the Waveshare e-Paper module order: 1 VCC (+3V3), 2 GND, 3 DIN, 4
 CLK, 5 CS, 6 DC, 7 RST, 8 BUSY. On the board it's an 8-way 0.5 mm FFC socket,
-and an FFC runs from it to the screen board (`hardware/Dachshund70-Screen/`),
-which carries the e-paper panel's boost circuit. Like Adafruit's eInk Friend,
-it runs the panel as 4-wire SPI, so the e-paper overlays work unchanged. A
+and an FFC runs from it to the screen board (`hardware/Dachshund70-Screen/`).
+The screen board (rev 2.0) carries the Sharp memory LCD and its 5 V boost, and
+uses J4's pins as SI (DIN), SCLK (CLK), SCS (CS, active high), EXTCOMIN (DC),
+DISP (RST) and the boost enable (BUSY, pulled high on the board). Rev 1.0 of
+the screen board carried the 2.13" e-paper panel's boost circuit for the
+e-paper overlays. A
 4-pin I2C OLED uses VCC, GND, DIN (SDA) and CLK (SCL), through an FFC
 adapter. Pins come from `boards/Dachshund70/board.json`. Overlays refer to J4
 pins only through `<&display_header PIN FLAGS>`; the host-lib tests reject
