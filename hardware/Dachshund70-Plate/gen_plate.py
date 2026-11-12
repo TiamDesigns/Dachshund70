@@ -108,18 +108,14 @@ ENCODER_BOX = (308.105, 41.33, 328.595, 55.7)
 NOTCH_LEFT = 305.25
 NOTCH_BELOW_COURTYARD = 1.3
 NOTCH_RADIUS = 2.0
-# The notch runs further forward (down to y = NOTCH_EXT_BOTTOM) from NOTCH_LEFT to
-# NOTCH_EXT_RIGHT: room for the case's encoder cover (its walls reach the PCB) and
-# the boss its front M2 screw goes into, which hangs from the top block through the
-# plate. Round 5 (2026-11-10): the plate floats on its socks and moves +-1 mm, so
-# the forward part now runs on to the right-hand edge (the knob's underside is clear
-# of it) and forward to y 104.5. That keeps the cover's front ear, its screw and
-# the boss 1.5 mm or more from the plate in plan, and leaves no plate under the
-# screen board, whose parts face down toward the plate and would be hit when the
-# plate floats up; the screen board's FFC loops through here to the mainboard's
-# J4 (at y 90-100). The sidebar keeps its plate from y 104.5 on (the LED windows).
-NOTCH_EXT_RIGHT = 347.5     # past the plate's right-hand edge (x 337.5)
-NOTCH_EXT_BOTTOM = 104.5
+# The notch runs on forward, from NOTCH_LEFT to the right-hand edge, down to
+# SIDEBAR_WEB above the right arrow's cutout: the whole sidebar beside the screen
+# and the indicator LEDs has no plate (Tiam, 2026-11-12: that piece had no job
+# once the LEDs moved past the plate's edge). That keeps the encoder cover's front
+# ear, its screw and boss clear of the floating plate, and leaves no plate under
+# the screen board, whose parts face down toward the plate; the screen board's FFC
+# loops through here to the mainboard's J4 (at y 90-100).
+SIDEBAR_WEB = 2.0           # plate left above the right arrow's switch cutout
 
 # Light windows over the reverse-mount indicator LEDs.
 LED_REFS = ("D2", "D3", "D4", "D5", "D6", "D7")
@@ -308,9 +304,14 @@ def build(mb):
     notch_bottom = round(ey1 + NOTCH_BELOW_COURTYARD, 2)
     if not NOTCH_LEFT < ex0:
         raise SystemExit("encoder courtyard is left of the notch")
+    # The right arrow is the rightmost switch; the sidebar notch stops SIDEBAR_WEB above it.
+    _, ax, ay = max(mb["switches"], key=lambda s: s[1])
+    if ax - half < NOTCH_LEFT:
+        raise SystemExit("the right arrow's cutout starts left of the notch")
+    sidebar_bottom = round(ay - half - SIDEBAR_WEB, 2)
     # Oversize the notch past the outline so only its inside corner is real.
     notch = union([rect(NOTCH_LEFT, y0 - 10, x1 + 10, notch_bottom),
-                   rect(NOTCH_LEFT, y0 - 10, NOTCH_EXT_RIGHT, NOTCH_EXT_BOTTOM)])
+                   rect(NOTCH_LEFT, y0 - 10, x1 + 10, sidebar_bottom)])
     round_outside_corners(notch, NOTCH_RADIUS)
     outline.BooleanSubtract(notch)
     for n in led_notches:
@@ -373,7 +374,7 @@ def build(mb):
 
     return {
         "plate": plate, "copper": copper, "mask": mask, "socks": socks,
-        "top_prongs": top_prongs, "bottom_prongs": bottom_prongs, "top_nubs": top_nubs, "bottom_nubs": bottom_nubs, "notch_bottom": notch_bottom, "led_windows": led_windows,
+        "top_prongs": top_prongs, "bottom_prongs": bottom_prongs, "top_nubs": top_nubs, "bottom_nubs": bottom_nubs, "notch_bottom": notch_bottom, "sidebar_bottom": sidebar_bottom, "led_windows": led_windows,
     }
 
 
@@ -460,7 +461,7 @@ def main():
     print("prongs, top edge: x = " + ", ".join(f"{x:.2f}" for x in geo["top_prongs"]))
     print("nubs, bottom edge (y = %s): x = " % y1 + ", ".join(f"{x:.2f}" for x in geo["bottom_nubs"]))
     print("prongs, bottom edge: x = " + ", ".join(f"{x:.2f}" for x in geo["bottom_prongs"]))
-    print(f"encoder notch: x >= {NOTCH_LEFT}, y <= {geo['notch_bottom']} (y <= {NOTCH_EXT_BOTTOM} for x <= {NOTCH_EXT_RIGHT})")
+    print(f"encoder notch: x >= {NOTCH_LEFT}, y <= {geo['notch_bottom']} (sidebar: y <= {geo['sidebar_bottom']})")
     print(f"wrote {os.path.relpath(OUT)}")
 
 

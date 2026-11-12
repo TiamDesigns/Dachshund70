@@ -6,6 +6,19 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Case clean-up, lower top and stepped weight (2026-11-12)
+
+- Case (Fusion v54 to v56, still not re-exported): the outer skin is rebuilt as one loft (one-piece slope, R1 G2 blends
+  to the top face and the wall), which removed the seams and recesses the stretches had left. The top face is 1 mm lower
+  (local s 23.354) and the slope now ends 1 mm above the accent ring. The screen glass pocket, the LED light guide and its
+  pocket came down 1 mm with it; the back M3 taps end at z 19.0 under the lower back slope, so those screws are M3x18.
+- Encoder hood + roller and the screen window are both exactly 2u (x 132.25 to 170.35).
+- Weight and bottom-shell floor are stepped along the front two key rows (steps at y -39.94 and -20.94) instead of the
+  old ramp; the weight's four screws sit at its corners (front pair M2x3 into the stepped ledge). Paw pad has two lobes.
+- Plate: the sidebar notch now runs from the encoder notch down to 2 mm above the right arrow (`SIDEBAR_WEB`), so there's
+  no plate beside the screen and LEDs. Regenerated (DRC 0) and the outline DXF re-exported.
+- Open: the hood stands 1 mm prouder of the lower top face; re-export the case STEP/DXF and update its README and BOM.
+
 ### Wider case, 2u encoder and LEDs across the screen (2026-11-11)
 
 - Case (Fusion v46 to v53, not yet re-exported to `hardware/case/step` and `dxf`): 11.825 mm wider on the right, so the

@@ -31,21 +31,20 @@ can't drift apart.
   SW606 and SW615) are the soldered ones, so the PCB holds them. The hot-swap 2.25u Mod (SW608) keeps a
   full cutout.
 - **Encoder:** the plate stops short of the roller. A notch takes out the top-right corner,
-  x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. From x 305.25 to the right-hand edge it runs further forward,
-  to y 104.5 (`NOTCH_EXT_RIGHT`, `NOTCH_EXT_BOTTOM`): the case's encoder cover stands on the module's board with its walls down
-  through the plate there, and the boss its front M2 screw goes into hangs from the top block through the plate. The plate
-  floats on its socks (±1 mm), so since round 5 the cover's front ear, its screw and the boss are 1.5 mm or more from it in
-  plan, the knob's underside (which used to reach 0.8 mm over the plate's top) has no plate under it, and neither has the
-  e-paper driver board (its parts were 0.3 over the plate). The sidebar keeps its plate from y 104.5 on: the J4 slot and
-  the LED windows. The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
+  x ≥ 305.25 mm and y ≤ 57.0 mm, with a 2 mm inside radius. From x 305.25 to the right-hand edge it runs on forward
+  to 2 mm above the right arrow's cutout (y 140.54, `SIDEBAR_WEB`), so the whole sidebar beside the screen and the
+  indicator LEDs has no plate (Tiam, 2026-11-12). The case's encoder cover stands on the module's board with its walls
+  down through the plate there, and the boss its front M2 screw goes into hangs from the top block. The plate floats on
+  its socks (±1 mm), so the cover's front ear, its screw and the boss stay well clear of it, and neither the knob's
+  underside nor the screen board's downward-facing parts have plate under them. The nearest cutout to the extension, Backspace's right stabilizer, is 3.1 mm away. It is narrower than the mainboard's own corner notch (x ≥ 304.0, open
   only to x 326.4) so the web next to the Delete cutout is 2.0 mm; the plate's notch goes on to the right edge so the shaft and the
   wheel on it are clear. The module's own board (below the plate) runs under the web, and nothing of the module stands at plate height there. Supporting the roller is up to the
   case. Since mainboard Rev 1.1 the encoder is on its own module board, so `gen_plate.py` no longer reads
   it from the mainboard: the notch's bottom edge comes from `ENCODER_BOX` and `NOTCH_LEFT`.
 - **Display header:** a slot over J4 (the courtyard plus 0.2 mm), for the 8.5 mm-tall pin header.
-- **Indicator LEDs:** 4 × 4 mm windows over D3–D5, the layer and battery LEDs; D6 (at the plate's right edge) gets a
-  4 mm notch in the edge instead, and D7 sits past the plate on the mainboard's LED tab. `gen_plate.py` ignores that tab
-  when it takes the plate outline from the mainboard (`MAIN_RIGHT_EDGE`). The Caps LED (D2) sits
+- **Indicator LEDs:** D3–D7 sit in the sidebar notch, so they have no plate over them (the window and edge-notch code
+  in `gen_plate.py` stays for any LED left under the plate). `gen_plate.py` ignores the mainboard's LED tab when it takes
+  the plate outline from the mainboard (`MAIN_RIGHT_EDGE`). The Caps LED (D2) sits
   inside its switch cutout, so it needs no window.
 
 ## Gasket nubs
