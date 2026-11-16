@@ -21,10 +21,15 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   ledges (not posts) for the encoder cover and the screen; a screen clamping frame over the glass border; roller 0.54
   longer with an R1.5 end and the opening's corners R1.7; USB daughterboard on M2 inserts; insert drawings in
   `hardware/case/drawings/`. Floor 1.2 and the whole stack 0.4 lower, with a 7.0 mm 703450 cell (~1200 mAh, was the
-  8.3 mm LP803450) so the PCB still clears it by 2.2 (1.2 floating). Heights on the 1 mm feet: case front edge 19.5
-  (A) / 19.6 (B), front keycap tops 29.0, back keycap tops 37.0. J2's lead from the cell's front end has 1.3 mm more room.
-- Open: case screws (point 4, tabs between keys don't fit an M3 head: Tiam to choose), the M3 inserts and screw
-  lengths that follow from it, the case STEP/DXF re-export. Not printed or tested.
+  8.3 mm LP803450) so the PCB still clears it by 2.2 (1.2 floating). Heights then: 19.5 / 19.6, 29.0, 37.0 (see below). J2's lead from the cell's front end has 1.3 mm more room.
+- v81-v82: point 4 dropped (Tiam: no screw-down top shell); the top shell stays held by 8 hidden M3x10 countersunk
+  screws from below into 3.6 x 5.0 insert holes (back row moved to y 71.5, x -151.5/-52.5/39.5/163.6, counterbored
+  so all eight are the same length). With 2.9 mm foam squeezed ~0.3, the stack is another 0.6 lower at 4 degrees
+  (3.5 degrees plus the drop needed a 6 mm cell, not taken). Heights on the 1 mm feet: case front edge 18.9 (A) /
+  19.0 (B), front keycap tops 28.4, back 36.4; PCB to battery 1.58 (0.58 floating).
+- PETG prototype for a Bambu A1: shells and ring split at x 44 into two halves (1.75 mm filament dowels, glue), pilot
+  holes Ø1.7 (M2) and Ø2.5 (M3) instead of inserts; STLs in `hardware/case/print-proto/`.
+- Open: the case STEP/DXF re-export. Not printed or tested.
 
 ### Case clean-up, lower top and stepped weight (2026-11-12)
 

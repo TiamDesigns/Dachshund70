@@ -1,6 +1,6 @@
 # Dachshund70 case (rev 2)
 
-> **Rev 3 (2026-11-16, Fusion v70 to v80, in progress):** the brass weight is gone; a 1.2 mm floor with room for 3 mm of foam; plate, PCB and caps 1.4 mm lower in all (the plate 1.0 in its case, then the whole stack 0.4) with a 7.0 mm 703450 cell; retainers, alignment walls and ledges for the encoder and screen are part of the bottom shell; gasket branches on both plate ends; two top shells (A sloped, B flat sides with a G80 thumb slope); heat-set inserts (`drawings/`). The STEP/DXF files and most of the text below still describe rev 2 until the case is re-exported; see PROGRESS.md.
+> **Rev 3 (2026-11-16, Fusion v70 to v82, in progress):** the brass weight is gone; a 1.2 mm floor with room for 3 mm of foam; plate, PCB and caps 2.0 mm lower in all (the plate 1.0 in its case, then the whole stack 0.4 and 0.6) with a 7.0 mm 703450 cell; retainers, alignment walls and ledges for the encoder and screen are part of the bottom shell; gasket branches on both plate ends; two top shells (A sloped, B flat sides with a G80 thumb slope); heat-set inserts (`drawings/`), 8 hidden M3x10 countersunk case screws, and a split PETG prototype for a 256 mm bed (`print-proto/`). The STEP/DXF files and most of the text below still describe rev 2 until the case is re-exported; see PROGRESS.md.
 
 A gasket-mount aluminium case at 4°, with a brass weight in the bottom, an accent ring at the seam, a
 2.13" e-paper screen and five status LEDs beside the knob, and a rotary knob on the right end. **The case is
