@@ -77,14 +77,15 @@ SOCK_WIDTH = 5.0
 # edge ends at the encoder notch (x = +127.75 here) and the USB-C sits at x = 0,
 # so the three nubs are spread evenly over the edge that is left (the centre
 # one 15 mm left of the connector) instead.
-FRONT_NUBS = (-106.17, 0.0, 106.17)
-BACK_NUBS = (-107.7, -15.0, 77.7)
+FRONT_NUBS = (-114.0, 0.0, 124.0)   # rev 3: outer nubs pushed toward the corners (left: up to the front-left case screw)
+BACK_NUBS = (-114.0, -15.0, 92.0)   # back right: up to the encoder notch; centre stays clear of the USB-C
 # Case rev 3 (Tiam, 2026-11-16: the plate flexed at the ends): one more branched nub
 # on the left edge, centred on it, the same T as the others. The right edge only has
 # plate in front of the sidebar notch (about 18 mm, beside the right arrow), so it
 # gets a one-sided nub instead: a RIGHT_NECK-wide neck by the front corner and one
 # RIGHT_ARM-long arm running back along the edge to a single prong and sock.
-LEFT_NUBS = (0.0,)          # from the middle of the left edge
+LEFT_NUBS = ()              # rev 3 (Tiam, 2026-11-16): end nubs dropped again; the outer nubs moved out instead
+RIGHT_NUB = False
 RIGHT_NECK = 5.0
 RIGHT_NECK_FROM_FRONT = 1.0  # from the front edge's corner arc to the neck
 RIGHT_ARM = 3.0              # from the neck's side face to the arm's free end (the prong starts there)
@@ -326,9 +327,10 @@ def build(mb):
     neck_back = neck_front - RIGHT_NECK
     arm_end = neck_back - RIGHT_ARM
     right_prong = arm_end - TAB_LENGTH / 2
-    tabs.append(rect(x1 - 1, neck_back, x1 + ARM_OUTER, neck_front))
-    tabs.append(rect(x1 + SLOT, arm_end, x1 + ARM_OUTER, neck_front))
-    tabs.append(rect(x1 + arm_mid - TAB_WIDTH / 2, right_prong - TAB_LENGTH / 2, x1 + arm_mid + TAB_WIDTH / 2, arm_end + 0.5))
+    if RIGHT_NUB:
+        tabs.append(rect(x1 - 1, neck_back, x1 + ARM_OUTER, neck_front))
+        tabs.append(rect(x1 + SLOT, arm_end, x1 + ARM_OUTER, neck_front))
+        tabs.append(rect(x1 + arm_mid - TAB_WIDTH / 2, right_prong - TAB_LENGTH / 2, x1 + arm_mid + TAB_WIDTH / 2, arm_end + 0.5))
     outline = union([outline] + tabs)
 
     ex0, ey0, ex1, ey1 = mb["encoder"]
@@ -407,8 +409,9 @@ def build(mb):
     for n in left_nubs:
         for s in (-1, 1):
             end_socks.append((n + s * PRONG_START, n + s * (PRONG_START + SOCK_LENGTH), x0 - arm_mid))
-    end_socks.append((arm_end, arm_end - SOCK_LENGTH, x1 + arm_mid))
-    if arm_end - SOCK_LENGTH < sidebar_bottom - 0.01:
+    if RIGHT_NUB:
+        end_socks.append((arm_end, arm_end - SOCK_LENGTH, x1 + arm_mid))
+    if RIGHT_NUB and arm_end - SOCK_LENGTH < sidebar_bottom - 0.01:
         raise SystemExit("the right-hand sock reaches past the sidebar notch")
 
     return {
