@@ -6,6 +6,20 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Case rev 3, first pass (2026-11-16, Fusion v70 to v75, in progress)
+
+- Tiam's 14-point list. Done in Fusion: the brass weight is gone; the floor under the keys is one surface for 3 mm foam
+  (local s 5.0, or 1.6 above the desk at the front); plate, PCB, switches, caps and socks 1 mm lower with the sock
+  pockets and the lip over the plate edge; the gasket retainers are part of the bottom shell (the ring goes round
+  them); the screen window is as wide as the encoder opening (3.81 road to the keys, 7.11 bezel like Esc's); the
+  screen tray and the encoder cover sit on posts from the bottom shell with M2 heat-set inserts; the LED holes and
+  light guide are on the new LED pitch; a second top shell, B (flat sides, G80-style front thumb slope), beside A.
+  Renders in `hardware/case/renders/rev3/`.
+- Plate: R1.5 corners (no corner gap; checked all round), gasket branches on both ends. Mainboard: D3-D7 at a
+  7.5 pitch (`move_leds.py`). DRC clean on both, STEP re-exported.
+- Open: case screws (point 4, tabs between keys don't fit an M3 head: Tiam to choose), the M3 inserts and screw
+  lengths that follow from it, the case STEP/DXF/README/BOM re-export. Not printed or tested.
+
 ### Case clean-up, lower top and stepped weight (2026-11-12)
 
 - Case (Fusion v54 to v56, still not re-exported): the outer skin is rebuilt as one loft (one-piece slope, R1 G2 blends
