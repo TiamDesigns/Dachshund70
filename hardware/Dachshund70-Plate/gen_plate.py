@@ -79,6 +79,15 @@ SOCK_WIDTH = 5.0
 # one 15 mm left of the connector) instead.
 FRONT_NUBS = (-106.17, 0.0, 106.17)
 BACK_NUBS = (-107.7, -15.0, 77.7)
+# Case rev 3 (Tiam, 2026-11-16: the plate flexed at the ends): one more branched nub
+# on the left edge, centred on it, the same T as the others. The right edge only has
+# plate in front of the sidebar notch (about 18 mm, beside the right arrow), so it
+# gets a one-sided nub instead: a RIGHT_NECK-wide neck by the front corner and one
+# RIGHT_ARM-long arm running back along the edge to a single prong and sock.
+LEFT_NUBS = (0.0,)          # from the middle of the left edge
+RIGHT_NECK = 5.0
+RIGHT_NECK_FROM_FRONT = 1.0  # from the front edge's corner arc to the neck
+RIGHT_ARM = 3.0              # from the neck's side face to the arm's free end (the prong starts there)
 # A prong continues its arm past the arm's end, along the plate edge, centred on the arm's width.
 PRONG_START = NECK_WIDTH / 2 + ARM_LENGTH      # from the nub centre: the arm's end, where the prong and the sock start
 # Distance from the plate edge to the arms' outer face, where the prongs start.
@@ -90,6 +99,11 @@ ARM_OUTER = SLOT + ARM_WIDTH
 # open to the edge where the circle would leave a sliver.
 POST_RELIEFS = ((306.625, 41.24), (306.625, 57.84))
 POST_RELIEF_D = 3.9
+
+# The plate's own outside corners. Case rev 3: R1.5, concentric with the case lip's R1.0
+# inner corner (the lip overlaps the plate edge 0.53 mm), so no gap shows at the corners
+# from above. The mainboard keeps its R5 corners.
+PLATE_CORNER_RADIUS = 1.5
 
 # Every inside corner of the outline gets at least this radius (tab roots).
 OUTLINE_INSIDE_RADIUS = 0.5
@@ -276,7 +290,7 @@ def build(mb):
     round_outside_corners(holes, CUTOUT_RADIUS)
 
     # --- outline -----------------------------------------------------------
-    outline = rounded_rect(x0, y0, x1, y1, mb["corner_radius"])
+    outline = rounded_rect(x0, y0, x1, y1, PLATE_CORNER_RADIUS)
 
     cx = (x0 + x1) / 2
     # Nubs: the top edge is y0 (the keyboard's back), the bottom edge y1 (its front).
@@ -298,6 +312,23 @@ def build(mb):
         tabs.append(rect(tx - TAB_LENGTH / 2 - 0.5, y0 - arm_mid - TAB_WIDTH / 2, tx + TAB_LENGTH / 2 + 0.5, y0 - arm_mid + TAB_WIDTH / 2))
     for tx in bottom_prongs:
         tabs.append(rect(tx - TAB_LENGTH / 2 - 0.5, y1 + arm_mid - TAB_WIDTH / 2, tx + TAB_LENGTH / 2 + 0.5, y1 + arm_mid + TAB_WIDTH / 2))
+    # Left edge (x0): the same T, turned to run along y.
+    cy = (y0 + y1) / 2
+    left_nubs = [cy + f for f in LEFT_NUBS]
+    left_prongs = [n + s * (PRONG_START + TAB_LENGTH / 2) for n in left_nubs for s in (-1, 1)]
+    for n in left_nubs:
+        tabs.append(rect(x0 - ARM_OUTER, n - NECK_WIDTH / 2, x0 + 1, n + NECK_WIDTH / 2))
+        tabs.append(rect(x0 - ARM_OUTER, n - reach, x0 - SLOT, n + reach))
+    for ty in left_prongs:
+        tabs.append(rect(x0 - arm_mid - TAB_WIDTH / 2, ty - TAB_LENGTH / 2 - 0.5, x0 - arm_mid + TAB_WIDTH / 2, ty + TAB_LENGTH / 2 + 0.5))
+    # Right edge (x1), in front of the sidebar notch: neck by the front corner, one arm back to one prong.
+    neck_front = y1 - PLATE_CORNER_RADIUS - RIGHT_NECK_FROM_FRONT
+    neck_back = neck_front - RIGHT_NECK
+    arm_end = neck_back - RIGHT_ARM
+    right_prong = arm_end - TAB_LENGTH / 2
+    tabs.append(rect(x1 - 1, neck_back, x1 + ARM_OUTER, neck_front))
+    tabs.append(rect(x1 + SLOT, arm_end, x1 + ARM_OUTER, neck_front))
+    tabs.append(rect(x1 + arm_mid - TAB_WIDTH / 2, right_prong - TAB_LENGTH / 2, x1 + arm_mid + TAB_WIDTH / 2, arm_end + 0.5))
     outline = union([outline] + tabs)
 
     ex0, ey0, ex1, ey1 = mb["encoder"]
@@ -371,8 +402,18 @@ def build(mb):
     for n in bottom_nubs:
         for s in (-1, 1):
             socks.append((n + s * PRONG_START, n + s * (PRONG_START + SOCK_LENGTH), y1 + arm_mid))
+    # (y start, y end, x centre) for the socks on the end edges
+    end_socks = []
+    for n in left_nubs:
+        for s in (-1, 1):
+            end_socks.append((n + s * PRONG_START, n + s * (PRONG_START + SOCK_LENGTH), x0 - arm_mid))
+    end_socks.append((arm_end, arm_end - SOCK_LENGTH, x1 + arm_mid))
+    if arm_end - SOCK_LENGTH < sidebar_bottom - 0.01:
+        raise SystemExit("the right-hand sock reaches past the sidebar notch")
 
     return {
+        "end_socks": end_socks, "left_nubs": left_nubs, "left_prongs": left_prongs, "right_prong": right_prong,
+        "right_neck": (neck_back, neck_front),
         "plate": plate, "copper": copper, "mask": mask, "socks": socks,
         "top_prongs": top_prongs, "bottom_prongs": bottom_prongs, "top_nubs": top_nubs, "bottom_nubs": bottom_nubs, "notch_bottom": notch_bottom, "sidebar_bottom": sidebar_bottom, "led_windows": led_windows,
     }
@@ -439,6 +480,9 @@ def write(mb, geo):
     for xa, xb, yc in geo["socks"]:
         add_contour(board, rect(min(xa, xb), yc - SOCK_WIDTH / 2, max(xa, xb), yc + SOCK_WIDTH / 2).Outline(0),
                     pcbnew.Cmts_User, 0.1)
+    for ya, yb, xc in geo["end_socks"]:
+        add_contour(board, rect(xc - SOCK_WIDTH / 2, min(ya, yb), xc + SOCK_WIDTH / 2, max(ya, yb)).Outline(0),
+                    pcbnew.Cmts_User, 0.1)
 
     # Bottom-side text faces the PCB, so it's never seen. "JLCJLCJLCJLC" tells
     # JLCPCB where to print its order number instead of somewhere on the top.
@@ -454,13 +498,18 @@ def main():
     geo = build(mb)
     write(mb, geo)
     x0, y0, x1, y1 = mb["edge"]
-    print(f"plate outline {x1 - x0:.2f} x {y1 - y0:.2f} mm, corner radius {mb['corner_radius']} mm")
+    print(f"plate outline {x1 - x0:.2f} x {y1 - y0:.2f} mm, corner radius {PLATE_CORNER_RADIUS} mm "
+          f"(mainboard {mb['corner_radius']} mm)")
     print(f"{len(mb['switches'])} switch cutouts, {len(mb['stabs'])} stabilizer cutouts, "
           f"LED windows over {', '.join(geo['led_windows'])}")
     print("nubs, top edge (y = %s): x = " % y0 + ", ".join(f"{x:.2f}" for x in geo["top_nubs"]))
     print("prongs, top edge: x = " + ", ".join(f"{x:.2f}" for x in geo["top_prongs"]))
     print("nubs, bottom edge (y = %s): x = " % y1 + ", ".join(f"{x:.2f}" for x in geo["bottom_nubs"]))
     print("prongs, bottom edge: x = " + ", ".join(f"{x:.2f}" for x in geo["bottom_prongs"]))
+    print("nub, left edge (x = %s): y = " % x0 + ", ".join(f"{y:.2f}" for y in geo["left_nubs"])
+          + "; prongs y = " + ", ".join(f"{y:.2f}" for y in geo["left_prongs"]))
+    print("nub, right edge (x = %s): neck y %.2f..%.2f, prong centre y %.2f" % (x1, *geo["right_neck"], geo["right_prong"]))
+    print("end socks (y from, y to, x centre): " + "; ".join("%.2f %.2f %.2f" % s for s in geo["end_socks"]))
     print(f"encoder notch: x >= {NOTCH_LEFT}, y <= {geo['notch_bottom']} (sidebar: y <= {geo['sidebar_bottom']})")
     print(f"wrote {os.path.relpath(OUT)}")
 
