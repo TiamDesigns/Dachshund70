@@ -34,7 +34,11 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   to back -114/-15/92 and front -114/0/124; six separate retainers (U-shaped wall, flush countersunk M3 from below:
   M3x16 back, M3x6 front); back case screws flush M3x18; ring and bottom leftovers closed; model PCB from the current
   board (LEDs on their holes); every body and component renamed, the E-paper and old PCB/J4 header removed.
-- Open: the case STEP/DXF re-export. Not printed or tested.
+- Second clean-up: top shells rebuilt again (no underside patches, R1 fillets where the retainer pockets meet the cavity
+  wall, clean ring tabs); retainers without screws (located by 1.0 pockets, clamped by the top shell); feet at x -126,
+  6, 138; floor at least 1.2 everywhere; hex sockets in every screw. STEP of top shells A and B and the bottom shell in
+  `hardware/case/step/Dachshund70-Case-Rev3-*.step`.
+- Open: the rest of the case re-export (assembly, ring DXF). Not printed or tested.
 
 ### Case clean-up, lower top and stepped weight (2026-11-12)
 
