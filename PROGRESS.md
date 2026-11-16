@@ -29,6 +29,11 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   19.0 (B), front keycap tops 28.4, back 36.4; PCB to battery 1.58 (0.58 floating).
 - PETG prototype for a Bambu A1: shells and ring split at x 44 into two halves (1.75 mm filament dowels, glue), pilot
   holes Ø1.7 (M2) and Ø2.5 (M3) instead of inserts; STLs in `hardware/case/print-proto/`.
+- Clean-up after Tiam's v84 review: top shells A and B rebuilt as clean solids (fresh skin loft, openings traced from
+  the top face, designed pockets: no leftover holes, slivers or indent line); end gasket nubs dropped, outer nubs moved
+  to back -114/-15/92 and front -114/0/124; six separate retainers (U-shaped wall, flush countersunk M3 from below:
+  M3x16 back, M3x6 front); back case screws flush M3x18; ring and bottom leftovers closed; model PCB from the current
+  board (LEDs on their holes); every body and component renamed, the E-paper and old PCB/J4 header removed.
 - Open: the case STEP/DXF re-export. Not printed or tested.
 
 ### Case clean-up, lower top and stepped weight (2026-11-12)
