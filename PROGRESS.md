@@ -17,8 +17,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   Renders in `hardware/case/renders/rev3/`.
 - Plate: R1.5 corners (no corner gap; checked all round), gasket branches on both ends. Mainboard: D3-D7 at a
   7.5 pitch (`move_leds.py`). DRC clean on both, STEP re-exported.
+- Later the same day (v76 to v80): gasket socks modelled as silicone sleeves; alignment walls on the retainer bars;
+  ledges (not posts) for the encoder cover and the screen; a screen clamping frame over the glass border; roller 0.54
+  longer with an R1.5 end and the opening's corners R1.7; USB daughterboard on M2 inserts; insert drawings in
+  `hardware/case/drawings/`. Floor 1.2 and the whole stack 0.4 lower, with a 7.0 mm 703450 cell (~1200 mAh, was the
+  8.3 mm LP803450) so the PCB still clears it by 2.2 (1.2 floating). Heights on the 1 mm feet: case front edge 19.5
+  (A) / 19.6 (B), front keycap tops 29.0, back keycap tops 37.0. J2's lead from the cell's front end has 1.3 mm more room.
 - Open: case screws (point 4, tabs between keys don't fit an M3 head: Tiam to choose), the M3 inserts and screw
-  lengths that follow from it, the case STEP/DXF/README/BOM re-export. Not printed or tested.
+  lengths that follow from it, the case STEP/DXF re-export. Not printed or tested.
 
 ### Case clean-up, lower top and stepped weight (2026-11-12)
 

@@ -1,5 +1,7 @@
 # Dachshund70 case (rev 2)
 
+> **Rev 3 (2026-11-16, Fusion v70 to v80, in progress):** the brass weight is gone; a 1.2 mm floor with room for 3 mm of foam; plate, PCB and caps 1.4 mm lower in all (the plate 1.0 in its case, then the whole stack 0.4) with a 7.0 mm 703450 cell; retainers, alignment walls and ledges for the encoder and screen are part of the bottom shell; gasket branches on both plate ends; two top shells (A sloped, B flat sides with a G80 thumb slope); heat-set inserts (`drawings/`). The STEP/DXF files and most of the text below still describe rev 2 until the case is re-exported; see PROGRESS.md.
+
 A gasket-mount aluminium case at 4°, with a brass weight in the bottom, an accent ring at the seam, a
 2.13" e-paper screen and five status LEDs beside the knob, and a rotary knob on the right end. **The case is
 designed in Fusion 360, and the Fusion model is the source of truth**, not the STEP files. The native
@@ -81,7 +83,7 @@ KiCad y = 99.55 − local y.
   flat and hollow under the screen and knob.
 - Battery bay: x 122.7 to 160, y 2.0 to 61.3 (its back wall ends at the cavity wall, so there's no lip), floor at Z 1.0,
   R3 corners and the cavity's own R5.75 at the back right, for an EEMB LP803450 (52.0 × 34.5 × 8.3 plus a 4.5
-  protection board) laid flat, its long side front to back, at x 123.6 to 158.1, y 2.92 to 59.42 (0.9 of play at the
+  protection board; rev 3 uses a 7.0 mm 703450 on a 1.2 floor, see "Rev 3" below) laid flat, its long side front to back, at x 123.6 to 158.1, y 2.92 to 59.42 (0.9 of play at the
   sides for the R3 corners: foam-tape it). The floor stays at 1.0. J1 (the JST-SH on the mainboard's underside) is
   now on the front sidebar at KiCad (333.5, 118.5), 17.6 from the cell; J5 at (329.8, 49.54) is 2.0 over it.
 - Weight: brass, face 185.0 × 76.1 (R4 corners, y −40.4 to 35.7: from the number row's top edge to the Shift row's

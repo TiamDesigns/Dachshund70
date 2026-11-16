@@ -97,7 +97,7 @@ Notes on the made parts:
 | 1 | Rubber or TPU rail with adhesive, 300 × 5.8 × 2.0 | Near the front edge, in a 1.0 pocket, 1.0 proud |
 | 1 | Rubber or TPU rail with adhesive, 269.4 × 5.8 × 2.0 | Near the back edge, x −150 to 119.4 (it stops 3.0 short of the battery bay), in a 1.0 pocket, 1.0 proud |
 | 12 | Gasket socks, silicone, 8 × 5 × 5 outside, pocket 6.5 × 2.8 × 1.2 | Moulded (stock). One on each of the plate's prongs, lying along the plate edge, on the gasket retainers |
-| 1 | LiPo cell EEMB LP803450, 52.0 × 34.5 × 8.3 plus a 4.5 protection board | Flat in the battery bay (x 122.7 to 160, y 2.0 to 61.3, floor 1.0, R3 corners), long side front to back, held with foam tape (0.9 of play at its sides). J1 is now on the front sidebar, clear of it. JST-PH polarity varies between vendors: check it against J2 |
+| 1 | LiPo cell 703450 (about 1200 mAh), 52.0 × 34.5 × 7.0 plus a 4.5 protection board (case rev 3: was the 8.3 mm LP803450, about 1500 mAh, swapped so the whole stack could sit 0.4 lower) | Flat in the battery bay (x 122.7 to 160, y 2.0 to 61.3, floor 1.2 thick, R3 corners), long side front to back, held with foam tape (0.9 of play at its sides). J1 is now on the front sidebar, clear of it. JST-PH polarity varies between vendors: check it against J2 |
 | 1 | E-paper panel, GoodDisplay GDEY0213B74 (2.13", 250 × 122) with driver board | Drops in from below, taped under the roof's window |
 | 1 | Double-sided tape, 0.2 mm (3M 9448A or tesa 4965) | Screen glass to the roof |
 | 1 | JST-SH 4-pin cable, about 100 mm, both ends plugged | USB-C daughterboard to J1 |
