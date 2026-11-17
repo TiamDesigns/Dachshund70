@@ -38,6 +38,13 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   wall, clean ring tabs); retainers without screws (located by 1.0 pockets, clamped by the top shell); feet at x -126,
   6, 138; floor at least 1.2 everywhere; hex sockets in every screw. STEP of top shells A and B and the bottom shell in
   `hardware/case/step/Dachshund70-Case-Rev3-*.step`.
+- Bottom shell rebuilt from scratch (Fusion "Clean rebuild of the bottom shell"): one plain cavity down to the foam
+  floor, a flat wall top, the battery bay open into it (no wall beside it) with a pocket for the battery JST, the
+  USB-C bay open from above (no shelf over the daughterboard), the retainer pockets with R0.8 corners and R1 where they
+  meet the cavity wall, old screw dimples filled. Retainer B2 sits on two supports beside the USB-C bay with a 11 mm
+  slot between them for the daughterboard cable. Feet, case screws, encoder and screen ledges kept. No interference
+  with any part in the model. Bottom STEP and the two bottom PETG STLs re-exported; renders
+  `hardware/case/renders/rev3/rev3_bottom_clean_*.png`.
 - Open: the rest of the case re-export (assembly, ring DXF). Not printed or tested.
 
 ### Case clean-up, lower top and stepped weight (2026-11-12)
