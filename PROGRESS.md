@@ -72,6 +72,9 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   closed (straight ring inner edge, flat bottom wall top). The top shell's gasket zones are solid round fitted
   sock pockets and one open bay for the plate tab. Ring: the 0.45 strip inside the screen-rail cutout removed; top
   shell ring tabs moved in with the ring slots.
+- Mainboard clearance (from the mainboard thread): the top shells' inner walls had 0.75 to the board edge front,
+  back and left; now 1.5 (a 0.75 relief from s 10 to 14.5, hidden under the plate), and the retainers start 0.75
+  further out.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
