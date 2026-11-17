@@ -67,8 +67,8 @@ switch footprints and wire them to the same diode.
 | Encoder B | P0.12 | J5 pin 4. Same as A. The push switch is in the matrix at (0, 14), through J5 pins 1 (COL14) and 5 (ENC_SW) and diode D114. |
 | LED data | P0.06 | SK6812MINI-E chain of 6, in this order: LED 0 layer, LEDs 1–4 battery gauge (25/50/75/100%), LED 5 under Caps Lock. LEDs 0–4 sit in a row above the Right arrow. Driven by SPI MOSI. |
 | LED power enable | P0.08 | Active-high EN of the TPS22917 load switch feeding the LEDs, with a 100 kΩ pull-down so the LEDs stay off through reset and sleep. |
-| Display CLK / DIN | P0.19 / P0.21 | J4 pins 4 and 3. SPI SCK/MOSI for e-paper, or SCL/SDA for an I2C OLED (the display module supplies the pull-ups). |
-| Display CS / DC / RST / BUSY | P0.20 / P0.23 / P0.22 / P0.24 | J4 pins 5–8, for e-paper. The Sharp memory LCD uses them as SCS, EXTCOMIN, DISP and its boost enable (`hardware/Dachshund70-Screen/`). An I2C OLED leaves them unused. J4 pins 1 and 2 are +3V3 and GND. |
+| Display CLK / DIN | P0.19 / P0.21 | The Sharp LS027B7DH01's SCLK and SI, on the panel socket J4 pins 1 and 2. |
+| Display CS / DC / RST / BUSY | P0.20 / P0.23 / P0.22 / P0.24 | SCS (J4 pin 3, active high), EXTCOMIN (pin 4), DISP (pin 5), and the enable of the panel's 5 V boost U5 (100 kΩ pull-up, so the 5 V is on unless the firmware drives it low). J4 pins 6–8 are +5V (VDDA, VDD, EXTMODE), 9–10 GND. The signal names are the old e-paper header's, kept so the firmware's `display_header` and overlays need no change. |
 | Charger status | P0.15 | MCP73831 STAT through a BAT54WS Schottky (cathode at STAT), so it behaves as open-drain: low while charging. Needs the internal pull-up. |
 | Reset | P0.18 | nRESET: reset button to GND and SWD header. Double-tap enters the UF2 bootloader (so does holding Esc at reset). |
 | USB | D+, D−, VBUS | Dedicated module pads. |
@@ -88,7 +88,7 @@ switch footprints and wire them to the same diode.
 - **No pin for battery sensing.** The battery feeds VDDH and the SAADC measures
   VDDH/5 internally, so there is no divider leaking current.
 - **Spare full-speed pins** for later: P0.07, P0.13, P0.14, P0.16, P0.17,
-  P0.25–P0.27, P1.00, P1.08, P1.09. P0.19–P0.24 go to the display port J4 (an FFC socket for the screen board).
+  P0.25–P0.27, P1.00, P1.08, P1.09. P0.19–P0.24 go to the Sharp panel's socket J4 and its boost.
 
 ## Hardware requirements these pins assume
 

@@ -6,6 +6,26 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Mainboard rev 1.2: wider rectangle, Sharp screen circuit on board, SWD header moved (2026-11-17)
+
+- Outline: the LED tab is gone. The board is now a rectangle out to KiCad x 349.3 (R6 corners at the right,
+  the encoder notch kept), so D3-D7 sit inside it. Checked against case rev 3's top shell A pocket: at least
+  0.78 mm to the right wall and about 0.84-1.0 mm at the corners. GND pours, the antenna keep-out and the
+  stitching vias were extended to match.
+- Screen: the old 8-pin FFC socket J4 is gone, and so is the need for the screen board. J4 is now an FH12-10S
+  for the Sharp LS027B7DH01's own tail, in the panel's pin order, at (313.45, 110.6) on the top side, mouth
+  facing -x. U5 (TPS61222 5 V boost), L1, R4 and C20-C24 sit beside it, as on the screen board. The MCU pins
+  are unchanged, so the firmware, overlays and `board.json` pins are too; only comments and docs changed.
+- SWD header J3 moved out of the battery plug's path (Tiam: it blocked J2's plug). It is now on the back at
+  (339.0-344.1, 117.0), pins along x, in the strip the wider board adds, reached by the bottom shell coming
+  off. Its four nets come down a channel at x 327.3-328.6 and along y 120.9-122.2 on F.Cu; the VBUS via by Q1
+  moved 0.3 mm east to make room. Nothing now sits in front of J2's mouth.
+- DRC: 0 unconnected, parity clean, the same 194 library-mismatch warnings as before. ERC: 0 errors, the same 5
+  warnings. Not ordered, not tested.
+- Open: the panel tail's length and position along the glass are not known, so J4's place assumes a tail of
+  about 12 mm with a J-fold; the FH12's contact side against the folded tail is unverified; the case needs a
+  slot in the screen tray at the glass's left edge, and the screen-board pocket can go.
+
 ### Case rev 3, first pass (2026-11-16, Fusion v70 to v75, in progress)
 
 - Tiam's 14-point list. Done in Fusion: the brass weight is gone; the floor under the keys is one surface for 3 mm foam

@@ -1,5 +1,9 @@
 # Dachshund70 screen board
 
+> **Superseded.** From mainboard rev 1.2 this circuit (U1 → U5, L1, R1 → R4, C1–C5 → C20–C24) and the panel's
+> socket (J1 → J4) are on the mainboard, so this board isn't ordered or exported any more. It stays here for
+> reference until Tiam decides whether to delete it.
+
 A small board that powers the 2.7" Sharp memory LCD and joins it to the mainboard with one flat cable. KiCad 10
 project, 2 layers, 0.8 mm FR4, 21.0 × 34.0 mm with R1 corners.
 

@@ -30,9 +30,9 @@
     "powerEnableActive": "high"
   },
   "display": {
-    "connector": "J4, 1x8 2.54 mm header on the front: VCC GND DIN CLK CS DC RST BUSY (Waveshare e-Paper module order)",
-    "interface": "SPI for e-paper; an I2C OLED uses CLK as SCL and DIN as SDA (the module supplies the pull-ups)",
-    "power": "+3V3 (REGOUT0, about 25 mA available for external parts)",
+    "connector": "J4, FH12-10S 10-way 0.5 mm FPC socket on the top side for the Sharp LS027B7DH01 tail, in the panel's pin order: 1 SCLK (clk) 2 SI (din) 3 SCS (cs, active high) 4 EXTCOMIN (dc) 5 DISP (rst) 6 VDDA 7 VDD 8 EXTMODE 9 VSS 10 VSSA",
+    "interface": "SPI to the Sharp memory LCD; busy drives the enable of the on-board 5 V boost (U5 TPS61222, 100k pull-up)",
+    "power": "+5V from U5 (from +3V3)",
     "pins": { "din": "P0.21", "clk": "P0.19", "cs": "P0.20", "dc": "P0.23", "rst": "P0.22", "busy": "P0.24" }
   },
   "power": {
