@@ -9,9 +9,10 @@ STL files for a home print of the case on a 256 mm bed (Bambu A1). The STL files
 - Joining: Ø1.9 holes, 8 mm deep each side, across the cut: push in 16 mm lengths of 1.75 mm filament as dowels, then
   glue the halves (CA or epoxy for PETG).
 - No heat-set inserts: every screw hole is a pilot hole to screw straight into the PETG. Ø1.7 for M2, Ø2.5 for M3.
-- Gasket retainers are separate parts (6: B1-B3, F1-F3; the end nubs are gone and the outer nubs moved toward the corners): print them standing on their base, no supports. Each has
-  a 1.2 mm wall on its outside and at both ends, so the socks (and the plate) are located on three sides. They sit in
-  1.0 mm pockets in the bottom shell and need no screws: the top shell clamps them (their walls stop 0.05 under it).
+- Gasket retainers (6: B1-B3, F1-F3) are plain flat bars, 5.7 mm thick: print them flat, no supports. They sit in
+  1.0 mm pockets in the bottom shell and carry the socks from below. The walls that locate each sock on three sides
+  (outside and both ends) are now part of the top shell and hang down round the socks; the top shell clamps the bars
+  through those walls (0.05 clear), so the bars need no screws.
 - Screws, all flush countersunk from below (DIN 7991): 4 × M3 × 10 (case front), 4 × M3 × 18 (case back),
   2 × M2 × 6 countersunk for the encoder cover;
   4 × M2 × 5 pan head (screen frame and tray: 2; USB-C board: 2, 3.0 mm pilots).
