@@ -45,7 +45,8 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   slot between them for the daughterboard cable. The recess in front of the USB-C bay is filled to the floor and the wall right
   of retainer B2 is closed, so the daughterboard drops in behind the retainer.
 - Sock walls moved back into top shells A and B (outside and end walls hang down round each sock); the six retainers
-  are now plain PETG bars in the bottom-shell pockets. Top A/B STEP, their PETG halves and the retainer STLs re-exported. Feet, case screws, encoder and screen ledges kept. No interference
+  are now plain PETG bars in the bottom-shell pockets. Top A/B STEP, their PETG halves and the retainer STLs re-exported.
+- Bottom shell: the raised pads left round the 12 accent-ring tabs by the rebuild are gone; each tab is one clean block. Feet, case screws, encoder and screen ledges kept. No interference
   with any part in the model. Bottom STEP and the two bottom PETG STLs re-exported; renders
   `hardware/case/renders/rev3/rev3_bottom_clean_*.png`.
 - Open: the rest of the case re-export (assembly, ring DXF). Not printed or tested.
