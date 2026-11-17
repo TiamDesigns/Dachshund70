@@ -14,8 +14,7 @@ STL files for a home print of the case on a 256 mm bed (Bambu A1). The STL files
   1.0 mm pockets in the bottom shell and carry the socks from below. The walls that locate each sock on three sides
   (outside and both ends) are now part of the top shell and hang down round the socks; the top shell clamps the bars
   through those walls (0.05 clear), so the bars need no screws.
-- Screws: 8 × M3×10 countersunk (DIN 7991) for the case, front flush and back in Ø6.2 × 9.7 counterbores so all
-  eight are the same; 2 × M2×6 countersunk (encoder cover); M2×5 pan or cap head for the encoder module (2),
+- Screws: countersunk (DIN 7991) for the case, all flush with the bottom: 4 × M3×10 (front) and 4 × M3×18 (back); 2 × M2×6 countersunk (encoder cover); M2×5 pan or cap head for the encoder module (2),
   screen frame (2) and USB-C board (2).
 - Also printed whole: the 6 retainers, encoder cover, screen tray, screen frame, LED guide (black), roller, power slider button.
 - The files are in the keyboard's assembly position: lay each piece flat in the slicer (top shells face down,
