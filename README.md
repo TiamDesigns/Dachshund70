@@ -64,7 +64,7 @@ And at the end of it I want a keyboard I actually enjoy using every day.
 | Switches | Kailh hot-swap sockets (3 soldered positions on the spacebar row) |
 | Encoder | Bourns PEC12R-2230F-S0024: shaft parallel to the board, 24 detents, push switch, 30 mm shaft, used as a 2u roller. On its own module board, cabled to the mainboard |
 | Lighting | 6 × SK6812MINI-E indicators: layer, a 4-step battery gauge, and Caps Lock. No per-key RGB |
-| Display | Optional OLED or e-paper on header J4 (panel not chosen yet) |
+| Display | Sharp LS027B7DH01 2.7" memory LCD (240 × 400 on end), plugged into the mainboard's J4 with its 5 V boost on board; OLED and e-paper overlays still build for wired adapters |
 | Power | USB-C on a daughterboard, 1S LiPo on JST-PH, MCP73831 charger with a load-sharing power path |
 | Connectivity | USB, Bluetooth LE, 2.4 GHz dongle |
 | Bootloader | Adafruit nRF52 UF2 bootloader: double-tap reset and drag a `.uf2` onto the drive |

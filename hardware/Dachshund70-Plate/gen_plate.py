@@ -127,9 +127,9 @@ NOTCH_RADIUS = 2.0
 # SIDEBAR_WEB above the right arrow's cutout: the whole sidebar beside the screen
 # and the indicator LEDs has no plate (Tiam, 2026-11-12: that piece had no job
 # once the LEDs moved past the plate's edge). That keeps the encoder cover's front
-# ear, its screw and boss clear of the floating plate, and leaves no plate under
-# the screen board, whose parts face down toward the plate; the screen board's FFC
-# loops through here to the mainboard's J4 (at y 90-100).
+# ear, its screw and boss clear of the floating plate, and leaves room for the
+# Sharp panel's tail, which loops down through here into the mainboard's J4
+# (KiCad x 312-316, y 106-115) beside the panel's 5 V boost.
 SIDEBAR_WEB = 2.0           # plate left above the right arrow's switch cutout
 
 # Light windows over the reverse-mount indicator LEDs.
@@ -190,8 +190,8 @@ def read_mainboard():
     board = pcbnew.LoadBoard(MAINBOARD)
 
     x0, y0, x1, y1 = bbox_mm(board.GetBoardEdgesBoundingBox())
-    # The mainboard grows a small tab under the indicator LEDs (to x 349.3) where the case is wider;
-    # the plate stops at the main outline's right edge.
+    # From rev 1.2 the mainboard runs on to x 349.3 under the indicator LEDs and the screen's
+    # circuit; the plate still stops at the old right edge.
     if x1 > MAIN_RIGHT_EDGE + 0.1:
         x1 = MAIN_RIGHT_EDGE + 0.025
     # Only the arcs in the outline's four corners count: the mainboard also has

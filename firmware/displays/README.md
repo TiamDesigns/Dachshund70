@@ -1,7 +1,7 @@
 # firmware/displays/
 
-One devicetree overlay per supported panel on the Dachshund70's J4 display
-port. Pick one at build time:
+One devicetree overlay per supported panel on the Dachshund70's display
+signals. Pick one at build time:
 
 ```
 west build -p -b dachshund70/nrf52840 -d build/firmware firmware -- -DBOARD_ROOT="$PWD" -DEXTRA_DTC_OVERLAY_FILE=displays/oled-ssd1306-128x64.overlay
@@ -30,16 +30,18 @@ landscape size. The Sharp driver (`sharp,ls0xx`) has no rotation at all.
 
 ## Wiring
 
-J4 follows the Waveshare e-Paper module order: 1 VCC (+3V3), 2 GND, 3 DIN, 4
-CLK, 5 CS, 6 DC, 7 RST, 8 BUSY. On the board it's an 8-way 0.5 mm FFC socket,
-and an FFC runs from it to the screen board (`hardware/Dachshund70-Screen/`).
-The screen board (rev 2.0) carries the Sharp memory LCD and its 5 V boost, and
-uses J4's pins as SI (DIN), SCLK (CLK), SCS (CS, active high), EXTCOMIN (DC),
-DISP (RST) and the boost enable (BUSY, pulled high on the board). Rev 1.0 of
-the screen board carried the 2.13" e-paper panel's boost circuit for the
-e-paper overlays. A
-4-pin I2C OLED uses VCC, GND, DIN (SDA) and CLK (SCL), through an FFC
-adapter. Pins come from `boards/Dachshund70/board.json`. Overlays refer to J4
+From mainboard rev 1.2 the Sharp LS027B7DH01's tail plugs straight into the
+mainboard's J4, a 10-way 0.5 mm FPC socket in the panel's own pin order (1
+SCLK, 2 SI, 3 SCS, 4 EXTCOMIN, 5 DISP, 6-8 +5V, 9-10 GND), and the panel's
+5 V boost (U5, TPS61222) is on the mainboard too. The separate screen board
+(`hardware/Dachshund70-Screen/`) is no longer needed.
+
+`&display_header` keeps the numbering of the old 8-pin e-paper header (3 DIN,
+4 CLK, 5 CS, 6 DC, 7 RST, 8 BUSY), so the MCU pins and every overlay are
+unchanged. The Sharp uses them as SI, SCLK, SCS (active high), EXTCOMIN, DISP
+and the boost enable (pulled high on the board). The OLED and e-paper overlays
+still build, but they no longer plug into the mainboard: they need a wired
+adapter to the same MCU pins. Pins come from `boards/Dachshund70/board.json`. Overlays refer to J4
 pins only through `<&display_header PIN FLAGS>`; the host-lib tests reject
 raw `&gpio` references here.
 
@@ -74,5 +76,5 @@ connection are live now.
 Copy the panel's node from Zephyr's `boards/shields/` (ssd1306,
 waveshare_epaper and others). Put it under `&display_i2c` or under a
 `zephyr,mipi-dbi-spi` node using `&display_spi`, as the files here do. Then
-replace the Arduino header references with `&display_header` J4 pin numbers,
+replace the Arduino header references with `&display_header` pin numbers,
 and add the overlay to the CI matrix.

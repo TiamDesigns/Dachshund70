@@ -10,7 +10,7 @@ The boards, as designed on main (2026-10-23):
 
 | Board | KiCad project | What it carries | Test access |
 | --- | --- | --- | --- |
-| Mainboard | `hardware/Dachshund70/` | MDBT50Q-P1MV2, MCP73831 charger (300 mA), JST-PH battery J2, 6-pin daughterboard port J1, TPS22917 LED switch, 6× SK6812MINI-E, encoder port J5, 80 switch positions, display header J4, SWD J3 | Test pads TP1–TP9 on the back (see below), plus the decoupling-cap pads, J3, J4 and J1 |
+| Mainboard | `hardware/Dachshund70/` | MDBT50Q-P1MV2, MCP73831 charger (300 mA), JST-PH battery J2, 6-pin daughterboard port J1, TPS22917 LED switch, 6× SK6812MINI-E, encoder port J5, 80 switch positions, Sharp panel socket J4 with its 5 V boost U5, SWD J3 | Test pads TP1–TP9 on the back (see below), plus the decoupling-cap pads, J3, J4 and J1 |
 | USB-C daughterboard | `hardware/Dachshund70-USB/` | HRO USB-C, 5.1 kΩ Rd on CC1/CC2, USBLC6-2SC6, 750 mA PTC, FB1 shield ferrite, the battery slide switch SW1 (C&K PCM12SMTR, actuator out of the back edge), 6-pin JST-SH J2 | Connector pins and part pads |
 | Encoder module | `hardware/Dachshund70-Encoder/` | Bourns PEC12R-2230F-S0024 roller encoder, JST-SH cable port J1 to the mainboard's J5 | Connector pins and the encoder's pads |
 | Dongle | `hardware/Dachshund70-Dongle/` | MDBT50Q-P1MV2, HRO USB-C, USBLC6-2SC6, PTC, PAIR and RESET buttons, RGB LED, SWD J2 | No test points. Probe C1–C4 and J2 |
@@ -101,7 +101,8 @@ Then the switch: J2-5 (VBAT) and J2-6 (VBAT_SW) are open with the switch off and
 | D8 power-path Schottky | Diode test, red on VBUS (C1), black on VSYS (C4) | About 0.15–0.3 V forward, open the other way |
 | Gate pull-down R3 | Across R3 | 100 kΩ |
 | LED data buffer U4 | U1 P0.06 to U4 pin 2; U4 pin 4 to D3 DIN (pin 2) | Under 1 Ω each, and P0.06 not connected straight to D3 |
-| +3V3 to GND | C6/C7 pads, J3-1 to J3-5, J4-1 to J4-2 | High |
+| +3V3 to GND | C6/C7 pads, J3-1 to J3-5 | High |
+| +5V (panel supply) to GND | C21, or J4-7 to J4-9 | High |
 | LED_VDD to GND | C12 or any of C13–C18 | High |
 | PROG resistor R1 | Across R1 | 3.3 kΩ (sets about 300 mA charge current) |
 | LED_EN pull-down R2 | Across R2 | 100 kΩ |

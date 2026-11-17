@@ -213,6 +213,11 @@ LED windows, and the radio's range through the aluminium over the antenna.
 
 ## Display
 
+> From mainboard rev 1.2 (2026-11-17) the screen is the Sharp LS027B7DH01, and its tail plugs straight into the
+> mainboard's J4 (KiCad (313.45, 110.6), mouth facing −x) beside its 5 V boost. The screen board and the FFC below
+> are gone; the tray needs a slot at the glass's left edge for the tail. The rest of this section still describes
+> the earlier e-paper setup.
+
 A bare 2.13" e-paper panel (GoodDisplay GDEY0213B74, SSD1680, 250 × 122, black on white) standing on end
 beside the knob: 29.2 × 59.2 mm, with a 23.7 × 48.6 mm picture. In portrait that's 120 × 248 pixels, 12 × 15
 cells of text with the 10 × 16 font. Build the firmware with
