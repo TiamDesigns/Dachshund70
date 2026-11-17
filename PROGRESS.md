@@ -112,6 +112,8 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   x 306.5-308, centred on J4's y) for the tail to fold down; the screen-board model removed. J3 (SWD) now hangs 4 mm
   under the board at KiCad x 339-344, y 117 with 0.6 to the floor: cut the foam there. The 'Mainboard parts'
   component models are still the old placement.
+- Top shell A: six cylinder stubs from an earlier insert-hole fill stuck out of the sloped front (they looked like
+  holes from outside); everything outside the outer skin trimmed (checked: 0 mm3 outside), ring tabs restored.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
