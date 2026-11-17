@@ -56,11 +56,8 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Accent ring rebuilt as one clean 1.6 mm prismatic plate (its top had been split into panels 0.006 apart); the notches
   round the retainer bars and the encoder ledge have R0.8 corners and R1 rounds at the inner edge. Ring STEP and a DXF
   outline (`hardware/case/dxf/Dachshund70-Case-Rev3-Ring.dxf`) for laser cutting or ordering it as a 1.6 mm PCB.
-- Heat-set inserts dropped (Tiam): PT-type thread-forming screws straight into pilots, Ø2.5 for K30 (top shells A and B,
-  front 5.75 and back 5.5 deep) and Ø1.8 for K22 (encoder and screen ledges, USB-C board, encoder-module pilots in the
-  cover). Screw types 5 -> 3: 8 x K30x10 CSK (the back case screws sit in Ø6.2 x 9.7 counterbores from below), 2 x K22x6
-  CSK (encoder cover, the top shell is 0.1 above it), 6 x K22x6 pan. The insert drawings in `hardware/case/drawings/`
-  are obsolete. Top shell A is the production shell (131 cm3 vs 166 for B). The accent ring will be laser cut. Feet, case screws, encoder and screen ledges kept. No interference
+- Heat-set inserts kept (Tiam reverted the PT-screw idea). All eight case screws are M3x10 countersunk: the back ones
+  sit in Ø6.2 x 9.7 counterbores from below (insert drawings updated). Top shell A is the production shell (131 cm3 vs 166 for B). The accent ring will be laser cut. Feet, case screws, encoder and screen ledges kept. No interference
   with any part in the model. Bottom STEP and the two bottom PETG STLs re-exported; renders
   `hardware/case/renders/rev3/rev3_bottom_clean_*.png`.
 - Open: the rest of the case re-export (assembly, ring DXF). Not printed or tested.
