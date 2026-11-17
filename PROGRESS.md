@@ -49,7 +49,13 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Bottom shell: the raised pads left round the 12 accent-ring tabs by the rebuild are gone; each tab is one clean block.
 - Bottom shell: the rebuild had left the wall top 0.54 low (s 8.5), so the ring floated and pads stood round the screen and
   encoder ledges. The wall top is one flat surface at the ring seat again (s 9.039), the retainer pockets are 1.0 deep
-  again, and the cavity and battery bay were recut full height. No interference. Feet, case screws, encoder and screen ledges kept. No interference
+  again, and the cavity and battery bay were recut full height. No interference.
+- Battery turned 90 deg and moved to the back (cell x 90-142, y 26.8-61.3, protection board at the left end); new bay with a
+  1.2 floor, the old bay filled to the foam floor. 0.77 clear of the parts above it (was 0.39). Case height unchanged:
+  the front row (1.2 floor + foam gap under the hotswap sockets) still sets it.
+- Accent ring rebuilt as one clean 1.6 mm prismatic plate (its top had been split into panels 0.006 apart); the notches
+  round the retainer bars and the encoder ledge have R0.8 corners and R1 rounds at the inner edge. Ring STEP and a DXF
+  outline (`hardware/case/dxf/Dachshund70-Case-Rev3-Ring.dxf`) for laser cutting or ordering it as a 1.6 mm PCB. Feet, case screws, encoder and screen ledges kept. No interference
   with any part in the model. Bottom STEP and the two bottom PETG STLs re-exported; renders
   `hardware/case/renders/rev3/rev3_bottom_clean_*.png`.
 - Open: the rest of the case re-export (assembly, ring DXF). Not printed or tested.
