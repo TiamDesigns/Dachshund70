@@ -86,6 +86,12 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   Every case insert checked for wall: back retainers 1.1, front 1.5 outside, M3 front 1.1, M3 back 1.5.
 - USB-C bay: 2.3 longer at the front and 0.9 clear each side, one floor level, so the board drops in 2 mm forward
   and slides back into the port opening (checked: no contact over the whole 2 mm).
+- Mainboard from PR #85 in the case model (board-only STEP from its kicad_pcb, aligned on its holes; the old board
+  removed): no contact with the top shell A, the bottom shell or the battery. Screen tray: the screen-board pocket
+  filled (the Sharp tail now plugs into J4 on the mainboard) and a 1.5 x 12 slot at the glass's left edge (KiCad
+  x 306.5-308, centred on J4's y) for the tail to fold down; the screen-board model removed. J3 (SWD) now hangs 4 mm
+  under the board at KiCad x 339-344, y 117 with 0.6 to the floor: cut the foam there. The 'Mainboard parts'
+  component models are still the old placement.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
