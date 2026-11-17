@@ -81,6 +81,11 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   pocket, both ending in line with one R1 round at the cavity wall (no hooks). Retainers 10.25 wide, M2x8 CSK screws
   2.9 from the outer edge (inserts 1.05 from the sock pocket). Plate corner radius 1.5 -> 4.5 (gen_plate.py; DRC
   clean). Top shell B is not rebuilt (A is the production shell).
+- Front retainer insert holes broke through the sloped front of top shell A: all 12 retainer inserts are now
+  Ø3.2 x 4.0 (M2x3 inserts, M2x6 CSK screws) and the front ones sit 0.4 further in (1.5 wall to the front face).
+  Every case insert checked for wall: back retainers 1.1, front 1.5 outside, M3 front 1.1, M3 back 1.5.
+- USB-C bay: 2.3 longer at the front and 0.9 clear each side, one floor level, so the board drops in 2 mm forward
+  and slides back into the port opening (checked: no contact over the whole 2 mm).
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
