@@ -61,6 +61,12 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Gasket socks (off the shelf) remodelled to the supplier drawing: 8 x 5 x 5, a full R2.5 round on the closed end
   seen from above, 6.5 x 2.8 x 1.2 slot from the square end, all other edges sharp. Squeezed about 0.2 top and
   bottom between the top shell and the retainer bar in the model; the 1.6 plate stretches the 1.2 slot.
+- Gasket mount rework (Tiam's review): the retainers screw up into the top shell (2 x M2x10 CSK each into M2
+  inserts G1-G12; bars 1.5 wider outward for the screws), so top shell + plate + socks + retainers are one
+  sub-assembly. The top shell's long sock channels are filled: one fitted pocket per sock (0.25 clear) and a channel
+  for the plate tab that clears the plate 2.6 down and 0.6 up. Bottom pockets and ring notches widened to suit.
+  Ring: the 9 outer tabs and slots moved 1.0 inward (2.5 web outside each slot, was 1.5); ring DXF re-exported.
+  Bottom: the split front face merged.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
