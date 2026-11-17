@@ -114,6 +114,15 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   component models are still the old placement.
 - Top shell A: six cylinder stubs from an earlier insert-hole fill stuck out of the sloped front (they looked like
   holes from outside); everything outside the outer skin trimmed (checked: 0 mm3 outside), ring tabs restored.
+- Feet centred between the case screws and in line with them: front x -99 / 6 / 111 at y -66.8, back x -102 / -6.5 /
+  101.6 at y 71.5 (old pockets filled).
+- 5 mm gaskets: retainers 2.8 thick (top s 13.49) and sock pockets 5.1 tall (to s 18.6), so the socks sit centred on
+  the plate with no squeeze; nothing touches them.
+- Plate corner radius 5.5 (gen_plate.py; its mainboard check now accepts the rev 1.2 board's mixed R5/R6 corners).
+- Screen: the tray is held on all four sides (top-shell ledges on the left and front and at the back from x 145,
+  an encoder-cover lip at the back-left, the rail on the right; the tail slot is left open). The ledge pocket on the
+  right was recut with R1 rounds where it meets the cavity wall (no hooks). The wall between the keys and the screen
+  recess is still only 0.35 thick at the top face (keycaps 0.9 away); moving the screen 1.5 right would fix it.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.

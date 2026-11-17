@@ -104,7 +104,7 @@ POST_RELIEF_D = 3.9
 # The plate's own outside corners. Case rev 3: R1.5, concentric with the case lip's R1.0
 # inner corner (the lip overlaps the plate edge 0.53 mm), so no gap shows at the corners
 # from above. The mainboard keeps its R5 corners.
-PLATE_CORNER_RADIUS = 4.5
+PLATE_CORNER_RADIUS = 5.5
 
 # Every inside corner of the outline gets at least this radius (tab roots).
 OUTLINE_INSIDE_RADIUS = 0.5
@@ -201,8 +201,10 @@ def read_mainboard():
         return min(abs(cx - x0), abs(cx - x1)) < 8 and min(abs(cy - y0), abs(cy - y1)) < 8
     radii = {round(pcbnew.ToMM(d.GetRadius()), 3) for d in board.GetDrawings()
              if d.GetLayer() == pcbnew.Edge_Cuts and d.GetShape() == pcbnew.SHAPE_T_ARC and in_corner(d)}
-    if len(radii) != 1:
-        raise SystemExit(f"expected one corner radius on the mainboard outline, got {radii}")
+    if not radii:
+        raise SystemExit("no corner arcs found on the mainboard outline")
+    # rev 1.2 mixes R5 and R6 corners; only the largest is reported
+    radii = {max(radii)}
     # The bounding box includes the line width; the outline itself is 0.025 mm in.
     edge = (round(x0 + 0.025, 3), round(y0 + 0.025, 3), round(x1 - 0.025, 3), round(y1 - 0.025, 3))
 
