@@ -75,6 +75,12 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Mainboard clearance (from the mainboard thread): the top shells' inner walls had 0.75 to the board edge front,
   back and left; now 1.5 (a 0.75 relief from s 10 to 14.5, hidden under the plate), and the retainers start 0.75
   further out.
+- Top shell A rebuilt clean for CNC (Tiam's review): the outer skin plus one underside pocket with R6 corners all round
+  (1.5 clear of the plate and mainboard; no plate-corner cuts, no lips or ledges), the top-face openings re-cut
+  straight, ring tabs and M3 insert holes. Each gasket zone is one R1.5 pocket for both socks above a retainer
+  pocket, both ending in line with one R1 round at the cavity wall (no hooks). Retainers 10.25 wide, M2x8 CSK screws
+  2.9 from the outer edge (inserts 1.05 from the sock pocket). Plate corner radius 1.5 -> 4.5 (gen_plate.py; DRC
+  clean). Top shell B is not rebuilt (A is the production shell).
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
