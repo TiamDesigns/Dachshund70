@@ -73,8 +73,11 @@
 	};
 
 	/*
-	 * Display header J4, indexed by J4 pin number. Panel overlays in
-	 * firmware/displays/ use <&display_header PIN FLAGS>.
+	 * Display signals, indexed by the old e-paper header's pin numbers
+	 * (3 DIN, 4 CLK, 5 CS, 6 DC, 7 RST, 8 BUSY). On the board they now go to
+	 * the Sharp panel's socket J4 and its boost enable (boards/Dachshund70/
+	 * README.md). Panel overlays in firmware/displays/ use
+	 * <&display_header PIN FLAGS>.
 	 */
 	display_header: display_header {
 		compatible = "dachshund,display-header";
@@ -90,7 +93,7 @@
 	};
 };
 
-/* J4 as I2C for an OLED. Disabled until a panel overlay enables it. */
+/* The display signals as I2C, for an OLED. Disabled until a panel overlay enables it. */
 display_i2c: &i2c0 {
 	compatible = "nordic,nrf-twim";
 	status = "disabled";
@@ -100,7 +103,7 @@ display_i2c: &i2c0 {
 	pinctrl-names = "default", "sleep";
 };
 
-/* J4 as SPI for e-paper. Disabled until a panel overlay enables it. */
+/* The display signals as SPI (the Sharp LCD, or e-paper). Disabled until a panel overlay enables it. */
 display_spi: &spi2 {
 	compatible = "nordic,nrf-spim";
 	status = "disabled";

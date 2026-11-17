@@ -1,12 +1,13 @@
 /*
  * 2.7" Sharp memory LCD (LS027B7DH01, 400x240) standing on end, as in the
  * case's sidebar: 240 x 400 pixels in portrait, turned in software
- * (dachshund,display-rotate). The panel sits on the screen board
- * (hardware/Dachshund70-Screen/), which makes its 5 V supply.
+ * (dachshund,display-rotate). The panel's tail plugs straight into the
+ * mainboard's J4, and the mainboard's U5 makes its 5 V supply.
  *
- * Same J4 pins as the e-paper overlays, with the Sharp's signals on them:
- * SI J4-3 (DIN), SCLK J4-4 (CLK), SCS J4-5 (CS), EXTCOMIN J4-6 (DC),
- * DISP J4-7 (RST). J4-8 (BUSY) is unused. SCS is active high.
+ * display_header keeps the old e-paper header's numbering (3 DIN ... 8 BUSY)
+ * so the MCU pins stay the same: SI = 3 (DIN), SCLK = 4 (CLK),
+ * SCS = 5 (CS, active high), EXTCOMIN = 6 (DC), DISP = 7 (RST). 8 (BUSY) is
+ * the boost enable, pulled up on the board and left alone here.
  * If the text is upside down, set rotation to 270.
  */
 

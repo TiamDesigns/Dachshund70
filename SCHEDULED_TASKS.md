@@ -2,7 +2,7 @@
 
 Open work to pick up in later prompts. Each task is written so it can be pasted into a prompt. When a task is finished, delete it here in the same change, and record what was done in `PROGRESS.md`.
 
-Last updated: 2026-11-11 (screen board and FFC display port; display and case-model tasks).
+Last updated: 2026-11-17 (mainboard rev 1.2: screen circuit on the mainboard, J3 moved; display and case-model tasks).
 
 ## Before ordering boards
 
@@ -37,14 +37,10 @@ Last updated: 2026-11-11 (screen board and FFC display port; display and case-mo
 - **J2 placement check (case).** Check the battery connector J2 and the cell's JST-PH lead against the Fusion model: the lead's route from the cell to J2 under the screen and knob, and its clearance to the plate, J5 and the bottom block's floor steps. Move J2 or the battery bay if it fouls.
 - **PCM12SMTR availability (case).** The power switch on the USB-C daughterboard is a C&K PCM12SMTR, and the case's slider cap and slot (`hardware/case/BOM.md`) are drawn for its lever. Check it is in stock at the fab and distributors; if not, pick a replacement and redraw the cap and slot.
 - **Dongle enclosure.** Still to design: plastic, with nothing metal over the antenna strip.
-- **Display.** Buy the Sharp LS027B7DH01 (2.7" memory LCD) and an 8-way 0.5 mm FFC with contacts on the same side at both ends, so they arrive with the boards. Before ordering the screen board (`hardware/Dachshund70-Screen/`, rev 2.0), go through the open checks in its README:
-  - which end of the panel's tail is pin 1 after it folds under the glass (J1 pin n = panel pin 11 − n is assumed), which face carries the contacts, and the pitch (0.5 mm assumed);
-  - where the tail leaves the glass and how long it is, so it reaches J1;
-  - the FH12 contact sides;
-  - the LCSC numbers still blank (J1, J2, U1, L1).
+- **Display.** Buy the Sharp LS027B7DH01 (2.7" memory LCD) so it arrives with the boards. Its tail plugs straight into the mainboard's J4 (rev 1.2; the screen board is no longer needed). Before ordering the mainboard, check against Sharp's drawing or a real panel:
+  - where the tail leaves the glass and how long it is, so it reaches J4 (at KiCad (313.45, 110.6), mouth facing -x) with a J-fold under the glass's left edge; J4 assumes about 12 mm;
+  - which face of the tail carries the contacts after the fold, against the FH12's contact side, and that J4 pin n = panel pin n (pin 1 at the smallest y);
+  - the LCSC numbers still blank (J4, U5, L1).
   On hardware, check the `sharp-ls027b7dh01-portrait` overlay (which way up the text comes out: `rotation`) and that the picture holds with EXTCOMIN at 1 Hz.
-- **Screen board and Sharp panel in the case model.** The Fusion model still has the 2.13" e-paper panel and Adafruit's eInk Breakout Friend. Swap in the LS027B7DH01 (62.8 × 42.82 × 1.64 mm glass, 58.8 × 35.28 mm picture, tail folding under its left edge in portrait) and the screen board (`hardware/step/Dachshund70-Screen.step`, re-exported with `python hardware/export_step.py`). Then:
-  - draw the FFC loop from J4 up through the plate's notch into J2, and set the cable length from it;
-  - check the screen board's parts against the plate, which floats ±1 mm;
-  - correct the screen pocket from the measured panel before machining (see "Display" in `hardware/case/README.md`).
+- **Sharp panel in the case model.** Put the LS027B7DH01 (62.8 × 42.82 × 1.64 mm glass, 58.8 × 35.28 mm picture) in the screen tray, cut a slot in the tray at the glass's left edge (about KiCad x 306.5-308) for the tail to fold down into J4, and fill the old screen-board pocket. Re-export the mainboard STEP (`python hardware/export_step.py`) and check the tail's loop and the J3 SWD header (now at KiCad (339-344, 117), on the back, 4 mm tall) against the bottom shell.
 - **nRF52840 Dongles (PCA10059), being ordered.** Two cover the wireless tests before the boards arrive: one runs the Pup (the keyboard firmware, `boards/Pup/README.md`), the other the receiver (`dongle/README.md`).
