@@ -67,6 +67,11 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   for the plate tab that clears the plate 2.6 down and 0.6 up. Bottom pockets and ring notches widened to suit.
   Ring: the 9 outer tabs and slots moved 1.0 inward (2.5 web outside each slot, was 1.5); ring DXF re-exported.
   Bottom: the split front face merged.
+- Retainers made flush (Tiam): bars 3.1 thick (s 10.695-13.79) in pockets in the top shell's underside, 2 x M2x8 CSK
+  each into M2 inserts; the ring and the bottom shell no longer pass the bars, so their notches and pockets are
+  closed (straight ring inner edge, flat bottom wall top). The top shell's gasket zones are solid round fitted
+  sock pockets and one open bay for the plate tab. Ring: the 0.45 strip inside the screen-rail cutout removed; top
+  shell ring tabs moved in with the ring slots.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
