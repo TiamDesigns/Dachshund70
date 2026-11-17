@@ -21,3 +21,9 @@ STL files for a home print of the case on a 256 mm bed (Bambu A1). The STL files
 - Also printed whole: the 6 retainers, encoder cover, screen tray, screen frame, LED guide (black), roller, power slider button.
 - The files are in the keyboard's assembly position: lay each piece flat in the slicer (top shells face down,
   bottom shell on its base).
+
+## Versions
+
+Copies in the project's shared files carry a version tag (`...-v01.stl`), bumped on every new export of the set.
+
+- v01 (2026-11-17): feet centred on the screw rows, 5 mm gasket room, plate R5.5, screen tray supported on all sides.
