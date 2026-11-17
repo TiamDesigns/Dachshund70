@@ -58,6 +58,9 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Accent ring rebuilt as one clean 1.6 mm prismatic plate (its top had been split into panels 0.006 apart); the notches
   round the retainer bars and the encoder ledge have R0.8 corners and R1 rounds at the inner edge. Ring STEP and a DXF
   outline (`hardware/case/dxf/Dachshund70-Case-Rev3-Ring.dxf`) for laser cutting or ordering it as a 1.6 mm PCB.
+- Gasket socks (off the shelf) remodelled to the supplier drawing: 8 x 5 x 5, a full R2.5 round on the closed end
+  seen from the side, 6.5 x 2.8 x 1.2 slot from the square end, all other edges sharp. Squeezed about 0.2 top and
+  bottom between the top shell and the retainer bar in the model; the 1.6 plate stretches the 1.2 slot.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
