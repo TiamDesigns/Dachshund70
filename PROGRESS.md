@@ -46,7 +46,10 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   of retainer B2 is closed, so the daughterboard drops in behind the retainer.
 - Sock walls moved back into top shells A and B (outside and end walls hang down round each sock); the six retainers
   are now plain PETG bars in the bottom-shell pockets. Top A/B STEP, their PETG halves and the retainer STLs re-exported.
-- Bottom shell: the raised pads left round the 12 accent-ring tabs by the rebuild are gone; each tab is one clean block. Feet, case screws, encoder and screen ledges kept. No interference
+- Bottom shell: the raised pads left round the 12 accent-ring tabs by the rebuild are gone; each tab is one clean block.
+- Bottom shell: the rebuild had left the wall top 0.54 low (s 8.5), so the ring floated and pads stood round the screen and
+  encoder ledges. The wall top is one flat surface at the ring seat again (s 9.039), the retainer pockets are 1.0 deep
+  again, and the cavity and battery bay were recut full height. No interference. Feet, case screws, encoder and screen ledges kept. No interference
   with any part in the model. Bottom STEP and the two bottom PETG STLs re-exported; renders
   `hardware/case/renders/rev3/rev3_bottom_clean_*.png`.
 - Open: the rest of the case re-export (assembly, ring DXF). Not printed or tested.
