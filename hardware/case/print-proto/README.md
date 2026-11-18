@@ -18,7 +18,7 @@ STL files for a home print of the case on a 256 mm bed (Bambu A1). The STL files
 - Screws (countersunk machine screws, DIN 7991, straight into the PETG pilots): 4 × M3×10 (case front) and
   4 × M3×18 (case back), all flush with the bottom; 12 × M2×6 (retainers); 2 × M2×6 countersunk (encoder cover); M2×5 pan or cap head for the encoder module (2),
   screen frame (2) and USB-C board (2).
-- Also printed whole: the 6 retainers, encoder cover, screen tray, screen frame, LED guide (black), roller, power slider button.
+- Also printed whole: the encoder rail and the screen rail (on their flat base), the 6 retainers, encoder cover, screen tray, screen frame, LED guide (black), roller, power slider button.
 - The files are in the keyboard's assembly position: lay each piece flat in the slicer (top shells face down,
   bottom shell on its base).
 
@@ -27,3 +27,4 @@ STL files for a home print of the case on a 256 mm bed (Bambu A1). The STL files
 Copies in the project's shared files carry a version tag (`...-v01.stl`), bumped on every new export of the set.
 
 - v01 (2026-11-17): feet centred on the screw rows, 5 mm gasket room, plate R5.5, screen tray supported on all sides.
+- v02 (2026-11-18): bottom shell cleaned (wall band rebuilt, no slivers; USB-C bay and cable slot with vertical walls, no ledges); the screen rail and the encoder rail are separate printed parts, screwed to the base (encoder rail 2 × M2×8, screen rail 3 × M2×12, countersunk from the top, into the base).

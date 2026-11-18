@@ -123,6 +123,9 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   an encoder-cover lip at the back-left, the rail on the right; the tail slot is left open). The ledge pocket on the
   right was recut with R1 rounds where it meets the cavity wall (no hooks). The wall between the keys and the screen
   recess is still only 0.35 thick at the top face (keycaps 0.9 away); moving the screen 1.5 right would fix it.
+- v02 bottom: the screen rail and the encoder rail are separate printed parts on the wall top (2 x M2x8 and 3 x M2x12
+  countersunk into M2 inserts in the base); the wall band rebuilt from one section (no slivers on the inner wall); the
+  strip in front of the USB-C bay solid to the wall top with a clean cable slot, so no ledges or overhangs there.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
