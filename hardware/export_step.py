@@ -11,6 +11,8 @@ the result when you want a snapshot):
 - Dachshund70-USB.step       USB-C daughterboard
 - Dachshund70-Dongle.step    2.4 GHz dongle
 - Dachshund70-Encoder.step   encoder module (the roller encoder on its own board)
+- Dachshund70-Screen.step    screen board (the Sharp panel's boost circuit and sockets, the five status
+                             LEDs), parts on its bottom face; same X/Y origin as the mainboard
 
 The mainboard, plate and assembly share one origin: the centre of the
 mainboard outline, so the separate files line up in X and Y. In every file the
@@ -33,8 +35,8 @@ KICAD_CLI = os.environ.get("KICAD_CLI", r"C:\Program Files\KiCad\10.0\bin\kicad-
 MAINBOARD = os.path.join(HERE, "Dachshund70", "Dachshund70.kicad_pcb")
 PLATE = os.path.join(HERE, "Dachshund70-Plate", "Dachshund70-Plate.kicad_pcb")
 
-# Centre of the rev 1.1 mainboard outline (19..337.5 x 39..160.1 mm). Kept from rev 1.2, whose outline runs
-# on to x 349.3, so the case model built on these files stays put.
+# Centre of the rev 1.1 mainboard outline (19..337.5 x 39..160.1 mm). Kept for later outlines (rev 1.3 stops
+# at x 326), so the case model built on these files stays put.
 MAIN_ORIGIN = "178.25x99.55mm"
 # Gap between the PCB's top face and the plate's bottom face.
 PLATE_LIFT = 3.4
@@ -93,6 +95,9 @@ def main():
         assembly(plate_abs, os.path.join(OUT, "Dachshund70-Assembly.step"))
     for name in ("Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder"):
         export(os.path.join(HERE, name, f"{name}.kicad_pcb"), os.path.join(OUT, f"{name}.step"))
+    # The screen board is drawn in mainboard coordinates, so it shares the mainboard's origin.
+    export(os.path.join(HERE, "Dachshund70-Screen", "Dachshund70-Screen.kicad_pcb"),
+           os.path.join(OUT, "Dachshund70-Screen.step"), "--user-origin", MAIN_ORIGIN)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,7 @@
+(version 1)
+
+# The SK6812MINI-E reverse-mount footprints (D1-D5) have a light cutout on
+# Edge.Cuts with their pads 0.35 mm from it, as on the mainboard.
+(rule "LED cutout edge clearance"
+  (constraint edge_clearance (min 0.3mm))
+  (condition "B.memberOfFootprint('D1') || B.memberOfFootprint('D2') || B.memberOfFootprint('D3') || B.memberOfFootprint('D4') || B.memberOfFootprint('D5')"))

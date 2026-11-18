@@ -1,22 +1,24 @@
 """Generate the Dachshund70 screen board: schematic, then the routed board.
 
-The screen board carries a 2.7" Sharp memory LCD (LS027B7DH01, 400 x 240):
-the panel's 5 V supply (a TPS61222 boost from the mainboard's 3V3), its
-10-pin FPC socket and an 8-pin FFC socket for the cable to the mainboard's J4.
+The screen board (rev 3.0) carries a 2.7" Sharp memory LCD (LS027B7DH01,
+400 x 240): the panel's 5 V supply (a TPS61222 boost from the mainboard's
+3V3), its 10-pin FPC socket, the five status LEDs (layer, battery gauge) and
+a 12-pin FFC socket for the cable to the mainboard's J4.
 
 Run with KiCad 10's own Python (it ships the pcbnew module), from the repo root:
 
     "C:/Program Files/KiCad/10.0/bin/python.exe" hardware/Dachshund70-Screen/gen_screen.py
 
 or in the kicad/kicad:10.0 Docker image. It overwrites the .kicad_sch and the
-whole .kicad_pcb: placement, the hand routing in ROUTES and VIAS, and the
-filled ground pours. Check with
+whole .kicad_pcb: placement, the routing in screen_routes.py (ROUTES and
+VIAS) and the filled ground pours. It reads the mainboard's J4 to set J2's
+place and pin order, so rerun it after moving J4. Check with
 `kicad-cli pcb drc --schematic-parity --severity-all Dachshund70-Screen.kicad_pcb`.
 
-Coordinates are the mainboard's (KiCad mm, y down): the board lies in the
-case's screen pocket right over the mainboard, so its STEP drops into the
-case model at the same x and y. Its top face is taped to the panel's back and
-every part is on the bottom side, facing the mainboard.
+Coordinates are the mainboard's (KiCad mm, y down): the board is held by the
+case under the panel and over the mainboard's right-hand edge, so its STEP
+drops into the case model at the same x and y. Every part is on the bottom
+side; the LEDs shine up through their cut-outs.
 """
 
 import os
@@ -42,28 +44,33 @@ PANEL = {
     10: "GND",
 }
 
-# The FFC socket's pin -> net. It sits right over the mainboard's J4 (the same footprint, upside down), and
-# the 0.5 mm FFC loops round between them, so each pin meets the J4 pin at the same y: pin n here is J4
-# pin 9 - n (see README). The mainboard's names for J4's pins are the e-paper ones (DIN, CLK, CS, DC, RST,
-# BUSY); here they carry the Sharp's SI, SCLK, SCS, EXTCOMIN, DISP and the boost enable.
-MAINBOARD_J4 = {1: "+3V3", 2: "GND", 3: "SI", 4: "SCLK", 5: "SCS", 6: "EXTCOMIN", 7: "DISP", 8: "VLCD_EN"}
-CABLE = {n: MAINBOARD_J4[9 - n] for n in range(1, 9)}
+# The mainboard's J4 (rev 1.3): a 12-pin FH12 on its top side at the right-hand edge, mouth facing +x. Its
+# net names are the e-paper ones (DIN, CLK, CS, DC, RST, BUSY); here they carry the Sharp's SI, SCLK, SCS,
+# EXTCOMIN, DISP and the boost enable, plus the LED chain (data out of the Caps Lock LED, and its supply).
+MAINBOARD_J4 = {1: "LED_VDD", 2: "LED_VDD", 3: "GND", 4: "LED_DIN", 5: "GND", 6: "DISP", 7: "EXTCOMIN", 8: "SCS",
+                9: "SI", 10: "SCLK", 11: "VLCD_EN", 12: "+3V3"}
+# J2 sits 6 mm right of J4 (the FFC's loop is longer by that), so there is room between J1 and J2 for the
+# signals, which keep the same top-to-bottom order in both sockets.
+J2_DX = 6.0
+MAINBOARD = os.path.join(HERE, "..", "Dachshund70", "Dachshund70.kicad_pcb")
 POWER = ("+3V3", "+5V", "GND")
 
 # J1's pads run the other way from the panel's pins: the tail folds back under the glass, so (looking down on
 # the board) panel pin 1 lands at the top, where J1's pad 10 is. J1 pin n = panel pin 11 - n (see README).
 SOCKET = {n: PANEL[11 - n] for n in range(1, 11)}
 
-# ref: (lib_id, value, footprint, mpn, lcsc, {pin: net})
+# ref: (lib_id, value, footprint, mpn, lcsc, {pin: net}). J2's pins are filled in by cable_map().
 C0603 = "Capacitor_SMD:C_0603_1608Metric"
 C0402 = "Capacitor_SMD:C_0402_1005Metric"
+LED_FP = "Dachshund70:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount_Cutout3.4"
+LED_NAMES = ("Layer", "Battery 1", "Battery 2", "Battery 3", "Battery 4")
 PARTS = {
     "J1": ("Connector_Generic_MountingPin:Conn_01x10_MountingPin", "Memory LCD (FPC 10P 0.5 mm)",
            "Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal",
            "Hirose FH12-10S-0.5SH(55)", "", dict(SOCKET, MP="GND")),
-    "J2": ("Connector_Generic_MountingPin:Conn_01x08_MountingPin", "Mainboard J4 (FFC 8P 0.5 mm, same side)",
-           "Connector_FFC-FPC:Hirose_FH12-8S-0.5SH_1x08-1MP_P0.50mm_Horizontal",
-           "Hirose FH12-8S-0.5SH(55)", "", dict(CABLE, MP="GND")),
+    "J2": ("Connector_Generic_MountingPin:Conn_01x12_MountingPin", "Mainboard J4 (FFC 12P 0.5 mm, same side)",
+           "Connector_FFC-FPC:Hirose_FH12-12S-0.5SH_1x12-1MP_P0.50mm_Horizontal",
+           "Hirose FH12-12S-0.5SH(55)", "", {}),
     "U1": ("Regulator_Switching:TPS61222DCK", "TPS61222DCK", "Package_TO_SOT_SMD:SOT-363_SC-70-6",
            "TI TPS61222DCKR (5 V boost)", "",
            {1: "+3V3", 2: "+5V", 3: "GND", 4: "+5V", 5: "SW", 6: "VLCD_EN"}),
@@ -79,88 +86,100 @@ PARTS = {
     "C4": ("Device:C", "100nF", C0402, "Samsung CL05B104KO5NNNC", "C1525", {1: "+5V", 2: "GND"}),
     "C5": ("Device:C", "100nF", C0402, "Samsung CL05B104KO5NNNC", "C1525", {1: "DISP", 2: "GND"}),
 }
+# The five status LEDs (reverse-mount SK6812MINI-E, the mainboard's footprint), a chain fed from the
+# mainboard's Caps Lock LED: D1 (layer), then D2-D5 (battery 25/50/75/100 %). Each has its own 100 nF.
+for i, name in enumerate(LED_NAMES):
+    din = "LED_DIN" if i == 0 else "LED_D%d" % i
+    dout = None if i == 4 else "LED_D%d" % (i + 1)
+    PARTS["D%d" % (i + 1)] = ("LED:SK6812MINI-E", "SK6812MINI-E (%s)" % name, LED_FP, "OPSCO SK6812MINI-E",
+                             "C5149201", {1: "GND", 2: din, 3: "LED_VDD", 4: dout})
+    PARTS["C%d" % (i + 6)] = ("Device:C", "100nF", C0402, "Samsung CL05B104KO5NNNC", "C1525",
+                             {1: "LED_VDD", 2: "GND"})
 
 # Board placement: x, y, rotation, side ("B" = bottom). Mainboard coordinates.
-BOARD_OUTLINE = (311.0, 69.2, 332.0, 103.2)     # x0, y0, x1, y1: the case's screen-board pocket
+# The board hangs from the case under the glass (KiCad x 308 to 351, y 63 to 126) and its LEDs: it does not
+# touch the mainboard, which floats with the plate. Its top edge stays below the radio's antenna (the
+# mainboard's U1, KiCad x 322-326, y 74-84).
+BOARD_OUTLINE = (309.0, 88.0, 349.0, 135.0)     # x0, y0, x1, y1
 BOARD_CORNER_R = 1.0
 THICKNESS = 0.8
-CABLE_XY = (327.9, 94.9)                         # J2 here = J4 on the mainboard, the same x and y
+LED_X0, LED_PITCH, LED_Y = 314.559, 7.5, 130.5   # the case's light holes (unchanged from mainboard rev 1.2)
 PLACE = {
     # The panel's FPC leaves its long edge on the left (in portrait) and folds back under the glass into J1,
     # whose mouth faces -x (see README, "Panel tail").
-    "J1": (316.6, 93.7, None, "B"),
-    "J2": (CABLE_XY[0], CABLE_XY[1], None, "B"),          # orientation set so the mouth faces -x
-    # Others: (x, y, (pad, dx, dy), "B"): the rotation is the one that puts that pad on the (dx, dy) side
+    "J1": (314.6, 110.6, None, "B"),
+    "J2": (None, None, None, "B"),                        # straight over the mainboard's J4, mouth facing +x
     # the boost, above the sockets
-    "U1": (319.5, 84.0, 180, "B"),                        # VIN top right, EN top left
-    "L1": (315.85, 84.0, ("2", 1, 0), "B"),
-    "C1": (322.3, 83.4, ("1", 0, -1), "B"),
-    "C2": (317.9, 86.6, ("1", 1, 0), "B"),
-    "R1": (326.5, 88.6, ("1", 1, 0), "B"),
-    # the panel's own capacitors, below the signal bundle
-    "C5": (321.0, 97.7, ("1", 0, -1), "B"),
-    "C3": (320.6, 101.2, ("1", 0, -1), "B"),
-    "C4": (322.1, 101.2, ("1", 0, -1), "B"),
+    "U1": (330.5, 96.0, 180, "B"),
+    "L1": (326.85, 96.0, ("2", 1, 0), "B"),
+    "C1": (333.3, 95.4, ("1", 0, -1), "B"),
+    "C2": (328.9, 98.6, ("1", 1, 0), "B"),
+    "R1": (334.5, 99.0, ("1", 1, 0), "B"),
+    # the panel's own capacitors, beside J1
+    "C5": (318.6, 104.6, ("1", 0, -1), "B"),
+    "C3": (317.6, 117.2, ("1", 0, -1), "B"),
+    "C4": (319.1, 117.2, ("1", 0, -1), "B"),
 }
+for i in range(5):
+    x = LED_X0 + LED_PITCH * i
+    PLACE["D%d" % (i + 1)] = (x, LED_Y, 90, "B")
+    PLACE["C%d" % (i + 6)] = (x, 125.9, 180, "B")
+
+
+def cable_map():
+    """J2 pin -> net. J2 sits straight over the mainboard's J4, both mouths facing +x, and a same-side FFC
+    loops between them (C shape), so each conductor keeps its y: J2's pad at a given y gets the net of J4's
+    pad at that y."""
+    import pcbnew
+    main = pcbnew.LoadBoard(MAINBOARD)
+    j4 = main.FindFootprintByReference("J4")
+    j4pads = {p.GetNumber(): p.GetPosition() for p in j4.Pads() if p.GetNumber().isdigit()}
+    tmp = pcbnew.BOARD()
+    fp = _load_fp(PARTS["J2"][2])
+    tmp.Add(fp)
+    _place_mouth(fp, pcbnew.ToMM(j4.GetPosition().x) + J2_DX, pcbnew.ToMM(j4.GetPosition().y), "B", +1)
+    out = {}
+    for p in fp.Pads():
+        if not p.GetNumber().isdigit():
+            continue
+        y = p.GetPosition().y
+        n4 = min(j4pads, key=lambda k: abs(j4pads[k].y - y))
+        assert abs(j4pads[n4].y - y) < 1000, "J2 and J4 pads don't line up"
+        out[int(p.GetNumber())] = MAINBOARD_J4[int(n4)]
+    PARTS["J2"][5].update(out)
+    PARTS["J2"][5]["MP"] = "GND"
+    PLACE["J2"] = (pcbnew.ToMM(j4.GetPosition().x) + J2_DX, pcbnew.ToMM(j4.GetPosition().y), None, "B")
+    return out
+
+
+def _load_fp(fpid):
+    import pcbnew
+    lib, name = fpid.split(":")
+    path = os.path.join(HERE, "..", "Dachshund70", "lib", lib + ".pretty") if lib == "Dachshund70" \
+        else os.path.join(FPDIR, lib + ".pretty")
+    fp = pcbnew.FootprintLoad(path, name)
+    fp.SetFPIDAsString(fpid)
+    return fp
+
+
+def _place_mouth(fp, x, y, side, sign):
+    """FH12 with its mouth (the actuator, +y in the library footprint) toward sign*x: pads on the other side."""
+    import pcbnew
+    fp.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(x), pcbnew.FromMM(y)))
+    if side == "B" and not fp.IsFlipped():
+        fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+    for r in (90, 270):
+        fp.SetOrientationDegrees(r)
+        ps = [p for p in fp.Pads() if p.GetNumber() == "1"]
+        if (pcbnew.ToMM(ps[0].GetPosition().x) - x) * sign < 0:
+            return
+    raise SystemExit("no orientation")
 
 
 # ---------------------------------------------------------------- routing
-# Hand-routed (two layers). Every part is on B.Cu; F.Cu, under the panel, is a ground pour that also carries
-# three hops: SCLK over SI (the one crossing), +5V from the boost to the panel socket, and the boost enable.
-# (net, layer, width, [(x, y), ...])
-J1X = 318.45                                     # J1's pad row
-J2X = 329.75                                     # J2's pad row
-ROUTES = [
-    # signals: right from the panel socket, then down a staircase into the FFC socket under its body
-    ("SI", "B", 0.2, [(J1X, 91.95), (324.6, 91.95), (324.6, 94.15), (J2X, 94.15)]),
-    ("SCLK", "B", 0.2, [(J1X, 91.45), (319.75, 91.45), (320.2, 91.0)]),
-    ("SCLK", "F", 0.2, [(320.2, 91.0), (323.3, 93.3)]),
-    ("SCLK", "B", 0.2, [(323.3, 93.3), (323.3, 94.65), (J2X, 94.65)]),
-    ("SCS", "B", 0.2, [(J1X, 92.45), (322.0, 92.45), (322.0, 95.15), (J2X, 95.15)]),
-    ("EXTCOMIN", "B", 0.2, [(J1X, 92.95), (321.5, 92.95), (321.5, 95.65), (J2X, 95.65)]),
-    ("DISP", "B", 0.2, [(J1X, 93.45), (321.0, 93.45), (321.0, 96.15), (J2X, 96.15)]),
-    ("DISP", "B", 0.2, [(321.0, 96.15), (321.0, 97.22)]),                       # C5
-    # boost enable: J2 pin 1, R1's pull-up, U1's EN
-    ("VLCD_EN", "B", 0.2, [(J2X, 96.65), (324.3, 96.65), (323.6, 97.3)]),
-    ("VLCD_EN", "F", 0.2, [(323.6, 97.3), (324.2, 96.7), (324.2, 89.4), (325.0, 88.6)]),
-    ("VLCD_EN", "B", 0.2, [(325.0, 88.6), (325.99, 88.6)]),
-    ("VLCD_EN", "F", 0.2, [(325.0, 88.6), (325.0, 82.3), (324.0, 81.3), (319.6, 81.3), (318.663, 82.5)]),
-    ("VLCD_EN", "B", 0.2, [(318.663, 82.5), (318.663, 83.35)]),
-    # 3V3: up from J2 under its body, to R1, then along the top to U1's VIN, C1 and L1
-    ("+3V3", "B", 0.3, [(J2X, 93.15), (328.6, 93.15), (328.6, 81.8), (314.7, 81.8), (314.7, 82.65)]),
-    ("+3V3", "B", 0.3, [(328.6, 88.6), (327.01, 88.6)]),
-    ("+3V3", "B", 0.3, [(320.337, 83.35), (320.337, 81.8)]),
-    ("+3V3", "B", 0.3, [(322.3, 82.625), (322.3, 81.8)]),
-    # boost
-    ("SW", "B", 0.4, [(318.663, 84.0), (317.0, 84.0)]),
-    ("+5V", "B", 0.2, [(320.337, 84.0), (319.5, 84.0), (319.5, 84.65), (318.663, 84.65)]),   # FB to VOUT
-    ("+5V", "B", 0.3, [(318.663, 84.65), (318.663, 86.6), (319.85, 86.6)]),
-    # 5 V over to the panel socket (pins 6-8 = J1 pads 5-3) and its capacitors
-    ("+5V", "F", 0.3, [(319.85, 86.6), (319.3, 87.15), (319.3, 93.6), (320.3, 94.45)]),
-    ("+5V", "B", 0.25, [(J1X, 93.95), (319.6, 93.95), (319.6, 94.95), (J1X, 94.95)]),
-    ("+5V", "B", 0.25, [(J1X, 94.45), (320.3, 94.45)]),
-    ("+5V", "F", 0.3, [(320.3, 94.45), (319.4, 95.35), (319.4, 98.9), (320.3, 99.8), (321.35, 99.8)]),
-    ("+5V", "B", 0.25, [(321.35, 99.8), (320.6, 100.72)]),
-    ("+5V", "B", 0.25, [(321.35, 99.8), (322.1, 100.72)]),
-    # ground: pads to their vias
-    ("GND", "B", 0.25, [(J1X, 95.45), (319.6, 95.45), (319.6, 95.95), (J1X, 95.95)]),
-    ("GND", "B", 0.25, [(319.6, 95.95), (320.35, 96.0)]),
-    ("GND", "B", 0.3, [(J2X, 93.65), (331.05, 93.65)]),
-    ("GND", "B", 0.3, [(320.337, 84.65), (321.6, 85.3)]),
-    ("GND", "B", 0.3, [(322.3, 84.175), (321.6, 85.3)]),
-    ("GND", "B", 0.3, [(317.125, 86.6), (316.1, 87.2)]),
-]
-VIAS = [
-    ("SCLK", 320.2, 91.0), ("SCLK", 323.3, 93.3),
-    ("VLCD_EN", 323.6, 97.3), ("VLCD_EN", 325.0, 88.6), ("VLCD_EN", 318.663, 82.5),
-    ("+5V", 319.85, 86.6), ("+5V", 320.3, 94.45), ("+5V", 321.35, 99.8),
-    *[("GND", x, y) for x, y in (
-        (320.35, 96.0), (331.05, 93.65), (321.6, 85.3), (316.1, 87.2),
-        # stitching
-        (313.0, 72.0), (318.0, 72.0), (324.0, 72.0), (330.0, 72.0), (313.0, 79.0), (322.0, 78.5),
-        (330.5, 80.0), (330.5, 88.0), (313.0, 86.5), (316.5, 88.0), (313.0, 101.5), (325.0, 101.8),
-        (330.5, 101.8))],
-]
+# Two layers, every part on B.Cu; F.Cu (under the panel) is mostly ground pour. Routed with Freerouting
+# (2026-11-17) from the placement above, then copied here so the board regenerates: (net, layer, width, [(x, y), ...]).
+from screen_routes import ROUTES, VIAS  # noqa: E402
 
 
 # ---------------------------------------------------------------- s-expressions
@@ -338,6 +357,12 @@ def build_schematic(root_uuid, sheet_xy):
                           ["stroke", ["width", "0"], ["type", "default"]], ["uuid", q(U())]])
             instance("#PWR%03d" % pwr_n[0], "power:+3V3", fx, fy + 2.54, "+3V3", hide_ref=True)
             # the +3V3 symbol's pin points up, so it sits on the wire's lower end
+    # LED_VDD comes in on the cable too
+    fx, fy = 78.74, 30.48
+    instance("#FLG04", "power:PWR_FLAG", fx, fy, "PWR_FLAG", hide_ref=True)
+    items.append(["wire", ["pts", ["xy", "%.2f" % fx, "%.2f" % fy], ["xy", "%.2f" % fx, "%.2f" % (fy + 2.54)]],
+                  ["stroke", ["width", "0"], ["type", "default"]], ["uuid", q(U())]])
+    attach("LED_VDD", fx, fy + 2.54, 90)
     # and SW: U1's L pin is a power input, fed only through L1
     fx, fy = 66.04, 30.48
     instance("#FLG03", "power:PWR_FLAG", fx, fy, "PWR_FLAG", hide_ref=True)
@@ -346,9 +371,10 @@ def build_schematic(root_uuid, sheet_xy):
     attach("SW", fx, fy + 2.54, 90)
 
     notes = [
-        "Dachshund70 screen board: 5 V for the Sharp LS027B7DH01 memory LCD (U1, L1, C1, C2) and panel socket J1.",
-        "J2: 8-pin 0.5 mm FFC to the mainboard's J4 (same-side contacts). J2 pin n = J4 pin 9 - n.",
-        "J4-8 (VLCD_EN) enables U1; R1 holds it high. EXTMODE high: VCOM follows the EXTCOMIN pulse.",
+        "Dachshund70 screen board: 5 V for the Sharp LS027B7DH01 memory LCD (U1, L1, C1, C2), panel socket J1, status LEDs D1-D5.",
+        "J2: 12-pin 0.5 mm FFC to the mainboard's J4 (same-side contacts, C loop): J2 pin n = J4 pin 13 - n.",
+        "VLCD_EN (mainboard DISP_BUSY, P0.24) enables U1; R1 holds it high. EXTMODE high: VCOM follows the EXTCOMIN pulse.",
+        "LED_DIN is the data out of the mainboard's Caps Lock LED: D1 layer, D2-D5 battery 25/50/75/100 %.",
         "C3 (VDD), C4 (VDDA) and C5 (DISP) are the capacitors from Sharp's specification, next to J1.",
         "J1 pin n = panel pin 11 - n: the panel's tail folds back under the glass.",
     ]
@@ -358,8 +384,8 @@ def build_schematic(root_uuid, sheet_xy):
 
     sch = ["kicad_sch", ["version", "20260306"], ["generator", q("eeschema")], ["generator_version", q("10.0")],
            ["uuid", q(root_uuid)], ["paper", q("A4")],
-           ["title_block", ["title", q("Dachshund70 screen board")], ["date", q("2026-11-11")], ["rev", q("2.0")],
-            ["comment", "1", q("2.7in Sharp memory LCD (LS027B7DH01): 5 V boost, FPC socket, FFC to the mainboard")]],
+           ["title_block", ["title", q("Dachshund70 screen board")], ["date", q("2026-11-17")], ["rev", q("3.0")],
+            ["comment", "1", q("2.7in Sharp memory LCD (LS027B7DH01): 5 V boost, FPC socket, 5 status LEDs, FFC to the mainboard")]],
            ["lib_symbols"] + list(used_libs.values())]
     sch += items
     sch += [["sheet_instances", ["path", q("/"), ["page", q("1")]]], ["embedded_fonts", "no"]]
@@ -368,6 +394,8 @@ def build_schematic(root_uuid, sheet_xy):
 
 SHEET_XY = {
     "J1": (63.5, 101.6), "J2": (215.9, 76.2),
+    **{"D%d" % (i + 1): (63.5 + 30.48 * i, 152.4) for i in range(5)},
+    **{"C%d" % (i + 6): (63.5 + 30.48 * i, 172.72) for i in range(5)},
     "U1": (139.7, 63.5), "L1": (127.0, 50.8), "R1": (114.3, 76.2),
     "C1": (101.6, 63.5), "C2": (165.1, 63.5), "C3": (101.6, 116.84), "C4": (114.3, 116.84),
     "C5": (127.0, 116.84),
@@ -381,6 +409,7 @@ def main():
         m = re.search(r'\(uuid "([^"]+)"\)', open(sch_path, encoding="utf-8").read())
         root_uuid = m.group(1) if m else None
     root_uuid = root_uuid or U()
+    cable_map()
     sch, sym_uuids = build_schematic(root_uuid, SHEET_XY)
     with open(sch_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(dump(sch) + "\n")
@@ -417,9 +446,7 @@ def build_board(sym_uuids):
         return pcbnew.ToMM(ps[0].GetPosition().x), pcbnew.ToMM(ps[0].GetPosition().y)
 
     for ref, (lib_id, value, fpid, mpn, lcsc, pnets) in PARTS.items():
-        lib, name = fpid.split(":")
-        fp = pcbnew.FootprintLoad(os.path.join(FPDIR, lib + ".pretty"), name)
-        fp.SetFPIDAsString(fpid)
+        fp = _load_fp(fpid)
         fp.SetReference(ref)
         fp.SetValue(value)
         for fname, fval in (("MPN", mpn), ("LCSC", lcsc)):
@@ -432,12 +459,9 @@ def build_board(sym_uuids):
         x, y, rot, side = PLACE[ref]
         b.Add(fp)
         if ref in ("J1", "J2"):
-            # mouth (the actuator, +y in the library footprint) toward -x, so the pads end up on the +x side
-            place(fp, x, y, None, side)
-            for r in (90, 270):
-                fp.SetOrientationDegrees(r)
-                if pads_centre(fp, "1")[0] > x:
-                    break
+            # J1's mouth faces -x (the panel's tail comes round the board's left edge), J2's +x (the FFC's
+            # loop is right of the mainboard's edge)
+            _place_mouth(fp, x, y, side, -1 if ref == "J1" else +1)
         elif isinstance(rot, tuple):
             pad, dx, dy = rot
             place(fp, x, y, None, side)
@@ -455,7 +479,8 @@ def build_board(sym_uuids):
             key = int(num) if num.isdigit() else num
             n = pnets.get(key)
             if n is None:       # the schematic's name for a pin with a no-connect flag
-                n = "unconnected-(%s-Pin_%s-Pad%s)" % (ref, num, num)
+                n = ("unconnected-(%s-DOUT-Pad4)" % ref) if ref.startswith("D") else \
+                    "unconnected-(%s-Pin_%s-Pad%s)" % (ref, num, num)
             elif n not in POWER:
                 n = "/" + n     # local labels
             p.SetNet(net(n))
@@ -494,7 +519,7 @@ def build_board(sym_uuids):
         z.SetLocalClearance(pcbnew.FromMM(0.25))
         z.SetMinThickness(pcbnew.FromMM(0.2))
         z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)
-        z.SetPadConnection(pcbnew.ZONE_CONNECTION_THERMAL)
+        z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL)   # solid: reflowed, and the LED pads have little room
         z.SetThermalReliefGap(pcbnew.FromMM(0.3))
         z.SetThermalReliefSpokeWidth(pcbnew.FromMM(0.3))
         ol = z.Outline()
@@ -502,6 +527,32 @@ def build_board(sym_uuids):
         for (px, py) in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
             ol.Append(pcbnew.FromMM(px), pcbnew.FromMM(py))
         b.Add(z)
+
+    # keep-outs for tracks and vias: a 0.5 mm strip inside the outline (the board's copper-to-edge rule)
+    # and 0.3 mm round each LED's light cut-out, so the router keeps to the rules
+    def keepout(bx0, by0, bx1, by1, name):
+        k = pcbnew.ZONE(b)
+        k.SetIsRuleArea(True)
+        k.SetDoNotAllowTracks(True)
+        k.SetDoNotAllowVias(True)
+        k.SetDoNotAllowZoneFills(False)
+        k.SetDoNotAllowPads(False)
+        k.SetDoNotAllowFootprints(False)
+        k.SetLayerSet(pcbnew.LSET.AllCuMask())
+        k.SetZoneName(name)
+        kol = k.Outline()
+        kol.NewOutline()
+        for (px, py) in ((bx0, by0), (bx1, by0), (bx1, by1), (bx0, by1)):
+            kol.Append(pcbnew.FromMM(px), pcbnew.FromMM(py))
+        b.Add(k)
+    e = 0.5
+    keepout(x0, y0, x1, y0 + e, "edge strip")
+    keepout(x0, y1 - e, x1, y1, "edge strip")
+    keepout(x0, y0, x0 + e, y1, "edge strip")
+    keepout(x1 - e, y0, x1, y1, "edge strip")
+    for i in range(5):
+        lx = LED_X0 + LED_PITCH * i
+        keepout(lx - 2.0, LED_Y - 2.0, lx + 2.0, LED_Y + 2.0, "D%d light cut-out" % (i + 1))
 
     def nn(name):
         return net(name if name in POWER else "/" + name)
@@ -522,14 +573,43 @@ def build_board(sym_uuids):
         v.SetNet(nn(name))
         b.Add(v)
 
+    STITCH = 2.5
+    # ground stitching: a via on a 2.5 mm grid wherever one fits 0.25 mm clear of other nets' copper, the
+    # cut-outs and the edge, so both pours are one ground
+    b.BuildConnectivity()
+    gnd = net("GND")
+    others = [t for t in b.GetTracks() if t.GetNetCode() != gnd.GetNetCode()]
+    others += [p for f in b.GetFootprints() for p in f.Pads() if p.GetNetCode() != gnd.GetNetCode()]
+    keepouts = [z for z in b.Zones() if z.GetIsRuleArea()]
+    gx = x0 + 1.5
+    while gx < x1 - 1.0:
+        gy = y0 + 1.5
+        while gy < y1 - 1.0:
+            v = pcbnew.PCB_VIA(b)
+            v.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(gx), pcbnew.FromMM(gy)))
+            v.SetWidth(pcbnew.FromMM(0.6))
+            v.SetDrill(pcbnew.FromMM(0.3))
+            v.SetNet(gnd)
+            shape = v.GetEffectiveShape(pcbnew.F_Cu)
+            clear = pcbnew.FromMM(0.25)
+            hit = any(o.GetEffectiveShape(o.GetLayer() if o.GetClass() != "PAD" else pcbnew.B_Cu).Collide(shape, clear)
+                      for o in others)
+            hit = hit or any(z.Outline().Collide(v.GetPosition(), pcbnew.FromMM(0.3)) for z in keepouts)
+            hit = hit or any(f.HitTest(v.GetPosition()) and f.GetReference().startswith(("J", "U", "L"))
+                             for f in b.GetFootprints())
+            if not hit:
+                b.Add(v)
+            gy += STITCH
+        gx += STITCH
+
     # silkscreen on the parts' side
     t = pcbnew.PCB_TEXT(b)
-    t.SetText("Dachshund70\nscreen v2.0")
+    t.SetText("Dachshund70\nscreen v3.0")
     t.SetLayer(pcbnew.B_SilkS)
     t.SetMirrored(True)
     t.SetTextSize(pcbnew.VECTOR2I(pcbnew.FromMM(0.8), pcbnew.FromMM(0.8)))
     t.SetTextThickness(pcbnew.FromMM(0.12))
-    t.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(315.6), pcbnew.FromMM(100.6)))
+    t.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(340.0), pcbnew.FromMM(112.0)))
     b.Add(t)
 
     b.BuildConnectivity()

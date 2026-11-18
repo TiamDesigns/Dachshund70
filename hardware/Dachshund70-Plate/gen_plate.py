@@ -133,7 +133,8 @@ NOTCH_RADIUS = 2.0
 SIDEBAR_WEB = 2.0           # plate left above the right arrow's switch cutout
 
 # Light windows over the reverse-mount indicator LEDs.
-LED_REFS = ("D2", "D3", "D4", "D5", "D6", "D7")
+# From mainboard rev 1.3 the other five (layer, battery) are on the screen board, over the sidebar notch.
+LED_REFS = ("D2",)
 LED_WINDOW = 4.0
 # The mainboard outline's right edge (KiCad mm), not counting its LED tab.
 MAIN_RIGHT_EDGE = 337.5
@@ -190,10 +191,9 @@ def read_mainboard():
     board = pcbnew.LoadBoard(MAINBOARD)
 
     x0, y0, x1, y1 = bbox_mm(board.GetBoardEdgesBoundingBox())
-    # From rev 1.2 the mainboard runs on to x 349.3 under the indicator LEDs and the screen's
-    # circuit; the plate still stops at the old right edge.
-    if x1 > MAIN_RIGHT_EDGE + 0.1:
-        x1 = MAIN_RIGHT_EDGE + 0.025
+    # The plate's right edge is fixed by the case, not by the mainboard: rev 1.2 ran the board on
+    # to x 349.3, and rev 1.3 stops it at x 326 (the keys' edge plus the electronics column).
+    x1 = MAIN_RIGHT_EDGE + 0.025
     # Only the arcs in the outline's four corners count: the mainboard also has
     # an inner cut-out (the encoder cable slot) whose ends are arcs of their own.
     def in_corner(d):
@@ -482,12 +482,14 @@ def write(mb, geo):
     add_fill(board, geo["mask"], pcbnew.F_Mask)
 
     # Sock outlines on Cmts.User, for designing the case pockets.
+    # Keep each rectangle in a variable: Outline() returns a view into it, and a temporary
+    # SHAPE_POLY_SET can be freed before add_contour reads it (garbage points in the output).
     for xa, xb, yc in geo["socks"]:
-        add_contour(board, rect(min(xa, xb), yc - SOCK_WIDTH / 2, max(xa, xb), yc + SOCK_WIDTH / 2).Outline(0),
-                    pcbnew.Cmts_User, 0.1)
+        sock = rect(min(xa, xb), yc - SOCK_WIDTH / 2, max(xa, xb), yc + SOCK_WIDTH / 2)
+        add_contour(board, sock.Outline(0), pcbnew.Cmts_User, 0.1)
     for ya, yb, xc in geo["end_socks"]:
-        add_contour(board, rect(xc - SOCK_WIDTH / 2, min(ya, yb), xc + SOCK_WIDTH / 2, max(ya, yb)).Outline(0),
-                    pcbnew.Cmts_User, 0.1)
+        sock = rect(xc - SOCK_WIDTH / 2, min(ya, yb), xc + SOCK_WIDTH / 2, max(ya, yb))
+        add_contour(board, sock.Outline(0), pcbnew.Cmts_User, 0.1)
 
     # Bottom-side text faces the PCB, so it's never seen. "JLCJLCJLCJLC" tells
     # JLCPCB where to print its order number instead of somewhere on the top.

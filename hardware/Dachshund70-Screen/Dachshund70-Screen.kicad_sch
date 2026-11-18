@@ -6,9 +6,9 @@
 	(paper "A4")
 	(title_block
 		(title "Dachshund70 screen board")
-		(date "2026-11-11")
-		(rev "2.0")
-		(comment 1 "2.7in Sharp memory LCD (LS027B7DH01): 5 V boost, FPC socket, FFC to the mainboard")
+		(date "2026-11-17")
+		(rev "3.0")
+		(comment 1 "2.7in Sharp memory LCD (LS027B7DH01): 5 V boost, FPC socket, 5 status LEDs, FFC to the mainboard")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic_MountingPin:Conn_01x10_MountingPin"
@@ -703,7 +703,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector_Generic_MountingPin:Conn_01x08_MountingPin"
+		(symbol "Connector_Generic_MountingPin:Conn_01x12_MountingPin"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -714,7 +714,7 @@
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
 			(property "Reference" "J"
-				(at 0 10.16 0)
+				(at 0 15.24 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -723,8 +723,8 @@
 					)
 				)
 			)
-			(property "Value" "Conn_01x08_MountingPin"
-				(at 1.27 -12.7 0)
+			(property "Value" "Conn_01x12_MountingPin"
+				(at 1.27 -17.78 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -756,7 +756,7 @@
 					)
 				)
 			)
-			(property "Description" "Generic connectable mounting pin connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(property "Description" "Generic connectable mounting pin connector, single row, 01x12, script generated (kicad-library-utils/schlib/autogen/connector/)"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -789,16 +789,38 @@
 					)
 				)
 			)
-			(symbol "Conn_01x08_MountingPin_1_1"
+			(symbol "Conn_01x12_MountingPin_1_1"
 				(rectangle
-					(start -1.27 8.89)
-					(end 1.27 -11.43)
+					(start -1.27 13.97)
+					(end 1.27 -16.51)
 					(stroke
 						(width 0.254)
 						(type default)
 					)
 					(fill
 						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 12.827)
+					(end 0 12.573)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 10.287)
+					(end 0 10.033)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
 					)
 				)
 				(rectangle
@@ -889,10 +911,32 @@
 						(type none)
 					)
 				)
+				(rectangle
+					(start -1.27 -12.573)
+					(end 0 -12.827)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -15.113)
+					(end 0 -15.367)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
 				(polyline
 					(pts
-						(xy -1.016 -12.192)
-						(xy 1.016 -12.192)
+						(xy -1.016 -17.272)
+						(xy 1.016 -17.272)
 					)
 					(stroke
 						(width 0.1524)
@@ -903,7 +947,7 @@
 					)
 				)
 				(text "Mounting"
-					(at 0 -11.811 0)
+					(at 0 -16.891 0)
 					(effects
 						(font
 							(size 0.381 0.381)
@@ -911,7 +955,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 7.62 0)
+					(at -5.08 12.7 0)
 					(length 3.81)
 					(name "Pin_1"
 						(effects
@@ -929,7 +973,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 5.08 0)
+					(at -5.08 10.16 0)
 					(length 3.81)
 					(name "Pin_2"
 						(effects
@@ -947,7 +991,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 2.54 0)
+					(at -5.08 7.62 0)
 					(length 3.81)
 					(name "Pin_3"
 						(effects
@@ -965,7 +1009,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 0 0)
+					(at -5.08 5.08 0)
 					(length 3.81)
 					(name "Pin_4"
 						(effects
@@ -983,7 +1027,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -2.54 0)
+					(at -5.08 2.54 0)
 					(length 3.81)
 					(name "Pin_5"
 						(effects
@@ -1001,7 +1045,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -5.08 0)
+					(at -5.08 0 0)
 					(length 3.81)
 					(name "Pin_6"
 						(effects
@@ -1019,7 +1063,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -7.62 0)
+					(at -5.08 -2.54 0)
 					(length 3.81)
 					(name "Pin_7"
 						(effects
@@ -1037,7 +1081,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -10.16 0)
+					(at -5.08 -5.08 0)
 					(length 3.81)
 					(name "Pin_8"
 						(effects
@@ -1055,7 +1099,79 @@
 					)
 				)
 				(pin passive line
-					(at 0 -15.24 90)
+					(at -5.08 -7.62 0)
+					(length 3.81)
+					(name "Pin_9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -10.16 0)
+					(length 3.81)
+					(name "Pin_10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -12.7 0)
+					(length 3.81)
+					(name "Pin_11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -15.24 0)
+					(length 3.81)
+					(name "Pin_12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -20.32 90)
 					(length 3.048)
 					(name "MountPin"
 						(effects
@@ -1899,6 +2015,289 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "LED:SK6812MINI-E"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 5.08 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify right bottom)
+				)
+			)
+			(property "Value" "SK6812MINI-E"
+				(at 1.27 -5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Footprint" "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount"
+				(at 1.27 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Datasheet" "https://www.lcsc.com/datasheet/C5149201.pdf"
+				(at 2.54 -9.525 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+			)
+			(property "Description" "RGB LED with integrated controller"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "RGB LED NeoPixel addressable"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "LED?SK6812MINI?E?3.2x2.8mm?P1.5mm*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "SK6812MINI-E_0_0"
+				(text "RGB"
+					(at 2.286 -4.191 0)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+					)
+				)
+			)
+			(symbol "SK6812MINI-E_0_1"
+				(polyline
+					(pts
+						(xy 1.27 -2.54)
+						(xy 1.778 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -3.556)
+						(xy 1.778 -3.556)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 -1.524)
+						(xy 1.27 -2.54)
+						(xy 1.27 -2.032)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 -2.54)
+						(xy 1.27 -3.556)
+						(xy 1.27 -3.048)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.683 -1.016)
+						(xy 3.683 -3.556)
+						(xy 3.683 -4.064)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.699 -1.524)
+						(xy 2.667 -1.524)
+						(xy 3.683 -3.556)
+						(xy 4.699 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.699 -3.556)
+						(xy 2.667 -3.556)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 5.08 5.08)
+					(end -5.08 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "SK6812MINI-E_1_1"
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "DIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "VDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "DOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:PWR_FLAG"
 			(power global)
 			(pin_numbers
@@ -2028,7 +2427,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b5e2c4a5-bc01-474b-98ba-c5985eda118c")
+		(uuid "9ec5e55b-d77c-4079-8188-a0748e4bdb09")
 		(property "Reference" "J1"
 			(at 66.04 100.33 0)
 			(effects
@@ -2082,37 +2481,37 @@
 			)
 		)
 		(pin "1"
-			(uuid "5da483bb-23da-43d0-b926-f9a22c692cb9")
+			(uuid "ccd4d14e-6b44-4b36-903b-01cccb9993a8")
 		)
 		(pin "2"
-			(uuid "92a984df-5392-453b-80fc-3d1fb2d3e84a")
+			(uuid "f41532d2-295b-47b7-981f-42c62c1cce0c")
 		)
 		(pin "3"
-			(uuid "951c2687-a5b0-4227-b2a4-4ec8d5850709")
+			(uuid "d845df53-cd66-49f0-a9b7-66d188bde963")
 		)
 		(pin "4"
-			(uuid "ec6f67ad-1df0-499c-be34-639550ae2889")
+			(uuid "d8efefb7-9d83-4032-832a-d5a4ad5f3972")
 		)
 		(pin "5"
-			(uuid "bd32e9b3-e7af-46f9-a3a7-ac2c9d662081")
+			(uuid "6b359642-6ae8-4cbf-89e7-1956d7413874")
 		)
 		(pin "6"
-			(uuid "dc6b56e7-d3b5-4274-b782-77ba5226f22f")
+			(uuid "13908917-5e27-4a1a-8832-65c2af177f44")
 		)
 		(pin "7"
-			(uuid "78903f12-af66-4214-9cb8-b6d5e2ba412d")
+			(uuid "debeb41d-ea98-4668-92f4-8b380b99e358")
 		)
 		(pin "8"
-			(uuid "827b580d-59be-49bc-b341-6552e7aa73ff")
+			(uuid "bd5cdeec-7e48-4cff-b031-27e8825a9be3")
 		)
 		(pin "9"
-			(uuid "93c9a8b9-b02d-463e-bd0a-6915603c16d9")
+			(uuid "d54784e2-e049-48ec-8e81-88b7bdeb4306")
 		)
 		(pin "10"
-			(uuid "70dcf1bf-9944-4480-8462-d72e9707e5ff")
+			(uuid "2e65ca3b-68e3-48a3-9a6e-5ff8e70277e8")
 		)
 		(pin "MP"
-			(uuid "f79084ca-c8ff-4d76-b6b1-75ccf1676280")
+			(uuid "67123e34-cd5a-445c-90e8-04d9396dc5e9")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2132,7 +2531,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a25db107-bf2e-4d55-b00f-7261c44c7e75")
+		(uuid "169195f2-2de4-455d-897d-8962d465e1e3")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2142,7 +2541,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "e7f3f3f7-825e-4899-8c6a-49b6a752c4b2")
+		(uuid "9b942838-de5d-474e-a58a-d8ef81dc7322")
 		(property "Reference" "#PWR001"
 			(at 58.42 90.17 0)
 			(hide yes)
@@ -2179,7 +2578,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "bfb926a3-1252-405a-8bba-7f851d61d12d")
+			(uuid "d61e9df2-c550-43fb-b239-7e5a18b65d76")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2199,7 +2598,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1816a752-6c43-4f8a-a82c-35ded596b688")
+		(uuid "899538ff-e632-4a5e-ac12-37e9945b7521")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2209,7 +2608,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "26951764-f830-40f9-a9ba-51cc04fb1b06")
+		(uuid "a19cbf50-5836-44d3-b1ba-2c41437e739c")
 		(property "Reference" "#PWR002"
 			(at 58.42 92.71 0)
 			(hide yes)
@@ -2246,7 +2645,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "5a221e82-530a-4d1d-84af-8eeead8eee74")
+			(uuid "84b77408-b8cc-401b-8616-195a8ebe610b")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2266,7 +2665,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5a2ae370-5518-46db-b6a8-bb8aaf656ae8")
+		(uuid "99a70f55-5f9a-4acf-8ee2-8bc3247f6e4a")
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -2276,7 +2675,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "30676364-3978-4786-b27e-1c178f39ef56")
+		(uuid "0a49bb44-2be5-4c8d-97fe-07b1f960423b")
 		(property "Reference" "#PWR003"
 			(at 58.42 95.25 0)
 			(hide yes)
@@ -2313,7 +2712,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "add97287-d297-4729-9e12-a0114238aee4")
+			(uuid "b33f148e-af01-4230-b5ba-2a927fca7fa0")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2333,7 +2732,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3982658e-d203-42d8-88a9-11449ca9b84d")
+		(uuid "2dc6a958-f723-47bb-bd0c-146a8f59ced4")
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -2343,7 +2742,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "ccd7421d-7049-4536-aa0e-17f9a411111b")
+		(uuid "5d61ddc0-9348-41db-b0b7-2596c6cf661a")
 		(property "Reference" "#PWR004"
 			(at 58.42 97.79 0)
 			(hide yes)
@@ -2380,7 +2779,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "5e23a0c5-def4-4df9-a18c-cbe6647d3950")
+			(uuid "c2db6f1c-d4a2-4f54-ba37-3b108a3942d6")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2400,7 +2799,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6da28356-28ce-4933-a76c-84cba121b494")
+		(uuid "bf9a8a4f-a107-4bd7-9185-84d010ae417c")
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -2410,7 +2809,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "c5a60349-711e-463f-8792-312f32743467")
+		(uuid "43f6cdc0-d64c-4612-82fa-b9967b90b55d")
 		(property "Reference" "#PWR005"
 			(at 58.42 100.33 0)
 			(hide yes)
@@ -2447,7 +2846,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "dbdbde51-8a6d-4c71-a01e-f44af325ddac")
+			(uuid "8f069a26-d479-4f16-bdad-9cf1201ce833")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2466,7 +2865,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "6aa50ac4-a338-4ad9-a956-3505a26f1392")
+		(uuid "47f95086-a8a5-452d-98da-698421ca4d73")
 	)
 	(label "EXTCOMIN"
 		(at 58.42 106.68 180)
@@ -2476,7 +2875,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "fb5bf49a-76d0-4a00-a574-54a7ddbfa43a")
+		(uuid "e4ed34cd-6c21-49b1-a92a-a2aff7e38b81")
 	)
 	(label "SCS"
 		(at 58.42 109.22 180)
@@ -2486,7 +2885,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "aa1b8dca-2b88-4845-a35a-fee6a0df755c")
+		(uuid "76212bc2-8361-4f49-a260-ccdc3a96d057")
 	)
 	(label "SI"
 		(at 58.42 111.76 180)
@@ -2496,7 +2895,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "b20cb819-7d22-4bfd-bcc9-5b64c8df6ab6")
+		(uuid "21e5d4b9-e6b7-44d0-a853-51fd0432a810")
 	)
 	(label "SCLK"
 		(at 58.42 114.30 180)
@@ -2506,7 +2905,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "bc7056e6-9da8-4ecf-a058-a5f59f86615f")
+		(uuid "3dbbd708-488d-46f2-b2c6-4d4dc5570e63")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2516,7 +2915,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "7e3c6313-a6a7-41d0-a6c8-6cb12f118a47")
+		(uuid "13492a7f-32ba-4dec-a549-4fe7a71bd600")
 		(property "Reference" "#PWR006"
 			(at 66.04 118.11 0)
 			(hide yes)
@@ -2553,7 +2952,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "32151ebc-c2b3-4e64-8e17-cb426a85da5d")
+			(uuid "cb6493f1-ff37-4dd9-86fe-f9fee187b1d1")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2565,14 +2964,14 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic_MountingPin:Conn_01x08_MountingPin")
+		(lib_id "Connector_Generic_MountingPin:Conn_01x12_MountingPin")
 		(at 215.90 76.20 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "14f3ee6c-8b42-4c68-95d1-922ed125b022")
+		(uuid "4c1205f1-d3cb-4146-8326-f8e176884eb5")
 		(property "Reference" "J2"
 			(at 218.44 74.93 0)
 			(effects
@@ -2581,7 +2980,7 @@
 				)
 			)
 		)
-		(property "Value" "Mainboard J4 (FFC 8P 0.5 mm, same side)"
+		(property "Value" "Mainboard J4 (FFC 12P 0.5 mm, same side)"
 			(at 218.44 77.47 0)
 			(effects
 				(font
@@ -2589,7 +2988,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-8S-0.5SH_1x08-1MP_P0.50mm_Horizontal"
+		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-12S-0.5SH_1x12-1MP_P0.50mm_Horizontal"
 			(at 215.90 76.20 0)
 			(hide yes)
 			(effects
@@ -2607,7 +3006,7 @@
 				)
 			)
 		)
-		(property "MPN" "Hirose FH12-8S-0.5SH(55)"
+		(property "MPN" "Hirose FH12-12S-0.5SH(55)"
 			(at 215.90 76.20 0)
 			(hide yes)
 			(effects
@@ -2626,31 +3025,43 @@
 			)
 		)
 		(pin "1"
-			(uuid "f16172da-7897-49ff-b58d-73aaf77cf8c8")
+			(uuid "ae310529-436c-48a8-a609-e91924c7af5b")
 		)
 		(pin "2"
-			(uuid "40e12f63-bffe-4495-bd47-fed6cb6ee831")
+			(uuid "b096e9ac-d891-4a36-832a-97f26f191cd8")
 		)
 		(pin "3"
-			(uuid "c108d700-ab49-486a-a8a0-3fac0283c4e9")
+			(uuid "ff4db1bb-2a70-45c9-bd3b-dc9027b78369")
 		)
 		(pin "4"
-			(uuid "e9929551-d1c6-43d5-904e-c050b3b69779")
+			(uuid "0f6aad55-bef1-4563-9411-6ed6529346f4")
 		)
 		(pin "5"
-			(uuid "650283f0-5705-4319-9a19-e1366559a95f")
+			(uuid "b94da743-d4bf-49d8-9279-2ace7d1a1698")
 		)
 		(pin "6"
-			(uuid "9edbe422-4791-409a-8acd-dd5e67a27e10")
+			(uuid "135e9ea4-9f6c-4d2f-abdc-1e2ea90c527a")
 		)
 		(pin "7"
-			(uuid "eebac78d-6c71-4100-a205-50cfbf98d01d")
+			(uuid "ad1ba3d7-ea3e-40c0-b8e0-f6d2a7b461cb")
 		)
 		(pin "8"
-			(uuid "46d5e4e4-3c6a-4f72-afd1-c9b083683a3b")
+			(uuid "bcc4cbe2-a97a-4e19-9300-6962a001845f")
+		)
+		(pin "9"
+			(uuid "dcf7f13e-28fe-4538-8013-4c83fa056aba")
+		)
+		(pin "10"
+			(uuid "8d3ab92e-f54c-458b-a18d-5edd477880fd")
+		)
+		(pin "11"
+			(uuid "67c8bc8a-c564-4f1f-9152-1496d9ff7e3f")
+		)
+		(pin "12"
+			(uuid "e26610e3-c457-4619-b25b-a55b8462ae03")
 		)
 		(pin "MP"
-			(uuid "152429d9-d052-4c35-b1d1-93321764f410")
+			(uuid "27843e1b-6e8e-43fb-80d6-99758927cde2")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2661,88 +3072,28 @@
 			)
 		)
 	)
-	(label "VLCD_EN"
-		(at 210.82 68.58 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "87bb1e95-5c69-43f2-9ab3-e1dc2dcd2612")
-	)
-	(label "DISP"
-		(at 210.82 71.12 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "15c84d55-01fd-408d-b057-38324c1a0900")
-	)
-	(label "EXTCOMIN"
-		(at 210.82 73.66 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a08d51b8-4614-4fc8-b3f5-3976e1b31674")
-	)
-	(label "SCS"
-		(at 210.82 76.20 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "ea270898-eb52-4307-a0f5-f2d38e2d905c")
-	)
-	(label "SCLK"
-		(at 210.82 78.74 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "bd73ec5c-b9ac-4f43-8f58-23d3d3194188")
-	)
-	(label "SI"
-		(at 210.82 81.28 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "6887a119-0963-408a-8563-7db0197528d4")
-	)
 	(wire
 		(pts
-			(xy 210.82 83.82)
-			(xy 208.28 83.82)
+			(xy 210.82 63.50)
+			(xy 208.28 63.50)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f8798680-584a-4435-a0c2-6f729a479ac2")
+		(uuid "813e1cd3-43e9-4bed-bb1a-8e189cd61d19")
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 208.28 83.82 0)
+		(lib_id "power:+3V3")
+		(at 208.28 63.50 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "3d96f792-a931-4f3c-857c-b66e1915d767")
+		(uuid "0be6b520-5993-45c7-8fdc-c37639748478")
 		(property "Reference" "#PWR007"
-			(at 210.82 82.55 0)
+			(at 210.82 62.23 0)
 			(hide yes)
 			(effects
 				(font
@@ -2750,8 +3101,8 @@
 				)
 			)
 		)
-		(property "Value" "GND"
-			(at 210.82 85.09 0)
+		(property "Value" "+3V3"
+			(at 210.82 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2759,7 +3110,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 208.28 83.82 0)
+			(at 208.28 63.50 0)
 			(hide yes)
 			(effects
 				(font
@@ -2768,7 +3119,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 208.28 83.82 0)
+			(at 208.28 63.50 0)
 			(hide yes)
 			(effects
 				(font
@@ -2777,7 +3128,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "d239c605-251b-46d0-b2fe-e6e0df5fde30")
+			(uuid "3c17fcd5-a54a-43c4-91c7-5777bef9a913")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -2788,6 +3139,143 @@
 			)
 		)
 	)
+	(label "VLCD_EN"
+		(at 210.82 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e869ace9-378f-4600-9e19-9cc899381184")
+	)
+	(label "SCLK"
+		(at 210.82 68.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8ef13261-7107-48de-af21-1f68275eca16")
+	)
+	(label "SI"
+		(at 210.82 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a74d3436-f80b-4523-ac83-3248c145138a")
+	)
+	(label "SCS"
+		(at 210.82 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "443236c6-7903-4674-b913-19a3c436444d")
+	)
+	(label "EXTCOMIN"
+		(at 210.82 76.20 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1c7383a9-9a19-4b89-a4fb-6699e9d3fb9f")
+	)
+	(label "DISP"
+		(at 210.82 78.74 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8128f244-1aa1-442c-8dc9-3bbfb2e93b9b")
+	)
+	(wire
+		(pts
+			(xy 210.82 81.28)
+			(xy 208.28 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fc4b1e27-d1ba-4839-9153-38309c44d5ca")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 208.28 81.28 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "fd9aa661-6a09-474b-b6b3-4314990e8d78")
+		(property "Reference" "#PWR008"
+			(at 210.82 80.01 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.82 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 208.28 81.28 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 208.28 81.28 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "0db67569-de96-4896-a32e-0bdd434ace03")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR008")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_DIN"
+		(at 210.82 83.82 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "54c8f0b5-d67b-45fc-82e4-6da4f694d541")
+	)
 	(wire
 		(pts
 			(xy 210.82 86.36)
@@ -2797,18 +3285,18 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0d03204f-633e-4a0a-bab8-6dc3fb601890")
+		(uuid "be937155-e933-4822-85b0-bfc5c9afaae8")
 	)
 	(symbol
-		(lib_id "power:+3V3")
+		(lib_id "power:GND")
 		(at 208.28 86.36 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "19ca7b51-d174-40da-8841-3a187c29fd71")
-		(property "Reference" "#PWR008"
+		(uuid "fe2023ee-7b84-44ff-af25-d696a8a36451")
+		(property "Reference" "#PWR009"
 			(at 210.82 85.09 0)
 			(hide yes)
 			(effects
@@ -2817,7 +3305,7 @@
 				)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "GND"
 			(at 210.82 87.63 0)
 			(effects
 				(font
@@ -2844,28 +3332,48 @@
 			)
 		)
 		(pin "1"
-			(uuid "9bd0b3a3-5d27-433f-b39e-013148bad9ea")
+			(uuid "3b90b7b9-aebe-47ea-9752-985a6777c520")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR008")
+					(reference "#PWR009")
 					(unit 1)
 				)
 			)
 		)
 	)
+	(label "LED_VDD"
+		(at 210.82 88.90 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8d1148c6-eb99-4f34-b1b5-0112901abc8f")
+	)
+	(label "LED_VDD"
+		(at 210.82 91.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8602f67c-4431-45c8-a76e-fe4149ee567a")
+	)
 	(symbol
 		(lib_id "power:GND")
-		(at 215.90 91.44 0)
+		(at 215.90 96.52 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "1b3dd56b-8ba3-4183-a383-9941aac692f1")
-		(property "Reference" "#PWR009"
-			(at 218.44 90.17 0)
+		(uuid "c1b2f9e1-bbe1-4fcd-8f2a-1fc9bad96fbc")
+		(property "Reference" "#PWR010"
+			(at 218.44 95.25 0)
 			(hide yes)
 			(effects
 				(font
@@ -2874,7 +3382,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 218.44 92.71 0)
+			(at 218.44 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2882,7 +3390,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 215.90 91.44 0)
+			(at 215.90 96.52 0)
 			(hide yes)
 			(effects
 				(font
@@ -2891,7 +3399,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 215.90 91.44 0)
+			(at 215.90 96.52 0)
 			(hide yes)
 			(effects
 				(font
@@ -2900,12 +3408,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "a15a7ae3-74a5-49df-82e0-e302c0161df8")
+			(uuid "14160734-24ac-45ff-83f0-b6acafcfeff0")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR009")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -2919,7 +3427,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8db1bab5-fc97-4977-bd85-b0f4655012b7")
+		(uuid "f8fb2431-fb63-4306-85b6-0f04b352f171")
 		(property "Reference" "U1"
 			(at 142.24 62.23 0)
 			(effects
@@ -2973,22 +3481,22 @@
 			)
 		)
 		(pin "1"
-			(uuid "4a42e492-8ca2-4710-9d4b-187b48bd21ce")
+			(uuid "c6e91e0d-bb27-4697-b35f-5047cd75aba8")
 		)
 		(pin "2"
-			(uuid "882cb596-1a71-40c6-8270-adce19f7349f")
+			(uuid "5022582c-3e38-4aa9-92f5-2b8851bd5b44")
 		)
 		(pin "3"
-			(uuid "a3bf02cf-203f-47ad-a337-4a42f2fb8c9e")
+			(uuid "efe536f3-4a75-43ba-b716-4f7b1356f5e7")
 		)
 		(pin "4"
-			(uuid "481ec163-f56b-443c-b2b9-a3eb37c886a5")
+			(uuid "3be13207-6fc3-4013-a67f-2f416230b8ce")
 		)
 		(pin "5"
-			(uuid "8f8cd5bd-4b6e-407c-a83a-c20682defa0a")
+			(uuid "ce2eca2a-74ac-4116-83d2-f990a2838b62")
 		)
 		(pin "6"
-			(uuid "76aafdb7-79a5-4a72-86a5-894318d6b055")
+			(uuid "33db0c26-19fd-46c5-8a88-97e9c9fbdbb6")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -3008,7 +3516,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5dbe7cb3-a345-4112-aca8-ac32b99a0da4")
+		(uuid "5b959801-502f-4baa-9af6-49de5cb9cf5c")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -3018,8 +3526,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "f53bc87b-12b8-4376-ac23-bc3ecb0f2f95")
-		(property "Reference" "#PWR010"
+		(uuid "33b17b98-8a16-49f7-a528-2e15b9a4a3e1")
+		(property "Reference" "#PWR011"
 			(at 129.54 62.23 0)
 			(hide yes)
 			(effects
@@ -3055,12 +3563,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "da1666b2-90a9-4f6c-ad88-b74f1c0d3e30")
+			(uuid "a34de640-a05e-4c49-8878-c98caf1e37ea")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR010")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -3075,7 +3583,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f8afbffb-c961-4fdc-8d82-12b8194e3d34")
+		(uuid "42917fbe-a90b-4394-a63a-3c375592eaf7")
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -3085,8 +3593,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "483738ca-96b9-4a34-a2a6-3af101773f9f")
-		(property "Reference" "#PWR011"
+		(uuid "796731b9-fc94-4e13-ada8-2195ad4a0d3e")
+		(property "Reference" "#PWR012"
 			(at 154.94 64.77 0)
 			(hide yes)
 			(effects
@@ -3122,12 +3630,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5bd299d2-7e8f-43f1-b502-0a32f75ce5b6")
+			(uuid "8fc3abc6-7c34-4c3a-88bf-9ba4c024e77a")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR011")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -3141,8 +3649,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "eb2636b4-525c-460d-b7c1-b107898f86f2")
-		(property "Reference" "#PWR012"
+		(uuid "f582a1b0-791d-4027-8e49-04ba8dc4e8ae")
+		(property "Reference" "#PWR013"
 			(at 142.24 69.85 0)
 			(hide yes)
 			(effects
@@ -3178,12 +3686,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "3ed4390a-790d-43b0-8009-f6e9a63883ec")
+			(uuid "9ad83fde-11da-4bb1-9ed3-7908a8df8aea")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR012")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -3198,7 +3706,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "777c4dc8-6267-4ed8-8414-5c539e958e68")
+		(uuid "8c4c0372-0d45-4186-b515-d6b8ee89dc45")
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -3208,8 +3716,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "a77cb468-e8d2-4c27-9220-c2c84995f879")
-		(property "Reference" "#PWR013"
+		(uuid "e3eeea20-5351-4373-9ac9-bc4d5faeb50d")
+		(property "Reference" "#PWR014"
 			(at 154.94 59.69 0)
 			(hide yes)
 			(effects
@@ -3245,12 +3753,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "00a2343b-5d0a-4140-b384-e95856c9bf74")
+			(uuid "ed07d890-a16c-40ff-bb81-7520fda04256")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR013")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -3264,7 +3772,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "5e32954c-3c3b-405e-812a-93f1157f2681")
+		(uuid "6d9391b9-2603-45a1-a845-14b228a0bde9")
 	)
 	(label "VLCD_EN"
 		(at 129.54 66.04 180)
@@ -3274,7 +3782,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "4f5d0369-2748-491d-9cf5-2083c0b6a9f7")
+		(uuid "8d99bce9-b425-4934-be8a-220761fb36d7")
 	)
 	(symbol
 		(lib_id "Device:L")
@@ -3284,7 +3792,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "41160c68-9ee9-4d36-8cd7-d44fd1e5c884")
+		(uuid "e5c9df73-8fee-4613-9450-bc487c851afa")
 		(property "Reference" "L1"
 			(at 129.54 49.53 0)
 			(effects
@@ -3338,10 +3846,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "0565da5e-a29f-4e59-80d5-a1468e95be28")
+			(uuid "cdfa7287-d1f0-44af-b1f8-61d0389f1ad4")
 		)
 		(pin "2"
-			(uuid "2c98b5a8-6348-4794-bf51-8889652bfa11")
+			(uuid "4bfac0da-c1e7-425a-86c7-231b8dec59bd")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -3360,8 +3868,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "857c39ec-b75f-4cd4-8b49-3a8f9ff851cc")
-		(property "Reference" "#PWR014"
+		(uuid "db613f42-ae13-4ef0-bc7d-4f5abec7ee9c")
+		(property "Reference" "#PWR015"
 			(at 129.54 45.72 0)
 			(hide yes)
 			(effects
@@ -3397,12 +3905,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "3884bb20-f38c-4b41-94e8-3f332e47f287")
+			(uuid "97c87b9e-49d1-4ba5-8c5f-14a20386e1dc")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR014")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -3416,7 +3924,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "9465feb8-847a-42db-af26-442f7dd4b3bd")
+		(uuid "b57bb3c3-cfcf-4e67-94d4-184dc901c8f6")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -3426,7 +3934,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "6a2c631f-6cc5-43b4-80b1-bef8d5854a98")
+		(uuid "4dbd3732-7172-479e-9f5c-4d52ed3d78f1")
 		(property "Reference" "R1"
 			(at 116.84 74.93 0)
 			(effects
@@ -3480,10 +3988,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "ac116c73-d5b5-404d-8b27-68beea445f56")
+			(uuid "a53d663d-cbcb-4bdd-bec0-ba6535b88c79")
 		)
 		(pin "2"
-			(uuid "8ef5e0f9-598e-455a-86a4-98b1087e97fd")
+			(uuid "4d615dee-3b03-4992-a8d0-32b17b3c208a")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -3502,8 +4010,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "db2e281f-bfae-4601-9831-32e990fd6637")
-		(property "Reference" "#PWR015"
+		(uuid "b7e78f0b-aead-48be-8336-cf277a2fe735")
+		(property "Reference" "#PWR016"
 			(at 116.84 71.12 0)
 			(hide yes)
 			(effects
@@ -3539,12 +4047,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "b050a9c6-3c86-4c0d-bc1e-7d81762657df")
+			(uuid "6d83f582-8508-4b97-9c7e-f1ec72648652")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR015")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -3558,7 +4066,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "23167ee8-2ec1-4911-8036-52a97569cafd")
+		(uuid "b05fe4f5-375a-4a2a-b541-2a68ee1b19d7")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -3568,7 +4076,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "926332bc-4cf9-4ceb-9ba1-0dbdf3d22974")
+		(uuid "f3e59fe5-de30-471c-b05e-0ec266781f5b")
 		(property "Reference" "C1"
 			(at 104.14 62.23 0)
 			(effects
@@ -3622,10 +4130,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c96a67f9-9e79-47ab-9544-1d170cb48bcc")
+			(uuid "4384bf25-d07a-45da-9d02-2c8b5552bf06")
 		)
 		(pin "2"
-			(uuid "7f12cde0-ac42-4b75-b054-f281377395cd")
+			(uuid "0bc1f445-0836-431d-815e-4a885a5614b8")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -3644,8 +4152,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "606d7719-2934-41c7-94dd-0c7d14a286d7")
-		(property "Reference" "#PWR016"
+		(uuid "56cfd576-d0a4-4ccc-9de3-a83878421f64")
+		(property "Reference" "#PWR017"
 			(at 104.14 58.42 0)
 			(hide yes)
 			(effects
@@ -3681,12 +4189,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "8252ea8b-8165-4f0a-876c-7d5c5ff0eb1f")
+			(uuid "d89c895e-b85c-457d-9048-8f29147697b3")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR016")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -3700,8 +4208,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "2cf7995c-243a-47a2-b016-9bf50f9b915e")
-		(property "Reference" "#PWR017"
+		(uuid "c5786b5f-fb24-427a-9e75-49389b23b7b6")
+		(property "Reference" "#PWR018"
 			(at 104.14 66.04 0)
 			(hide yes)
 			(effects
@@ -3737,12 +4245,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "f789755f-6045-41fb-8b96-6477d4b3dee1")
+			(uuid "d3fb06f8-74ed-4785-a0ef-de52ef94a954")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR017")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -3756,7 +4264,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0fe53dee-16de-4a6b-9e90-7b6984943da7")
+		(uuid "58be45d9-6cd6-45c0-9d99-26da7fb70ff0")
 		(property "Reference" "C2"
 			(at 167.64 62.23 0)
 			(effects
@@ -3810,10 +4318,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "f7d34cea-ae9a-454e-8a61-7f63dcd82069")
+			(uuid "63809239-4cd5-469c-84ac-de6515ba97f2")
 		)
 		(pin "2"
-			(uuid "e8c58ce2-e58c-4dce-8e54-7e87717298f4")
+			(uuid "7b71d90e-1a12-4aa0-a411-48a9350befd9")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -3832,8 +4340,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "7244d04e-d174-4a74-8731-6a196f560461")
-		(property "Reference" "#PWR018"
+		(uuid "4a17574a-41ec-4314-b573-3ea8327a8207")
+		(property "Reference" "#PWR019"
 			(at 167.64 58.42 0)
 			(hide yes)
 			(effects
@@ -3869,12 +4377,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "03cc6858-702c-4b2a-9566-42b21f70ebd0")
+			(uuid "928aa5fe-58c8-41bf-a075-cda514762b6c")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR018")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
@@ -3888,8 +4396,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "3054c7fc-4346-4a70-92d1-91a44f92cd67")
-		(property "Reference" "#PWR019"
+		(uuid "f5d87d88-5a5d-4f16-be2e-832cf95119c7")
+		(property "Reference" "#PWR020"
 			(at 167.64 66.04 0)
 			(hide yes)
 			(effects
@@ -3925,12 +4433,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "eae68882-2d33-4df9-9eaa-c7cce2e4a263")
+			(uuid "df902b53-7883-46ed-9a34-b49b9c095475")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR019")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -3944,7 +4452,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "af35b83a-de89-49d2-b988-341b669e3188")
+		(uuid "08672171-4481-47e6-8182-39822d71bf84")
 		(property "Reference" "C3"
 			(at 104.14 115.57 0)
 			(effects
@@ -3998,10 +4506,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "92c04273-06a1-481b-91d7-1b4bf26324e9")
+			(uuid "afd9616e-e152-47b6-b96e-39b2fba629a5")
 		)
 		(pin "2"
-			(uuid "42f2179f-40b9-4419-9b11-db2f2893347c")
+			(uuid "99e05ce4-d87b-4a9e-9230-864f67f454ac")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -4020,8 +4528,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "1e47ea43-7ad8-4bc1-8912-a4d477752f7c")
-		(property "Reference" "#PWR020"
+		(uuid "477c39ab-a684-4202-8b29-edf54b8e0f6c")
+		(property "Reference" "#PWR021"
 			(at 104.14 111.76 0)
 			(hide yes)
 			(effects
@@ -4057,12 +4565,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "43eb22fe-4de7-4a5e-8674-8de5cee61e97")
+			(uuid "e2f83c93-bdf2-4f79-a7b3-5857f3a526ea")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR020")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -4076,8 +4584,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "964b075c-8d09-49cd-80a0-7dfd982b6a01")
-		(property "Reference" "#PWR021"
+		(uuid "8b280193-3277-48b3-ad9e-b5cb5e86489c")
+		(property "Reference" "#PWR022"
 			(at 104.14 119.38 0)
 			(hide yes)
 			(effects
@@ -4113,12 +4621,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "d2162982-03b2-4f4f-88f5-7954e43c7a95")
+			(uuid "cd41edea-343b-4a01-bf66-b5321abd8cb0")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR021")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -4132,7 +4640,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "4489376b-58c4-4c66-9c30-d3005dbda670")
+		(uuid "f388aa08-078c-4229-b43f-846439fbf997")
 		(property "Reference" "C4"
 			(at 116.84 115.57 0)
 			(effects
@@ -4186,10 +4694,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "190aa572-d22f-4e7b-84d3-0f7c4d9138df")
+			(uuid "5ec7a34e-21e3-4a52-9fe7-bd638bb51185")
 		)
 		(pin "2"
-			(uuid "985f0967-7ff8-4243-aeaf-873324f574a2")
+			(uuid "096be4e2-7fd8-456d-b14e-bc82e230708e")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -4208,8 +4716,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "06efb0f8-b797-4280-beb7-a471a391b628")
-		(property "Reference" "#PWR022"
+		(uuid "115df3f9-730b-442e-873b-6edc7cd70e8d")
+		(property "Reference" "#PWR023"
 			(at 116.84 111.76 0)
 			(hide yes)
 			(effects
@@ -4245,12 +4753,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "bb1f9573-6c6a-4a03-ab90-7004bf22c748")
+			(uuid "c19c578b-706b-4b07-9d13-a860f9179cdd")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR022")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -4264,8 +4772,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "6c8a2400-23eb-4f9d-966c-2ca30ed85182")
-		(property "Reference" "#PWR023"
+		(uuid "2a4852f4-a1c2-47de-b20b-362284314221")
+		(property "Reference" "#PWR024"
 			(at 116.84 119.38 0)
 			(hide yes)
 			(effects
@@ -4301,12 +4809,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "266c2cfe-649a-49bd-8f23-9fa14f87ebbe")
+			(uuid "7dfaa4ad-07c3-4a24-a592-338f5c02addd")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR023")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -4320,7 +4828,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0161e29a-6987-4b58-9f3e-95f5fc238792")
+		(uuid "9f4ae911-2d41-4b51-9465-a05c1b404d5d")
 		(property "Reference" "C5"
 			(at 129.54 115.57 0)
 			(effects
@@ -4374,10 +4882,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "be6f4748-7154-45fe-9382-c2a187449918")
+			(uuid "f9f3cf79-751d-4fdc-b1d5-386c355d1c1f")
 		)
 		(pin "2"
-			(uuid "438d598a-09c6-424c-9a04-7a2086ac40a4")
+			(uuid "ff45ff75-f0d3-40ab-902f-1d06e81a1f75")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -4396,7 +4904,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "51f85d56-2a65-4c65-93f4-ca7955d3e23a")
+		(uuid "d91c21bf-69ad-42ed-b87b-7a5a6ad25137")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -4406,8 +4914,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "e023cc4f-e451-4ae4-a4f6-d5cf016f1e8b")
-		(property "Reference" "#PWR024"
+		(uuid "36b49689-c9a0-4314-aef0-9a7511a018a1")
+		(property "Reference" "#PWR025"
 			(at 129.54 119.38 0)
 			(hide yes)
 			(effects
@@ -4443,12 +4951,1556 @@
 			)
 		)
 		(pin "1"
-			(uuid "1cbcec99-74f6-40d6-aea8-39d1b070ef66")
+			(uuid "b38d6304-5e24-4720-9d18-64894adb5ad2")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR024")
+					(reference "#PWR025")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI-E")
+		(at 63.50 152.40 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "41dd0bb8-c285-479c-9303-9266ea0bdd6b")
+		(property "Reference" "D1"
+			(at 66.04 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI-E (Layer)"
+			(at 66.04 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Dachshund70:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount_Cutout3.4"
+			(at 63.50 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.50 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "OPSCO SK6812MINI-E"
+			(at 63.50 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5149201"
+			(at 63.50 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "917a0a4b-7208-4753-b8e1-c4b7d367334b")
+		)
+		(pin "2"
+			(uuid "7bce5f6b-5a60-4947-9c0d-53ff58efbbc4")
+		)
+		(pin "3"
+			(uuid "8fa37575-208f-4f10-ac24-f6a9c3bb5bfb")
+		)
+		(pin "4"
+			(uuid "5ccd81db-74e2-4f4f-a414-291924f2092e")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 63.50 160.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "cc8b531b-254f-468b-aba7-7d66535f4b42")
+		(property "Reference" "#PWR026"
+			(at 66.04 158.75 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 66.04 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.50 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.50 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b2d62609-4620-4f86-9213-9f6e9c300056")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR026")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_DIN"
+		(at 55.88 152.40 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "be0a1cb5-8ca3-4a98-b41a-3643b2219594")
+	)
+	(label "LED_VDD"
+		(at 63.50 144.78 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "94b62893-6ce3-4941-bd3d-ffc54e3a974d")
+	)
+	(label "LED_D1"
+		(at 71.12 152.40 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e46be94b-26cd-4c07-bb00-2c1774cb65ff")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 63.50 172.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ff19ede3-72b6-4969-9738-896756d94edf")
+		(property "Reference" "C6"
+			(at 66.04 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 66.04 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 63.50 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.50 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samsung CL05B104KO5NNNC"
+			(at 63.50 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 63.50 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3e7219d6-7b3a-4fc0-ac15-4d0d0059ce45")
+		)
+		(pin "2"
+			(uuid "fdde2bcb-5462-42f1-b120-de255f073565")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "C6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_VDD"
+		(at 63.50 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6fe2cc04-297a-49a3-93d6-d12aa19d6c76")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 63.50 176.53 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "61ffd908-bf5e-4582-a4f4-828b52d80205")
+		(property "Reference" "#PWR027"
+			(at 66.04 175.26 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 66.04 177.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.50 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.50 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1dac86d5-1ccc-4174-8dcb-ae4ec89330e9")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR027")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI-E")
+		(at 93.98 152.40 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b4de63e3-c057-4ac6-98db-9419b7e14d6c")
+		(property "Reference" "D2"
+			(at 96.52 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI-E (Battery 1)"
+			(at 96.52 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Dachshund70:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount_Cutout3.4"
+			(at 93.98 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 93.98 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "OPSCO SK6812MINI-E"
+			(at 93.98 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5149201"
+			(at 93.98 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2e38e4ce-e3f1-4119-8133-6f361d1a3191")
+		)
+		(pin "2"
+			(uuid "fbfb9efd-e817-4ecf-9c61-3a89d890dc61")
+		)
+		(pin "3"
+			(uuid "c23b962c-4b5f-4e5c-8814-705fb1b7e7b1")
+		)
+		(pin "4"
+			(uuid "84278af0-d5cb-4abd-b60c-be819eb97fb5")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "D2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 93.98 160.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "6d36be52-9151-40da-83a7-fd463e2c5ffd")
+		(property "Reference" "#PWR028"
+			(at 96.52 158.75 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 96.52 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 93.98 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 93.98 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "447f25a4-9807-4d65-b3e9-02f0b4cb1866")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR028")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_D1"
+		(at 86.36 152.40 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "07dd4d3f-be9e-4b51-9f68-2af5e0f6e570")
+	)
+	(label "LED_VDD"
+		(at 93.98 144.78 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b3b41cd1-c224-4db3-9876-2d89d07afea2")
+	)
+	(label "LED_D2"
+		(at 101.60 152.40 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fe6680a1-d819-4fcf-ba99-c8a263079a2a")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 93.98 172.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2f1f6354-fad4-4b7e-b38c-e0f57171fca2")
+		(property "Reference" "C7"
+			(at 96.52 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 96.52 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 93.98 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 93.98 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samsung CL05B104KO5NNNC"
+			(at 93.98 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 93.98 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "25d8b6c4-8d80-40f8-8411-84bc9de909c7")
+		)
+		(pin "2"
+			(uuid "9790affe-5513-40a9-a765-fc4690bffd3f")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "C7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_VDD"
+		(at 93.98 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "00a7a310-b285-4065-ae33-558bef03df7d")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 93.98 176.53 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "74c8d96f-2e29-451c-9766-b1f8872c4302")
+		(property "Reference" "#PWR029"
+			(at 96.52 175.26 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 96.52 177.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 93.98 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 93.98 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3675b6ce-e90c-4cef-bd18-641a4bc742d4")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR029")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI-E")
+		(at 124.46 152.40 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ed99a609-076b-4ad0-9d56-a5fd65f4f6ae")
+		(property "Reference" "D3"
+			(at 127.00 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI-E (Battery 2)"
+			(at 127.00 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Dachshund70:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount_Cutout3.4"
+			(at 124.46 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "OPSCO SK6812MINI-E"
+			(at 124.46 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5149201"
+			(at 124.46 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "76bf8254-e076-470a-94da-cb81bd8bc7b4")
+		)
+		(pin "2"
+			(uuid "6929d021-8bfe-4017-8967-21aaa05b7e23")
+		)
+		(pin "3"
+			(uuid "d0bc9648-d7e8-4f39-a975-bbd23e86ca91")
+		)
+		(pin "4"
+			(uuid "b0798775-84a5-4028-bfce-b662bc1a7321")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 124.46 160.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "097f0875-cc0b-4f8a-9ce4-775e55140eaf")
+		(property "Reference" "#PWR030"
+			(at 127.00 158.75 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 127.00 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c4f64a0c-dea9-4ac8-bf12-3feb5b4b000e")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR030")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_D2"
+		(at 116.84 152.40 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "77a1349d-eda6-417f-9172-00c9c09cc1c4")
+	)
+	(label "LED_VDD"
+		(at 124.46 144.78 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "24de95e6-3a43-4c43-83a3-61ac98a2ebb4")
+	)
+	(label "LED_D3"
+		(at 132.08 152.40 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dfe2c843-3771-4a98-8f11-731724a9200a")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 124.46 172.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ad9efcee-2ac4-4fa4-9e2b-eaab2d104ec1")
+		(property "Reference" "C8"
+			(at 127.00 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 127.00 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 124.46 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samsung CL05B104KO5NNNC"
+			(at 124.46 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 124.46 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "60974136-9253-4a7e-9ace-e96102dda1cc")
+		)
+		(pin "2"
+			(uuid "6734bfde-49dd-49fd-8199-3896393d6144")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "C8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_VDD"
+		(at 124.46 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "86aeef88-e6ed-41c4-8d05-907f4be745c9")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 124.46 176.53 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "bfc8526a-c6e0-4683-905b-ebba7e5af86b")
+		(property "Reference" "#PWR031"
+			(at 127.00 175.26 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 127.00 177.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c9bd57ad-5f97-4109-a07c-a7567ea5c608")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR031")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI-E")
+		(at 154.94 152.40 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0567b919-8c9c-4fb3-8232-7754dce36005")
+		(property "Reference" "D4"
+			(at 157.48 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI-E (Battery 3)"
+			(at 157.48 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Dachshund70:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount_Cutout3.4"
+			(at 154.94 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 154.94 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "OPSCO SK6812MINI-E"
+			(at 154.94 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5149201"
+			(at 154.94 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b4484af8-c33a-4d8e-a635-a41e04322bc0")
+		)
+		(pin "2"
+			(uuid "43f9793e-ccb2-49e3-8a6a-2df46ac7aac9")
+		)
+		(pin "3"
+			(uuid "8ac2520c-5a2a-44a2-b068-f8e48f728a7f")
+		)
+		(pin "4"
+			(uuid "036e9a04-b514-485c-8859-35c83337dec1")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 154.94 160.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "e207e208-d1f1-40df-9b87-f3881fbe00d4")
+		(property "Reference" "#PWR032"
+			(at 157.48 158.75 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 157.48 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 154.94 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 154.94 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5b0d4d19-af20-454f-ae8c-70fb0722a361")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR032")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_D3"
+		(at 147.32 152.40 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "680a005a-ed9a-4f16-8023-47284118f79f")
+	)
+	(label "LED_VDD"
+		(at 154.94 144.78 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c668c623-ebde-4961-a2cd-ad04ca39cb67")
+	)
+	(label "LED_D4"
+		(at 162.56 152.40 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bc7fe57c-4b74-45ea-8b51-a64871231b62")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 154.94 172.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ee87e8a2-6415-415c-9085-443f4ff2956e")
+		(property "Reference" "C9"
+			(at 157.48 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 157.48 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 154.94 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 154.94 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samsung CL05B104KO5NNNC"
+			(at 154.94 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 154.94 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "677375a5-4737-422f-ad11-7eee5c5f4736")
+		)
+		(pin "2"
+			(uuid "d76700ad-5a17-4b70-aed0-7dfd775753c4")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_VDD"
+		(at 154.94 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6346058d-cde9-47b1-85f0-59639526f72a")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 154.94 176.53 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "3b5e8c86-4267-4b7e-9443-61a22ce48dfb")
+		(property "Reference" "#PWR033"
+			(at 157.48 175.26 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 157.48 177.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 154.94 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 154.94 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bae34480-836c-4696-b4fa-6b08d68b2c33")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR033")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI-E")
+		(at 185.42 152.40 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f7e79848-9598-4645-8ab2-9ee55d54490a")
+		(property "Reference" "D5"
+			(at 187.96 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI-E (Battery 4)"
+			(at 187.96 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Dachshund70:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount_Cutout3.4"
+			(at 185.42 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "OPSCO SK6812MINI-E"
+			(at 185.42 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5149201"
+			(at 185.42 152.40 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "26e1ebcf-731d-4ead-a18a-10121b4a6a59")
+		)
+		(pin "2"
+			(uuid "70633648-3ffc-4997-a9cd-bd41cb11cd84")
+		)
+		(pin "3"
+			(uuid "ee68935e-6fc2-42e3-b665-f1fc20cc4a02")
+		)
+		(pin "4"
+			(uuid "1231e0cc-3342-49e2-9654-7a9ab8f9c596")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 185.42 160.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "57cba28c-77a4-4052-9c2f-39bf2a301072")
+		(property "Reference" "#PWR034"
+			(at 187.96 158.75 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 187.96 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 185.42 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 160.02 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f9d72cf1-8c4c-41d2-a2b5-3aa658090f03")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR034")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_D4"
+		(at 177.80 152.40 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "308f3b8e-bd6a-47b2-bcfe-2146b5e27b83")
+	)
+	(label "LED_VDD"
+		(at 185.42 144.78 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7939b0ba-f614-4916-a591-cd2c2d22836e")
+	)
+	(no_connect
+		(at 193.04 152.40)
+		(uuid "baecdefe-5af1-4345-a6a2-5638e537c2bc")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 185.42 172.72 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "54e83e79-4c6f-4e36-b491-49abb0b64fd8")
+		(property "Reference" "C10"
+			(at 187.96 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 187.96 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 185.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samsung CL05B104KO5NNNC"
+			(at 185.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 185.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f254ef97-04f6-4fbe-8cfa-53febdf0a725")
+		)
+		(pin "2"
+			(uuid "0376ef28-53f6-4fad-bcc3-25cca52af7a4")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "C10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "LED_VDD"
+		(at 185.42 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4b9cd227-657c-4c5c-bf23-7218cae585eb")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 185.42 176.53 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "4b73202e-686f-4a82-ab4b-055515c8e360")
+		(property "Reference" "#PWR035"
+			(at 187.96 175.26 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 187.96 177.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 185.42 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 185.42 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "294f4100-a0b6-4ee4-9cf9-d5590b1e83e4")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -4462,7 +6514,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "6061875e-9d36-4cb9-a07a-c6f558898605")
+		(uuid "69330ad8-66a2-405e-ae0e-205912487d0b")
 		(property "Reference" "#FLG01"
 			(at 43.18 29.21 0)
 			(hide yes)
@@ -4499,7 +6551,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "c129fa15-80e3-4b06-858b-4d7f766ce73b")
+			(uuid "f6080fb0-d5ba-4f48-8a69-0d5957b9aa3c")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -4519,7 +6571,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e96800cf-7864-4517-9594-8f47ef6093e9")
+		(uuid "291806ad-b58c-4e60-8389-0bdd04e9427f")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -4529,8 +6581,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "2b75ebf1-745f-4fb5-92d2-9630e6438a9a")
-		(property "Reference" "#PWR025"
+		(uuid "d68b7de9-8680-43b5-b612-04802fcc8ee4")
+		(property "Reference" "#PWR036"
 			(at 43.18 31.75 0)
 			(hide yes)
 			(effects
@@ -4566,12 +6618,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "510d2543-50d4-4edb-9f76-891cabd17eca")
+			(uuid "ee11bbc6-ef0f-4b18-8d5b-e5df99689936")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR025")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -4585,7 +6637,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "4cf2591e-b0ac-4e07-9da7-da155aee8f1f")
+		(uuid "95a90d6f-3c64-4d7d-9834-403e4ff0c1b6")
 		(property "Reference" "#FLG02"
 			(at 55.88 29.21 0)
 			(hide yes)
@@ -4622,7 +6674,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "751227a3-05e9-4a0a-b255-143add96724c")
+			(uuid "bf032133-0cea-4c1f-bad1-833134e9014e")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -4642,7 +6694,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "140b08d2-9f3c-450e-b442-dad14fba4b3a")
+		(uuid "4ad4a4e0-92f3-4c31-8f29-07b34ae1bca9")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -4652,8 +6704,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "f28d63ad-44d0-4a8d-acf0-45516c136f48")
-		(property "Reference" "#PWR026"
+		(uuid "1e0e8af2-5970-4e35-9669-03bc8bc99857")
+		(property "Reference" "#PWR037"
 			(at 55.88 31.75 0)
 			(hide yes)
 			(effects
@@ -4689,16 +6741,93 @@
 			)
 		)
 		(pin "1"
-			(uuid "7d0c062a-ecea-4a88-a3f2-c7a588b40843")
+			(uuid "de62057a-1c41-4d31-9da4-4d7394872011")
 		)
 		(instances
 			(project "Dachshund70-Screen"
 				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
-					(reference "#PWR026")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 78.74 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "75985c0a-f4e9-49e9-b48f-d1b0126ada63")
+		(property "Reference" "#FLG04"
+			(at 81.28 29.21 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 81.28 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 78.74 30.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 78.74 30.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a6be27ba-5257-46d6-b6b2-c883911c0b47")
+		)
+		(instances
+			(project "Dachshund70-Screen"
+				(path "/b7bf106d-48f1-4532-b076-d8175d35ba40"
+					(reference "#FLG04")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 78.74 30.48)
+			(xy 78.74 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b3e7832-59da-44fc-ab0f-a03653db7fea")
+	)
+	(label "LED_VDD"
+		(at 78.74 33.02 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "47bcf3bb-b421-4450-be4c-b76cb79a5988")
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
@@ -4708,7 +6837,7 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "025cc470-66bc-4edf-921b-24f07eacb37a")
+		(uuid "4bf6f383-c6ac-47d6-b7f6-cf2d4e560902")
 		(property "Reference" "#FLG03"
 			(at 68.58 29.21 0)
 			(hide yes)
@@ -4745,7 +6874,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "cc8a7eae-a86a-49d9-826e-1a4ac204db18")
+			(uuid "1540606e-b46a-45d3-b6eb-d5f33b762eb3")
 		)
 		(instances
 			(project "Dachshund70-Screen"
@@ -4765,7 +6894,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "bd5043ce-5be7-43e1-a089-76f1b11c6923")
+		(uuid "dea0e584-99ba-4870-8c55-6b163ca868f9")
 	)
 	(label "SW"
 		(at 66.04 33.02 270)
@@ -4775,9 +6904,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "0ffe24d5-48a9-4241-a117-7273817ab86d")
+		(uuid "665a0a6e-75df-4b15-883f-8f94bf16ca66")
 	)
-	(text "Dachshund70 screen board: 5 V for the Sharp LS027B7DH01 memory LCD (U1, L1, C1, C2) and panel socket J1."
+	(text "Dachshund70 screen board: 5 V for the Sharp LS027B7DH01 memory LCD (U1, L1, C1, C2), panel socket J1, status LEDs D1-D5."
 		(exclude_from_sim no)
 		(at 25.4 172.72 0)
 		(effects
@@ -4786,9 +6915,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "46c72c9a-6ff3-4392-9bf2-b3476c5d3dbb")
+		(uuid "04d8b1f6-1e9c-4922-ab9e-8c414eec4939")
 	)
-	(text "J2: 8-pin 0.5 mm FFC to the mainboard's J4 (same-side contacts). J2 pin n = J4 pin 9 - n."
+	(text "J2: 12-pin 0.5 mm FFC to the mainboard's J4 (same-side contacts, C loop): J2 pin n = J4 pin 13 - n."
 		(exclude_from_sim no)
 		(at 25.4 176.53 0)
 		(effects
@@ -4797,9 +6926,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "abcc5d7b-58ea-4860-9334-0075540d5212")
+		(uuid "5e6b4da9-690a-45a2-a7d9-196d63f56969")
 	)
-	(text "J4-8 (VLCD_EN) enables U1; R1 holds it high. EXTMODE high: VCOM follows the EXTCOMIN pulse."
+	(text "VLCD_EN (mainboard DISP_BUSY, P0.24) enables U1; R1 holds it high. EXTMODE high: VCOM follows the EXTCOMIN pulse."
 		(exclude_from_sim no)
 		(at 25.4 180.34 0)
 		(effects
@@ -4808,9 +6937,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "1f030544-dd59-4d54-9a2a-9e02b4456d50")
+		(uuid "4cd3f9af-99ce-43ee-9277-bcaf255307b9")
 	)
-	(text "C3 (VDD), C4 (VDDA) and C5 (DISP) are the capacitors from Sharp's specification, next to J1."
+	(text "LED_DIN is the data out of the mainboard's Caps Lock LED: D1 layer, D2-D5 battery 25/50/75/100 %."
 		(exclude_from_sim no)
 		(at 25.4 184.15 0)
 		(effects
@@ -4819,9 +6948,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "9c806b87-3cfc-440c-accc-d5a32d178322")
+		(uuid "c539f059-f3a7-4543-aa6c-3b4e54af2ea3")
 	)
-	(text "J1 pin n = panel pin 11 - n: the panel's tail folds back under the glass."
+	(text "C3 (VDD), C4 (VDDA) and C5 (DISP) are the capacitors from Sharp's specification, next to J1."
 		(exclude_from_sim no)
 		(at 25.4 187.96 0)
 		(effects
@@ -4830,7 +6959,18 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "a6b9587e-465f-4aaf-af3f-d0b1ff7c4ba3")
+		(uuid "38f6d37d-4cc7-42ae-ac36-7ece310aaba3")
+	)
+	(text "J1 pin n = panel pin 11 - n: the panel's tail folds back under the glass."
+		(exclude_from_sim no)
+		(at 25.4 191.77 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "60197a19-6c14-47b4-beb5-0a671bb82ae2")
 	)
 	(sheet_instances
 		(path "/"

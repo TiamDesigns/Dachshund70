@@ -40,14 +40,17 @@ LOG_MODULE_REGISTER(indicators, LOG_LEVEL_INF);
 /*
  * The chain, in data order. Must match the indicators in
  * boards/Dachshund70/keyboard.json (checked by host-lib's board tests).
+ * Caps Lock is on the mainboard and comes first; the layer LED and the
+ * battery gauge are on the screen board, after it on the cable, so a
+ * board without the screen board (the Lite) still has Caps Lock.
  */
 static const struct kb_led_def chain[] = {
+    {KB_LED_ROLE_CAPS, 0},
     {KB_LED_ROLE_LAYER, 0},
     {KB_LED_ROLE_BATTERY, 1},
     {KB_LED_ROLE_BATTERY, 2},
     {KB_LED_ROLE_BATTERY, 3},
     {KB_LED_ROLE_BATTERY, 4},
-    {KB_LED_ROLE_CAPS, 0},
 };
 BUILD_ASSERT(ARRAY_SIZE(chain) == STRIP_LEN, "indicator table must cover the LED chain");
 
