@@ -133,6 +133,11 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   left the heads proud). Heads now sit 0.3 below the face, which also covers anodize or e-coat. Back screws at the front
   row's x (105.03 pitch) and back feet at the front feet's x; back screws 2 and 3 go into bosses in the B2/B3 retainer
   pockets (R1.5 inner corners), and those retainers are notched. Old back holes, inserts and foot pockets filled.
+- v05: mainboard rev 1.4 and screen board rev 3.1 (PR #86) replace rev 1.3 / 3.0 in the Fusion model (their STEPs use the
+  case origin, KiCad 178.25, 99.55). Checked: J4 (FFC, back) and the screen board's J2 line up in y; the 12-way FFC loop
+  reaches x 159.4 and clears the plate, tray and rails. J5 (back, mouth +y) clears the battery by about 0.4-0.6 and its
+  cable runs into the encoder socket (mouth +x) through the board notch right of x 128. The battery JST PH touched the
+  floor by 0.25, so the bottom has a 0.75 pocket there. Cable and FFC bodies modelled; the old encoder cable is gone.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
