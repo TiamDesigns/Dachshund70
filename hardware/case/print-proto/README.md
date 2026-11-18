@@ -28,3 +28,4 @@ Copies in the project's shared files carry a version tag (`...-v01.stl`), bumped
 
 - v01 (2026-11-17): feet centred on the screw rows, 5 mm gasket room, plate R5.5, screen tray supported on all sides.
 - v02 (2026-11-18): bottom shell cleaned (wall band rebuilt, no slivers; USB-C bay and cable slot with vertical walls, no ledges); the screen rail and the encoder rail are separate printed parts, screwed to the base (encoder rail 2 × M2×8, screen rail 3 × M2×12, countersunk from the top, into the base).
+- v03 (2026-11-18): fitted to mainboard rev 1.3 and screen board rev 3.0 (PR #86): the screen tray has a window for the screen board (taped to the panel's back), the top shell a pocket for the board's front edge and LED row, and the LED light guide now sits on the board (s 19.55 up).

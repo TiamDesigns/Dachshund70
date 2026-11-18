@@ -126,6 +126,9 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - v02 bottom: the screen rail and the encoder rail are separate printed parts on the wall top (2 x M2x8 and 3 x M2x12
   countersunk into M2 inserts in the base); the wall band rebuilt from one section (no slivers on the inner wall); the
   strip in front of the USB-C bay solid to the wall top with a clean cable slot, so no ledges or overhangs there.
+- v03: mainboard rev 1.3 (board only) and screen board rev 3.0 from PR #86 in the case model, no contacts. Screen tray
+  window for the screen board, a pocket in top shell A for its front edge and LED row, the LED guide cut down to sit on
+  the board.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
