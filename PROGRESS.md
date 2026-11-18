@@ -129,6 +129,10 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - v03: mainboard rev 1.3 (board only) and screen board rev 3.0 from PR #86 in the case model, no contacts. Screen tray
   window for the screen board, a pocket in top shell A for its front edge and LED row, the LED guide cut down to sit on
   the board.
+- v04: bottom countersinks Ø6.6 × 90° (were about Ø5.8 and 1.9 deep, too small for a 6.0 DIN 7991 head; Tiam's PLA print
+  left the heads proud). Heads now sit 0.3 below the face, which also covers anodize or e-coat. Back screws at the front
+  row's x (105.03 pitch) and back feet at the front feet's x; back screws 2 and 3 go into bosses in the B2/B3 retainer
+  pockets (R1.5 inner corners), and those retainers are notched. Old back holes, inserts and foot pockets filled.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
