@@ -10334,7 +10334,7 @@
 		)
 		(uuid "4282d4a3-eeb2-44b1-8dce-3174918fe934")
 	)
-	(label "DISP_CLK"
+	(label "DISP_RST"
 		(at 350.52 302.26 180)
 		(effects
 			(font
@@ -10924,7 +10924,7 @@
 		)
 		(uuid "73aab554-7a60-430d-ab24-96de193ed290")
 	)
-	(label "DISP_RST"
+	(label "DISP_CLK"
 		(at 350.52 292.1 180)
 		(effects
 			(font
@@ -10964,7 +10964,7 @@
 		)
 		(uuid "74d0e1bd-7bc4-4207-84c4-09b8573a27a5")
 	)
-	(label "DISP_DC"
+	(label "DISP_DIN"
 		(at 350.52 294.64 180)
 		(effects
 			(font
@@ -11234,7 +11234,7 @@
 		)
 		(uuid "83ea2016-c0b7-4090-8503-0de065da9adf")
 	)
-	(label "DISP_DIN"
+	(label "DISP_DC"
 		(at 350.52 299.72 180)
 		(effects
 			(font

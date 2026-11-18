@@ -34,28 +34,30 @@ circuit onto the mainboard (rev 1.2), which rev 1.3 undoes.
 
 ## Cable
 
-Mainboard J4 and this board's J2 are both Hirose FH12-12S-0.5SH(55) (12-way, 0.5 mm). J4 is on the mainboard's
-top side at its right edge, mouth +x, pads at x 319.45, y 109.25 (pin 12) to 114.75 (pin 1). J2 is on this
-board's bottom side at the same y, 6 mm further right (pads at x 325.45), also mouth +x. The cable leaves J4,
-loops up and back into J2: a C-shaped loop past the mainboard's right edge (x 326).
+Mainboard J4 and this board's J2 are both Hirose FH12-12S-0.5SH(55) (12-way, 0.5 mm). From mainboard rev 1.4 both
+sit on the **bottom** of their boards, so JLC can assemble each board from one side. J4 is at the mainboard's right
+edge, mouth +x, pads at x 319.45, y 115.15 (pin 1) to 120.65 (pin 12). J2 is 6 mm further right (pads at x 325.45)
+at the same y, also mouth +x. The cable leaves J4, loops up and back into J2: a C-shaped loop past the mainboard's
+right edge (x 326).
 
-- Use a **0.5 mm pitch, 12-way FFC with contacts on the same side at both ends** (type A). Each conductor
-  keeps its y, so **J2 pin n = J4 pin 13 − n**. The schematics already account for that.
+- Use a **0.5 mm pitch, 12-way FFC with contacts on opposite sides at the two ends** (type B): both connectors
+  hang under their boards, and the loop turns the cable over. Each conductor keeps its y, so **J2 pin n = J4
+  pin n**. The schematics already account for that.
 - Length: set it from the case model (gap between the boards plus the loop), and buy a few lengths around it.
 
 | J4 pin (mainboard) | Mainboard net | MCU pin | J2 pin (screen) | Screen net | Panel pin |
 | --- | --- | --- | --- | --- | --- |
-| 1, 2 | LED_VDD | | 12, 11 | LED_VDD | |
-| 3 | GND | | 10 | GND | 9, 10 |
-| 4 | LED_DOUT (from D2) | (P0.06 via D2) | 9 | LED_DIN | |
-| 5 | GND | | 8 | GND | |
-| 6 | DISP_RST | P0.22 | 7 | DISP | 5 |
-| 7 | DISP_DC | P0.23 | 6 | EXTCOMIN | 4 |
-| 8 | DISP_CS | P0.20 | 5 | SCS (active high) | 3 |
-| 9 | DISP_DIN | P0.21 | 4 | SI | 2 |
-| 10 | DISP_CLK | P0.19 | 3 | SCLK | 1 |
-| 11 | DISP_BUSY | P0.24 | 2 | VLCD_EN (U1's EN) | |
-| 12 | +3V3 | | 1 | +3V3 (U1 input) | |
+| 1, 2 | LED_VDD | | 1, 2 | LED_VDD | |
+| 3 | GND | | 3 | GND | 9, 10 |
+| 4 | LED_DOUT (from D2) | (P0.06 via D2) | 4 | LED_DIN | |
+| 5 | GND | | 5 | GND | |
+| 6 | DISP_CLK | P0.19 | 6 | SCLK | 1 |
+| 7 | DISP_DIN | P0.21 | 7 | SI | 2 |
+| 8 | DISP_CS | P0.20 | 8 | SCS (active high) | 3 |
+| 9 | DISP_DC | P0.23 | 9 | EXTCOMIN | 4 |
+| 10 | DISP_RST | P0.22 | 10 | DISP | 5 |
+| 11 | DISP_BUSY | P0.24 | 11 | VLCD_EN (U1's EN) | |
+| 12 | +3V3 | | 12 | +3V3 (U1 input) | |
 
 Panel pins 6, 7 (VDDA, VDD) and 8 (EXTMODE) are on +5V. Without the screen board (the Lite), J4 can be left
 unfitted: Caps Lock still works, and the firmware is built without a display overlay.
@@ -71,10 +73,15 @@ unfitted: Caps Lock still works, and the firmware is built without a display ove
 
 ## Routing
 
-Autorouted with Freerouting 1.9, then hand-fixed. The routes are in `screen_routes.py` (`ROUTES`, `VIAS`), which
-`gen_screen.py` reads. Power (+5V, +3V3, LED_VDD) is 0.3 mm; signals 0.2 mm; vias 0.6/0.3 mm. The LED chain and
-power are routed by hand. The ground pours on both sides are stitched on a 2.5 mm grid; 0.5 mm keep-outs run
-along the edges and ±2 mm around each LED cut-out (`Dachshund70-Screen.kicad_dru` allows 0.3 mm from the cut-outs).
+Autorouted with Freerouting 1.9 around a hand-routed LED chain, then hand-fixed (2026-11-18, rev 3.1). The routes
+are in `screen_routes.py` (`ROUTES`, `VIAS`), which `gen_screen.py` reads. Power (+5V, +3V3, LED_VDD) and signals
+are 0.2 mm (the FH12's 0.5 mm pitch leaves no room for wider tracks at its pads), ground links 0.25 mm; vias
+0.6/0.3 mm. The LED chain runs its data on the front between LEDs and LED_VDD as one front row at y 123.8, so the
+back stays free around the LEDs' ground pads. There is no ground pour over the mainboard's antenna (rule area
+x 318-332, y 120-135, "over the mainboard antenna"): the ground pads of D2, D3, C7, C8 and J2's lower tab reach the
+pour on short tracks. There is no stitching grid: eight ground vias, by the connectors, the boost and the LEDs, join
+the two pours (and the pour boxed in by J1's tracks); 0.5 mm keep-outs run along the edges and ±2 mm around each LED cut-out
+(`Dachshund70-Screen.kicad_dru` allows 0.3 mm from the cut-outs).
 
 ## Status
 
@@ -85,8 +92,8 @@ Checked in KiCad only; nothing is ordered, made or fitted. ERC: 0. DRC with sche
 
 - **Panel FPC: pin 1, contact face, pitch, tail position and length**, from Sharp's Figure 8-1 or a panel in
   hand. If pin 1 lands at the bottom of J1, swap `SOCKET` in `gen_screen.py` and reroute.
-- **FFC contact sides**: with a type-A cable in a C loop, J4 (top side) and J2 (bottom side) must face the
-  cable's contacts at each end.
+- **FFC contact sides**: with a type-B cable in a C loop, J4 and J2 (both on the bottom of their boards) must
+  each face the cable's contacts.
 - **LCSC numbers:** J1/J2 (FH12-10S, FH12-12S), U1 (TPS61222DCKR) and L1 (FNR3015S4R7MT) are still blank.
 - **Case:** the board pocket, the cable loop past the mainboard's right edge and the LED holes at x 314.56 +
   7.5 i, y 130.5.

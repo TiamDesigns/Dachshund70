@@ -33,7 +33,7 @@ landscape size. The Sharp driver (`sharp,ls0xx`) has no rotation at all.
 From mainboard rev 1.3 the Sharp LS027B7DH01 is on its own screen board
 (`hardware/Dachshund70-Screen/`, rev 3.0) with its 5 V boost and the layer and
 battery LEDs. A 12-way 0.5 mm FFC joins it to the mainboard's J4: 1-2 LED_VDD,
-3 GND, 4 LED data, 5 GND, 6 RST, 7 DC, 8 CS, 9 DIN, 10 CLK, 11 BUSY, 12 3V3
+3 GND, 4 LED data, 5 GND, 6 CLK, 7 DIN, 8 CS, 9 DC, 10 RST, 11 BUSY, 12 3V3
 (the screen board README has the full table). Without a screen board (the
 Lite) the firmware is built with no display overlay.
 

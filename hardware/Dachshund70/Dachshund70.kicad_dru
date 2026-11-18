@@ -37,3 +37,9 @@
   (constraint silk_clearance)
   (severity ignore)
   (condition "(A.memberOfFootprint('SW604') || A.memberOfFootprint('SW606') || A.memberOfFootprint('SW615') || A.memberOfFootprint('ST4') || A.memberOfFootprint('ST5') || A.memberOfFootprint('ST6')) && (B.memberOfFootprint('SW604') || B.memberOfFootprint('SW606') || B.memberOfFootprint('SW615') || B.memberOfFootprint('ST4') || B.memberOfFootprint('ST5') || B.memberOfFootprint('ST6'))"))
+
+# Rev 1.4: J1's and J5's ground pins sit between signal pins at 1.0 mm pitch,
+# where the pour can't fit two thermal spokes; connect them to the pour solid.
+(rule "Connector ground pins solid"
+  (constraint zone_connection solid)
+  (condition "A.Type == 'Pad' && A.NetName == 'GND' && (A.memberOfFootprint('J1') || A.memberOfFootprint('J5'))"))

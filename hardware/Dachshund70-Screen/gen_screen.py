@@ -1,6 +1,6 @@
 """Generate the Dachshund70 screen board: schematic, then the routed board.
 
-The screen board (rev 3.0) carries a 2.7" Sharp memory LCD (LS027B7DH01,
+The screen board (rev 3.1) carries a 2.7" Sharp memory LCD (LS027B7DH01,
 400 x 240): the panel's 5 V supply (a TPS61222 boost from the mainboard's
 3V3), its 10-pin FPC socket, the five status LEDs (layer, battery gauge) and
 a 12-pin FFC socket for the cable to the mainboard's J4.
@@ -44,11 +44,11 @@ PANEL = {
     10: "GND",
 }
 
-# The mainboard's J4 (rev 1.3): a 12-pin FH12 on its top side at the right-hand edge, mouth facing +x. Its
+# The mainboard's J4 (rev 1.4): a 12-pin FH12 on its bottom side at the right-hand edge, mouth facing +x. Its
 # net names are the e-paper ones (DIN, CLK, CS, DC, RST, BUSY); here they carry the Sharp's SI, SCLK, SCS,
 # EXTCOMIN, DISP and the boost enable, plus the LED chain (data out of the Caps Lock LED, and its supply).
-MAINBOARD_J4 = {1: "LED_VDD", 2: "LED_VDD", 3: "GND", 4: "LED_DIN", 5: "GND", 6: "DISP", 7: "EXTCOMIN", 8: "SCS",
-                9: "SI", 10: "SCLK", 11: "VLCD_EN", 12: "+3V3"}
+MAINBOARD_J4 = {1: "LED_VDD", 2: "LED_VDD", 3: "GND", 4: "LED_DIN", 5: "GND", 6: "SCLK", 7: "SI", 8: "SCS",
+                9: "EXTCOMIN", 10: "DISP", 11: "VLCD_EN", 12: "+3V3"}
 # J2 sits 6 mm right of J4 (the FFC's loop is longer by that), so there is room between J1 and J2 for the
 # signals, which keep the same top-to-bottom order in both sockets.
 J2_DX = 6.0
@@ -68,7 +68,7 @@ PARTS = {
     "J1": ("Connector_Generic_MountingPin:Conn_01x10_MountingPin", "Memory LCD (FPC 10P 0.5 mm)",
            "Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal",
            "Hirose FH12-10S-0.5SH(55)", "", dict(SOCKET, MP="GND")),
-    "J2": ("Connector_Generic_MountingPin:Conn_01x12_MountingPin", "Mainboard J4 (FFC 12P 0.5 mm, same side)",
+    "J2": ("Connector_Generic_MountingPin:Conn_01x12_MountingPin", "Mainboard J4 (FFC 12P 0.5 mm, opposite side)",
            "Connector_FFC-FPC:Hirose_FH12-12S-0.5SH_1x12-1MP_P0.50mm_Horizontal",
            "Hirose FH12-12S-0.5SH(55)", "", {}),
     "U1": ("Regulator_Switching:TPS61222DCK", "TPS61222DCK", "Package_TO_SOT_SMD:SOT-363_SC-70-6",
@@ -103,6 +103,8 @@ for i, name in enumerate(LED_NAMES):
 BOARD_OUTLINE = (309.0, 88.0, 349.0, 135.0)     # x0, y0, x1, y1
 BOARD_CORNER_R = 1.0
 THICKNESS = 0.8
+# Copper-pour keep-out over the mainboard's radio antenna (its band plus 4 mm each side)
+ANTENNA_CLEAR = ((318.0, 120.0), (332.0, 120.0), (332.0, 135.0), (318.0, 135.0))
 LED_X0, LED_PITCH, LED_Y = 314.559, 7.5, 130.5   # the case's light holes (unchanged from mainboard rev 1.2)
 PLACE = {
     # The panel's FPC leaves its long edge on the left (in portrait) and folds back under the glass into J1,
@@ -127,7 +129,7 @@ for i in range(5):
 
 
 def cable_map():
-    """J2 pin -> net. J2 sits straight over the mainboard's J4, both mouths facing +x, and a same-side FFC
+    """J2 pin -> net. J2 sits straight over the mainboard's J4, both mouths facing +x, and an opposite-side FFC
     loops between them (C shape), so each conductor keeps its y: J2's pad at a given y gets the net of J4's
     pad at that y."""
     import pcbnew
@@ -372,7 +374,7 @@ def build_schematic(root_uuid, sheet_xy):
 
     notes = [
         "Dachshund70 screen board: 5 V for the Sharp LS027B7DH01 memory LCD (U1, L1, C1, C2), panel socket J1, status LEDs D1-D5.",
-        "J2: 12-pin 0.5 mm FFC to the mainboard's J4 (same-side contacts, C loop): J2 pin n = J4 pin 13 - n.",
+        "J2: 12-pin 0.5 mm FFC to the mainboard's J4 (opposite-side contacts, type B, C loop): J2 pin n = J4 pin n.",
         "VLCD_EN (mainboard DISP_BUSY, P0.24) enables U1; R1 holds it high. EXTMODE high: VCOM follows the EXTCOMIN pulse.",
         "LED_DIN is the data out of the mainboard's Caps Lock LED: D1 layer, D2-D5 battery 25/50/75/100 %.",
         "C3 (VDD), C4 (VDDA) and C5 (DISP) are the capacitors from Sharp's specification, next to J1.",
@@ -553,6 +555,23 @@ def build_board(sym_uuids):
     for i in range(5):
         lx = LED_X0 + LED_PITCH * i
         keepout(lx - 2.0, LED_Y - 2.0, lx + 2.0, LED_Y + 2.0, "D%d light cut-out" % (i + 1))
+    # no ground pour over the mainboard radio's antenna (mainboard U1, KiCad x 322.25-326.5, y 124.2-136.6,
+    # at the mainboard's right edge, a few mm below this board): tracks and the LED chain's vias may cross
+    # it, pours may not
+    k = pcbnew.ZONE(b)
+    k.SetIsRuleArea(True)
+    k.SetDoNotAllowTracks(False)
+    k.SetDoNotAllowVias(False)
+    k.SetDoNotAllowZoneFills(True)
+    k.SetDoNotAllowPads(False)
+    k.SetDoNotAllowFootprints(False)
+    k.SetLayerSet(pcbnew.LSET.AllCuMask())
+    k.SetZoneName("over the mainboard antenna")
+    kol = k.Outline()
+    kol.NewOutline()
+    for (px, py) in ANTENNA_CLEAR:
+        kol.Append(pcbnew.FromMM(px), pcbnew.FromMM(py))
+    b.Add(k)
 
     def nn(name):
         return net(name if name in POWER else "/" + name)
@@ -573,38 +592,12 @@ def build_board(sym_uuids):
         v.SetNet(nn(name))
         b.Add(v)
 
-    STITCH = 2.5
-    # ground stitching: a via on a 2.5 mm grid wherever one fits 0.25 mm clear of other nets' copper, the
-    # cut-outs and the edge, so both pours are one ground
-    b.BuildConnectivity()
-    gnd = net("GND")
-    others = [t for t in b.GetTracks() if t.GetNetCode() != gnd.GetNetCode()]
-    others += [p for f in b.GetFootprints() for p in f.Pads() if p.GetNetCode() != gnd.GetNetCode()]
-    keepouts = [z for z in b.Zones() if z.GetIsRuleArea()]
-    gx = x0 + 1.5
-    while gx < x1 - 1.0:
-        gy = y0 + 1.5
-        while gy < y1 - 1.0:
-            v = pcbnew.PCB_VIA(b)
-            v.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(gx), pcbnew.FromMM(gy)))
-            v.SetWidth(pcbnew.FromMM(0.6))
-            v.SetDrill(pcbnew.FromMM(0.3))
-            v.SetNet(gnd)
-            shape = v.GetEffectiveShape(pcbnew.F_Cu)
-            clear = pcbnew.FromMM(0.25)
-            hit = any(o.GetEffectiveShape(o.GetLayer() if o.GetClass() != "PAD" else pcbnew.B_Cu).Collide(shape, clear)
-                      for o in others)
-            hit = hit or any(z.Outline().Collide(v.GetPosition(), pcbnew.FromMM(0.3)) for z in keepouts)
-            hit = hit or any(f.HitTest(v.GetPosition()) and f.GetReference().startswith(("J", "U", "L"))
-                             for f in b.GetFootprints())
-            if not hit:
-                b.Add(v)
-            gy += STITCH
-        gx += STITCH
+    # no stitching grid (Tiam, 2026-11-18: no vias sprinkled over the board); the few ground vias in
+    # screen_routes.VIAS join the pour areas that tracks box in, so both pours are one ground
 
     # silkscreen on the parts' side
     t = pcbnew.PCB_TEXT(b)
-    t.SetText("Dachshund70\nscreen v3.0")
+    t.SetText("Dachshund70\nscreen v3.1")
     t.SetLayer(pcbnew.B_SilkS)
     t.SetMirrored(True)
     t.SetTextSize(pcbnew.VECTOR2I(pcbnew.FromMM(0.8), pcbnew.FromMM(0.8)))

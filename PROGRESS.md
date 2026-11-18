@@ -6,6 +6,33 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Mainboard rev 1.4 and screen board rev 3.1: everything on the back, cleaner vias and pour (2026-11-18)
+
+Tiam: J4 and J5 were on the wrong side for single-sided JLC assembly, both boards were speckled with vias, the
+ground pour was patchy, the mainboard's fillets were inconsistent, and there should be more board right of Delete.
+
+- J4 (FH12-12S, screen FFC) and J5 (encoder, JST SH) are on the back of the mainboard: J4 pads x 319.45,
+  y 115.15-120.65, mouth +x; J5 at the column top, mouth -y. Every mainboard part is now on the back.
+- J4 pin order changed so the bus to the radio module runs straight with no crossings: 1-2 LED_VDD, 3 GND, 4 LED
+  data, 5 GND, 6 CLK, 7 DIN, 8 CS, 9 DC, 10 RST, 11 BUSY, 12 3V3. The MCU pins are unchanged. The screen board's
+  J2 follows it (J2 pin n = J4 pin n); both sockets hang under their boards, so the cable is a type B FFC
+  (contacts on opposite sides at the two ends). `board.json`, the board README and the display README are updated.
+- Outline: the ear right of SW113 (Delete) now reaches x 306.2 (was 304), the case's limit; every outer corner is
+  R5 and every inside corner R1. The plate regenerates unchanged.
+- Test points TP1-5 at y 70 and TP6-9 at y 73.5 (x 306-318), labelled on the back silk; the board name block
+  moved to x 313.6.
+- The column was rerouted: Freerouting 1.9 for most nets, a hand-routed J4-to-U1 bus (one via, on DC, whose pin is
+  in the module's inner row), and a grid router for the encoder and SWD lines. ENC_A takes a long way round
+  (about 15 vias), because the column has no free lane left for it.
+- Ground: the 169-via stitching grid is gone. The pours now keep 0.2 mm from other copper (was 0.3) so they flow
+  between more tracks, SMD ground pads join the pour with thermal spokes (J1's and J5's ground pins solid, see
+  the .kicad_dru), and each cut-off pour area of 4 mm2 or more gets one via (91 ground vias on the whole board,
+  was 199; 346 vias in all, was 468). Both pours now cover the board with no missing areas.
+- Screen board rev 3.1: rerouted for the new pin order; no stitching grid, 8 ground vias join the pour areas;
+  no pour over the mainboard's antenna (rule area x 318-332, y 120-135).
+- Checks (kicad-cli 10, 2026-11-18): mainboard DRC 0 errors, 0 unconnected, schematic parity clean (only the
+  known ST4/ST6 co-located holes); screen board DRC 0 and 0; ERC 0 on both. Not ordered, not tested.
+
 ### Mainboard rev 1.3 and screen board rev 3.0: screen and LEDs off the mainboard (2026-11-17)
 
 Tiam: the mainboard moves with the plate's flex, so the screen goes back on its own board, with the five layer and
