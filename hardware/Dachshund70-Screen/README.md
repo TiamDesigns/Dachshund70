@@ -73,8 +73,9 @@ unfitted: Caps Lock still works, and the firmware is built without a display ove
 
 Autorouted with Freerouting 1.9, then hand-fixed. The routes are in `screen_routes.py` (`ROUTES`, `VIAS`), which
 `gen_screen.py` reads. Power (+5V, +3V3, LED_VDD) is 0.3 mm; signals 0.2 mm; vias 0.6/0.3 mm. The LED chain and
-power are routed by hand. The ground pours on both sides are stitched on a 2.5 mm grid; 0.5 mm keep-outs run
-along the edges and ±2 mm around each LED cut-out (`Dachshund70-Screen.kicad_dru` allows 0.3 mm from the cut-outs).
+power are routed by hand. The ground pours on both sides are joined by
+only the vias they need (`hardware/gnd_vias.py` picks them from a 2.5 mm grid of places that fit, one per pour
+island), not a grid across the board; 0.5 mm keep-outs run along the edges and ±2 mm around each LED cut-out (`Dachshund70-Screen.kicad_dru` allows 0.3 mm from the cut-outs).
 
 ## Status
 

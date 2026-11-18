@@ -6,6 +6,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Ground vias only where they're needed (2026-11-18)
+
+Tiam asked for no vias sprinkled across the boards, like the screen board's 2.5 mm grid. `hardware/gnd_vias.py` removes every GND via that isn't the end of a GND track and puts back only the ones that join a pour island or a GND pad to the rest of the ground (islands under 4 mm² with no pad get none; the filler drops them).
+
+- Screen board: 162 stitching vias down to 2. `gen_screen.py` uses the same module, so a rebuild won't bring the grid back. It's out of step with the committed board (hand edits since; a rebuild gives one clearance error) and its zone fill crashed on Windows on a board with no project, so it now saves and reloads the board before filling.
+- Mainboard: 169 stitching vias down to 36 (one per pour island); the 30 GND vias in routed tracks are unchanged. One 2 mm² back-side island is gone.
+- DRC (every severity, schematic parity) is unchanged on both: screen board clean, mainboard the same 186 warnings, 0 unconnected. Pour area is unchanged. Not checked on hardware. Board STEPs not re-exported (vias don't change the case).
+
 ### Mainboard rev 1.3 and screen board rev 3.0: screen and LEDs off the mainboard (2026-11-17)
 
 Tiam: the mainboard moves with the plate's flex, so the screen goes back on its own board, with the five layer and

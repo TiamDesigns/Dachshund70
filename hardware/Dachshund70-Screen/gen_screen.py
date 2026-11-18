@@ -23,6 +23,7 @@ side; the LEDs shine up through their cut-outs.
 
 import os
 import re
+import sys
 import uuid
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -180,6 +181,8 @@ def _place_mouth(fp, x, y, side, sign):
 # Two layers, every part on B.Cu; F.Cu (under the panel) is mostly ground pour. Routed with Freerouting
 # (2026-11-17) from the placement above, then copied here so the board regenerates: (net, layer, width, [(x, y), ...]).
 from screen_routes import ROUTES, VIAS  # noqa: E402
+
+sys.path.insert(0, os.path.join(HERE, ".."))
 
 
 # ---------------------------------------------------------------- s-expressions
@@ -420,6 +423,7 @@ def main():
 # ---------------------------------------------------------------- board
 def build_board(sym_uuids):
     import pcbnew
+    import gnd_vias
     pcb_path = os.path.join(HERE, NAME + ".kicad_pcb")
     b = pcbnew.BOARD()
     ds = b.GetDesignSettings()
@@ -574,13 +578,15 @@ def build_board(sym_uuids):
         b.Add(v)
 
     STITCH = 2.5
-    # ground stitching: a via on a 2.5 mm grid wherever one fits 0.25 mm clear of other nets' copper, the
-    # cut-outs and the edge, so both pours are one ground
+    # ground vias: the places on a 2.5 mm grid where one fits 0.25 mm clear of other nets' copper, the
+    # cut-outs and the edge are only candidates; gnd_vias keeps the few that join a pour island or a GND
+    # pad to the rest of the ground, so the board isn't covered in a grid of vias
     b.BuildConnectivity()
     gnd = net("GND")
     others = [t for t in b.GetTracks() if t.GetNetCode() != gnd.GetNetCode()]
     others += [p for f in b.GetFootprints() for p in f.Pads() if p.GetNetCode() != gnd.GetNetCode()]
     keepouts = [z for z in b.Zones() if z.GetIsRuleArea()]
+    cands = []
     gx = x0 + 1.5
     while gx < x1 - 1.0:
         gy = y0 + 1.5
@@ -598,7 +604,7 @@ def build_board(sym_uuids):
             hit = hit or any(f.HitTest(v.GetPosition()) and f.GetReference().startswith(("J", "U", "L"))
                              for f in b.GetFootprints())
             if not hit:
-                b.Add(v)
+                cands.append((gx, gy))
             gy += STITCH
         gx += STITCH
 
@@ -612,10 +618,13 @@ def build_board(sym_uuids):
     t.SetPosition(pcbnew.VECTOR2I(pcbnew.FromMM(340.0), pcbnew.FromMM(112.0)))
     b.Add(t)
 
-    b.BuildConnectivity()
-    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    # saved and loaded again before the pours are filled: KiCad's zone filler crashes on a board with no
+    # project behind it (seen on Windows)
     b.Save(pcb_path)
-    print("wrote", pcb_path)
+    b = pcbnew.LoadBoard(pcb_path)
+    added = gnd_vias.join_ground(b, cands)
+    b.Save(pcb_path)
+    print("wrote %s (%d ground vias from %d candidates)" % (pcb_path, len(added), len(cands)))
 
 
 if __name__ == "__main__":
