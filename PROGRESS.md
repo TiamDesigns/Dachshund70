@@ -204,6 +204,9 @@ cheaper Dachshund70 Lite with no screen and no encoder. Every connector faces ou
   pockets from below (no ledges or undercuts, R1 inside corners), the screen frame taped to the pocket ceiling. Merged
   the mainboard rev 1.4 branch (PR #86) so the plate is generated from rev 1.4.
 - v07: sock pockets line-to-line with the socks at the ends and the outer side (Tiam: no tolerance needed).
+- v08: gasket zones recut on the exact pocket walls (one retainer pocket and one sock pocket per zone, ends at the sock
+  tips, flush outer wall, R1 entry edges), retainer bars shortened to match; screen-zone pillars and steps removed;
+  encoder band one pocket at 19.45. Known: the encoder cover touches the top shell by 0.03 mm3 at the window edge.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.
