@@ -1,13 +1,20 @@
 (version 1)
 
-# The SK6812MINI-E reverse-mount footprints (D2-D7) have a light cutout on
+# The SK6812MINI-E reverse-mount footprint (D2; D3-D7 moved to the screen board in rev 1.3) has a light cutout on
 # Edge.Cuts. The project footprint (lib/Dachshund70.pretty) uses a plain
 # 3.4 x 3.4 mm cutout with 0.5 mm corners: its pads sit 0.35 mm from the edge
 # and the nearest track about 0.36 mm, so the board-wide 0.5 mm edge rule
 # can't apply here. 0.3 mm is the fabs' usual minimum for routed edges.
 (rule "LED cutout edge clearance"
   (constraint edge_clearance (min 0.3mm))
-  (condition "B.memberOfFootprint('D2') || B.memberOfFootprint('D3') || B.memberOfFootprint('D4') || B.memberOfFootprint('D5') || B.memberOfFootprint('D6') || B.memberOfFootprint('D7')"))
+  (condition "B.memberOfFootprint('D2')"))
+
+# Rev 1.3: the battery (J2), daughterboard (J1) and encoder (J5) sockets sit at
+# the board edge with their mouths facing out, so their mounting tabs end 0.3 mm
+# from the edge (J2's 0.295 mm). JLC's minimum for routed edges is 0.2 mm.
+(rule "Edge-mount connector tabs"
+  (constraint edge_clearance (min 0.25mm))
+  (condition "A.memberOfFootprint('J1') || A.memberOfFootprint('J2') || A.memberOfFootprint('J5')"))
 
 # SW1 (PCM12) is an edge-mount slide switch: its no-net mounting tabs sit at
 # the board edge on purpose.
@@ -30,3 +37,9 @@
   (constraint silk_clearance)
   (severity ignore)
   (condition "(A.memberOfFootprint('SW604') || A.memberOfFootprint('SW606') || A.memberOfFootprint('SW615') || A.memberOfFootprint('ST4') || A.memberOfFootprint('ST5') || A.memberOfFootprint('ST6')) && (B.memberOfFootprint('SW604') || B.memberOfFootprint('SW606') || B.memberOfFootprint('SW615') || B.memberOfFootprint('ST4') || B.memberOfFootprint('ST5') || B.memberOfFootprint('ST6'))"))
+
+# Rev 1.4: J1's and J5's ground pins sit between signal pins at 1.0 mm pitch,
+# where the pour can't fit two thermal spokes; connect them to the pour solid.
+(rule "Connector ground pins solid"
+  (constraint zone_connection solid)
+  (condition "A.Type == 'Pad' && A.NetName == 'GND' && (A.memberOfFootprint('J1') || A.memberOfFootprint('J5'))"))

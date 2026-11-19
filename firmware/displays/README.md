@@ -30,11 +30,12 @@ landscape size. The Sharp driver (`sharp,ls0xx`) has no rotation at all.
 
 ## Wiring
 
-From mainboard rev 1.2 the Sharp LS027B7DH01's tail plugs straight into the
-mainboard's J4, a 10-way 0.5 mm FPC socket in the panel's own pin order (1
-SCLK, 2 SI, 3 SCS, 4 EXTCOMIN, 5 DISP, 6-8 +5V, 9-10 GND), and the panel's
-5 V boost (U5, TPS61222) is on the mainboard too. The separate screen board
-(`hardware/Dachshund70-Screen/`) is no longer needed.
+From mainboard rev 1.3 the Sharp LS027B7DH01 is on its own screen board
+(`hardware/Dachshund70-Screen/`, rev 3.0) with its 5 V boost and the layer and
+battery LEDs. A 12-way 0.5 mm FFC joins it to the mainboard's J4: 1-2 LED_VDD,
+3 GND, 4 LED data, 5 GND, 6 CLK, 7 DIN, 8 CS, 9 DC, 10 RST, 11 BUSY, 12 3V3
+(the screen board README has the full table). Without a screen board (the
+Lite) the firmware is built with no display overlay.
 
 `&display_header` keeps the numbering of the old 8-pin e-paper header (3 DIN,
 4 CLK, 5 CS, 6 DC, 7 RST, 8 BUSY), so the MCU pins and every overlay are

@@ -6,7 +6,68 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
-### Mainboard rev 1.2: wider rectangle, Sharp screen circuit on board, SWD header moved (2026-11-17)
+### Mainboard rev 1.4 and screen board rev 3.1: everything on the back, cleaner vias and pour (2026-11-18)
+
+Tiam: J4 and J5 were on the wrong side for single-sided JLC assembly, both boards were speckled with vias, the
+ground pour was patchy, the mainboard's fillets were inconsistent, and there should be more board right of Delete.
+
+- J4 (FH12-12S, screen FFC) and J5 (encoder, JST SH) are on the back of the mainboard: J4 pads x 319.45,
+  y 115.15-120.65, mouth +x; J5 at the column top, mouth -y. Every mainboard part is now on the back.
+- J4 pin order changed so the bus to the radio module runs straight with no crossings: 1-2 LED_VDD, 3 GND, 4 LED
+  data, 5 GND, 6 CLK, 7 DIN, 8 CS, 9 DC, 10 RST, 11 BUSY, 12 3V3. The MCU pins are unchanged. The screen board's
+  J2 follows it (J2 pin n = J4 pin n); both sockets hang under their boards, so the cable is a type B FFC
+  (contacts on opposite sides at the two ends). `board.json`, the board README and the display README are updated.
+- Outline: the ear right of SW113 (Delete) now reaches x 306.2 (was 304), the case's limit; every outer corner is
+  R5 and every inside corner R1. The plate regenerates unchanged.
+- Test points TP1-5 at y 70 and TP6-9 at y 73.5 (x 306-318), labelled on the back silk; the board name block
+  moved to x 313.6.
+- The column was rerouted: Freerouting 1.9 for most nets, a hand-routed J4-to-U1 bus (one via, on DC, whose pin is
+  in the module's inner row), and a grid router for the encoder and SWD lines. ENC_A takes a long way round
+  (about 15 vias), because the column has no free lane left for it.
+- Ground: the 169-via stitching grid is gone. The pours now keep 0.2 mm from other copper (was 0.3) so they flow
+  between more tracks, SMD ground pads join the pour with thermal spokes (J1's and J5's ground pins solid, see
+  the .kicad_dru), and each cut-off pour area of 4 mm2 or more gets one via (91 ground vias on the whole board,
+  was 199; 346 vias in all, was 468). Both pours now cover the board with no missing areas.
+- Screen board rev 3.1: rerouted for the new pin order; no stitching grid, 8 ground vias join the pour areas;
+  no pour over the mainboard's antenna (rule area x 318-332, y 120-135).
+- Checks (kicad-cli 10, 2026-11-18): mainboard DRC 0 errors, 0 unconnected, schematic parity clean (only the
+  known ST4/ST6 co-located holes); screen board DRC 0 and 0; ERC 0 on both. Not ordered, not tested.
+
+### Mainboard rev 1.3 and screen board rev 3.0: screen and LEDs off the mainboard (2026-11-17)
+
+Tiam: the mainboard moves with the plate's flex, so the screen goes back on its own board, with the five layer and
+battery LEDs, and the mainboard is cut down to the keys, the MCU, power and its connectors, so it can also go into a
+cheaper Dachshund70 Lite with no screen and no encoder. Every connector faces out of the board.
+
+- Mainboard outline: x 19 to 326, y 39 to 160.1 (was to 349.3). Right of the keys (x > 304) a 22 mm column runs from
+  y 61 (the encoder corner notch) to the bottom. R5 outer corners, R3 at the notch, R1 inside.
+- Removed from the mainboard: the Sharp socket, the 5 V boost (U5, L1, R4, C20-C24), D3-D7 and C14-C18. D2 (Caps
+  Lock) stays; its DOUT now goes out on J4.
+- Connectors, all at the edge, mouths out: J2 battery (back, mouth +x, y about 92), J1 USB-C daughterboard (back,
+  mouth +x, y about 106.5), J4 screen board FH12-12S (top, mouth +x, pads x 319.45, y 109.25-114.75), J5 encoder
+  (top, mouth -y, x 308.6-317.4 at the column's top edge, y 61). J3 SWD on the back at (321.4, 81), x 315.2-322.6,
+  y 79.4-82.6, well clear of J2's plug. Reset SW2 at (310.6, 79.5); test points TP1-5 at y 64 and TP6-9 at y 68
+  (x 306-318, labelled on the back silk); C10/C11 at (321.2, 64/67).
+- U1 (the radio module) moved to the bottom of the column, (318.25, 130.35), with its antenna at the right edge
+  (y about 124-137) and the keep-out moved with it. With U1 at the top, the router couldn't reach J4 or the module's
+  north pads. **Open:** the screen board (y 88-135) now sits over the antenna; see SCHEDULED_TASKS.md.
+- The column was re-placed and routed with Freerouting 1.9 (pre-routed escapes for the module's inner pads), then
+  cleaned up by hand: leftover stubs pruned, ground stitched, and three tracks nudged (Net-(D513-A), ROW1, ENC_A)
+  so the last ground islands (the radio's decoupling caps and J1's tabs) join the pour.
+- J4 pins: 1-2 LED_VDD, 3 GND, 4 LED data, 5 GND, 6 RST, 7 DC, 8 CS, 9 DIN, 10 CLK, 11 BUSY, 12 3V3. MCU pins are
+  unchanged; `board.json`, the board README and the LED chain order (Caps first, then layer, battery 1-4) were updated
+  in `indicators.c`, `keyboard.json` and the DTS comment.
+- Screen board rev 3.0 (`hardware/Dachshund70-Screen/`, 40 x 47 mm at x 309-349, y 88-135): the Sharp socket J1,
+  the TPS61222 boost, D1-D5 at the old D3-D7 places (x 314.56 + 7.5 i, y 130.5) and J2, an FH12-12S on the back
+  6 mm right of J4. Same-side 12-way FFC in a C loop: J2 pin n = J4 pin 13 - n. Back in `export_fab.py` and
+  `export_step.py`.
+- Plate regenerated: only the Caps Lock LED is left under it (it shines through the Caps cutout), so the five LED
+  windows are gone; the sidebar notch already clears the screen board.
+- Checks (kicad-cli 10, 2026-11-18): mainboard, screen board and plate DRC 0 errors, 0 unconnected, schematic parity
+  clean (only the two known ST4/ST6 co-located holes, excluded). ERC 0 errors on both schematics. Core and host-lib
+  tests pass. Not ordered, not tested.
+
+### Mainboard rev 1.2 (superseded by rev 1.3 above): wider rectangle, Sharp screen circuit on board, SWD header moved (2026-11-17)
 
 - Outline: the LED tab is gone. The board is now a rectangle out to KiCad x 349.3 (R6 corners at the right,
   the encoder notch kept), so D3-D7 sit inside it. Checked against case rev 3's top shell A pocket: at least

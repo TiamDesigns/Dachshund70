@@ -65,10 +65,10 @@ switch footprints and wire them to the same diode.
 |---|---|---|
 | Encoder A | P0.11 | Encoder port J5 pin 2. To GND through the encoder module; internal pull-up. |
 | Encoder B | P0.12 | J5 pin 4. Same as A. The push switch is in the matrix at (0, 14), through J5 pins 1 (COL14) and 5 (ENC_SW) and diode D114. |
-| LED data | P0.06 | SK6812MINI-E chain of 6, in this order: LED 0 layer, LEDs 1–4 battery gauge (25/50/75/100%), LED 5 under Caps Lock. LEDs 0–4 sit in a row above the Right arrow. Driven by SPI MOSI. |
+| LED data | P0.06 | SK6812MINI-E chain of 6, in this order: LED 0 under Caps Lock (on the mainboard), then on the screen board LED 1 layer and LEDs 2–5 battery gauge (25/50/75/100%), which sit in a row above the Right arrow. The data leaves the mainboard on J4 from the Caps Lock LED's DOUT, so a board without the screen board (the Lite) keeps Caps Lock. Driven by SPI MOSI. |
 | LED power enable | P0.08 | Active-high EN of the TPS22917 load switch feeding the LEDs, with a 100 kΩ pull-down so the LEDs stay off through reset and sleep. |
-| Display CLK / DIN | P0.19 / P0.21 | The Sharp LS027B7DH01's SCLK and SI, on the panel socket J4 pins 1 and 2. |
-| Display CS / DC / RST / BUSY | P0.20 / P0.23 / P0.22 / P0.24 | SCS (J4 pin 3, active high), EXTCOMIN (pin 4), DISP (pin 5), and the enable of the panel's 5 V boost U5 (100 kΩ pull-up, so the 5 V is on unless the firmware drives it low). J4 pins 6–8 are +5V (VDDA, VDD, EXTMODE), 9–10 GND. The signal names are the old e-paper header's, kept so the firmware's `display_header` and overlays need no change. |
+| Display CLK / DIN | P0.19 / P0.21 | The Sharp LS027B7DH01's SCLK and SI, on J4 pins 6 and 7: the 12-pin FFC socket (on the back since rev 1.4) to the screen board. |
+| Display CS / DC / RST / BUSY | P0.20 / P0.23 / P0.22 / P0.24 | SCS (J4 pin 8, active high), EXTCOMIN (pin 9), DISP (pin 10), and the enable of the screen board's 5 V boost (pin 11, 100 kΩ pull-up there, so the 5 V is on unless the firmware drives it low). J4 pins 1–2 are LED_VDD, 3 and 5 GND, 4 the LED data, 12 3V3. The signal names are the old e-paper header's, kept so the firmware's `display_header` and overlays need no change. |
 | Charger status | P0.15 | MCP73831 STAT through a BAT54WS Schottky (cathode at STAT), so it behaves as open-drain: low while charging. Needs the internal pull-up. |
 | Reset | P0.18 | nRESET: reset button to GND and SWD header. Double-tap enters the UF2 bootloader (so does holding Esc at reset). |
 | USB | D+, D−, VBUS | Dedicated module pads. |

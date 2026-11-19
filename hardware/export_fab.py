@@ -33,9 +33,9 @@ import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 KICAD_CLI = os.environ.get("KICAD_CLI", r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe")
-# The screen board (Dachshund70-Screen) is left out: from mainboard rev 1.2 its circuit is on the mainboard.
-BOARDS = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Plate", "Dachshund70-Encoder"]
-ASSEMBLED = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder"]
+BOARDS = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Plate", "Dachshund70-Encoder",
+          "Dachshund70-Screen"]
+ASSEMBLED = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder", "Dachshund70-Screen"]
 # Kailh socket centre relative to the switch footprint's origin (midpoint of its two pads), KiCad axes.
 SOCKET_FOOTPRINT = "SW_Hotswap_Kailh_MX"
 SOCKET_OFFSET = (-0.6215, -3.81)

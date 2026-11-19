@@ -30,9 +30,9 @@
     "powerEnableActive": "high"
   },
   "display": {
-    "connector": "J4, FH12-10S 10-way 0.5 mm FPC socket on the top side for the Sharp LS027B7DH01 tail, in the panel's pin order: 1 SCLK (clk) 2 SI (din) 3 SCS (cs, active high) 4 EXTCOMIN (dc) 5 DISP (rst) 6 VDDA 7 VDD 8 EXTMODE 9 VSS 10 VSSA",
-    "interface": "SPI to the Sharp memory LCD; busy drives the enable of the on-board 5 V boost (U5 TPS61222, 100k pull-up)",
-    "power": "+5V from U5 (from +3V3)",
+    "connector": "J4, FH12-12S 12-way 0.5 mm FFC socket on the back at the right-hand edge (mouth +x), type B FFC to the screen board's J2 (Sharp LS027B7DH01, its 5 V boost and the layer and battery LEDs): 1-2 LED_VDD 3 GND 4 LED data (from D2's DOUT) 5 GND 6 SCLK (clk) 7 SI (din) 8 SCS (cs, active high) 9 EXTCOMIN (dc) 10 DISP (rst) 11 boost enable (busy) 12 3V3",
+    "interface": "SPI to the Sharp memory LCD; busy drives the enable of the screen board's 5 V boost (TPS61222, 100k pull-up)",
+    "power": "+3V3 on J4; the screen board makes the panel's +5V",
     "pins": { "din": "P0.21", "clk": "P0.19", "cs": "P0.20", "dc": "P0.23", "rst": "P0.22", "busy": "P0.24" }
   },
   "power": {

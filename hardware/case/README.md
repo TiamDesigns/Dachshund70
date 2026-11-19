@@ -136,7 +136,8 @@ KiCad y = 99.55 − local y.
   screws go in before the ring and the top block.
 - Feet: two rubber rails near the front and back edges, in 1.0 mm pockets: 300 × 5.8 × 2.0 at the front, 269.4 × 5.8 × 2.0
   at the back (it stops at x 119.4, its pocket 3.0 short of the battery bay).
-- LEDs and light guide: the LEDs (D3 to D7, reverse-mount SK6812MINI-E) span the Sharp screen's window at an even
+- LEDs and light guide (from rev 1.3 the five LEDs are D1 to D5 on the screen board, at x 314.56 + 7.5 i, y 130.5;
+  the text below describes rev 1.2): the LEDs (D3 to D7, reverse-mount SK6812MINI-E) span the Sharp screen's window at an even
   8.525 pitch: KiCad x 312.51, 321.035, 329.56, 338.085 and 346.61, y 130.5 (world x 134.26, 142.785, 151.31,
   159.835 and 168.36). D6 and D7 sit on a small tab of the mainboard (to x 349.3) under the widened sidebar, and the
   plate has an edge notch for D6 instead of a window. The roof's five Ø3 light holes are on the same axes, square to the plate, so each hole is straight over its
@@ -213,10 +214,12 @@ LED windows, and the radio's range through the aluminium over the antenna.
 
 ## Display
 
-> From mainboard rev 1.2 (2026-11-17) the screen is the Sharp LS027B7DH01, and its tail plugs straight into the
-> mainboard's J4 (KiCad (313.45, 110.6), mouth facing −x) beside its 5 V boost. The screen board and the FFC below
-> are gone; the tray needs a slot at the glass's left edge for the tail. The rest of this section still describes
-> the earlier e-paper setup.
+> From mainboard rev 1.3 (2026-11-17) the Sharp LS027B7DH01 sits on the screen board again
+> (`hardware/Dachshund70-Screen/` rev 3.0, KiCad x 309-349, y 88-135, parts on its back), which also carries the
+> five layer and battery LEDs at the places below (x 314.56 + 7.5 i, y 130.5). A 12-way same-side FFC loops from the
+> mainboard's J4 (top side, right edge, mouth +x, y 109.25-114.75) past the mainboard's edge (x 326) into the screen
+> board's J2 (back, 6 mm further right). The panel's tail folds under the glass's left edge into J1 (314.6, 110.6).
+> The rest of this section still describes the earlier e-paper setup.
 
 A bare 2.13" e-paper panel (GoodDisplay GDEY0213B74, SSD1680, 250 × 122, black on white) standing on end
 beside the knob: 29.2 × 59.2 mm, with a 23.7 × 48.6 mm picture. In portrait that's 120 × 248 pixels, 12 × 15
@@ -237,8 +240,9 @@ cells of text with the 10 × 16 font. Build the firmware with
 - Refresh: e-paper keeps its picture with no power, and a refresh takes about a second, so the firmware redraws
   at most every 3 s (`CONFIG_KB_SCREEN_EPD_MIN_INTERVAL_MS`). That suits the layer, lock, battery and
   connection status it shows.
-- The screen board stays clear of the radio module's antenna (KiCad x > 333, y 67–79 mm); only the panel's
-  glass reaches over the antenna's left end.
+- Antenna: on mainboard rev 1.3 the radio module's antenna is at the right edge, KiCad y about 124–137, and the
+  screen board (x 309–349, y 88–135) sits over it. That is an open issue (`SCHEDULED_TASKS.md`): either the module
+  moves or the screen board's copper over the antenna is cleared and the range is tested.
 - Sizes are nominal: measure your parts and correct the screen pocket in the Fusion model (`build_case2.py`)
   before machining. If the text comes out upside down, set `rotation = <270>` in the overlay.
 - Other screens: Pimoroni's 1.12" 128 × 128 SH1107 OLED (overlay `oled-sh1107-128x128`, 8 text rows) fits the
