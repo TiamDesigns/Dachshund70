@@ -199,6 +199,10 @@ cheaper Dachshund70 Lite with no screen and no encoder. Every connector faces ou
   reaches x 159.4 and clears the plate, tray and rails. J5 (back, mouth +y) clears the battery by about 0.4-0.6 and its
   cable runs into the encoder socket (mouth +x) through the board notch right of x 128. The battery JST PH touched the
   floor by 0.25, so the bottom has a 0.75 pocket there. Cable and FFC bodies modelled; the old encoder cable is gone.
+- v06: plate corners R1.5 again (R5.5 left a gap at the bezel corners), top shell plate-pocket corners R3.0; sock
+  pockets closed to 0.1 at the sock ends (plate held in x, was 1.6 play); screen zone of top shell A rebuilt as plain
+  pockets from below (no ledges or undercuts, R1 inside corners), the screen frame taped to the pocket ceiling. Merged
+  the mainboard rev 1.4 branch (PR #86) so the plate is generated from rev 1.4.
 - Heat-set inserts kept (Tiam reverted the PT-screw idea). Case screws flush with the bottom (Tiam, aesthetic):
   4 x M3x10 CSK front, 4 x M3x18 CSK back. Top shell A is the production shell (131 cm3
   vs 166 for B). The accent ring will be laser cut.

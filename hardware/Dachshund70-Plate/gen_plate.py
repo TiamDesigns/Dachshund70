@@ -103,8 +103,9 @@ POST_RELIEF_D = 3.9
 
 # The plate's own outside corners. Case rev 3: R1.5, concentric with the case lip's R1.0
 # inner corner (the lip overlaps the plate edge 0.53 mm), so no gap shows at the corners
-# from above. The mainboard keeps its R5 corners.
-PLATE_CORNER_RADIUS = 5.5
+# from above (Tiam, 2026-11-19: R5.5 showed a gap; the top shell's corners were cut back
+# to clear R1.5 instead). The mainboard keeps its R5 corners.
+PLATE_CORNER_RADIUS = 1.5
 
 # Every inside corner of the outline gets at least this radius (tab roots).
 OUTLINE_INSIDE_RADIUS = 0.5
