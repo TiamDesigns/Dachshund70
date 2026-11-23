@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+
+  (lib (name "Dachshund70-Hub") (type "KiCad") (uri "${KIPRJMOD}/Dachshund70-Hub.kicad_sym") (options "") (descr "")))
