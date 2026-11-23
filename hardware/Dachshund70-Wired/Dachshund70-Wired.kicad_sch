@@ -5257,6 +5257,105 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Mechanical:MountingHole"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "H"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MountingHole"
+				(at 0 3.175 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Mounting Hole without connection"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "mounting hole"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "MountingHole*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "MountingHole_0_1"
+				(circle
+					(center 0 0)
+					(radius 1.27)
+					(stroke
+						(width 1.27)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(no_connect
 		(at 525.78 63.5)
@@ -8757,7 +8856,7 @@
 		)
 		(uuid "2157a6ac-e131-46d5-b96e-7fd8c26ecda2")
 	)
-	(label "COL12"
+	(label "ROW0"
 		(at 647.7 144.78 0)
 		(effects
 			(font
@@ -8767,7 +8866,7 @@
 		)
 		(uuid "c0599288-9db3-4dbc-a2bd-a4a56b0f2c2e")
 	)
-	(label "COL13"
+	(label "ROW1"
 		(at 647.7 147.32 0)
 		(effects
 			(font
@@ -8777,7 +8876,7 @@
 		)
 		(uuid "47b926e5-a39b-497a-a055-fe5b73101adc")
 	)
-	(label "COL14"
+	(label "ROW2"
 		(at 647.7 149.86 0)
 		(effects
 			(font
@@ -8787,7 +8886,7 @@
 		)
 		(uuid "e8f38e0f-6558-4b5e-aa8b-58a7cb2fd8f8")
 	)
-	(label "LED_EN"
+	(label "ROW3"
 		(at 647.7 152.4 0)
 		(effects
 			(font
@@ -8797,7 +8896,7 @@
 		)
 		(uuid "47176bbc-2056-4cb4-a285-e3ca2c244797")
 	)
-	(label "ROW0"
+	(label "COL12"
 		(at 647.7 154.94 0)
 		(effects
 			(font
@@ -8807,7 +8906,7 @@
 		)
 		(uuid "6e630b31-4bb3-46ca-bd38-39ef93104dd4")
 	)
-	(label "ROW1"
+	(label "COL13"
 		(at 647.7 157.48 0)
 		(effects
 			(font
@@ -8817,7 +8916,7 @@
 		)
 		(uuid "7b81b70e-3117-4a52-85bb-512b118cb26e")
 	)
-	(label "ROW2"
+	(label "COL14"
 		(at 647.7 160.02 0)
 		(effects
 			(font
@@ -8827,7 +8926,7 @@
 		)
 		(uuid "550dc583-4e21-4175-ac77-541a1e883276")
 	)
-	(label "ROW3"
+	(label "ROW4"
 		(at 647.7 162.56 0)
 		(effects
 			(font
@@ -8837,7 +8936,7 @@
 		)
 		(uuid "c2c17975-6800-4860-a515-36eac593bba7")
 	)
-	(label "ROW4"
+	(label "ROW5"
 		(at 647.7 165.1 0)
 		(effects
 			(font
@@ -8847,7 +8946,7 @@
 		)
 		(uuid "405613b4-d562-4de2-8122-6f220e311949")
 	)
-	(label "ROW5"
+	(label "LED_EN"
 		(at 647.7 167.64 0)
 		(effects
 			(font
@@ -13915,6 +14014,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 294.64 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14053,6 +14153,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 320.04 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14191,6 +14292,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 396.24 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14329,6 +14431,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 269.24 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14467,6 +14570,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 116.84 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14605,6 +14709,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 66.04 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14743,6 +14848,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 345.44 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -14881,6 +14987,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 269.24 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15019,6 +15126,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 218.44 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15157,6 +15265,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 370.84 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15295,6 +15404,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 294.64 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15433,6 +15543,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 40.64 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15571,6 +15682,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 40.64 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15709,6 +15821,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 167.64 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15847,6 +15960,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 66.04 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -15985,6 +16099,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 116.84 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16123,6 +16238,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 320.04 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16261,6 +16377,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 142.24 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16399,6 +16516,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 193.04 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16537,6 +16655,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 294.64 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16675,6 +16794,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 91.44 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16813,6 +16933,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 116.84 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -16951,6 +17072,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 345.44 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17089,6 +17211,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 370.84 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17227,6 +17350,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 40.64 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17365,6 +17489,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 66.04 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17503,6 +17628,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 320.04 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17641,6 +17767,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 91.44 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17779,6 +17906,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 193.04 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -17917,6 +18045,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 167.64 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18055,6 +18184,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 91.44 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18193,6 +18323,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 40.64 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18331,6 +18462,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 66.04 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18469,6 +18601,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 193.04 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18607,6 +18740,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 243.84 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18745,6 +18879,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 370.84 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -18883,6 +19018,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 345.44 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19021,6 +19157,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 193.04 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19159,6 +19296,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 243.84 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19297,6 +19435,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 345.44 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19435,6 +19574,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 116.84 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19573,6 +19713,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 142.24 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19711,6 +19852,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 142.24 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19849,6 +19991,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 40.64 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -19987,6 +20130,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 294.64 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20125,6 +20269,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 193.04 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20263,6 +20408,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 370.84 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20276,7 +20422,7 @@
 				)
 			)
 		)
-		(property "Value" "MX \\ (1.50u)"
+		(property "Value" "MX Backslash (1.50u)"
 			(at 370.84 95.25 0)
 			(effects
 				(font
@@ -20401,6 +20547,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 243.84 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20539,6 +20686,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 294.64 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20677,6 +20825,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 294.64 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20815,6 +20964,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 116.84 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -20953,6 +21103,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 116.84 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21091,6 +21242,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 218.44 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21229,6 +21381,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 66.04 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21367,6 +21520,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 167.64 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21505,6 +21659,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 218.44 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21643,6 +21798,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 91.44 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21781,6 +21937,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 218.44 101.6 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -21919,6 +22076,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 91.44 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22057,6 +22215,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 167.64 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22195,6 +22354,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 269.24 127 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22333,6 +22493,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 142.24 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22471,6 +22632,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 370.84 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22609,6 +22771,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 320.04 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22747,6 +22910,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 243.84 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -22885,6 +23049,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 345.44 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23023,6 +23188,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 370.84 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23161,6 +23327,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 167.64 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23299,6 +23466,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 142.24 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23437,6 +23605,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 269.24 50.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23575,6 +23744,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 320.04 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23713,6 +23883,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 40.64 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23851,6 +24022,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 218.44 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -23989,6 +24161,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 243.84 152.4 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -24127,6 +24300,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 269.24 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -24265,6 +24439,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 66.04 76.2 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -24403,6 +24578,7 @@
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 193.04 177.8 0)
+		(mirror y)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
@@ -28429,7 +28605,7 @@
 				)
 			)
 		)
-		(property "Value" "SK6812MINI-E (\\)"
+		(property "Value" "SK6812MINI-E (Backslash)"
 			(at 256.54 346.71 0)
 			(effects
 				(font
@@ -35250,15 +35426,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "U1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C2040"
 			(at 622.3 152.4 0)
 			(hide yes)
@@ -35276,7 +35443,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Memory_Flash:W25Q128JVS")
 		(at 520.7 127 0)
@@ -35328,15 +35504,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "U2")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C97521"
 			(at 520.7 127 0)
 			(hide yes)
@@ -35354,7 +35521,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Regulator_Linear:ME6211C33M5")
 		(at 520.7 63.5 0)
@@ -35406,15 +35582,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "U3")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C82942"
 			(at 520.7 63.5 0)
 			(hide yes)
@@ -35432,7 +35599,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "74xGxx:74AHCT1G125")
 		(at 736.6 254 0)
@@ -35484,15 +35660,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "U4")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C7484"
 			(at 736.6 254 0)
 			(hide yes)
@@ -35510,7 +35677,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "U4")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Transistor_FET:AO3401A")
 		(at 622.3 254 0)
@@ -35564,15 +35740,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "Q1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C15127"
 			(at 622.3 254 0)
 			(hide yes)
@@ -35590,7 +35757,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Transistor_FET:2N7002")
 		(at 660.4 279.4 0)
@@ -35644,15 +35820,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C8545"
 			(at 660.4 279.4 0)
 			(hide yes)
@@ -35670,7 +35837,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "Q2")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:Crystal_GND24")
 		(at 533.4 190.5 0)
@@ -35724,15 +35900,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "Y1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C9002"
 			(at 533.4 190.5 0)
 			(hide yes)
@@ -35750,7 +35917,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "Y1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Connector_Generic_MountingPin:Conn_01x06_MountingPin")
 		(at 495.3 254 0)
@@ -35803,15 +35979,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "J1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C160405"
 			(at 495.3 254 0)
 			(hide yes)
@@ -35829,7 +35996,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Connector_Generic_MountingPin:Conn_01x12_MountingPin")
 		(at 762 139.7 0)
@@ -35882,15 +36058,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "J4")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C88360"
 			(at 762 139.7 0)
 			(hide yes)
@@ -35908,7 +36075,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "J4")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Connector_Generic_MountingPin:Conn_01x05_MountingPin")
 		(at 762 200.66 0)
@@ -35961,15 +36137,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "J5")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C136657"
 			(at 762 200.66 0)
 			(hide yes)
@@ -35987,7 +36154,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "J5")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x05")
 		(at 495.3 312.42 0)
@@ -36100,15 +36276,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "SW1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C318884"
 			(at 508 101.6 0)
 			(hide yes)
@@ -36126,7 +36293,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "SW1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 548.64 101.6 0)
@@ -36179,15 +36355,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "SW2")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C318884"
 			(at 548.64 101.6 0)
 			(hide yes)
@@ -36205,7 +36372,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "SW2")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:D")
 		(at 787.4 213.36 90)
@@ -36257,15 +36433,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "D114")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C81598"
 			(at 787.4 213.36 0)
 			(hide yes)
@@ -36283,7 +36450,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "D114")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 693.42 330.2 0)
@@ -36335,15 +36511,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25100"
 			(at 693.42 330.2 0)
 			(hide yes)
@@ -36361,7 +36528,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 708.66 330.2 0)
@@ -36413,15 +36589,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R2")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25100"
 			(at 708.66 330.2 0)
 			(hide yes)
@@ -36439,7 +36606,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 723.9 330.2 0)
@@ -36491,15 +36667,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R3")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C11702"
 			(at 723.9 330.2 0)
 			(hide yes)
@@ -36517,7 +36684,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 739.14 330.2 0)
@@ -36569,15 +36745,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R4")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C11702"
 			(at 739.14 330.2 0)
 			(hide yes)
@@ -36595,7 +36762,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 754.38 330.2 0)
@@ -36647,15 +36823,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R5")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25744"
 			(at 754.38 330.2 0)
 			(hide yes)
@@ -36673,7 +36840,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R5")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 693.42 350.52 0)
@@ -36725,15 +36901,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R6")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25741"
 			(at 693.42 350.52 0)
 			(hide yes)
@@ -36751,7 +36918,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 708.66 350.52 0)
@@ -36803,15 +36979,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R7")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25744"
 			(at 708.66 350.52 0)
 			(hide yes)
@@ -36829,7 +36996,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 723.9 350.52 0)
@@ -36881,15 +37057,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R8")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25741"
 			(at 723.9 350.52 0)
 			(hide yes)
@@ -36907,7 +37074,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 739.14 350.52 0)
@@ -36959,15 +37135,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R9")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25105"
 			(at 739.14 350.52 0)
 			(hide yes)
@@ -36985,7 +37152,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R_Small")
 		(at 754.38 350.52 0)
@@ -37037,15 +37213,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "R10")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C25744"
 			(at 754.38 350.52 0)
 			(hide yes)
@@ -37063,7 +37230,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "R10")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 495.3 368.3 0)
@@ -37117,15 +37293,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 495.3 368.3 0)
 			(hide yes)
@@ -37143,7 +37310,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 510.54 368.3 0)
@@ -37197,15 +37373,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C2")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 510.54 368.3 0)
 			(hide yes)
@@ -37223,7 +37390,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C2")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 525.78 368.3 0)
@@ -37277,15 +37453,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C3")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 525.78 368.3 0)
 			(hide yes)
@@ -37303,7 +37470,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C3")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 541.02 368.3 0)
@@ -37357,15 +37533,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C4")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 541.02 368.3 0)
 			(hide yes)
@@ -37383,7 +37550,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 556.26 368.3 0)
@@ -37437,15 +37613,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C5")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 556.26 368.3 0)
 			(hide yes)
@@ -37463,7 +37630,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C5")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 571.5 368.3 0)
@@ -37517,15 +37693,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C6")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 571.5 368.3 0)
 			(hide yes)
@@ -37543,7 +37710,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C6")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 586.74 368.3 0)
@@ -37597,15 +37773,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C7")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 586.74 368.3 0)
 			(hide yes)
@@ -37623,7 +37790,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C7")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 601.98 368.3 0)
@@ -37677,15 +37853,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C8")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 601.98 368.3 0)
 			(hide yes)
@@ -37703,7 +37870,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C8")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 495.3 388.62 0)
@@ -37757,15 +37933,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C9")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C52923"
 			(at 495.3 388.62 0)
 			(hide yes)
@@ -37783,7 +37950,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 510.54 388.62 0)
@@ -37837,15 +38013,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C10")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C52923"
 			(at 510.54 388.62 0)
 			(hide yes)
@@ -37863,7 +38030,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C10")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 525.78 388.62 0)
@@ -37917,15 +38093,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C11")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 525.78 388.62 0)
 			(hide yes)
@@ -37943,7 +38110,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C11")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 541.02 388.62 0)
@@ -37997,15 +38173,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C12")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 541.02 388.62 0)
 			(hide yes)
@@ -38023,7 +38190,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C12")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 556.26 388.62 0)
@@ -38077,15 +38253,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C13")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1548"
 			(at 556.26 388.62 0)
 			(hide yes)
@@ -38103,7 +38270,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C13")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 571.5 388.62 0)
@@ -38157,15 +38333,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C14")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1548"
 			(at 571.5 388.62 0)
 			(hide yes)
@@ -38183,7 +38350,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C14")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 586.74 388.62 0)
@@ -38237,15 +38413,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C15")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 586.74 388.62 0)
 			(hide yes)
@@ -38263,7 +38430,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C15")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 601.98 388.62 0)
@@ -38317,15 +38493,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C16")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C19702"
 			(at 601.98 388.62 0)
 			(hide yes)
@@ -38343,7 +38510,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C16")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 495.3 408.94 0)
@@ -38397,15 +38573,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C17")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C15525"
 			(at 495.3 408.94 0)
 			(hide yes)
@@ -38423,7 +38590,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C17")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 510.54 408.94 0)
@@ -38477,15 +38653,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C18")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C45783"
 			(at 510.54 408.94 0)
 			(hide yes)
@@ -38503,7 +38670,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C18")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 525.78 408.94 0)
@@ -38557,15 +38733,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C19")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 525.78 408.94 0)
 			(hide yes)
@@ -38583,7 +38750,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C19")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 541.02 408.94 0)
@@ -38637,15 +38813,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C20")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C15195"
 			(at 541.02 408.94 0)
 			(hide yes)
@@ -38663,7 +38830,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C20")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 556.26 408.94 0)
@@ -38717,15 +38893,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C21")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C15195"
 			(at 556.26 408.94 0)
 			(hide yes)
@@ -38743,7 +38910,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C21")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 571.5 408.94 0)
@@ -38797,15 +38973,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C22")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C1525"
 			(at 571.5 408.94 0)
 			(hide yes)
@@ -38823,7 +38990,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C22")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C_Small")
 		(at 586.74 408.94 0)
@@ -38877,15 +39053,6 @@
 				)
 			)
 		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "C23")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "LCSC" "C19702"
 			(at 586.74 408.94 0)
 			(hide yes)
@@ -38903,12 +39070,21 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "C23")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 609.6 330.2 0)
 		(unit 1)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(uuid "9e9faaff-abcd-423e-8c95-4e9c0ef3a2d5")
@@ -38968,7 +39144,7 @@
 		(lib_id "Connector:TestPoint")
 		(at 624.84 330.2 0)
 		(unit 1)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(uuid "03866233-9232-4404-ba87-b0016a897ea9")
@@ -39028,7 +39204,7 @@
 		(lib_id "Connector:TestPoint")
 		(at 640.08 330.2 0)
 		(unit 1)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(uuid "9f4f781a-6afa-4990-a1fb-0bb8dd406bef")
@@ -39088,7 +39264,7 @@
 		(lib_id "Connector:TestPoint")
 		(at 655.32 330.2 0)
 		(unit 1)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(uuid "c921590b-bef0-4005-85ca-cdb983af1b4b")
@@ -39322,6 +39498,246 @@
 			(project "Dachshund70-Wired"
 				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
 					(reference "#FLG03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 449.58 50.8 0)
+		(unit 1)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "c0ae9ca7-70b0-4ffe-b4d8-50efe49eccba")
+		(property "Reference" "ST1"
+			(at 449.58 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Stab Backspace 2.00u"
+			(at 449.58 47.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Keyswitch:Stabilizer_Cherry_MX_2.00u"
+			(at 449.58 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 449.58 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 449.58 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "ST1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 449.58 63.5 0)
+		(unit 1)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "056c0c09-698e-4f51-ab81-f5f0075d0d71")
+		(property "Reference" "ST2"
+			(at 449.58 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Stab Enter 2.25u"
+			(at 449.58 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Keyswitch:Stabilizer_Cherry_MX_2.00u"
+			(at 449.58 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 449.58 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 449.58 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "ST2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 449.58 76.2 0)
+		(unit 1)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "b3194d98-16a2-4ead-b007-5b2720dbf4e6")
+		(property "Reference" "ST3"
+			(at 449.58 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Stab Shift 2.25u"
+			(at 449.58 73.025 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Keyswitch:Stabilizer_Cherry_MX_2.00u"
+			(at 449.58 76.2 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 449.58 76.2 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 449.58 76.2 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "ST3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 449.58 88.9 0)
+		(unit 1)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "fe04b0d8-b4f4-4b9e-8034-03277df330e5")
+		(property "Reference" "ST4"
+			(at 449.58 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Stab Space 6.25u"
+			(at 449.58 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Keyswitch:Stabilizer_Cherry_MX_6.25u"
+			(at 449.58 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 449.58 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 449.58 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "ST4")
 					(unit 1)
 				)
 			)

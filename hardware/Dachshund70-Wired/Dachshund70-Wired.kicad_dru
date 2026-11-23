@@ -1,0 +1,21 @@
+(version 1)
+
+# Every key has an SK6812MINI-E (LED1-LED77) under it, mounted through a
+# 3.4 x 3.4 mm light cutout on Edge.Cuts. Its pads sit 0.35 mm from the
+# routed edge, so the board-wide 0.5 mm copper-to-edge rule can't apply there.
+# 0.3 mm is the fabs' usual minimum for routed edges.
+(rule "LED cutout edge clearance"
+  (constraint edge_clearance (min 0.3mm))
+  (condition "B.Reference == 'LED*' || B.memberOfFootprint('LED*')"))
+
+# The USB (J1) and encoder (J5) sockets sit at the board edge with their
+# mouths facing out, so their mounting tabs end about 0.3 mm from the edge.
+(rule "Edge-mount connector tabs"
+  (constraint edge_clearance (min 0.25mm))
+  (condition "A.memberOfFootprint('J1') || A.memberOfFootprint('J5')"))
+
+# J1's and J5's ground pins sit between signal pins at 1.0 mm pitch, where the
+# pour can't fit two thermal spokes; connect them to the pour solid.
+(rule "Connector ground pins solid"
+  (constraint zone_connection solid)
+  (condition "A.Type == 'Pad' && A.NetName == 'GND' && (A.memberOfFootprint('J1') || A.memberOfFootprint('J5'))"))
