@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Keyswitch") (type "KiCad") (uri "${KIPRJMOD}/../Dachshund70/lib/keyswitch.pretty") (options "") (descr "Shared with the Dachshund70 mainboard"))
+  (lib (name "Dachshund70") (type "KiCad") (uri "${KIPRJMOD}/../Dachshund70/lib/Dachshund70.pretty") (options "") (descr "Shared with the Dachshund70 mainboard"))
+)
