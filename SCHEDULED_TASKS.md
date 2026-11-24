@@ -2,15 +2,15 @@
 
 Open work to pick up in later prompts. Each task is written so it can be pasted into a prompt. When a task is finished, delete it here in the same change, and record what was done in `PROGRESS.md`.
 
-Last updated: 2026-11-24 (wired mainboard rev 1.3: e-paper touch screen).
+Last updated: 2026-11-24 (wired mainboard rev 1.4: 3.7" front-lit touch e-paper).
 
 ## Wired board (RP2350B) and hub
 
-- **E-paper screen adapter (next).** Buy Waveshare's 2.9" Touch e-Paper HAT (296 × 128, capacitive touch on I2C 0x48) and check its pin table and outline on Waveshare's wiki. Build a small adapter from the mainboard's J4 (FH12-16S: 1-2 +3V3, 3 GND, 4 TP_RST, 5 GND, 6 TP_INT, 7 TP_SCL, 8 TP_SDA, 9 spare, 10 TP_EN, 11 BUSY, 12 RST, 13 DC, 14 MOSI, 15 SCK, 16 CS) to the HAT's 40-pin header. It must fit the case's screen window.
-- **RP2350 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2350): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW scanned with pull-ups (erratum E9), encoder, 77-LED chain on GPIO0 through PIO with LED_EN on GPIO1 (off in USB suspend) and a total-current cap (about 300 mA by default), the 2.9" e-paper on SPI0 (CS 33, SCK 34, MOSI 35, DC 36, RST 37, BUSY 38) with partial refresh for menus and a full refresh now and then to clear ghosting, the touch controller on I2C1 (GPIO42/43, address 0x48, INT 44, RST 45, enable 39), UF2 from the RP2350's ROM. Doghouse needs the 77-key layout and per-key RGB.
+- **E-paper screen adapter (next).** Buy Good Display's GDEY037T03-FT21 (3.7" e-paper, 240 × 416, FT6336U touch, front light) and get its drawings and FPC pinouts (e-paper, touch, front light). Build the adapter: an FH12-16S to the mainboard's J4 (1-2 +3V3, 3 GND, 4 TP_RST, 5 GND, 6 TP_INT, 7 TP_SCL, 8 TP_SDA, 9 FL_PWM, 10 TP_EN, 11 BUSY, 12 RST, 13 DC, 14 MOSI, 15 SCK, 16 CS), the e-paper's FPC socket and booster circuit (as on Good Display's DESPI-C02), the touch FPC socket, and a PWM-dimmed front-light driver (check its forward voltage; it may need a small boost from 3.3 V). It must fit the case's screen window.
+- **RP2350 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2350): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW scanned with pull-ups (erratum E9), encoder, 77-LED chain on GPIO0 through PIO with LED_EN on GPIO1 (off in USB suspend) and a total-current cap (about 300 mA by default), the 3.7" e-paper (GDEY037T03, 240 × 416) on SPI0 (CS 33, SCK 34, MOSI 35, DC 36, RST 37, BUSY 38) with partial refresh for menus and a full refresh now and then to clear ghosting, the FT6336U touch controller on I2C1 (GPIO42/43, INT 44, RST 45, enable 39), the front light dimmed by PWM on GPIO40 and off when idle, UF2 from the RP2350's ROM. Doghouse needs the 77-key layout and per-key RGB.
 - **L1 land pattern.** The regulator inductor's footprint is Murata's DFE201610P standing in for the Abracon AOTA-B201610S3R3-101-T. Check the pads and the polarity dot against Abracon's drawing before ordering.
 - **Hub checks before ordering.** Check the SY6280AAC pin order and its ISET value against Silergy's datasheet, and the XKB USB-A footprint's front edge against its drawing (`hardware/Dachshund70-Hub/README.md`).
-- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the 2.9" Touch e-Paper HAT in place of the Sharp panel (window and adapter mounting).
+- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the 3.7" GDEY037T03-FT21 (93 × 53 mm, on end beside the knob, about 2.8u wide) in place of the Sharp panel (window and adapter mounting).
 
 ## Before ordering boards
 

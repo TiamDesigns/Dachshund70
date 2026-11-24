@@ -72289,7 +72289,7 @@
 			(size 0.8 0.2)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "/DISP_AUX")
+			(net "/FL_PWM")
 			(uuid "2d25af65-bdda-4ef8-8075-89ccb8d4eb69")
 		)
 		(pad "50" smd roundrect
@@ -84656,7 +84656,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "Display (FFC 16P 0.5 mm, e-paper SPI + touch)"
+		(property "Value" "Display (FFC 16P 0.5 mm, e-paper SPI, touch, front light)"
 			(at 0 -5.6 90)
 			(layer "B.Fab")
 			(uuid "2b218518-f8e5-4e91-bcda-4490938dd865")
@@ -85057,7 +85057,7 @@
 			(at 0.25 1.85 270)
 			(size 0.3 1.3)
 			(layers "B.Cu" "B.Mask" "B.Paste")
-			(net "/DISP_AUX")
+			(net "/FL_PWM")
 			(uuid "b88ad536-dec0-4350-8136-e7e73c39d67f")
 		)
 		(pad "10" smd rect
@@ -173277,7 +173277,7 @@
 		(end 320.7 119.458)
 		(width 0.15)
 		(layer "F.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "2f3b5238-b376-4457-95f2-3222aef64570")
 	)
 	(segment
@@ -173285,7 +173285,7 @@
 		(end 324.3 119.458)
 		(width 0.15)
 		(layer "F.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "8319cb63-a6ec-4620-ab28-992275bc1665")
 	)
 	(segment
@@ -173293,7 +173293,7 @@
 		(end 320.7 91.4)
 		(width 0.15)
 		(layer "F.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "b5e9c297-8eef-4300-969c-03ad615b527b")
 	)
 	(via
@@ -173301,7 +173301,7 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "a0d01792-9916-46c9-a047-a5f3ae6e86ad")
 	)
 	(via
@@ -173309,7 +173309,7 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "d5e33548-7db6-47a0-af04-500b8e8d02c0")
 	)
 	(segment
@@ -173317,7 +173317,7 @@
 		(end 321.95 90.4)
 		(width 0.15)
 		(layer "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "381e1e8a-9776-4c0d-9e6c-4e28945b1244")
 	)
 	(segment
@@ -173325,7 +173325,7 @@
 		(end 321.95 91.4)
 		(width 0.15)
 		(layer "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "8f1f2f1f-e08d-4164-93b0-78e989491b6e")
 	)
 	(segment
@@ -173333,7 +173333,7 @@
 		(end 321.955 119.458)
 		(width 0.15)
 		(layer "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "957453b9-b2c9-41c1-a7ad-194f40edb9f9")
 	)
 	(segment
@@ -173341,7 +173341,7 @@
 		(end 321.955 119.65)
 		(width 0.15)
 		(layer "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "ada6a1bb-c249-40fe-b728-a9e279071c07")
 	)
 	(segment
@@ -173349,7 +173349,7 @@
 		(end 324.3 119.458)
 		(width 0.15)
 		(layer "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "ef3a4291-1687-41d9-a2aa-cdddd52e4958")
 	)
 	(segment
@@ -173357,7 +173357,7 @@
 		(end 323.7 91.4)
 		(width 0.15)
 		(layer "B.Cu")
-		(net "/DISP_AUX")
+		(net "/FL_PWM")
 		(uuid "f5968e2c-f079-4cc9-87e4-483874b1d5e0")
 	)
 	(segment

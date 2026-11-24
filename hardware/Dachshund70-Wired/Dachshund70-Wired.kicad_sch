@@ -11952,7 +11952,7 @@
 		)
 		(uuid "01c10133-7575-43c5-b0db-4c6ecc699374")
 	)
-	(label "DISP_AUX"
+	(label "FL_PWM"
 		(at 596.9 193.04 180)
 		(effects
 			(font
@@ -12032,7 +12032,7 @@
 		)
 		(uuid "b5ff926d-3a30-4666-a987-85d29762a057")
 	)
-	(label "DISP_AUX"
+	(label "FL_PWM"
 		(at 756.92 147.32 180)
 		(effects
 			(font
@@ -38546,7 +38546,7 @@
 				)
 			)
 		)
-		(property "Value" "Display (FFC 16P 0.5 mm, e-paper SPI + touch)"
+		(property "Value" "Display (FFC 16P 0.5 mm, e-paper SPI, touch, front light)"
 			(at 763.27 172.72 0)
 			(effects
 				(font
