@@ -1,0 +1,7 @@
+(version 1)
+
+# A small, crowded board: every ground pad joins the pour solid, since most of them sit between tracks where two
+# thermal spokes don't fit.
+(rule "Ground pads solid"
+  (constraint zone_connection solid)
+  (condition "A.Type == 'Pad' && A.NetName == 'GND'"))

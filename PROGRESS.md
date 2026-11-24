@@ -6,6 +6,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### E-paper adapter board (2026-11-24)
+
+`hardware/Dachshund70-EPD/` (rev 1.0): joins the wired mainboard's J4 to the GDEY037T03-FT21's three FPCs
+(e-paper 24-pin, touch 6-pin, front light 6-pin), with Good Display's booster circuit for the e-paper and a PWM
+front-light driver (AO3400A, 15 Ω). 46 × 28 mm, 2 layers, all parts on top. Schematic built with the KiCad MCP;
+ERC 0; DRC clean (0 violations, 0 unconnected, parity clean). Export `hardware/step/Dachshund70-EPD-v01.step`;
+`export_fab.py` includes it. Not ordered, not tested; checks are in its README.
+
 ### Wired mainboard rev 1.4: 3.7" front-lit touch e-paper (2026-11-24)
 
 Tiam wanted a bigger screen than the 2.9" and chose Good Display's GDEY037T03-FT21 (3.7", 240 × 416, FT6336U
