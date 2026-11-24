@@ -6,6 +6,24 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wired mainboard rev 1.1: RP2350B and an AMOLED screen (2026-11-24)
+
+Tiam wanted a high-resolution screen with a good refresh rate and colour, ideally an AliExpress module, and picked
+the 2.41" AMOLED (450 × 600, RM690B0 driver, quad SPI). Its frame rate needs quad SPI, so the RP2040 became an
+RP2350B (QFN-80). The board stays 2-layer.
+
+- Schematic: RP2350B with its own 1.1 V switching regulator (L1 3.3 µH, 4.7 µF in and out, VREG_AVDD through
+  33 Ω), ABM8-272-T3 crystal, 100 nF per power pin, PWR_FLAGs. GPIOs re-assigned so the matrix leaves the chip's
+  left side and the screen its right side (pin map in the README). J4 now carries the screen's quad SPI: CLK, D0-D3,
+  CS, RST, TE, +3V3 and GND. ERC 0.
+- Board: only the MCU column above the USB connector was re-placed and re-routed; keys, LEDs and the lower column
+  keep rev 1.0's routing. Staircase fan-outs, +3V3/+1V1 rings inside the QFN's pad ring, the regulator at the
+  chip's corner with short ground links. DRC 0 violations, 0 unconnected, schematic parity clean (kicad-cli
+  10.0.3). `tools/rebuild_column.sh` and `tools/prefan.py` hold the method.
+- Export: `hardware/step/Dachshund70-Wired-v02.step` (v01 is the RP2040 board).
+- Not ordered, not tested, no firmware yet. Open: the AMOLED module's FPC pinout and drawing (varies by seller),
+  L1's land pattern (Murata DFE201610P stands in for the Abracon part), RP2350 firmware.
+
 ### Wired mainboard, USB hub board and wired plate (2026-11-24)
 
 Tiam asked for a wired-only board next to the tri-mode one (which stays as it is): no radio or battery, a cheaper
