@@ -9016,15 +9016,9 @@
 		)
 		(uuid "030cfe0a-72cc-4aee-a3ce-7ba250403565")
 	)
-	(label "TFT_CS"
-		(at 647.7 187.96 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "00ca76a3-1070-4b22-9ddd-9f85ee79aed1")
+	(no_connect
+		(at 647.7 187.96)
+		(uuid "f8947605-cd15-44f5-8a18-7af1c6a49e9f")
 	)
 	(label "TFT_DC"
 		(at 647.7 190.5 0)
@@ -9196,26 +9190,6 @@
 		)
 		(uuid "1d306147-864b-4e6f-a0a5-2c7a40340653")
 	)
-	(label "TFT_MOSI"
-		(at 756.92 139.7 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0a60c1ab-426e-4772-b7ae-ae029ebfda60")
-	)
-	(label "TFT_CS"
-		(at 756.92 142.24 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "36da9a8b-cd4b-465c-a334-fac12acc4a47")
-	)
 	(label "TFT_DC"
 		(at 756.92 144.78 180)
 		(effects
@@ -9275,36 +9249,6 @@
 			(justify right bottom)
 		)
 		(uuid "fb178329-d587-4877-8721-02f211f8aa38")
-	)
-	(label "SWDIO"
-		(at 490.22 309.88 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "74acf07f-35dd-49bf-8c41-60232e6ab81c")
-	)
-	(label "SWCLK"
-		(at 490.22 312.42 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f3f26ce1-e1c5-4169-9cff-1ce9bd06d216")
-	)
-	(label "RUN"
-		(at 490.22 314.96 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0845bba2-e791-413a-9cc0-2383bbbe1f6f")
 	)
 	(label "BOOT_SW"
 		(at 502.92 101.6 180)
@@ -9555,6 +9499,27 @@
 			(justify left bottom)
 		)
 		(uuid "e71b915d-3421-4257-ae46-ef7153015dc5")
+	)
+	(label "TFT_MOSI"
+		(at 756.92 152.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c4c0873e-848b-441c-a15f-c65bea74df9b")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 756.92 154.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "53f20c22-0153-42fd-bcd1-f8a51911b402")
 	)
 	(global_label "LED_5V"
 		(shape passive)
@@ -13340,28 +13305,6 @@
 		)
 		(uuid "6c61e4df-7fa9-4f9d-94e7-0fa394f5c32f")
 	)
-	(global_label "VBUS"
-		(shape passive)
-		(at 756.92 152.4 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "5329bb27-1227-4ddb-acd7-9d86535ab9fc")
-	)
-	(global_label "VBUS"
-		(shape passive)
-		(at 756.92 154.94 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "c6618752-692c-48c0-a709-93aaaa99b16f")
-	)
 	(global_label "GND"
 		(shape passive)
 		(at 762 160.02 270)
@@ -13394,28 +13337,6 @@
 			(justify right)
 		)
 		(uuid "454eb471-4348-45ac-80a8-bb7bf480c134")
-	)
-	(global_label "+3V3"
-		(shape passive)
-		(at 490.22 307.34 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "16ab0748-fc0b-41a2-ac4e-c76760452b8f")
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 490.22 317.5 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "1c1941cd-6b70-4d57-86cf-d54aa20fccf0")
 	)
 	(global_label "GND"
 		(shape passive)
@@ -14010,6 +13931,28 @@
 			(justify right)
 		)
 		(uuid "1f1cf801-3531-409c-9701-c64d80ad20b3")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 756.92 139.7 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cb1b839d-c322-4416-bb07-732fbd7fcb47")
+	)
+	(global_label "+3V3"
+		(shape passive)
+		(at 756.92 142.24 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4b53c966-7c98-41c5-bf07-60b44afe4811")
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
@@ -36165,66 +36108,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x05")
-		(at 495.3 312.42 0)
-		(unit 1)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "37a14d7e-3082-4f00-b1fd-c34a95d3968d")
-		(property "Reference" "J3"
-			(at 495.3 304.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "SWD"
-			(at 495.3 320.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_1.27mm:PinHeader_1x05_P1.27mm_Vertical"
-			(at 495.3 312.42 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 495.3 312.42 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 495.3 312.42 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "Dachshund70-Wired"
-				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
-					(reference "J3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Switch:SW_Push")
 		(at 508 101.6 0)
 		(unit 1)
@@ -39742,5 +39625,145 @@
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 497.84 312.42 0)
+		(unit 1)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "54480585-6dcc-4590-9126-2e4af6a9fca3")
+		(property "Reference" "TP5"
+			(at 497.84 305.562 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SWDIO"
+			(at 497.84 307.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 497.84 312.42 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 497.84 312.42 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 497.84 312.42 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "TP5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 510.54 312.42 0)
+		(unit 1)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "088947f0-8e40-4845-b4d4-92e876d7ef4f")
+		(property "Reference" "TP6"
+			(at 510.54 305.562 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SWCLK"
+			(at 510.54 307.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 510.54 312.42 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 510.54 312.42 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 510.54 312.42 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-Wired"
+				(path "/3f0b99aa-e67a-4dbe-9ed7-d5144e85eda8"
+					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "SWDIO"
+		(at 497.84 312.42 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "68347c7e-9bfa-4f06-a651-d6b2ff64a62b")
+	)
+	(label "SWCLK"
+		(at 510.54 312.42 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "eb1a26aa-58c9-49b6-886d-c0e26a401db3")
 	)
 )
