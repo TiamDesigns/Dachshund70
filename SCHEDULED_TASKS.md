@@ -2,7 +2,14 @@
 
 Open work to pick up in later prompts. Each task is written so it can be pasted into a prompt. When a task is finished, delete it here in the same change, and record what was done in `PROGRESS.md`.
 
-Last updated: 2026-11-17 (mainboard rev 1.3 and screen board rev 3.0: screen and LEDs on their own board again).
+Last updated: 2026-11-24 (wired mainboard, hub board and wired plate).
+
+## Wired board (RP2040) and hub
+
+- **TFT screen board (next).** Pick the 2.4" 240 × 320 ST7789 panel (candidate: HS HS24CG003-ARX, LCSC C5329583, about $4) and get its drawing; then build the screen board: the panel's FPC socket, backlight transistor on TFT_BL, CS tied low, RST by an RC from 3.3 V, and the FH12-12S to the mainboard's J4 (pinout in `hardware/Dachshund70-Wired/README.md`). It must fit the case's screen window.
+- **RP2040 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2040): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW, encoder, 77-LED chain on GPIO24 through PIO with LED_EN on GPIO21 (off in USB suspend) and a total-current cap (about 300 mA by default), the ST7789 on SPI1 (SCK 26, MOSI 27, DC 29, no CS) with PWM backlight on GPIO25, UF2 from the RP2040's ROM. Doghouse needs the 77-key layout and per-key RGB.
+- **Hub checks before ordering.** Check the SY6280AAC pin order and its ISET value against Silergy's datasheet, and the XKB USB-A footprint's front edge against its drawing (`hardware/Dachshund70-Hub/README.md`).
+- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the TFT screen in place of the Sharp panel.
 
 ## Before ordering boards
 
