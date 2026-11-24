@@ -6,6 +6,12 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wired mainboard rev 1.4: 3.7" front-lit touch e-paper (2026-11-24)
+
+Tiam wanted a bigger screen than the 2.9" and chose Good Display's GDEY037T03-FT21 (3.7", 240 × 416, FT6336U
+capacitive touch, front light), accepting a screen column about 2.8u wide instead of 2u. The board is unchanged
+apart from J4 pin 9's spare line, now FL_PWM (GPIO40) for the front light's dimming. ERC 0; DRC clean, parity clean.
+
 ### Wired mainboard rev 1.3: e-paper touch screen (2026-11-24)
 
 Tiam will use the screen mostly to change keyboard settings, so the AMOLED (burn-in risk) gives way to e-paper with
