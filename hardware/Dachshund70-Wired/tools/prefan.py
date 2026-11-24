@@ -37,7 +37,7 @@ def stair(pins, side, xv0, xv1, step=0.35, pitch=0.8, first=1.1, yc=None):
     return [(V[-N + k][0], V[-N + k][1], pins[k]['net']) for k in range(N)]
 
 left = [p for p in U.values() if p['x'] < cx - 4 and sig(p)]
-right = [p for p in U.values() if p['x'] > cx + 4 and sig(p) and p['net'].startswith(('/DISP', '/TP_'))]
+right = [p for p in U.values() if p['x'] > cx + 4 and sig(p) and p['net'].startswith(('/DISP', '/EPD_', '/TP_'))]
 stair(left, -1, 305.0, 304.2)
 ubus = stair(right, +1, 322.9, 323.7)
 

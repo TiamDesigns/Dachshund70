@@ -1,6 +1,6 @@
 # Dachshund70 wired mainboard
 
-Rev 1.2 (2026-11-24). A wired-only mainboard next to the tri-mode one (`hardware/Dachshund70/`, unchanged): no
+Rev 1.3 (2026-11-24). A wired-only mainboard next to the tri-mode one (`hardware/Dachshund70/`, unchanged): no
 radio, no battery, an RP2350B, an SK6812MINI-E under every key and hot-swap sockets on every key. KiCad 10, 2 layers,
 same outline as mainboard rev 1.4 (x 19 to 326, y 39 to 160.1, the MCU column on the right), every part on the back,
 so it drops into the same plate, case and flex.
@@ -10,7 +10,9 @@ Not ordered, not tested. No firmware yet: the RP2350 port is in `SCHEDULED_TASKS
 
 Rev 1.0 had an RP2040 and a small SPI TFT; rev 1.1 swaps in the RP2350B so the screen can be a 2.41" AMOLED
 (450 × 600, RM690B0 driver) on quad SPI, which the RP2040 couldn't drive at a useful frame rate. Rev 1.2 adds the
-touch version of that screen: J4 grows to 16 pins for its touch controller's I2C, interrupt and reset.
+touch version of that screen: J4 grows to 16 pins for its touch controller's I2C, interrupt and reset. Rev 1.3
+switches the screen to e-paper with capacitive touch (Waveshare 2.9" Touch e-Paper HAT, 296 × 128), since the
+screen is mostly for changing settings: same copper and GPIOs as rev 1.2, the screen lines renamed for the e-paper.
 
 ## What's on it
 
@@ -32,12 +34,12 @@ touch version of that screen: J4 grows to 16 pins for its touch controller's I2C
   - J1 (JST-SH 6P) to the hub board or the old USB-C board: 1 VBUS, 2 D−, 3 D+, 4 GND, 5-6 not connected.
     The old daughterboard (`hardware/Dachshund70-USB`) still fits for a Lite build; its slide switch does nothing.
   - J4 (FH12-16S FFC, LCSC C596731) to the screen: 1-2 +3V3, 3 GND, 4 TP_RST, 5 GND, 6 TP_INT, 7 TP_SCL,
-    8 TP_SDA, 9 DISP_TE, 10 DISP_RST, 11 DISP_CS, 12 DISP_CLK, 13 DISP_D3, 14 DISP_D2, 15 DISP_D1, 16 DISP_D0.
-    Quad SPI to the AMOLED's driver (TE lets the firmware start a frame on the panel's refresh) and I2C to its touch
-    controller (an FT6336-type chip on the touch panels), with 4.7k pull-ups on the board (R12, R13). The signal
-    order is the chip's, reversed, so the twelve lines run as one bus with no crossings. J4 sits 1.5 mm lower than
-    rev 1.1's 12-pin one (centre y 119.4). The AliExpress panels come on their own FPC, so a small adapter (or the
-    module's breakout) goes between: see Open checks.
+    8 TP_SDA, 9 DISP_AUX (spare), 10 TP_EN, 11 EPD_BUSY, 12 EPD_RST, 13 EPD_DC, 14 EPD_MOSI, 15 EPD_SCK, 16 EPD_CS.
+    The e-paper's SPI is on the RP2350's SPI0 pins (CS GPIO33, SCK 34, MOSI 35) and its touch controller (I2C,
+    address 0x48) on I2C1 (GPIO42/43) with 4.7k pull-ups on the board (R12, R13). The twelve lines run as one bus
+    with no crossings (J4's order is the chip's, reversed). J4 sits 1.5 mm lower than rev 1.1's 12-pin one (centre
+    y 119.4). The HAT has a Raspberry Pi 40-pin header, so a small adapter (FFC socket to that header) goes between:
+    see Open checks.
   - J5 (JST-SH 5P) encoder, unchanged: 1 COL14, 2 ENC_A, 3 GND, 4 ENC_B, 5 ENC_SW (push switch at row 0, col 14
     through D114).
 
@@ -45,15 +47,17 @@ touch version of that screen: J4 grows to 16 pins for its touch controller's I2C
 
 | GPIO | Net | | GPIO | Net |
 |---|---|---|---|---|
-| 0 | LED data (PIO, through U4) | | 27-32 | not connected |
+| 0 | LED data (PIO, through U4) | | 33 | EPD_CS (SPI0 CSn) |
+| 1 | LED_EN | | 34 | EPD_SCK (SPI0) |
+| 2-3 | not connected | | 35 | EPD_MOSI (SPI0 TX) |
+| 4-14 | COL4-COL14 | | 36 | EPD_DC |
+| 15-20 | ROW0-ROW5 | | 37 | EPD_RST |
+| 21-24 | COL0-COL3 | | 38 | EPD_BUSY |
+| 25-26 | ENC_A, ENC_B | | 39 | TP_EN (touch power, optional) |
+| 27-32 | not connected | | 40 | DISP_AUX (spare, on J4 pin 9) |
 | | | | 42, 43 | TP_SDA, TP_SCL (I2C1) |
 | | | | 44, 45 | TP_INT, TP_RST |
-| 1 | LED_EN | | 33-36 | DISP_D0-D3 (PIO quad SPI) |
-| 2-3 | not connected | | 37 | DISP_CLK |
-| 4-14 | COL4-COL14 | | 38 | DISP_CS |
-| 15-20 | ROW0-ROW5 | | 39 | DISP_RST |
-| 21-24 | COL0-COL3 | | 40 | DISP_TE |
-| 25-26 | ENC_A, ENC_B | | 41, 46, 47 | not connected (ADC pins free) |
+| | | | 41, 46, 47 | not connected (ADC pins free) |
 
 The schematic is the reference: the left side of the chip carries the matrix (COL4-COL14, ROW0-ROW5) and the right
 side the screen and touch, so neither crosses the other. Scan the matrix with pull-ups (drive rows low, read columns): the
@@ -76,7 +80,7 @@ and turn LED_EN off in USB suspend. There's no battery, so the old battery-life 
   join short rings inside the pad ring: +3V3 in three arcs tied together on the front under the chip, +1V1 in an
   arch over the exposed pad, and PGND straight into the exposed pad. The regulator's inductor and caps sit at the
   chip's bottom-right corner, next to VREG_LX/VREG_FB/VREG_AVDD, with their grounds on short links to vias.
-- The screen and touch lines leave the chip's right side and J4's pins in a staircase to via columns and run
+- The screen and touch lines (e-paper SPI, touch I2C) leave the chip's right side and J4's pins in a staircase to via columns and run
   between them as a fixed twelve-line bus on the front, nested so no two cross. The crystal is turned so XIN and
   XOUT are short, with a ground guard under it between them.
 - Ground: a pour on both layers, with one via per cut-off pour area (no via grid), placed by `tools/stitch.py`,
@@ -99,8 +103,9 @@ It needs rev 1.0's board geometry as `geom_old.json` and the scratch folder in `
 
 ## Open checks
 
-- **Screen:** 2.41" AMOLED, 450 × 600, RM690B0, quad SPI, with capacitive touch, from AliExpress. The bare panels'
-  FPC pinout varies by seller, so check the listing's drawing before making the adapter from J4's 16 pins. The case window is sized in
+- **Screen:** Waveshare 2.9" Touch e-Paper HAT (296 × 128, 4 greys, partial refresh, capacitive touch on I2C at
+  0x48). Check its pin table and HAT outline against Waveshare's wiki before making the adapter from J4's 16 pins.
+  The board would also take the 2.41" AMOLED it was laid out for (rev 1.2's names), since the lines are general. The case window is sized in
   the case thread.
 - **L1:** the footprint is Murata's DFE201610P land pattern standing in for the Abracon AOTA-B201610S3R3-101-T
   (same 2016 size). Check the land pattern and the polarity dot against Abracon's drawing before ordering.

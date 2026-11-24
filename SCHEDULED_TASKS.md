@@ -2,15 +2,15 @@
 
 Open work to pick up in later prompts. Each task is written so it can be pasted into a prompt. When a task is finished, delete it here in the same change, and record what was done in `PROGRESS.md`.
 
-Last updated: 2026-11-24 (wired mainboard rev 1.2: AMOLED with touch).
+Last updated: 2026-11-24 (wired mainboard rev 1.3: e-paper touch screen).
 
 ## Wired board (RP2350B) and hub
 
-- **AMOLED screen adapter (next).** Buy or pick the 2.41" AMOLED with capacitive touch (450 × 600, RM690B0, quad SPI, FT6336-type touch on I2C) from AliExpress and get the listing's FPC drawing and pinout (it varies by seller). Then build a small adapter: the panel's FPC socket, its supply rails (most panels want 3.3 V logic plus an AMOLED supply the module or adapter makes), and an FH12-16S to the mainboard's J4 (1-2 +3V3, 3 GND, 4 TP_RST, 5 GND, 6 TP_INT, 7 TP_SCL, 8 TP_SDA, 9 TE, 10 RST, 11 CS, 12 CLK, 13-16 D3-D0). If the module comes on its own breakout, a cable may be enough. It must fit the case's screen window.
-- **RP2350 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2350): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW scanned with pull-ups (erratum E9), encoder, 77-LED chain on GPIO0 through PIO with LED_EN on GPIO1 (off in USB suspend) and a total-current cap (about 300 mA by default), the RM690B0 over PIO quad SPI (GPIO33-40), the touch controller on I2C1 (GPIO42/43, INT 44, RST 45), UF2 from the RP2350's ROM. Doghouse needs the 77-key layout and per-key RGB.
+- **E-paper screen adapter (next).** Buy Waveshare's 2.9" Touch e-Paper HAT (296 × 128, capacitive touch on I2C 0x48) and check its pin table and outline on Waveshare's wiki. Build a small adapter from the mainboard's J4 (FH12-16S: 1-2 +3V3, 3 GND, 4 TP_RST, 5 GND, 6 TP_INT, 7 TP_SCL, 8 TP_SDA, 9 spare, 10 TP_EN, 11 BUSY, 12 RST, 13 DC, 14 MOSI, 15 SCK, 16 CS) to the HAT's 40-pin header. It must fit the case's screen window.
+- **RP2350 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2350): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW scanned with pull-ups (erratum E9), encoder, 77-LED chain on GPIO0 through PIO with LED_EN on GPIO1 (off in USB suspend) and a total-current cap (about 300 mA by default), the 2.9" e-paper on SPI0 (CS 33, SCK 34, MOSI 35, DC 36, RST 37, BUSY 38) with partial refresh for menus and a full refresh now and then to clear ghosting, the touch controller on I2C1 (GPIO42/43, address 0x48, INT 44, RST 45, enable 39), UF2 from the RP2350's ROM. Doghouse needs the 77-key layout and per-key RGB.
 - **L1 land pattern.** The regulator inductor's footprint is Murata's DFE201610P standing in for the Abracon AOTA-B201610S3R3-101-T. Check the pads and the polarity dot against Abracon's drawing before ordering.
 - **Hub checks before ordering.** Check the SY6280AAC pin order and its ISET value against Silergy's datasheet, and the XKB USB-A footprint's front edge against its drawing (`hardware/Dachshund70-Hub/README.md`).
-- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the 2.41" AMOLED in place of the Sharp panel (window and adapter mounting).
+- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the 2.9" Touch e-Paper HAT in place of the Sharp panel (window and adapter mounting).
 
 ## Before ordering boards
 
