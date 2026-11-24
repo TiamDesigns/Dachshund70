@@ -19,3 +19,8 @@
 (rule "Connector ground pins solid"
   (constraint zone_connection solid)
   (condition "A.Type == 'Pad' && A.NetName == 'GND' && (A.memberOfFootprint('J1') || A.memberOfFootprint('J5'))"))
+
+# Ground pads boxed in by tracks, where the pour can't reach them with two thermal spokes; connect them solid.
+(rule "Boxed-in ground pads solid"
+  (constraint zone_connection solid)
+  (condition "A.Type == 'Pad' && A.NetName == 'GND' && (A.memberOfFootprint('J4') || A.memberOfFootprint('C10') || A.memberOfFootprint('LED29') || A.memberOfFootprint('C8') || A.memberOfFootprint('C176') || A.memberOfFootprint('U3') || A.memberOfFootprint('C101') || A.memberOfFootprint('R8'))"))
