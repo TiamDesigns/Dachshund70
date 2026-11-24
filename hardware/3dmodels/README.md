@@ -39,6 +39,10 @@ Footprints reference them as `${KIPRJMOD}/../3dmodels/<file>`. Colours are in th
   5.1 x 5.1 x 1.4 mm body with a 3 mm plunger to 1.55 and four legs). KiCad 10's library has no model for
   either footprint, and neither is in kicad-packages3D. They're only for case fit, made with a few lines of
   FreeCAD (not in `gen_models.py`); the wired board's STEP export (v04 on) points U1, SW1 and SW2 at them.
+- `USB_A_Receptacle_XKB_U231-091N-4BLRA00-S_standin.step`: the hub board's two USB-A ports (J3, J4), made
+  with FreeCAD from the footprint's fab outline: 13.1 x 5.7 shell, 14.5 x 6.3 flange at the mouth, 12.5 x 5.12
+  opening and tongue. KiCad 10 has no model for this footprint. The hub's USB-C ports now use the generated
+  HRO model here too (the stock library has none).
 
 ## Regenerating
 

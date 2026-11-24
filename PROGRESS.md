@@ -6,6 +6,19 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Hub board in the case: bay and four back ports (2026-11-24, Fusion "Dachshund70 case rev2")
+
+- `hardware/step/Dachshund70-Hub-v02.step`: the hub with its port models (v01 had none). Origin is the board's
+  KiCad origin (STEP X = board x, STEP Y = -board y), ports on the y = 0 edge. The hub's footprints now point at
+  `hardware/3dmodels/` for the USB-C (generated HRO model) and USB-A (stand-in).
+- Fusion: the wired mainboard (STEP v04) and the hub replace the tri-mode mainboard and the USB-C daughterboard
+  (both kept, hidden). The hub sits on the old daughterboard floor (board bottom world z 5.16, port edge y 78.07),
+  centred on the case (x -33.95..46.05) between the back M3 screws. Bottom shell: old USB-C opening and power-slider
+  channel filled; an 81 x 23 bay; M3 heat-set insert holes (3.6 x 2.96, 1.2 over foot B2's pocket) under H1 and H2;
+  four port openings on one line (z 5.19..13.04 world, 0.56 under the ring): USB-A 14.6 wide at x -24.95 and -7.95,
+  USB-C 11.6 wide lead-ins with 9.2 x 3.66 port holes at x 7.05 (hub port 4) and 31.05 (to the PC). Slider button hidden.
+- Open: screen column for the 3.7" panel waits on Tiam's layout choice; no new case export yet.
+
 ### Wired mainboard STEP v04 with every part (2026-11-24)
 
 - `hardware/step/Dachshund70-Wired-v04.step`: the rev 1.4 wired board with all 3D models, now including the 77

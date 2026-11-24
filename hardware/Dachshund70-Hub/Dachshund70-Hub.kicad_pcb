@@ -3606,7 +3606,7 @@
 			(uuid "8f4ac1a8-f234-4934-a88d-75b11536f54f")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_C_Receptacle_HRO_TYPE-C-31-M-12.step"
+		(model "${KIPRJMOD}/../3dmodels/USB_C_Receptacle_HRO_TYPE-C-31-M-12.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -6540,7 +6540,7 @@
 			(uuid "d72062e8-8434-4c06-bbbd-8857df04cb13")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_A_Receptacle_XKB_U231-091N-4BLRA00-S.step"
+		(model "${KIPRJMOD}/../3dmodels/USB_A_Receptacle_XKB_U231-091N-4BLRA00-S_standin.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -6979,7 +6979,7 @@
 			(uuid "d0c4d25e-5542-4e80-9c0b-8ca8dc992aed")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_A_Receptacle_XKB_U231-091N-4BLRA00-S.step"
+		(model "${KIPRJMOD}/../3dmodels/USB_A_Receptacle_XKB_U231-091N-4BLRA00-S_standin.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -7396,7 +7396,7 @@
 			(uuid "b79fd2cd-47b4-4086-bb8f-f97f97c5e7d5")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_C_Receptacle_HRO_TYPE-C-31-M-12.step"
+		(model "${KIPRJMOD}/../3dmodels/USB_C_Receptacle_HRO_TYPE-C-31-M-12.step"
 			(offset
 				(xyz 0 0 0)
 			)
