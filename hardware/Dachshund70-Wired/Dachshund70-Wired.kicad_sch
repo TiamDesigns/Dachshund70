@@ -11882,7 +11882,7 @@
 		)
 		(uuid "5af8fb90-21d6-4fc1-af46-8cef3a836635")
 	)
-	(label "DISP_D0"
+	(label "EPD_CS"
 		(at 647.7 195.58 0)
 		(effects
 			(font
@@ -11892,7 +11892,7 @@
 		)
 		(uuid "87e7dc7a-e72c-42f6-8ed8-d67f1b4f5e5f")
 	)
-	(label "DISP_D1"
+	(label "EPD_SCK"
 		(at 647.7 198.12 0)
 		(effects
 			(font
@@ -11902,7 +11902,7 @@
 		)
 		(uuid "39355d21-41fa-4331-8dbf-8c16baf5a56f")
 	)
-	(label "DISP_D2"
+	(label "EPD_MOSI"
 		(at 647.7 200.66 0)
 		(effects
 			(font
@@ -11912,7 +11912,7 @@
 		)
 		(uuid "283d041b-76f9-4fc2-88cf-08503640e8bd")
 	)
-	(label "DISP_D3"
+	(label "EPD_DC"
 		(at 647.7 203.2 0)
 		(effects
 			(font
@@ -11922,7 +11922,7 @@
 		)
 		(uuid "88989528-a76f-4b0f-8356-5a1dbfee1045")
 	)
-	(label "DISP_CLK"
+	(label "EPD_RST"
 		(at 647.7 205.74 0)
 		(effects
 			(font
@@ -11932,7 +11932,7 @@
 		)
 		(uuid "89a7d2a6-dcf4-4181-8769-033048035271")
 	)
-	(label "DISP_CS"
+	(label "EPD_BUSY"
 		(at 647.7 208.28 0)
 		(effects
 			(font
@@ -11942,7 +11942,7 @@
 		)
 		(uuid "f16d21fd-e548-48d5-b333-f720273200e1")
 	)
-	(label "DISP_RST"
+	(label "TP_EN"
 		(at 647.7 210.82 0)
 		(effects
 			(font
@@ -11952,7 +11952,7 @@
 		)
 		(uuid "01c10133-7575-43c5-b0db-4c6ecc699374")
 	)
-	(label "DISP_TE"
+	(label "DISP_AUX"
 		(at 596.9 193.04 180)
 		(effects
 			(font
@@ -12032,7 +12032,7 @@
 		)
 		(uuid "b5ff926d-3a30-4666-a987-85d29762a057")
 	)
-	(label "DISP_TE"
+	(label "DISP_AUX"
 		(at 756.92 147.32 180)
 		(effects
 			(font
@@ -12042,7 +12042,7 @@
 		)
 		(uuid "00d45d07-9823-4335-acc2-02457e060d5a")
 	)
-	(label "DISP_RST"
+	(label "TP_EN"
 		(at 756.92 149.86 180)
 		(effects
 			(font
@@ -12052,7 +12052,7 @@
 		)
 		(uuid "743f06d3-bb66-487a-8221-7b1ff6ebb9eb")
 	)
-	(label "DISP_CS"
+	(label "EPD_BUSY"
 		(at 756.92 152.4 180)
 		(effects
 			(font
@@ -12062,7 +12062,7 @@
 		)
 		(uuid "3e57e4e3-16aa-4e89-a6f7-846a46eaa264")
 	)
-	(label "DISP_CLK"
+	(label "EPD_RST"
 		(at 756.92 154.94 180)
 		(effects
 			(font
@@ -38546,7 +38546,7 @@
 				)
 			)
 		)
-		(property "Value" "Display (FFC 16P 0.5 mm, QSPI + touch)"
+		(property "Value" "Display (FFC 16P 0.5 mm, e-paper SPI + touch)"
 			(at 763.27 172.72 0)
 			(effects
 				(font
@@ -43066,7 +43066,7 @@
 		)
 		(uuid "1b609cb4-db73-4587-9955-c927cdd03279")
 	)
-	(label "DISP_D3"
+	(label "EPD_DC"
 		(at 756.92 157.48 180)
 		(effects
 			(font
@@ -43076,7 +43076,7 @@
 		)
 		(uuid "3057846d-8e30-4d87-956a-3eb4901e8080")
 	)
-	(label "DISP_D2"
+	(label "EPD_MOSI"
 		(at 756.92 160.02 180)
 		(effects
 			(font
@@ -43086,7 +43086,7 @@
 		)
 		(uuid "61faacbf-3ed0-4ca0-8354-0366f4adf437")
 	)
-	(label "DISP_D1"
+	(label "EPD_SCK"
 		(at 756.92 162.56 180)
 		(effects
 			(font
@@ -43096,7 +43096,7 @@
 		)
 		(uuid "c439defa-6ab4-412d-9b23-e0d511f62d22")
 	)
-	(label "DISP_D0"
+	(label "EPD_CS"
 		(at 756.92 165.1 180)
 		(effects
 			(font

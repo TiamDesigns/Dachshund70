@@ -6,6 +6,15 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wired mainboard rev 1.3: e-paper touch screen (2026-11-24)
+
+Tiam will use the screen mostly to change keyboard settings, so the AMOLED (burn-in risk) gives way to e-paper with
+capacitive touch: Waveshare's 2.9" Touch e-Paper HAT (296 × 128, partial refresh, touch on I2C at 0x48). The copper
+and GPIOs are rev 1.2's; only the screen nets are renamed: EPD_CS/SCK/MOSI on SPI0 (GPIO33-35), EPD_DC 36,
+EPD_RST 37, EPD_BUSY 38, TP_EN 39, a spare on 40, touch as before (I2C1 on GPIO42/43, INT 44, RST 45). J4's new
+pinout is in the README. ERC 0; DRC 0 violations, 0 unconnected, schematic parity clean. No new STEP (geometry is
+unchanged from v03).
+
 ### Wired mainboard rev 1.2: touch for the AMOLED (2026-11-24)
 
 Tiam asked for the touch version of the 2.41" AMOLED.
