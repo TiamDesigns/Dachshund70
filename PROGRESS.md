@@ -6,6 +6,27 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wired mainboard, USB hub board and wired plate (2026-11-24)
+
+Tiam asked for a wired-only board next to the tri-mode one (which stays as it is): no radio or battery, a cheaper
+MCU that still does 1 kHz, a 6.25u spacebar only, hot-swap sockets and an RGB LED on every key, a cheap TFT, and a
+USB hub on the back with extra ports for a high-polling mouse. Both new boards are 2-layer (Tiam's choice) and
+were built with the KiCad MCP (Konnect) for the schematics and checks.
+
+- `hardware/Dachshund70-Wired/` (rev 1.0): RP2040 + 16 MB flash, 77 hot-swap keys, 77 SK6812MINI-E per-key LEDs
+  with a switched 5 V rail and a 74AHCT1G125 level shifter, ME6211 3.3 V, rev 1.4's outline and connector places.
+  J1 keeps the old 6-pin pinout (the old USB-C board still fits a Lite build); J4's screen pinout changed (no CS,
+  no 5 V); SWD is on two test pads. ERC 0; DRC 0 violations, 0 unconnected, parity clean. Routed by the grid router
+  in `tools/` (Freerouting can't run on this PC); one GND via per cut-off pour area. Pin map in its README.
+- `hardware/Dachshund70-Hub/` (rev 1.0): CH334F hub (USB 2.0 high-speed, one TT per port), USB-C to the PC,
+  keyboard on port 1 over the JST-SH cable, 2 × USB-A + 1 × USB-C on the back behind a shared current-limited
+  switch, ESD on every port. 80 × 22 mm. ERC 0; DRC clean. Checked against the CH334 datasheet Tiam supplied.
+- `hardware/Dachshund70-Wired-Plate/`: the plate script run on the wired board (77 cutouts, 6.25u only).
+  `gen_plate.py` takes `PLATE_MAINBOARD`, `PLATE_OUT` and `PLATE_LED_REFS` for this.
+- Exports: `hardware/step/Dachshund70-Wired-v01.step`, `-Hub-v01.step`, `-Wired-Plate-v01.step`, the plate's
+  `-outline-v01.dxf`; `export_fab.py` covers the three new boards (BOM/CPL for the two assembled ones).
+- Not ordered, not tested, no firmware yet. Open items are in `SCHEDULED_TASKS.md`.
+
 ### Mainboard rev 1.4 and screen board rev 3.1: everything on the back, cleaner vias and pour (2026-11-18)
 
 Tiam: J4 and J5 were on the wrong side for single-sided JLC assembly, both boards were speckled with vias, the
