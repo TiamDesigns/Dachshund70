@@ -35,6 +35,7 @@ while True:
     dead_v = []
     for v in vias:
         n = v[2]; layers = 0
+        if n == 'GND': continue   # stitching vias join the pours
         for L in (0, 1):
             if any(o[6] == n and o[5] == L and min((o[0] - v[0]) ** 2 + (o[1] - v[1]) ** 2, (o[2] - v[0]) ** 2 + (o[3] - v[1]) ** 2) < 0.3 ** 2 for o in tracks) or on_pad(n, L, v[0], v[1]) or \
                any(o[6] == n and o[5] == L and on_seg(o, v[0], v[1]) for o in tracks): layers += 1

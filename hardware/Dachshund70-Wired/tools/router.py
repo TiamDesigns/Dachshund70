@@ -159,6 +159,7 @@ def mark(L, win, m, n):
 from collections import deque, Counter
 QUEUE = deque(); RIPS = Counter(); PEN = 20.0; MAXRIP = 400; total = [0]
 INV = {}
+GND_REFS = ['C101', 'C6', 'C8', 'U3', 'C10', 'J4', 'U1']
 PRE = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else {'tracks': [], 'vias': []}
 PRE_TREE, PRE_DONE = {}, {}
 def seg_cells(L, x1, y1, x2, y2):
@@ -231,10 +232,10 @@ def route_net(name, refs=None, region=None):
             if soft and not isinstance(soft[0], str):
                 res = soft; soft = None
             if soft:
-                victims = [v for v in soft if RIPS[v] < 8]
+                victims = [v for v in soft if RIPS[v] < 16]
                 if victims and len(victims) == len(soft):
                     for v in victims:
-                        rip(v); RIPS[v] += 1; total[0] += 1; QUEUE.append([v, None, None])
+                        rip(v); RIPS[v] += 1; total[0] += 1; QUEUE.append([v, GND_REFS if v == 'GND' else None, None])
                     rebuild()
                     for marg in (40, 120, 400):
                         res = connect(n, name, w, extra, tree, tgt, marg)
@@ -382,6 +383,20 @@ for name, cs in PRE_TREE.items():
     for q in pins.get(name, []):
         if cs & set(q['cells']): PRE_DONE.setdefault(name, set()).add(q['ref']); cs.update(q['cells'])
 stamp_pre()
+# existing, rippable routing (argv[5]): loaded as finished routes with their trees
+if len(sys.argv) > 5:
+    EX = json.load(open(sys.argv[5]))
+    for x1, y1, x2, y2, w, L, name in EX['tracks']:
+        ROUTES.setdefault(name, {'tracks': [], 'vias': []})['tracks'].append([x1, y1, x2, y2, w, L, name])
+        TREES.setdefault(name, set(PRE_TREE.get(name, set()))).update(seg_cells(L, x1, y1, x2, y2))
+    for x, y, name in EX['vias']:
+        ROUTES.setdefault(name, {'tracks': [], 'vias': []})['vias'].append([x, y, name])
+        TREES.setdefault(name, set(PRE_TREE.get(name, set()))).update(seg_cells(0, x, y, x, y) | seg_cells(1, x, y, x, y))
+    for name, cs in TREES.items():
+        DONE[name] = set(PRE_DONE.get(name, set()))
+        for q in pins.get(name, []):
+            if cs & set(q['cells']): DONE[name].add(q['ref']); cs.update(q['cells'])
+    rebuild()
 t0 = time.time()
 for step in order:
     QUEUE.append(step if not isinstance(step, str) else [step, None, None])
