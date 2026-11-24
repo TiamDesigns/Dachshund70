@@ -1,6 +1,6 @@
 # Dachshund70 wired mainboard
 
-Rev 1.1 (2026-11-24). A wired-only mainboard next to the tri-mode one (`hardware/Dachshund70/`, unchanged): no
+Rev 1.2 (2026-11-24). A wired-only mainboard next to the tri-mode one (`hardware/Dachshund70/`, unchanged): no
 radio, no battery, an RP2350B, an SK6812MINI-E under every key and hot-swap sockets on every key. KiCad 10, 2 layers,
 same outline as mainboard rev 1.4 (x 19 to 326, y 39 to 160.1, the MCU column on the right), every part on the back,
 so it drops into the same plate, case and flex.
@@ -9,7 +9,8 @@ Status: schematic ERC 0; board DRC clean (0 violations, 0 unconnected, schematic
 Not ordered, not tested. No firmware yet: the RP2350 port is in `SCHEDULED_TASKS.md`.
 
 Rev 1.0 had an RP2040 and a small SPI TFT; rev 1.1 swaps in the RP2350B so the screen can be a 2.41" AMOLED
-(450 × 600, RM690B0 driver) on quad SPI, which the RP2040 couldn't drive at a useful frame rate.
+(450 × 600, RM690B0 driver) on quad SPI, which the RP2040 couldn't drive at a useful frame rate. Rev 1.2 adds the
+touch version of that screen: J4 grows to 16 pins for its touch controller's I2C, interrupt and reset.
 
 ## What's on it
 
@@ -30,9 +31,12 @@ Rev 1.0 had an RP2040 and a small SPI TFT; rev 1.1 swaps in the RP2350B so the s
 - **Connectors**, all at the edge with their mouths out, in rev 1.4's places:
   - J1 (JST-SH 6P) to the hub board or the old USB-C board: 1 VBUS, 2 D−, 3 D+, 4 GND, 5-6 not connected.
     The old daughterboard (`hardware/Dachshund70-USB`) still fits for a Lite build; its slide switch does nothing.
-  - J4 (FH12-12S FFC) to the screen: 1 +3V3, 2 +3V3, 3 GND, 4 DISP_CLK, 5 GND, 6 DISP_D0, 7 DISP_D1, 8 DISP_D2,
-    9 DISP_D3, 10 DISP_CS, 11 DISP_RST, 12 DISP_TE. Quad SPI to the AMOLED's driver; TE lets the firmware start a
-    frame on the panel's refresh. The AliExpress panels come on their own FPC, so a small adapter (or the
+  - J4 (FH12-16S FFC, LCSC C596731) to the screen: 1-2 +3V3, 3 GND, 4 TP_RST, 5 GND, 6 TP_INT, 7 TP_SCL,
+    8 TP_SDA, 9 DISP_TE, 10 DISP_RST, 11 DISP_CS, 12 DISP_CLK, 13 DISP_D3, 14 DISP_D2, 15 DISP_D1, 16 DISP_D0.
+    Quad SPI to the AMOLED's driver (TE lets the firmware start a frame on the panel's refresh) and I2C to its touch
+    controller (an FT6336-type chip on the touch panels), with 4.7k pull-ups on the board (R12, R13). The signal
+    order is the chip's, reversed, so the twelve lines run as one bus with no crossings. J4 sits 1.5 mm lower than
+    rev 1.1's 12-pin one (centre y 119.4). The AliExpress panels come on their own FPC, so a small adapter (or the
     module's breakout) goes between: see Open checks.
   - J5 (JST-SH 5P) encoder, unchanged: 1 COL14, 2 ENC_A, 3 GND, 4 ENC_B, 5 ENC_SW (push switch at row 0, col 14
     through D114).
@@ -42,15 +46,17 @@ Rev 1.0 had an RP2040 and a small SPI TFT; rev 1.1 swaps in the RP2350B so the s
 | GPIO | Net | | GPIO | Net |
 |---|---|---|---|---|
 | 0 | LED data (PIO, through U4) | | 27-32 | not connected |
+| | | | 42, 43 | TP_SDA, TP_SCL (I2C1) |
+| | | | 44, 45 | TP_INT, TP_RST |
 | 1 | LED_EN | | 33-36 | DISP_D0-D3 (PIO quad SPI) |
 | 2-3 | not connected | | 37 | DISP_CLK |
 | 4-14 | COL4-COL14 | | 38 | DISP_CS |
 | 15-20 | ROW0-ROW5 | | 39 | DISP_RST |
 | 21-24 | COL0-COL3 | | 40 | DISP_TE |
-| 25-26 | ENC_A, ENC_B | | 41-47 | not connected (ADC pins free) |
+| 25-26 | ENC_A, ENC_B | | 41, 46, 47 | not connected (ADC pins free) |
 
 The schematic is the reference: the left side of the chip carries the matrix (COL4-COL14, ROW0-ROW5) and the right
-side the screen, so neither crosses the other. Scan the matrix with pull-ups (drive rows low, read columns): the
+side the screen and touch, so neither crosses the other. Scan the matrix with pull-ups (drive rows low, read columns): the
 RP2350's erratum E9 makes its internal pull-downs unreliable.
 
 Rows and columns follow `boards/Dachshund70/README.md`'s matrix (row 5, col 6 is the 6.25u spacebar; row 5 cols 4
@@ -70,6 +76,9 @@ and turn LED_EN off in USB suspend. There's no battery, so the old battery-life 
   join short rings inside the pad ring: +3V3 in three arcs tied together on the front under the chip, +1V1 in an
   arch over the exposed pad, and PGND straight into the exposed pad. The regulator's inductor and caps sit at the
   chip's bottom-right corner, next to VREG_LX/VREG_FB/VREG_AVDD, with their grounds on short links to vias.
+- The screen and touch lines leave the chip's right side and J4's pins in a staircase to via columns and run
+  between them as a fixed twelve-line bus on the front, nested so no two cross. The crystal is turned so XIN and
+  XOUT are short, with a ground guard under it between them.
 - Ground: a pour on both layers, with one via per cut-off pour area (no via grid), placed by `tools/stitch.py`,
   plus short ground links where a pad sat in a cut-off island. Ground pads too boxed in for two thermal spokes join
   the pour solid (rule in `Dachshund70-Wired.kicad_dru`).
@@ -81,17 +90,17 @@ and turn LED_EN off in USB suspend. There's no battery, so the old battery-life 
 The schematic was built with the KiCad MCP (Konnect): parts placed and checked through it, with the repetitive key,
 LED and label grids written by script. Freerouting couldn't run on this PC, so the board was routed by a small grid
 router in `tools/` (multi-source Dijkstra on a 0.1 mm grid, both layers, rip-up and reroute, then dead-end pruning).
-For rev 1.1 only the MCU column above the USB connector was re-placed and re-routed; the keys, LEDs and the lower
-column kept rev 1.0's routing. `tools/rebuild_column.sh` re-does that from the schematic: placement in `tools/sync.py`
-and `tools/col.json`, fixed fan-outs and power rings in `tools/prefan.py`, routing plan `tools/plan_column.json`,
-then pour, one ground via per cut-off island (`tools/stitch.py`) and removal of one-sided vias. It needs rev 1.0's
-routing outside the column, cut and pruned, as `ex_outp.json`, and the scratch folder in `S`. One SWCLK end at TP6
-was finished by hand.
+For revs 1.1 and 1.2 only the MCU column was re-placed and re-routed (above the USB connector, plus J4's corner);
+the keys, LEDs and the rest of the lower column kept rev 1.0's routing. `tools/rebuild_column.sh` re-does that from the schematic: placement in `tools/sync.py`
+and `tools/col.json`, fixed fan-outs, power rings, the screen bus and ground links in `tools/prefan.py`, rev 1.0's routing cut out of
+the column (`tools/cut.py`), routing plan `tools/plan_column.json` (the net order `tools/orders.py` found that
+routes everything), then pour, one ground via per cut-off island (`tools/stitch.py`) and removal of one-sided vias.
+It needs rev 1.0's board geometry as `geom_old.json` and the scratch folder in `S`.
 
 ## Open checks
 
-- **Screen:** 2.41" AMOLED, 450 × 600, RM690B0, quad SPI, from AliExpress. The bare panels' FPC pinout varies by
-  seller, so check the listing's drawing before making the adapter from J4's 12 pins. The case window is sized in
+- **Screen:** 2.41" AMOLED, 450 × 600, RM690B0, quad SPI, with capacitive touch, from AliExpress. The bare panels'
+  FPC pinout varies by seller, so check the listing's drawing before making the adapter from J4's 16 pins. The case window is sized in
   the case thread.
 - **L1:** the footprint is Murata's DFE201610P land pattern standing in for the Abracon AOTA-B201610S3R3-101-T
   (same 2016 size). Check the land pattern and the polarity dot against Abracon's drawing before ordering.

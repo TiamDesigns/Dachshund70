@@ -12,7 +12,7 @@ from scipy import ndimage, sparse
 from scipy.sparse.csgraph import dijkstra
 
 G = 0.1                     # grid pitch, mm
-CLR = 0.15                  # copper clearance, mm (Default netclass)
+CLR = float(os.environ.get("CLR", 0.15))                  # copper clearance, mm (Default netclass)
 HW = 0.075                  # half width of the narrowest track (keep-outs are built for it)
 MARGIN = 0.02               # extra safety on every keep-out
 VIA_D, VIA_DRILL = 0.6, 0.3
@@ -236,7 +236,7 @@ def route_net(name, refs=None, region=None):
                 victims = [v for v in soft if RIPS[v] < 16]
                 if victims and len(victims) == len(soft):
                     for v in victims:
-                        rip(v); RIPS[v] += 1; total[0] += 1; QUEUE.append([v, GND_REFS if v == 'GND' else None, None])
+                        rip(v); RIPS[v] += 1; total[0] += 1; QUEUE.append([v, None, None])
                     rebuild()
                     for marg in (40, 120, 400):
                         res = connect(n, name, w, extra, tree, tgt, marg)
