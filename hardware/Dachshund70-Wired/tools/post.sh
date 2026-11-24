@@ -1,11 +1,11 @@
 set -e
-S="${S:?set S to a scratch folder holding these tools, template.kicad_pcb, wired.net, keys.json and ex_outp.json}"
+S="${S:?set S to a scratch folder holding these tools, template.kicad_pcb, wired.net, keys.json and geom_old.json (rev 1.0 board geometry)}"
 KP="/c/Program Files/KiCad/10.0/bin/python.exe"; KC="/c/Program Files/KiCad/10.0/bin/kicad-cli.exe"
 B=hardware/Dachshund70-Wired/Dachshund70-Wired.kicad_pcb
 q(){ grep -v -e handler -e leak || true; }
 (cd "$S" && python -c "
 import json,sys;a=json.load(open('pre2350.json'));b=json.load(open(sys.argv[1]))
-json.dump({'tracks':a['tracks']+b['tracks'],'vias':a['vias']+b['vias']},open('r_all.json','w'))" $1 && python prune_json.py gnew.json r_all.json r_pruned.json && python -c "
+json.dump({'tracks':a['tracks']+b['tracks'],'vias':a['vias']+b['vias']},open('r_all.json','w'))" $1 && python snap.py gnew.json r_all.json && python prune_json.py gnew.json r_all.json r_pruned.json && python -c "
 import json;a=json.load(open('pre2350.json'));b=json.load(open('r_pruned.json'))
 k=lambda t:tuple(t)
 st={k(t) for t in b['tracks']};sv={k(v) for v in b['vias']}

@@ -6,6 +6,18 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wired mainboard rev 1.2: touch for the AMOLED (2026-11-24)
+
+Tiam asked for the touch version of the 2.41" AMOLED.
+
+- Schematic: J4 is now a 16-pin FH12-16S (LCSC C596731) carrying the touch controller's I2C (TP_SDA/TP_SCL on
+  GPIO42/43, I2C1, 4.7k pull-ups R12/R13), TP_INT (GPIO44) and TP_RST (GPIO45) as well as the screen's quad SPI. Its
+  signal order is the chip's reversed (pinout in the README), so the twelve lines run as one fixed bus on the front
+  without crossings. ERC 0.
+- Board: J4 moved 1.5 mm down to fit; the crystal turned so XIN/XOUT are short, with a ground guard under it; the
+  spare 100 nF caps moved to the corner right of TP4. DRC 0 violations, 0 unconnected, schematic parity clean.
+- Export: `hardware/step/Dachshund70-Wired-v03.step`.
+
 ### Wired mainboard rev 1.1: RP2350B and an AMOLED screen (2026-11-24)
 
 Tiam wanted a high-resolution screen with a good refresh rate and colour, ideally an AliExpress module, and picked
