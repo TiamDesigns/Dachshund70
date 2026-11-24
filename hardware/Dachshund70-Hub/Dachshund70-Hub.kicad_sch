@@ -5200,6 +5200,15 @@
 				)
 			)
 		)
+		(property "LCSC" "C1017"
+			(at 50.8 152.4 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(instances
 			(project "Dachshund70-Hub"
 				(path "/ff711336-aca8-4def-93b1-f388546cae8c"

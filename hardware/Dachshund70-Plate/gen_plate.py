@@ -16,8 +16,9 @@ import os
 import pcbnew
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-MAINBOARD = os.path.join(HERE, "..", "Dachshund70", "Dachshund70.kicad_pcb")
-OUT = os.path.join(HERE, "Dachshund70-Plate.kicad_pcb")
+# PLATE_MAINBOARD / PLATE_OUT / PLATE_LED_REFS build the same plate for another mainboard (the wired one).
+MAINBOARD = os.environ.get("PLATE_MAINBOARD", os.path.join(HERE, "..", "Dachshund70", "Dachshund70.kicad_pcb"))
+OUT = os.environ.get("PLATE_OUT", os.path.join(HERE, "Dachshund70-Plate.kicad_pcb"))
 
 # Plate stock. MX switches clip into 1.5 mm plates; 1.6 mm FR4 is the usual
 # substitute and the top end of what the gasket socks take (1.2-1.6 mm).
@@ -135,7 +136,7 @@ SIDEBAR_WEB = 2.0           # plate left above the right arrow's switch cutout
 
 # Light windows over the reverse-mount indicator LEDs.
 # From mainboard rev 1.3 the other five (layer, battery) are on the screen board, over the sidebar notch.
-LED_REFS = ("D2",)
+LED_REFS = tuple(r for r in os.environ.get("PLATE_LED_REFS", "D2").split(",") if r)
 LED_WINDOW = 4.0
 # The mainboard outline's right edge (KiCad mm), not counting its LED tab.
 MAIN_RIGHT_EDGE = 337.5

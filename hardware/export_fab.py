@@ -34,8 +34,9 @@ import zipfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 KICAD_CLI = os.environ.get("KICAD_CLI", r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe")
 BOARDS = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Plate", "Dachshund70-Encoder",
-          "Dachshund70-Screen"]
-ASSEMBLED = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder", "Dachshund70-Screen"]
+          "Dachshund70-Screen", "Dachshund70-Wired", "Dachshund70-Hub", "Dachshund70-Wired-Plate"]
+ASSEMBLED = ["Dachshund70", "Dachshund70-USB", "Dachshund70-Dongle", "Dachshund70-Encoder", "Dachshund70-Screen",
+             "Dachshund70-Wired", "Dachshund70-Hub"]
 # Kailh socket centre relative to the switch footprint's origin (midpoint of its two pads), KiCad axes.
 SOCKET_FOOTPRINT = "SW_Hotswap_Kailh_MX"
 SOCKET_OFFSET = (-0.6215, -3.81)
