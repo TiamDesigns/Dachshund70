@@ -6,6 +6,15 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Wired mainboard STEP v04 with every part (2026-11-24)
+
+- `hardware/step/Dachshund70-Wired-v04.step`: the rev 1.4 wired board with all 3D models, now including the 77
+  switches, hotswap sockets and stabilisers (v03 had only the stock-library parts) and stand-ins for the RP2350B and
+  the two tact switches (`hardware/3dmodels/`). Origin is the old mainboard's centre (KiCad 178.25, 99.55), as in
+  `export_step.py`, so it drops into the case's frame like the tri-mode board did. Exported with kicad-cli 10 from a
+  copy of the board with `${KIPRJMOD}/lib/keyswitch.3dshapes` pointed at `hardware/Dachshund70/lib/` (the wired
+  project has no lib folder of its own).
+
 ### Wired mainboard rev 1.4: 3.7" front-lit touch e-paper (2026-11-24)
 
 Tiam wanted a bigger screen than the 2.9" and chose Good Display's GDEY037T03-FT21 (3.7", 240 × 416, FT6336U

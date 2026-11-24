@@ -34,6 +34,11 @@ Footprints reference them as `${KIPRJMOD}/../3dmodels/<file>`. Colours are in th
   their SMD tails, and the two metal fittings on the MP pads. The cavity size and the lead path are
   approximate. Replace it with JST's STEP (jst-mfg.com, emailed after you accept their licence) if you
   need it exact. JST's licence forbids passing that file on, so don't commit it to a public repo.
+- `QFN-80-1EP_10x10mm_standin.step` and `SW_Push_XKB_TS-1187A_standin.step`: plain stand-ins for the
+  wired mainboard's RP2350B (U1, a 10 x 10 x 0.85 mm block) and its two tact switches (SW1/SW2, a
+  5.1 x 5.1 x 1.4 mm body with a 3 mm plunger to 1.55 and four legs). KiCad 10's library has no model for
+  either footprint, and neither is in kicad-packages3D. They're only for case fit, made with a few lines of
+  FreeCAD (not in `gen_models.py`); the wired board's STEP export (v04 on) points U1, SW1 and SW2 at them.
 
 ## Regenerating
 
