@@ -1,3 +1,4 @@
+import os
 """Grid maze router for the Dachshund70 wired mainboard (2 layers).
 
 geom.json (from export_geom.py) -> routes.json (tracks and vias). Nets are routed one connection at a time
@@ -18,7 +19,7 @@ VIA_D, VIA_DRILL = 0.6, 0.3
 HOLE_CLR = 0.25
 EDGE_CLR, CUT_CLR = 0.5, 0.3
 VIA_COST = 3.0              # mm-equivalent
-WIDTH = {'LED_5V': 0.5, 'VBUS': 0.5, '+3V3': 0.2, 'GND': 0.3, '+1V1': 0.2}
+WIDTH = {'LED_5V': 0.5, 'VBUS': 0.5, '+3V3': 0.2, 'GND': 0.3, '+1V1': 0.2, '/VREG_AVDD': 0.2, '/VREG_LX': 0.25}
 
 geom = json.load(open(sys.argv[1]))
 order = json.load(open(sys.argv[2]))          # list of net names in routing order
@@ -157,9 +158,9 @@ def mark(L, win, m, n):
     t2[m & (t1 != 0) & (t1 != n)] = n
     t1[m & (t1 == 0)] = n
 from collections import deque, Counter
-QUEUE = deque(); RIPS = Counter(); PEN = 20.0; MAXRIP = 400; total = [0]
+QUEUE = deque(); RIPS = Counter(); PEN = 20.0; MAXRIP = int(os.environ.get("MAXRIP", 400)); total = [0]
 INV = {}
-GND_REFS = ['C101', 'C6', 'C8', 'U3', 'C10', 'J4', 'U1']
+GND_REFS = ['U1', 'C9', 'C10', 'C27', 'L1']
 PRE = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else {'tracks': [], 'vias': []}
 PRE_TREE, PRE_DONE = {}, {}
 def seg_cells(L, x1, y1, x2, y2):
@@ -379,9 +380,35 @@ for x1, y1, x2, y2, w, L, name in PRE['tracks']:
     PRE_TREE.setdefault(name, set()).update(seg_cells(L, x1, y1, x2, y2))
 for x, y, name in PRE['vias']:
     PRE_TREE.setdefault(name, set()).update(seg_cells(0, x, y, x, y) | seg_cells(1, x, y, x, y))
-for name, cs in PRE_TREE.items():
-    for q in pins.get(name, []):
-        if cs & set(q['cells']): PRE_DONE.setdefault(name, set()).add(q['ref']); cs.update(q['cells'])
+# PRE pieces: each connected piece of fixed copper joins the pins it touches into one combined pin
+_els = {}
+for x1, y1, x2, y2, w, L, name in PRE['tracks']: _els.setdefault(name, []).append(seg_cells(L, x1, y1, x2, y2))
+isvia = {}
+for x1, y1, x2, y2, w, L, name in PRE['tracks']: isvia.setdefault(name, []).append(False)
+for x, y, name in PRE['vias']:
+    _els.setdefault(name, []).append(seg_cells(0, x, y, x, y) | seg_cells(1, x, y, x, y)); isvia.setdefault(name, []).append(True)
+for name, els in _els.items():
+    plist = pins.get(name, [])
+    items = [set(e) for e in els] + [set(q['cells']) for q in plist]
+    par = list(range(len(items)))
+    def _f(a):
+        while par[a] != a: par[a] = par[par[a]]; a = par[a]
+        return a
+    for a in range(len(items)):
+        for b in range(a + 1, len(items)):
+            if items[a] & items[b]: par[_f(a)] = _f(b)
+    groups = {}
+    for a in range(len(items)): groups.setdefault(_f(a), []).append(a)
+    newp = []
+    for g_ in groups.values():
+        ps = [plist[a - len(els)] for a in g_ if a >= len(els)]
+        if not ps: continue
+        cells = set()
+        vi = [a for a in g_ if a < len(els) and isvia[name][a]]
+        for a in (vi or g_): cells |= items[a]
+        newp.append({'cells': list(cells), 'ref': '+'.join(q['ref'] for q in ps), 'x': ps[0]['x'], 'y': ps[0]['y']})
+    pins[name] = newp
+PRE_TREE.clear(); PRE_DONE.clear()
 stamp_pre()
 # existing, rippable routing (argv[5]): loaded as finished routes with their trees
 if len(sys.argv) > 5:

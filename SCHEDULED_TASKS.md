@@ -2,14 +2,15 @@
 
 Open work to pick up in later prompts. Each task is written so it can be pasted into a prompt. When a task is finished, delete it here in the same change, and record what was done in `PROGRESS.md`.
 
-Last updated: 2026-11-24 (wired mainboard, hub board and wired plate).
+Last updated: 2026-11-24 (wired mainboard rev 1.1: RP2350B and AMOLED).
 
-## Wired board (RP2040) and hub
+## Wired board (RP2350B) and hub
 
-- **TFT screen board (next).** Pick the 2.4" 240 × 320 ST7789 panel (candidate: HS HS24CG003-ARX, LCSC C5329583, about $4) and get its drawing; then build the screen board: the panel's FPC socket, backlight transistor on TFT_BL, CS tied low, RST by an RC from 3.3 V, and the FH12-12S to the mainboard's J4 (pinout in `hardware/Dachshund70-Wired/README.md`). It must fit the case's screen window.
-- **RP2040 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2040): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW, encoder, 77-LED chain on GPIO24 through PIO with LED_EN on GPIO21 (off in USB suspend) and a total-current cap (about 300 mA by default), the ST7789 on SPI1 (SCK 26, MOSI 27, DC 29, no CS) with PWM backlight on GPIO25, UF2 from the RP2040's ROM. Doghouse needs the 77-key layout and per-key RGB.
+- **AMOLED screen adapter (next).** Buy or pick the 2.41" AMOLED (450 × 600, RM690B0, quad SPI) from AliExpress and get the listing's FPC drawing and pinout (it varies by seller). Then build a small adapter: the panel's FPC socket, its supply rails (most panels want 3.3 V logic plus an AMOLED supply the module or adapter makes), and an FH12-12S to the mainboard's J4 (1-2 +3V3, 3 GND, 4 CLK, 5 GND, 6-9 D0-D3, 10 CS, 11 RST, 12 TE). If the module comes on its own breakout, a cable may be enough. It must fit the case's screen window.
+- **RP2350 firmware.** Port the keyboard to `hardware/Dachshund70-Wired` (Zephyr supports the RP2350): a new board in `boards/` from the README's pin map, matrix 6 × 15 COL2ROW scanned with pull-ups (erratum E9), encoder, 77-LED chain on GPIO0 through PIO with LED_EN on GPIO1 (off in USB suspend) and a total-current cap (about 300 mA by default), the RM690B0 over PIO quad SPI (GPIO33-40), UF2 from the RP2350's ROM. Doghouse needs the 77-key layout and per-key RGB.
+- **L1 land pattern.** The regulator inductor's footprint is Murata's DFE201610P standing in for the Abracon AOTA-B201610S3R3-101-T. Check the pads and the polarity dot against Abracon's drawing before ordering.
 - **Hub checks before ordering.** Check the SY6280AAC pin order and its ISET value against Silergy's datasheet, and the XKB USB-A footprint's front edge against its drawing (`hardware/Dachshund70-Hub/README.md`).
-- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the TFT screen in place of the Sharp panel.
+- **Case for the wired build (case thread).** New back opening for the hub's 2 × USB-A + 2 × USB-C and its 80 × 22 mm board, mounts for it, and the 2.41" AMOLED in place of the Sharp panel (window and adapter mounting).
 
 ## Before ordering boards
 
