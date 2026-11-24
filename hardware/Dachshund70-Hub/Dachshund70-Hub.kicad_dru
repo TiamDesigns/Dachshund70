@@ -1,0 +1,22 @@
+(version 1)
+
+# The ports (J1, J3, J4, J5) overhang the back edge on purpose, so their outlines on the silkscreen cross it and
+# their shell tabs sit at the edge. The fab clips silk at the edge.
+(rule "Edge-mount ports silk"
+  (constraint silk_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('J1') || A.memberOfFootprint('J3') || A.memberOfFootprint('J4') || A.memberOfFootprint('J5')) && B.Layer == 'Edge.Cuts'"))
+
+(rule "Edge-mount ports (edge check)"
+  (constraint edge_clearance)
+  (severity ignore)
+  (condition "(A.memberOfFootprint('J1') || A.memberOfFootprint('J3') || A.memberOfFootprint('J4') || A.memberOfFootprint('J5')) && A.Layer == 'F.Silkscreen'"))
+
+(rule "Port shells at the edge"
+  (constraint edge_clearance (min 0mm))
+  (condition "A.Type == 'Pad' && A.NetName == 'SHIELD'"))
+
+# Small board, short ground paths: every ground pad joins the pour solid (no thermal spokes).
+(rule "Ground pads solid"
+  (constraint zone_connection solid)
+  (condition "A.Type == 'Pad' && A.NetName == 'GND'"))
