@@ -19,6 +19,8 @@ for k, p in enumerate(left):
     for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
         if abs(x1 - x2) + abs(y1 - y2) > 1e-6:
             tracks.append([round(x1, 3), round(y1, 3), round(x2, 3), round(y2, 3), W, 1, n])
+    if n == '+3V3':
+        tracks[:] = [t for t in tracks if not (t[6] == n and abs(t[1] - y) < 1e-6 and len(tracks) and False)]
     vias.append([xv, round(yp, 3), n])
 right = sorted([p for p in U if p['x'] > 317], key=lambda p: p['y'])
 assert len(right) == 14
@@ -34,6 +36,12 @@ for k, p in enumerate(right):
     for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
         if abs(x1 - x2) + abs(y1 - y2) > 1e-6:
             tracks.append([round(x1, 3), round(y1, 3), round(x2, 3), round(y2, 3), W, 1, n])
+    if n == '+3V3':
+        tracks[:] = [t for t in tracks if not (t[6] == n and abs(t[1] - y) < 1e-6 and len(tracks) and False)]
     vias.append([xv, round(yp, 3), n])
+tracks = [t for t in tracks if t[6] != '+3V3']; vias = [v for v in vias if v[2] != '+3V3']
+# TESTEN (pin 19) straight into the exposed pad
+p19 = [p for p in U if p['num'] == '19'][0]
+tracks.append([p19['x'], p19['y'], p19['x'], round(yc - 1.5 if p19['y'] < yc else yc + 1.5, 3), W, 1, 'GND'])
 json.dump({'tracks': tracks, 'vias': vias}, open(sys.argv[2], 'w'))
 print(len(tracks), len(vias), [p['net'] for p in left])
