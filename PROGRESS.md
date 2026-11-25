@@ -6,6 +6,20 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Case: 2.7" screen, YMDK feet, A1 print set v12 (2026-11-25, Fusion "Dachshund70 case rev2")
+
+- Screen: Good Display GDEY027T91-FT11 (2.7", touch + front light, 45.8 x 70.42 x 2.1, picture 57.29 x 38.19). The
+  window is the picture (R1.5, 0.3 chamfer), with 4.25 mm roads to the Delete column and to the knob opening, which is
+  now the same 38.19 width (roller 24.8 long). The case keeps its width (right bezel 7.3). The panel sits in a pocket
+  1.0 under the top face; its tails fold under its front end into adapter rev 1.5 (EPD v06), which sits on two posts
+  from the bottom shell (taped). FFC to the mainboard's J4: 16-way 0.5 mm, 60 mm, type B.
+  Tried and dropped: the 3.7" (case 27 mm wider) and the 2.9" (no room for its ribbon fold).
+- Feet: six YMDK silicone bars (40.5 x 11.8 x 1.8, R5.9 ends) in 40.7 x 12.0 x 0.8 pockets at the old foot
+  positions. The bottom shell has no through holes but the eight case-screw holes; the hub board is held by one M3
+  heat-set insert (blind, under H2) and its ports in the back wall.
+- Print set v12 for the A1 (project files): Bottom, Top A and Ring halves (split at x = 44), wired plate halves,
+  and printed joint keys (`hardware/case/print-proto/make_print_v12.py`). Not printed or test-fitted yet.
+
 ### Hub board in the case: bay and four back ports (2026-11-24, Fusion "Dachshund70 case rev2")
 
 - `hardware/step/Dachshund70-Hub-v02.step`: the hub with its port models (v01 had none). Origin is the board's
