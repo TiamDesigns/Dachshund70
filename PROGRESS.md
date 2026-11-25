@@ -17,12 +17,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Feet: six YMDK silicone bars (40.5 x 11.8 x 1.8, R5.9 ends) in 40.7 x 12.0 x 0.8 pockets at the old foot
   positions. The bottom shell has no through holes but the eight case-screw holes; the hub board is held by one M3
   heat-set insert (blind, under H2) and its ports in the back wall.
-- Screen support (v13): a printed backing tray (1.5 thick, 45.8 x 66.5) sits under the whole 2.7" panel (0.2 for
-  foam tape), above the adapter and the folded tails, so touch presses don't flex the panel. It rests on two legs on
-  the mainboard's top face (left side, clear of the touch tail) and screws down with 2 x M2x6 countersunk into two new
-  bottom-shell posts with M2 heat-set inserts (right side, between the e-paper and front-light tails). Its back edge
-  stops 3.8 short of the panel's, clear of the knob cover. The old Sharp screen rail is no longer used (hidden).
-  New files: Bottom halves v13 and Screen-tray-v13 (`hardware/case/print-proto/make_print_v13.py`); the rest stays v12.
+- Screen support (v14): a printed backing tray (1.5 thick, 45.8 x 66.5) sits under the whole 2.7" panel (0.2 for
+  foam tape), above the adapter and the folded tails, so touch presses don't flex the panel. It touches only the
+  bottom shell (Tiam: the mainboard floats for typing feel, so nothing may bear on it): 3 x M2x6 countersunk into
+  three bottom-shell posts with M2 heat-set inserts, all right of the mainboard's edge (x 152/166 at the back,
+  162 at the front, between the e-paper and front-light tails). The panel glass carries the left part (about 0.07 mm
+  at the left edge for a 2 N press). Its back edge stops 3.8 short of the panel's, clear of the knob cover. The old
+  Sharp screen rail is no longer used (hidden). New files: Bottom halves v14 and Screen-tray-v14
+  (`hardware/case/print-proto/make_print_v14.py`); the rest stays v12. (v13 had two legs on the mainboard; dropped.)
 - Print set v12 for the A1 (project files): Bottom, Top A and Ring halves (split at x = 44), wired plate halves,
   and printed joint keys (`hardware/case/print-proto/make_print_v12.py`). Not printed or test-fitted yet.
 

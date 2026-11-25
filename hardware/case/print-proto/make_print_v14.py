@@ -1,7 +1,7 @@
 import FreeCAD as App, Part, Mesh, MeshPart, math
 E=r"<work>/exports/"
-O=r"<work>/print-v13/"
-V='v13'
+O=r"<work>/print-v14/"
+V='v14'
 c=math.cos(math.radians(4)); s=math.sin(math.radians(4))
 X0=44.0
 def box(x0,y0,z0,x1,y1,z1): return Part.makeBox(x1-x0,y1-y0,z1-z0,App.Vector(x0,y0,z0))
