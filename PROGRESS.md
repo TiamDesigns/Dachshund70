@@ -6,6 +6,14 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### E-paper adapter rev 1.5: socket order from the case model (2026-11-25)
+
+The case model (adapter under the panel, component side up, turned 180°) showed the e-paper and touch tails' pin 1
+arriving at the other end of their sockets, and the touch and front-light tails on opposite sides from rev 1.4. J2
+and J3 are renumbered in reverse, J3 (touch) and J4 (front light) swap ends, and the front-light driver moves with
+J4. The FFC to the mainboard is 16-way, 60 mm, type B. ERC 0; DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v06.step`.
+
 ### E-paper adapter rev 1.4: dual-contact panel sockets (2026-11-25)
 
 The case model showed some panel tails may arrive contacts-up after folding under the panel, so J2, J3 and J4 are now
