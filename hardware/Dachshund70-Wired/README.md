@@ -12,8 +12,8 @@ Rev 1.0 had an RP2040 and a small SPI TFT; rev 1.1 swaps in the RP2350B so the s
 (450 × 600, RM690B0 driver) on quad SPI, which the RP2040 couldn't drive at a useful frame rate. Rev 1.2 adds the
 touch version of that screen: J4 grows to 16 pins for its touch controller's I2C, interrupt and reset. Rev 1.3
 switches the screen to e-paper with capacitive touch, since the screen is mostly for changing settings; rev 1.4
-picks the panel: Good Display's 2.9" GDEY029T94-FT01 (296 × 128, capacitive touch, front light), which fits the 2u
-column above the arrows (the 3.7" GDEY037T03-FT21 made the keyboard too wide). Both keep rev
+picks the panel: Good Display's 2.7" GDEY027T91-FT11 (264 × 176, capacitive touch, front light), which fits the
+column between the knob and the arrows (the 3.7" made the keyboard too wide, the 2.9" was too long). Both keep rev
 1.2's copper and GPIOs, with the screen lines renamed.
 
 ## What's on it
@@ -105,9 +105,9 @@ It needs rev 1.0's board geometry as `geom_old.json` and the scratch folder in `
 
 ## Open checks
 
-- **Screen:** Good Display GDEY029T94-FT01: 2.9" e-paper, 296 × 128, 79.0 × 36.7 × 2.15 mm outline, 66.9 × 29.1 mm
-  picture, FT6336U capacitive touch, 4-LED front light. The adapter board is `hardware/Dachshund70-EPD/` (its README
-  lists the checks before ordering). The case window is the 2u column above the arrows (case thread).
+- **Screen:** Good Display GDEY027T91-FT11: 2.7" e-paper, 264 × 176, 70.42 × 45.8 × 2.1 mm outline, 57.29 × 38.19 mm
+  picture, FT6336U capacitive touch, 4-LED front light (in series, driven by a boost on the adapter). The adapter
+  board is `hardware/Dachshund70-EPD/` (its README lists the checks before ordering).
 - **L1:** the footprint is Murata's DFE201610P land pattern standing in for the Abracon AOTA-B201610S3R3-101-T
   (same 2016 size). Check the land pattern and the polarity dot against Abracon's drawing before ordering.
 

@@ -6,6 +6,15 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Screen changed to the 2.7" GDEY027T91-FT11; e-paper adapter rev 1.2 (2026-11-25)
+
+The 2.9" panel's 79 mm plus its ribbon fold didn't fit between the knob and the arrows, and Tiam wants the picture
+as wide as the knob, so the screen is now Good Display's 2.7" GDEY027T91-FT11 (SSD1680, 264 × 176, 70.42 × 45.8 ×
+2.1 mm, picture 57.29 × 38.19 mm, FT6336U touch). Its front light is four LEDs in series (up to 12 V, 15 mA), so the
+adapter's front-light switch became a TPS61040 boost regulating 15 mA (82 Ω sense), enabled by FL_PWM. The adapter is
+44 × 30 mm with the three panel sockets on the top edge. ERC 0; DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v03.step`. Mainboard unchanged.
+
 ### Screen changed to the 2.9" GDEY029T94-FT01; e-paper adapter rev 1.1 (2026-11-25)
 
 The 3.7" made the keyboard too wide, so Tiam chose Good Display's 2.9" GDEY029T94-FT01 (SSD1680, 296 × 128,
