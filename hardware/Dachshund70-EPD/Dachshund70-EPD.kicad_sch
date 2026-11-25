@@ -3628,16 +3628,6 @@
 		)
 		(uuid "244a8537-73c6-47d9-ab8e-4ebc52790ba1")
 	)
-	(label "VPP"
-		(at 147.32 93.98 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d19fa90b-8930-47fd-b535-7a414265c308")
-	)
 	(label "VSH"
 		(at 147.32 96.52 180)
 		(effects
@@ -3697,36 +3687,6 @@
 			(justify right bottom)
 		)
 		(uuid "d1c38fdf-40a0-4f47-ae70-a21bda42f9e5")
-	)
-	(label "TP_INT"
-		(at 223.52 53.34 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b7d70261-3d6d-4a00-8c55-77daa9acc451")
-	)
-	(label "TP_SDA"
-		(at 223.52 55.88 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "2ad31749-51b3-4df1-8a5f-eaaaab89de3d")
-	)
-	(label "TP_SCL"
-		(at 223.52 58.42 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "94702c64-f071-473c-ab38-656602b6b1b7")
 	)
 	(label "SW"
 		(at 101.6 130.81 270)
@@ -3867,16 +3827,6 @@
 			(justify left bottom)
 		)
 		(uuid "5fcebcfa-60d3-4225-ad4f-f93304ee1569")
-	)
-	(label "VPP"
-		(at 114.3 187.96 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9eb9deb4-745d-4a47-af6f-169d2522f428")
 	)
 	(label "VSH"
 		(at 127 187.96 90)
@@ -4179,17 +4129,6 @@
 		)
 		(uuid "c49cfd16-d839-46de-aef5-bf812e87dcda")
 	)
-	(global_label "+3V3"
-		(shape passive)
-		(at 223.52 48.26 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "4be79455-0d1f-4bbc-9f8e-159abae011ac")
-	)
 	(global_label "GND"
 		(shape passive)
 		(at 228.6 63.5 270)
@@ -4288,17 +4227,6 @@
 			(justify right)
 		)
 		(uuid "fcfbe0dd-a728-474d-9c6e-1cbf3d5cd7d0")
-	)
-	(global_label "GND"
-		(shape passive)
-		(at 114.3 193.04 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "f4a08c38-a63a-4d16-a81f-1137fd997f5a")
 	)
 	(global_label "GND"
 		(shape passive)
@@ -4819,7 +4747,7 @@
 				)
 			)
 		)
-		(property "Value" "10uH"
+		(property "Value" "47uH"
 			(at 103.505 127 90)
 			(effects
 				(font
@@ -4827,7 +4755,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
+		(property "Footprint" "Inductor_SMD:L_Changjiang_FNR3015S"
 			(at 101.6 127 0)
 			(hide yes)
 			(effects
@@ -4854,7 +4782,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C602018"
+		(property "LCSC" "C167766"
 			(at 101.6 127 0)
 			(hide yes)
 			(effects
@@ -4863,7 +4791,7 @@
 				)
 			)
 		)
-		(property "MPN" "FHD252012S-100MT (10uH 1A, 2520)"
+		(property "MPN" "FNR3015S470MT (47uH 430mA, 3015)"
 			(at 101.6 127 0)
 			(hide yes)
 			(effects
@@ -5671,86 +5599,6 @@
 	)
 	(symbol
 		(lib_id "Device:C_Small")
-		(at 114.3 190.5 0)
-		(unit 1)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "899f7a9f-b217-4777-8e9d-8541886bd133")
-		(property "Reference" "C4"
-			(at 114.554 188.722 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "1uF"
-			(at 114.554 192.532 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 114.3 190.5 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 114.3 190.5 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor, small symbol"
-			(at 114.3 190.5 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C15849"
-			(at 114.3 190.5 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "CL10A105KB8NNNC"
-			(at 114.3 190.5 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "Dachshund70-EPD"
-				(path "/3bd42ece-82fc-4ab1-ba0d-c57ab83a3cf2"
-					(reference "C4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C_Small")
 		(at 127 190.5 0)
 		(unit 1)
 		(in_bom yes)
@@ -6166,7 +6014,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "4.7uF 25V"
 			(at 139.954 148.082 0)
 			(effects
 				(font
@@ -6175,7 +6023,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 139.7 146.05 0)
 			(hide yes)
 			(effects
@@ -6202,7 +6050,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C15849"
+		(property "LCSC" "C1779"
 			(at 139.7 146.05 0)
 			(hide yes)
 			(effects
@@ -6211,7 +6059,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10A105KB8NNNC"
+		(property "MPN" "CL21A475KAQNNNE"
 			(at 139.7 146.05 0)
 			(hide yes)
 			(effects
@@ -6246,7 +6094,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "4.7uF 25V"
 			(at 190.754 192.532 0)
 			(effects
 				(font
@@ -6255,7 +6103,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 190.5 190.5 0)
 			(hide yes)
 			(effects
@@ -6282,7 +6130,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C15849"
+		(property "LCSC" "C1779"
 			(at 190.5 190.5 0)
 			(hide yes)
 			(effects
@@ -6291,7 +6139,7 @@
 				)
 			)
 		)
-		(property "MPN" "CL10A105KB8NNNC"
+		(property "MPN" "CL21A475KAQNNNE"
 			(at 190.5 190.5 0)
 			(hide yes)
 			(effects
@@ -6928,5 +6776,149 @@
 			(justify right)
 		)
 		(uuid "4412b1e0-cfba-40c8-a7fd-efb84560ead0")
+	)
+	(no_connect
+		(at 147.32 93.98)
+		(uuid "febd8a6d-7eb3-4547-b4c9-f61adf7cf2de")
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 88.9 152.4 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7cf70faf-b9a1-48f3-803e-b36d74dc6999")
+		(property "Reference" "R4"
+			(at 88.9 152.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1M"
+			(at 90.678 152.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 88.9 152.4 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 152.4 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 88.9 152.4 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C22935"
+			(at 88.9 152.4 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0603WAF1004T5E"
+			(at 88.9 152.4 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Dachshund70-EPD"
+				(path "/3bd42ece-82fc-4ab1-ba0d-c57ab83a3cf2"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "TP_INT"
+		(at 223.52 48.26 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "039bd2ac-436e-471c-9c4e-5382ed26b307")
+	)
+	(global_label "+3V3"
+		(shape passive)
+		(at 223.52 53.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ab351fd4-a986-4a81-ad53-6089913e18d0")
+	)
+	(label "TP_SCL"
+		(at 223.52 55.88 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b73af1d1-28c6-4586-a5fc-2a0e3a1d0dcf")
+	)
+	(label "TP_SDA"
+		(at 223.52 58.42 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f9320ffd-caa4-48f3-adee-728cfcc09af0")
+	)
+	(label "GDR"
+		(at 88.90 149.86 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "157b9276-b112-4728-b40f-f4fb9fa3f445")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 88.90 154.94 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b9391f8d-faf8-475b-b841-0fb50b91bbae")
 	)
 )

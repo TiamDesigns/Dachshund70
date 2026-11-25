@@ -6,6 +6,13 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### E-paper adapter rev 1.3: checked against the GDEY027T91-FT11 spec (2026-11-25)
+
+Tiam supplied Good Display's spec. The e-paper and front-light pinouts matched; the touch FPC didn't (it is 1 GND,
+2 INT, 3 RST, 4 VDD, 5 SCL, 6 SDA), so J3 is rewired. The booster now follows the spec's reference circuit: 47 µH
+inductor (FNR3015S470MT), 4.7 µF pump and input caps, a 1M pull-down on GDR, and VPP (pin 19, for test) left open.
+ERC 0; DRC clean, parity clean. Export `hardware/step/Dachshund70-EPD-v04.step`.
+
 ### Screen changed to the 2.7" GDEY027T91-FT11; e-paper adapter rev 1.2 (2026-11-25)
 
 The 2.9" panel's 79 mm plus its ribbon fold didn't fit between the knob and the arrows, and Tiam wants the picture
