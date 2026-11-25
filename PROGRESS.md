@@ -6,6 +6,15 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### Screen changed to the 2.9" GDEY029T94-FT01; e-paper adapter rev 1.1 (2026-11-25)
+
+The 3.7" made the keyboard too wide, so Tiam chose Good Display's 2.9" GDEY029T94-FT01 (SSD1680, 296 × 128,
+FT6336U touch, 4-LED front light, 79.0 × 36.7 × 2.15 mm), which fits the 2u column above the arrows. The mainboard is
+unchanged. The adapter (`hardware/Dachshund70-EPD/`) is narrowed to 34 × 46 mm with J2 on the top edge, J3 (touch) left,
+J4 (front light) right and J1 (mainboard) bottom, and re-routed: ERC 0, DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v02.step`. Its touch and front-light pinouts still need checking against the panel's
+spec PDF.
+
 ### E-paper adapter board (2026-11-24)
 
 `hardware/Dachshund70-EPD/` (rev 1.0): joins the wired mainboard's J4 to the GDEY037T03-FT21's three FPCs
