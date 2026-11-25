@@ -4519,7 +4519,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-24S-0.5SH_1x24-1MP_P0.50mm_Horizontal"
+		(property "Footprint" "Dachshund70-EPD:Hirose_FH34SRJ-24S-0.5SH_1x24-1MP_P0.50mm_Horizontal"
 			(at 152.4 76.2 0)
 			(hide yes)
 			(effects
@@ -4546,7 +4546,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C202112"
+		(property "LCSC" "C324726"
 			(at 152.4 76.2 0)
 			(hide yes)
 			(effects
@@ -4555,7 +4555,7 @@
 				)
 			)
 		)
-		(property "MPN" "Hirose FH12-24S-0.5SH(55)"
+		(property "MPN" "Hirose FH34SRJ-24S-0.5SH(50) (dual contact)"
 			(at 152.4 76.2 0)
 			(hide yes)
 			(effects
@@ -4598,7 +4598,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-6S-0.5SH_1x06-1MP_P0.50mm_Horizontal"
+		(property "Footprint" "Dachshund70-EPD:Hirose_FH34SRJ-6S-0.5SH_1x06-1MP_P0.50mm_Horizontal"
 			(at 228.6 50.8 0)
 			(hide yes)
 			(effects
@@ -4625,7 +4625,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C202118"
+		(property "LCSC" "C224194"
 			(at 228.6 50.8 0)
 			(hide yes)
 			(effects
@@ -4634,7 +4634,7 @@
 				)
 			)
 		)
-		(property "MPN" "Hirose FH12-6S-0.5SH(55)"
+		(property "MPN" "Hirose FH34SRJ-6S-0.5SH(50) (dual contact)"
 			(at 228.6 50.8 0)
 			(hide yes)
 			(effects
@@ -4677,7 +4677,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-6S-0.5SH_1x06-1MP_P0.50mm_Horizontal"
+		(property "Footprint" "Dachshund70-EPD:Hirose_FH34SRJ-6S-0.5SH_1x06-1MP_P0.50mm_Horizontal"
 			(at 228.6 101.6 0)
 			(hide yes)
 			(effects
@@ -4704,7 +4704,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C202118"
+		(property "LCSC" "C224194"
 			(at 228.6 101.6 0)
 			(hide yes)
 			(effects
@@ -4713,7 +4713,7 @@
 				)
 			)
 		)
-		(property "MPN" "Hirose FH12-6S-0.5SH(55)"
+		(property "MPN" "Hirose FH34SRJ-6S-0.5SH(50) (dual contact)"
 			(at 228.6 101.6 0)
 			(hide yes)
 			(effects

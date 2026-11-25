@@ -6,6 +6,13 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### E-paper adapter rev 1.4: dual-contact panel sockets (2026-11-25)
+
+The case model showed some panel tails may arrive contacts-up after folding under the panel, so J2, J3 and J4 are now
+Hirose FH34SRJ dual-contact sockets (LCSC C324726, C224194; footprints made from LCSC's land patterns in
+`hardware/Dachshund70-EPD/lib/`). Re-routed: ERC 0; DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v05.step`.
+
 ### E-paper adapter rev 1.3: checked against the GDEY027T91-FT11 spec (2026-11-25)
 
 Tiam supplied Good Display's spec. The e-paper and front-light pinouts matched; the touch FPC didn't (it is 1 GND,

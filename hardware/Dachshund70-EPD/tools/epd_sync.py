@@ -46,7 +46,8 @@ def getnet(name):
 miss = []
 for ref, c in comps.items():
     lib, name = c['fp'].split(':')
-    fp = pcbnew.FootprintLoad(STOCK + lib + '.pretty', name)
+    path = 'hardware/Dachshund70-EPD/lib/Dachshund70-EPD.pretty' if lib == 'Dachshund70-EPD' else STOCK + lib + '.pretty'
+    fp = pcbnew.FootprintLoad(path, name)
     fp.SetReference(ref); fp.SetValue(c['value']); fp.SetFPIDAsString(c['fp']); fp.SetPath(pcbnew.KIID_PATH('/' + c['ts']))
     for k, v in c['fields'].items():
         if k in ('LCSC', 'MPN', 'Description', 'Datasheet'): fp.SetField(k, v)
