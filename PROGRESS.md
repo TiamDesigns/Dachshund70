@@ -6,6 +6,46 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 
 ## Done
 
+### E-paper adapter rev 1.5: socket order from the case model (2026-11-25)
+
+The case model (adapter under the panel, component side up, turned 180°) showed the e-paper and touch tails' pin 1
+arriving at the other end of their sockets, and the touch and front-light tails on opposite sides from rev 1.4. J2
+and J3 are renumbered in reverse, J3 (touch) and J4 (front light) swap ends, and the front-light driver moves with
+J4. The FFC to the mainboard is 16-way, 60 mm, type B. ERC 0; DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v06.step`.
+
+### E-paper adapter rev 1.4: dual-contact panel sockets (2026-11-25)
+
+The case model showed some panel tails may arrive contacts-up after folding under the panel, so J2, J3 and J4 are now
+Hirose FH34SRJ dual-contact sockets (LCSC C324726, C224194; footprints made from LCSC's land patterns in
+`hardware/Dachshund70-EPD/lib/`). Re-routed: ERC 0; DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v05.step`.
+
+### E-paper adapter rev 1.3: checked against the GDEY027T91-FT11 spec (2026-11-25)
+
+Tiam supplied Good Display's spec. The e-paper and front-light pinouts matched; the touch FPC didn't (it is 1 GND,
+2 INT, 3 RST, 4 VDD, 5 SCL, 6 SDA), so J3 is rewired. The booster now follows the spec's reference circuit: 47 µH
+inductor (FNR3015S470MT), 4.7 µF pump and input caps, a 1M pull-down on GDR, and VPP (pin 19, for test) left open.
+ERC 0; DRC clean, parity clean. Export `hardware/step/Dachshund70-EPD-v04.step`.
+
+### Screen changed to the 2.7" GDEY027T91-FT11; e-paper adapter rev 1.2 (2026-11-25)
+
+The 2.9" panel's 79 mm plus its ribbon fold didn't fit between the knob and the arrows, and Tiam wants the picture
+as wide as the knob, so the screen is now Good Display's 2.7" GDEY027T91-FT11 (SSD1680, 264 × 176, 70.42 × 45.8 ×
+2.1 mm, picture 57.29 × 38.19 mm, FT6336U touch). Its front light is four LEDs in series (up to 12 V, 15 mA), so the
+adapter's front-light switch became a TPS61040 boost regulating 15 mA (82 Ω sense), enabled by FL_PWM. The adapter is
+44 × 30 mm with the three panel sockets on the top edge. ERC 0; DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v03.step`. Mainboard unchanged.
+
+### Screen changed to the 2.9" GDEY029T94-FT01; e-paper adapter rev 1.1 (2026-11-25)
+
+The 3.7" made the keyboard too wide, so Tiam chose Good Display's 2.9" GDEY029T94-FT01 (SSD1680, 296 × 128,
+FT6336U touch, 4-LED front light, 79.0 × 36.7 × 2.15 mm), which fits the 2u column above the arrows. The mainboard is
+unchanged. The adapter (`hardware/Dachshund70-EPD/`) is narrowed to 34 × 46 mm with J2 on the top edge, J3 (touch) left,
+J4 (front light) right and J1 (mainboard) bottom, and re-routed: ERC 0, DRC clean, parity clean. Export
+`hardware/step/Dachshund70-EPD-v02.step`. Its touch and front-light pinouts still need checking against the panel's
+spec PDF.
+
 ### E-paper adapter board (2026-11-24)
 
 `hardware/Dachshund70-EPD/` (rev 1.0): joins the wired mainboard's J4 to the GDEY037T03-FT21's three FPCs
