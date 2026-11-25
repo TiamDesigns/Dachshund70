@@ -17,6 +17,11 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Feet: six YMDK silicone bars (40.5 x 11.8 x 1.8, R5.9 ends) in 40.7 x 12.0 x 0.8 pockets at the old foot
   positions. The bottom shell has no through holes but the eight case-screw holes; the hub board is held by one M3
   heat-set insert (blind, under H2) and its ports in the back wall.
+- Back ports v3 (v15): the hub sits 0.89 mm further back, so the USB-C mouths are flush with the back face and the
+  USB-A mouths 0.8 behind it. Each opening follows its receptacle with an even 0.3 mm gap (USB-C 9.54 x 3.86 stadium,
+  USB-A 13.7 x 6.3 R1) and a 0.3 chamfer. The laptop and USB-trident engravings are gone (Tiam: too detailed and
+  technical); one small paw print, 0.4 deep, marks the port to the computer. New files: Bottom halves v15
+  (`hardware/case/print-proto/make_print_v15.py`); tray stays v14, the rest v12.
 - Screen support (v14): a printed backing tray (1.5 thick, 45.8 x 66.5) sits under the whole 2.7" panel (0.2 for
   foam tape), above the adapter and the folded tails, so touch presses don't flex the panel. It touches only the
   bottom shell (Tiam: the mainboard floats for typing feel, so nothing may bear on it): 3 x M2x6 countersunk into
@@ -24,7 +29,7 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   162 at the front, between the e-paper and front-light tails). The panel glass carries the left part (about 0.07 mm
   at the left edge for a 2 N press). Its back edge stops 3.8 short of the panel's, clear of the knob cover. The old
   Sharp screen rail is no longer used (hidden). New files: Bottom halves v14 and Screen-tray-v14
-  (`hardware/case/print-proto/make_print_v14.py`); the rest stays v12. (v13 had two legs on the mainboard; dropped.)
+  ; the rest stays v12. (v13 had two legs on the mainboard; dropped.)
 - Print set v12 for the A1 (project files): Bottom, Top A and Ring halves (split at x = 44), wired plate halves,
   and printed joint keys (`hardware/case/print-proto/make_print_v12.py`). Not printed or test-fitted yet.
 

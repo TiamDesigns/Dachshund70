@@ -1,7 +1,7 @@
 import FreeCAD as App, Part, Mesh, MeshPart, math
 E=r"<work>/exports/"
-O=r"<work>/print-v14/"
-V='v14'
+O=r"<work>/print-v15/"
+V='v15'
 c=math.cos(math.radians(4)); s=math.sin(math.radians(4))
 X0=44.0
 def box(x0,y0,z0,x1,y1,z1): return Part.makeBox(x1-x0,y1-y0,z1-z0,App.Vector(x0,y0,z0))
@@ -25,9 +25,3 @@ cut=cut.fuse(pin(78.0,11.5))
 b=b.cut(cut)
 L,R=halves(b)
 save(L,'Dachshund70-Rev3-Bottom-PETG-left-%s.stl'%V); save(R,'Dachshund70-Rev3-Bottom-PETG-right-%s.stl'%V)
-
-t=Part.read(E+'tray.step')
-m=App.Matrix(); m.rotateX(math.radians(-4)); t=t.transformGeometry(m)
-m=App.Matrix(); m.rotateX(math.radians(180)); t=t.transformGeometry(m)
-bb=t.BoundBox; t.translate(App.Vector(-bb.XMin,-bb.YMin,-bb.ZMin))
-save(t,'Dachshund70-Rev3-Screen-tray-%s.stl'%V,0.01)
