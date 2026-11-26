@@ -17,11 +17,16 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
 - Feet: six YMDK silicone bars (40.5 x 11.8 x 1.8, R5.9 ends) in 40.7 x 12.0 x 0.8 pockets at the old foot
   positions. The bottom shell has no through holes but the eight case-screw holes; the hub board is held by one M3
   heat-set insert (blind, under H2) and its ports in the back wall.
+- Full print set v18 (all parts, one version): the joint over the hub bay is gone (the ring's back slot at x -35.5 to
+  -23.5 is filled and the top-shell tongue and the bottom-shell tab remnant there are cut away; Tiam: that tongue and
+  groove was the overhang), and the key openings now have the same 0.3 x 45 deg top chamfer as the window and the knob
+  opening. Files: Bottom, Top A, Ring and wired-plate halves, joint keys and screen tray, all -v18
+  (`hardware/case/print-proto/make_print_v18.py`).
 - Bottom v17 (Tiam: still overhangs and fussy geometry round the hub): the hub area is rebuilt as one open
   rectangular bay (no roof) in front of a plain back wall, about 2.6 mm thick and full height. The wall has a 2 mm deep
   slot for the board's edge, reliefs behind the outer skin for the USB-A flanges and USB-C bodies (short bridges only),
   and the four port openings (0.3 gap, 0.3 chamfer). Old blind holes in the bay floor filled; the paw print recut.
-  New files: Bottom halves v17 (`hardware/case/print-proto/make_print_v17.py`).
+  New files: Bottom halves v17 .
 - Back ports v3 (v15): the hub sits 0.89 mm further back, so the USB-C mouths are flush with the back face and the
   USB-A mouths 0.8 behind it. Each opening follows its receptacle with an even 0.3 mm gap (USB-C 9.54 x 3.86 stadium,
   USB-A 13.7 x 6.3 R1) and a 0.3 chamfer. The laptop and USB-trident engravings are gone (Tiam: too detailed and
@@ -36,7 +41,7 @@ Phase 15 (desktop packaging and auto-update) is done, and with it every phase in
   Sharp screen rail is no longer used (hidden). New files: Bottom halves v14 and Screen-tray-v14
   ; the rest stays v12. (v13 had two legs on the mainboard; dropped.)
 - Print set v12 for the A1 (project files): Bottom, Top A and Ring halves (split at x = 44), wired plate halves,
-  and printed joint keys (`hardware/case/print-proto/make_print_v12.py`). Not printed or test-fitted yet.
+  and printed joint keys . Not printed or test-fitted yet.
 
 ### Hub board in the case: bay and four back ports (2026-11-24, Fusion "Dachshund70 case rev2")
 

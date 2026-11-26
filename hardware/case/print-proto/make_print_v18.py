@@ -1,15 +1,7 @@
-# Case rev 3 print set v12 for a Bambu A1 (256 mm bed): run with FreeCAD 1.1's freecadcmd.
-# Inputs: <work>/exports/{bottom,topA,ring}.step (the Fusion bodies 'Bottom shell', 'Top shell A', 'Accent ring',
-# each exported on its own, world frame) and the wired plate STEP (hardware/step/Dachshund70-Wired-Plate-v01.step).
-# Shells and ring split at world x = 44. Joints: printed keys in slots 0.15 bigger a side, 11.3 deep each side
-# (bottom: three 8 x 3 x 22 flat keys in the floor at y 15/30/45; top A: one 4 x 4 x 22 key at the back), plus
-# 1.75 filament pins where the walls are too thin for a key (top A front at y -73/-68, bottom back wall at y 78).
-# Ring: a dovetail tab on the left half in each band (neck 6, head 10, 7 long; 0.1 clearance in the right half).
-# Plate: split stepping through the 5 mm webs between cutouts (2.5 mm from any cutout), butt joint.
 import FreeCAD as App, Part, Mesh, MeshPart, math
 E=r"<work>/exports/"
-O=r"<work>/print-v12/"
-V='v12'
+O=r"<work>/print-v18/"
+V='v18'
 c=math.cos(math.radians(4)); s=math.sin(math.radians(4))
 X0=44.0
 def box(x0,y0,z0,x1,y1,z1): return Part.makeBox(x1-x0,y1-y0,z1-z0,App.Vector(x0,y0,z0))
@@ -69,3 +61,8 @@ for y0,y1,xs in bands:
     t=box(0,-y1,-5,xs,-y0,5); left=t if left is None else left.fuse(t)
 PL=pl.common(left); PR=pl.cut(left)
 save(PL,'Dachshund70-Wired-Plate-print-left-%s.stl'%V,0.01); save(PR,'Dachshund70-Wired-Plate-print-right-%s.stl'%V,0.01)
+
+t=Part.read(E+'tray.step')
+m=App.Matrix(); m.rotateX(math.radians(-4)); t=t.transformGeometry(m)
+bb=t.BoundBox; t.translate(App.Vector(-bb.XMin,-bb.YMin,-bb.ZMin))
+save(t,'Dachshund70-Rev3-Screen-tray-%s.stl'%V,0.01)
